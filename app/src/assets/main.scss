@@ -1,3 +1,7 @@
+@use 'vuetify' with (
+  $color-pack: false
+);
+
 html {
   font-family: 'JetBrains Mono';
 }

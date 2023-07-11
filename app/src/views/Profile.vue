@@ -5,17 +5,46 @@
 
     <form class="py-6">
       <v-text-field
-        class="mt-2"
+        class="mt-3"
         label="OPENAI_KEY"
         variant="outlined"
         density="compact"
         v-model="state.openaiKey.value"
-        :counter="10"
-        :append-icon="state.openaiKey.show ? 'mdi-eye' : 'mdi-eye-off'"
+        :append-inner-icon="state.openaiKey.show ? 'mdi-eye' : 'mdi-eye-off'"
         :type="state.openaiKey.show ? 'text' : 'password'"
         @input="v$.name.$touch"
         @blur="v$.name.$touch"
-        @click:append="state.openaiKey.show = !state.openaiKey.show"
+        @click:append-inner="state.openaiKey.show = !state.openaiKey.show"
+      />
+
+      <v-tooltip
+        text="openai billing"
+        location="start"
+        :open-delay="3"
+        :open-on-hover="true"
+      >
+        <template v-slot:activator="{ props }">
+          <v-progress-linear
+            :height="9"
+            v-bind="props"
+            color="primary"
+            model-value="20"
+            class="mb-8"
+          />
+        </template>
+      </v-tooltip>
+
+      <v-text-field
+        class="mt-3"
+        label="PINECONE_KEY"
+        variant="outlined"
+        density="compact"
+        v-model="state.pineconeKey.value"
+        :append-inner-icon="state.pineconeKey.show ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="state.pineconeKey.show ? 'text' : 'password'"
+        @input="v$.name.$touch"
+        @blur="v$.name.$touch"
+        @click:append-inner="state.pineconeKey.show = !state.pineconeKey.show"
       />
 
       <div class="mt-5">
@@ -41,6 +70,10 @@ import { email, required } from '@vuelidate/validators'
 
 const initialState = {
   openaiKey: {
+    value: '',
+    show: false,
+  },
+  pineconeKey: {
     value: '',
     show: false,
   },
@@ -73,5 +106,9 @@ function clear() {
 :deep(.v-field__field) {
   height: 38px;
   font-size: 14px;
+
+  .v-field__input {
+    padding-top: 4px !important;
+  }
 }
 </style>
