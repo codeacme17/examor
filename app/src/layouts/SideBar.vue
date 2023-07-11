@@ -1,55 +1,48 @@
 <template>
-  <v-navigation-drawer
-    v-model="isDrawer"
-    :rail="rail"
-    permanent
-    @click="rail = false"
-  >
+  <v-navigation-drawer v-model="isDrawer" :rail="rail" permanent>
     <v-list-item
       prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-      title="John Leider"
+      title="examor"
       nav
-    >
-      <template v-slot:append>
-        <v-btn
-          variant="text"
-          icon="mdi-chevron-left"
-          @click.stop="rail = !rail"
-        ></v-btn>
-      </template>
-    </v-list-item>
+    />
 
     <v-divider></v-divider>
 
+    <!-- default nav list -->
     <v-list density="compact" nav>
       <v-list-item
-        prepend-icon="mdi-home-city"
-        title="Home"
-        value="home"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-account"
-        title="My Account"
-        value="account"
-      ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-account-group-outline"
-        title="Users"
-        value="users"
-      ></v-list-item>
+        v-for="item in defualtNavList"
+        :key="item.value"
+        :prepend-icon="item.icon"
+        :title="item.title"
+        :to="item.value"
+        :active="route.path === item.value"
+      />
     </v-list>
   </v-navigation-drawer>
 </template>
 
-<script setup lang="ts">
-import { ref } from "vue";
-
-const isDrawer = ref(true);
-const rail = ref(false);
-</script>
-
 <script lang="ts">
 export default {
-  name: "side-bar",
-};
+  name: 'side-bar',
+}
+</script>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStorage } from '@vueuse/core'
+
+const route = useRoute()
+
+const isDrawer = ref(true)
+const rail = useStorage('side-bar-rail', true)
+
+const defualtNavList = [
+  {
+    icon: 'mdi-home-lightbulb',
+    title: 'Home',
+    value: '/home',
+  },
+]
 </script>
