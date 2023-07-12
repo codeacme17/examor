@@ -5,19 +5,27 @@ const routes = [
   {
     path: '/',
     component: () => import('@/layouts/Default.vue'),
-    redirect: '/home',
+    redirect: '/dashboard',
     children: [
       {
-        path: '/home',
-        name: 'Home',
-        component: () =>
-          import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/Dashboard.vue'),
+      },
+      {
+        path: '/notes',
+        name: 'Notes',
+        component: () => import('@/views/Notes.vue'),
+      },
+      {
+        path: '/add',
+        name: 'Add',
+        component: () => import('@/views/Add.vue'),
       },
       {
         path: '/profile',
         name: 'Profile',
-        component: () =>
-          import(/* webpackChunkName: "home" */ '@/views/Profile.vue'),
+        component: () => import('@/views/Profile.vue'),
       },
     ],
   },

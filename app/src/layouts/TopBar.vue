@@ -2,6 +2,7 @@
   <v-system-bar
     window
     style="justify-content: space-between; padding: 12px 15px; height: 45px"
+    color="transparent"
   >
     <!-- Left -->
     <div class="d-flex align-center">

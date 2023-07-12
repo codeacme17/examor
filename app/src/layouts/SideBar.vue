@@ -1,10 +1,31 @@
 <template>
   <v-navigation-drawer v-model="isDrawer" :rail="rail" permanent>
+    <!-- logo & title -->
     <v-list-item
-      prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-      title="examor"
-      nav
-    />
+      class="pl-2"
+      style="user-select: none; transition: padding 0.15s ease-in-out"
+      :class="{
+        'py-9': !rail,
+        'py-2': rail,
+      }"
+    >
+      <template #prepend>
+        <img
+          src="/src/assets/logo.svg"
+          :width="rail ? 38 : 50"
+          class="mr-5"
+          style="transition: width 0.15s ease-in-out"
+        />
+      </template>
+
+      <template #title>
+        <h3>examor</h3>
+      </template>
+
+      <template #subtitle>
+        <p style="font-size: 12px">test yourself</p>
+      </template>
+    </v-list-item>
 
     <v-divider></v-divider>
 
@@ -12,6 +33,29 @@
     <v-list density="compact" nav>
       <v-list-item
         v-for="item in defualtNavList"
+        :key="item.value"
+        :prepend-icon="item.icon"
+        :title="item.title"
+        :to="item.value"
+        :active="route.path === item.value"
+      />
+    </v-list>
+
+    <v-divider></v-divider>
+
+    <!-- notes list -->
+    <v-list density="compact" nav>
+      <v-list-item
+        prepend-icon="mdi-plus"
+        title="add note"
+        style="padding-left: 7px"
+        :border="true"
+        :to="'/add'"
+        :active="route.path === '/add'"
+      />
+
+      <v-list-item
+        v-for="item in notesList"
         :key="item.value"
         :prepend-icon="item.icon"
         :title="item.title"
@@ -40,9 +84,27 @@ const rail = useStorage('side-bar-rail', true)
 
 const defualtNavList = [
   {
-    icon: 'mdi-home-lightbulb',
-    title: 'Home',
-    value: '/home',
+    icon: 'mdi-view-dashboard',
+    title: 'Dashboard',
+    value: '/dashboard',
+  },
+  {
+    icon: 'mdi-notebook-multiple',
+    title: 'Notes',
+    value: '/notes',
+  },
+]
+
+const notesList = [
+  {
+    icon: 'mdi-docker',
+    title: 'docker',
+    value: '/note/2',
+  },
+  {
+    icon: 'mdi-vuejs',
+    title: 'vue',
+    value: '/note/2',
   },
 ]
 </script>

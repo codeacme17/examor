@@ -5,3 +5,7 @@
 html {
   font-family: 'JetBrains Mono';
 }
+
+#app {
+  transition: background-color 2s ease-in-out !important;
+}
