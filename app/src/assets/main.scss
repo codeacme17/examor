@@ -9,3 +9,8 @@ html {
 #app {
   transition: background-color 2s ease-in-out !important;
 }
+
+.main_width {
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
