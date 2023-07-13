@@ -11,7 +11,11 @@
     >
       <template #prepend>
         <img
-          src="/src/assets/logo.svg"
+          :src="
+            isDark
+              ? '/src/assets/images/logo-dark.svg'
+              : '/src/assets/images/logo.svg'
+          "
           :width="rail ? 38 : 50"
           class="mr-5"
           style="transition: width 0.15s ease-in-out"
@@ -76,6 +80,9 @@ export default {
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
+import { useDark } from '@vueuse/core'
+
+const isDark = useDark()
 
 const route = useRoute()
 
