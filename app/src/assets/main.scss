@@ -4,10 +4,12 @@
 
 :root {
   --td-brand-color: #000 !important;
+  --td-brand-color-hover: #000 !important;
 }
 
 :root[theme-mode='dark'] {
   --td-brand-color: #fff !important;
+  --td-brand-color-hover: #fff !important;
 }
 
 html {

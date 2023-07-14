@@ -22,8 +22,11 @@ export const zhCN = {
   },
 
   label: {
+    selectNoteType: '笔记类型',
+  },
+
+  placeholder: {
     selectNoteType: '请选择笔记类型',
-    selectFiles: '请选择本地文件',
   },
 
   option: {

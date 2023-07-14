@@ -23,8 +23,12 @@ export const en = {
 
   // label of input field
   label: {
-    selectNoteType: 'Select a note type',
-    selectFiles: 'Select local files',
+    selectNoteType: 'note type',
+  },
+
+  // placeholder of input field
+  placeholder: {
+    selectNoteType: 'please select a note type',
   },
 
   // option label on select component

@@ -24,11 +24,6 @@
 
     <!-- Right Handlers -->
     <div class="d-flex align-center">
-      <div class="mr-2">
-        <v-icon icon="mdi-message" class="me-2"></v-icon>
-        <span>10 unread messages</span>
-      </div>
-
       <v-menu offset="10">
         <template v-slot:activator="{ props }">
           <v-btn
