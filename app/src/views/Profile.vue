@@ -92,6 +92,7 @@
 import { reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { email, required } from '@vuelidate/validators'
+
 import OpenaiIcon from '@/components/icons/Openai.vue'
 import PineconeIcon from '@/components/icons/Pinecone.vue'
 import NotionIcon from '@/components/icons/Notion.vue'

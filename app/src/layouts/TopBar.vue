@@ -28,6 +28,31 @@
         <span>10 unread messages</span>
       </div>
 
+      <v-menu>
+        <template v-slot:activator="{ props }">
+          <v-btn
+            icon="mdi-translate"
+            size="small"
+            elevation="0"
+            variant="text"
+            v-bind="props"
+          />
+        </template>
+
+        <v-list density="compact" nav>
+          <v-list-item
+            v-for="(item, index) in languageList"
+            :key="index"
+            :value="index"
+            :active="lang === item.value"
+            @click="lang = item.value"
+            min-height="30px"
+          >
+            <v-list-item-title>{{ item.label }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
       <v-btn
         icon="mdi-cogs"
         size="small"
@@ -62,6 +87,7 @@ const router = useRouter()
 
 // side bar trigger
 const rail = useStorage('side-bar-rail', true)
+const lang = useStorage('local-lang', 'zh')
 
 // dark theme trigger
 const theme = useTheme()
@@ -71,4 +97,22 @@ const isDark = useDark({
   },
 })
 const toggleDark = useToggle(isDark)
+
+const languageList = [
+  {
+    value: 'zh',
+    label: '简写中文',
+  },
+  {
+    value: 'en',
+    label: 'English',
+  },
+]
 </script>
+
+<style lang="scss" scoped>
+:deep(.v-list-item-title) {
+  font-size: 12px !important;
+  padding: 3px 10px;
+}
+</style>
