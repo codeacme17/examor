@@ -77,30 +77,36 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
 import { useDark } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
+import { watchEffect } from 'vue'
 
 const isDark = useDark()
-
 const route = useRoute()
+const { t } = useI18n()
 
 const isDrawer = ref(true)
 const rail = useStorage('side-bar-rail', true)
 
-const defualtNavList = [
+const defualtNavList = computed(() => [
   {
     icon: 'mdi-view-dashboard',
-    title: 'Dashboard',
+    title: t('menus.dashboard'),
     value: '/dashboard',
   },
   {
     icon: 'mdi-notebook-multiple',
-    title: 'Notes',
+    title: t('menus.notes'),
     value: '/notes',
   },
-]
+])
+
+watchEffect(() => {
+  console.log(defualtNavList.value[0].title)
+})
 
 const notesList = [
   {

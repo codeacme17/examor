@@ -44,8 +44,8 @@
             v-for="(item, index) in languageList"
             :key="index"
             :value="index"
-            :active="lang === item.value"
-            @click="lang = item.value"
+            :active="storageLang === item.value"
+            @click="handleLangSwitch(item.value)"
             min-height="30px"
           >
             <v-list-item-title>{{ item.label }}</v-list-item-title>
@@ -82,12 +82,12 @@ export default {
 import { useTheme } from 'vuetify'
 import { useDark, useToggle, useStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 
 // side bar trigger
 const rail = useStorage('side-bar-rail', true)
-const lang = useStorage('local-lang', 'zh')
 
 // dark theme trigger
 const theme = useTheme()
@@ -98,21 +98,30 @@ const isDark = useDark({
 })
 const toggleDark = useToggle(isDark)
 
+// lang trigger
+const preferLang = navigator.language === 'zh-CN' ? 'cn' : navigator.language
+const storageLang = useStorage('local-lang', preferLang)
+const { locale } = useI18n()
 const languageList = [
-  {
-    value: 'zh',
-    label: '简写中文',
-  },
   {
     value: 'en',
     label: 'English',
   },
+  {
+    value: 'cn',
+    label: '简写中文',
+  },
 ]
+const handleLangSwitch = (lang: string) => {
+  storageLang.value = lang
+  locale.value = lang
+  console.log(locale)
+}
 </script>
 
 <style lang="scss" scoped>
 :deep(.v-list-item-title) {
-  font-size: 12px !important;
+  font-size: 14px !important;
   padding: 3px 10px;
 }
 </style>
