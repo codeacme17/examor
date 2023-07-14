@@ -6,14 +6,11 @@ export const useConfirmBtnDisabled = (
 ): Ref<boolean> => {
   return computed(() => {
     for (const key in formData) {
-      if (Object.prototype.hasOwnProperty.call(formData, key)) {
-        const element = formData[key]
-        if (!element) return true
-        if (Array.isArray(element)) if (!element.length) return true
-      }
+      const element = formData[key]
+      if (!element && !options[key]) return true
+      if (Array.isArray(element) && !options[key])
+        if (!element.length) return true
     }
-
-    if (options) return true
 
     return false
   })

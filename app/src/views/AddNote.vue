@@ -35,7 +35,7 @@
       />
 
       <v-select
-        v-model="fileType"
+        v-model="noteType"
         class="mt-4"
         variant="outlined"
         density="compact"
@@ -46,11 +46,11 @@
       />
 
       <t-config-provider
-        v-if="fileType === 'files'"
+        v-if="noteType === 'files'"
         :global-config="locale === 'en' ? enConfig : cnConfig"
       >
         <t-upload
-          v-model="files"
+          v-model="formData.files"
           class="mt-1"
           placeholder=""
           theme="file-flow"
@@ -62,7 +62,7 @@
 
     <div class="mt-2 d-flex justify-end">
       <v-btn
-        v-show="fileType"
+        v-show="noteType"
         color="primary"
         elevation="0"
         :block="true"
@@ -91,11 +91,6 @@ import { useConfirmBtnDisabled } from '@/hooks'
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
-type FormData = {
-  noteName: string
-  namespace: string
-}
-
 const { t, locale } = useI18n()
 
 const noteTypeOptions = computed(() => [
@@ -109,12 +104,16 @@ const noteTypeOptions = computed(() => [
   },
 ])
 
-const formData = reactive<FormData>({
+const formData = reactive<{
+  noteName: string
+  namespace: string
+  files: any[]
+}>({
   noteName: '',
   namespace: '',
+  files: [],
 })
-
-const disabled = useConfirmBtnDisabled(formData)
+const noteType = ref<'files' | 'notion' | null>(null)
 
 const rules = {
   noteName: { required },
@@ -122,8 +121,10 @@ const rules = {
 }
 const v$ = useVuelidate(rules, formData)
 
-const fileType = ref<'files' | 'notion' | null>(null)
-const files = ref<any[]>([])
+const disabled = useConfirmBtnDisabled(formData, {
+  files: noteType.value === 'files',
+  notion: noteType.value === 'notion',
+})
 </script>
 
 <style scoped lang="scss">
