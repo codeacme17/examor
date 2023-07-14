@@ -134,11 +134,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 
-import OpenaiIcon from '@/components/icons/Openai.vue'
-import AzureIcon from '@/components/icons/Azure.vue'
-import PineconeIcon from '@/components/icons/Pinecone.vue'
-import NotionIcon from '@/components/icons/Notion.vue'
-
 const initialState = {
   openaiKey: {
     value: '',

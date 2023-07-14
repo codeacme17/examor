@@ -1,6 +1,9 @@
 import vue from '@vitejs/plugin-vue'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
 
+import { TDesignResolver } from 'unplugin-vue-components/resolvers'
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 
@@ -11,6 +14,20 @@ export default defineConfig({
     }),
     vuetify({
       autoImport: true,
+    }),
+    AutoImport({
+      resolvers: [
+        TDesignResolver({
+          library: 'vue-next',
+        }),
+      ],
+    }),
+    Components({
+      resolvers: [
+        TDesignResolver({
+          library: 'vue-next',
+        }),
+      ],
     }),
   ],
   define: { 'process.env': {} },

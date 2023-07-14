@@ -2,6 +2,14 @@
   $color-pack: false
 );
 
+:root {
+  --td-brand-color: #000 !important;
+}
+
+:root[theme-mode='dark'] {
+  --td-brand-color: #fff !important;
+}
+
 html {
   font-family: 'JetBrains Mono', '微软雅黑' !important;
 }

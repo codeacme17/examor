@@ -54,8 +54,8 @@
         style="padding-left: 7px"
         :title="$t('menus.addNote')"
         :border="true"
-        :to="'/add'"
-        :active="route.path === '/add'"
+        :to="'/addNote'"
+        :active="route.path === '/addNote'"
       />
 
       <v-list-item

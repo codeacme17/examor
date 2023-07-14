@@ -16,39 +16,23 @@
         :label="$t('label.selectNoteType')"
         :items="noteTypeOptions"
       />
-
-      <v-file-input
-        v-model="files"
-        class="mt-3"
-        counter
-        multiple
-        prepend-inner-icon="mdi-file-document-plus"
-        variant="outlined"
-        :label="$t('label.selectFiles')"
-        :show-size="1000"
-      >
-        <template v-slot:selection="{ fileNames }">
-          <template v-for="(fileName, index) in fileNames" :key="fileName">
-            <v-chip
-              v-if="index < 2"
-              class="me-2"
-              label
-              color="primary"
-              size="small"
-            >
-              {{ fileName }}
-            </v-chip>
-
-            <span
-              v-else-if="index === 2"
-              class="text-overline text-grey-darken-3 mx-2"
-            >
-              + {{ files.length - 2 }} {{ $t('hint.files') }}
-            </span>
-          </template>
-        </template>
-      </v-file-input>
+      <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
+        <t-upload
+          v-model="files"
+          placeholder=""
+          theme="file-flow"
+          multiple
+          :autoUpload="false"
+        >
+        </t-upload>
+      </t-config-provider>
     </section>
+
+    <div class="mt-2 d-flex justify-end">
+      <v-btn color="primary" elevation="0" :block="true">
+        {{ $t('button.submit') }}
+      </v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -61,8 +45,10 @@ export default {
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import enConfig from 'tdesign-vue-next/es/locale/en_US'
+import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const noteTypeOptions = computed(() => [
   {
@@ -87,5 +73,9 @@ const files = ref<any[]>([])
   .v-field__input {
     padding-top: 5px !important;
   }
+}
+
+:deep(.t-upload__flow-bottom) {
+  display: none;
 }
 </style>

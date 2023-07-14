@@ -95,6 +95,7 @@ const theme = useTheme()
 const isDark = useDark({
   onChanged(dark: boolean) {
     theme.global.name.value = dark ? 'dark' : 'light'
+    document.documentElement.setAttribute('theme-mode', dark ? 'dark' : 'light')
   },
 })
 const toggleDark = useToggle(isDark)

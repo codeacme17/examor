@@ -18,9 +18,9 @@ const routes = [
         component: () => import('@/views/Notes.vue'),
       },
       {
-        path: '/add',
-        name: 'Add',
-        component: () => import('@/views/Add.vue'),
+        path: '/addNote',
+        name: 'AddNote',
+        component: () => import('@/views/AddNote.vue'),
       },
       {
         path: '/profile',
