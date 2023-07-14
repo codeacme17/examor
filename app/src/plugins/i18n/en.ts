@@ -23,6 +23,8 @@ export const en = {
 
   // label of input field
   label: {
+    noteName: 'note name',
+    namespace: 'namespace',
     selectNoteType: 'note type',
   },
 
@@ -40,5 +42,10 @@ export const en = {
   hint: {
     openAIBilling: 'OpenAI billing',
     files: 'File(s)',
+  },
+
+  errorHint: {
+    noteName: 'note name is required',
+    namespace: 'namespace is required',
   },
 }

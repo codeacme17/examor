@@ -5,24 +5,43 @@
 
     <v-divider class="mt-8"></v-divider>
 
-    <section class="py-6">
+    <form class="py-6">
       <v-text-field
-        v-model="formData.namespace"
+        v-model="formData.noteName"
         class="mt-3"
-        label="namespace"
         variant="outlined"
         density="compact"
+        :color="requiredFieldBorderColor"
+        :base-color="requiredFieldBorderColor"
+        :label="$t('label.noteName') + '*'"
+        :error-messages="
+          v$.noteName.$errors.map(() => $t('errorHint.namespace'))
+        "
+        @input="v$.noteName.$touch"
+      />
+
+      <v-text-field
+        v-model="formData.namespace"
+        class="mt-4"
+        variant="outlined"
+        density="compact"
+        :color="requiredFieldBorderColor"
+        :base-color="requiredFieldBorderColor"
+        :label="$t('label.namespace') + '*'"
+        :error-messages="
+          v$.namespace.$errors.map(() => $t('errorHint.namespace'))
+        "
+        @input="v$.namespace.$touch"
       />
 
       <v-select
         v-model="fileType"
-        class="mt-3"
+        class="mt-4"
         variant="outlined"
         density="compact"
         item-title="label"
         item-value="value"
         :label="$t('label.selectNoteType')"
-        :placeholder="$t('placeholder.selectNoteType')"
         :items="noteTypeOptions"
       />
 
@@ -32,16 +51,23 @@
       >
         <t-upload
           v-model="files"
+          class="mt-1"
           placeholder=""
           theme="file-flow"
           multiple
           :autoUpload="false"
         />
       </t-config-provider>
-    </section>
+    </form>
 
     <div class="mt-2 d-flex justify-end">
-      <v-btn color="primary" elevation="0" :block="true" v-show="fileType">
+      <v-btn
+        v-show="fileType"
+        color="primary"
+        elevation="0"
+        :block="true"
+        :disabled="disabled"
+      >
         {{ $t('button.submit') }}
       </v-btn>
     </div>
@@ -57,14 +83,20 @@ export default {
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import { requiredFieldBorderColor } from '@/utils'
+import { useConfirmBtnDisabled } from '@/hooks'
+
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
-const { t, locale } = useI18n()
-
 type FormData = {
+  noteName: string
   namespace: string
 }
+
+const { t, locale } = useI18n()
 
 const noteTypeOptions = computed(() => [
   {
@@ -78,8 +110,17 @@ const noteTypeOptions = computed(() => [
 ])
 
 const formData = reactive<FormData>({
+  noteName: '',
   namespace: '',
 })
+
+const disabled = useConfirmBtnDisabled(formData)
+
+const rules = {
+  noteName: { required },
+  namespace: { required },
+}
+const v$ = useVuelidate(rules, formData)
 
 const fileType = ref<'files' | 'notion' | null>(null)
 const files = ref<any[]>([])

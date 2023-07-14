@@ -22,6 +22,8 @@ export const zhCN = {
   },
 
   label: {
+    noteName: '笔记名称',
+    namespace: '命名空间',
     selectNoteType: '笔记类型',
   },
 
@@ -37,5 +39,10 @@ export const zhCN = {
   hint: {
     openAIBilling: 'OpenAI 使用额度',
     files: '文件',
+  },
+
+  errorHint: {
+    noteName: '笔记名称不可为空',
+    namespace: '命名空间不可为空',
   },
 }

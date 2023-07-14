@@ -5,6 +5,7 @@
 :root {
   --td-brand-color: #000 !important;
   --td-brand-color-hover: #000 !important;
+  --list-item-font-size: 12px;
 }
 
 :root[theme-mode='dark'] {
@@ -13,7 +14,7 @@
 }
 
 html {
-  font-family: 'JetBrains Mono', '微软雅黑' !important;
+  font-family: 'JetBrains Mono', '微软雅黑', '圆体-简' !important;
 }
 
 #app {
