@@ -76,7 +76,7 @@
 
 <script lang="ts">
 export default {
-  name: 'Add',
+  name: 'AddNote',
 }
 </script>
 

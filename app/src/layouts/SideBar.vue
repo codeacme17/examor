@@ -77,12 +77,11 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
 import { useDark, useWindowSize } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-import { watchEffect } from 'vue'
 
 const isDark = useDark()
 const route = useRoute()
@@ -90,7 +89,7 @@ const route = useRoute()
 // handle side-bar rail state
 const rail = useStorage('side-bar-rail', true)
 const { width } = useWindowSize()
-watchEffect(() => {
+watch(width, () => {
   if (width.value <= 1030) rail.value = true
   else rail.value = false
 })
