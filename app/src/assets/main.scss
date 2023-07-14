@@ -3,7 +3,7 @@
 );
 
 html {
-  font-family: 'JetBrains Mono';
+  font-family: 'JetBrains Mono', '微软雅黑' !important;
 }
 
 #app {
@@ -13,4 +13,8 @@ html {
 .main_width {
   max-width: 800px !important;
   margin: 0 auto !important;
+}
+
+h5 {
+  color: gray;
 }

@@ -1,7 +1,9 @@
 <template>
   <v-container class="main_width">
-    <h2>Profile</h2>
-    <h5>Configuration items can be configured here what you need</h5>
+    <h2>{{ $t('title.profile') }}</h2>
+    <h5>{{ $t('subTitle.profile') }}</h5>
+
+    <v-divider class="mt-8"></v-divider>
 
     <form class="py-6">
       <!-- OpenAI  -->
@@ -23,7 +25,7 @@
           />
 
           <v-tooltip
-            text="openai billing"
+            :text="$t('hint.openAIBilling')"
             location="start"
             :open-delay="3"
             :open-on-hover="true"
@@ -81,7 +83,7 @@
           :block="true"
           @click="v$.$validate"
         >
-          submit
+          {{ $t('button.submit') }}
         </v-btn>
       </div>
     </form>
@@ -125,14 +127,6 @@ const rules = {
 }
 
 const v$ = useVuelidate(rules, state)
-
-function clear() {
-  v$.value.$reset()
-
-  for (const [key, value] of Object.entries(initialState)) {
-    state[key] = value
-  }
-}
 </script>
 
 <style scoped lang="scss">

@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="isDrawer" :rail="rail" permanent>
+  <v-navigation-drawer :rail="rail" permanent>
     <!-- logo & title -->
     <v-list-item
       class="pl-2"
@@ -27,7 +27,7 @@
       </template>
 
       <template #subtitle>
-        <p style="font-size: 12px">test yourself</p>
+        <p style="font-size: 12px">{{ $t('slogan') }}</p>
       </template>
     </v-list-item>
 
@@ -51,7 +51,7 @@
     <v-list density="compact" nav>
       <v-list-item
         prepend-icon="mdi-plus"
-        title="add note"
+        :title="$t('menus.addNote')"
         style="padding-left: 7px"
         :border="true"
         :to="'/add'"
@@ -77,20 +77,17 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
 import { useDark } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-import { watchEffect } from 'vue'
 
 const isDark = useDark()
 const route = useRoute()
-const { t } = useI18n()
-
-const isDrawer = ref(true)
 const rail = useStorage('side-bar-rail', true)
 
+const { t } = useI18n()
 const defualtNavList = computed(() => [
   {
     icon: 'mdi-view-dashboard',
@@ -103,10 +100,6 @@ const defualtNavList = computed(() => [
     value: '/notes',
   },
 ])
-
-watchEffect(() => {
-  console.log(defualtNavList.value[0].title)
-})
 
 const notesList = [
   {

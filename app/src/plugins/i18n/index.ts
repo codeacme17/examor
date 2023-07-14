@@ -18,7 +18,7 @@ const lang = useStorage('local-lang', navigator.language)
 const i18n = createI18n({
   locale: lang.value,
   legacy: false,
-  globalInjection: false,
+  globalInjection: true,
   messages: message,
 })
 

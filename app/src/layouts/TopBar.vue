@@ -28,7 +28,7 @@
         <span>10 unread messages</span>
       </div>
 
-      <v-menu>
+      <v-menu offset="10">
         <template v-slot:activator="{ props }">
           <v-btn
             icon="mdi-translate"
