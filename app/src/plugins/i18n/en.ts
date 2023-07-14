@@ -29,11 +29,12 @@ export const en = {
 
   // option label on select component
   option: {
-    localFiles: 'local files',
+    localFiles: 'Local Files',
     notion: 'Notion DB',
   },
 
   hint: {
     openAIBilling: 'OpenAI billing',
+    files: 'File(s)',
   },
 }

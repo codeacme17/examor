@@ -21,10 +21,6 @@ export const zhCN = {
     addNote: '可以在此处新增新的笔记',
   },
 
-  hint: {
-    openAIBilling: 'OpenAI 使用额度',
-  },
-
   label: {
     selectNoteType: '请选择笔记类型',
     selectFiles: '请选择本地文件',
@@ -33,5 +29,10 @@ export const zhCN = {
   option: {
     localFiles: '本地文件',
     notion: 'Notion 文档',
+  },
+
+  hint: {
+    openAIBilling: 'OpenAI 使用额度',
+    files: '文件',
   },
 }

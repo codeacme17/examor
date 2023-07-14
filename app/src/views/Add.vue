@@ -1,12 +1,13 @@
 <template>
   <v-container class="main_width">
     <h2>{{ $t('title.addNote') }}</h2>
-    <h5>{{ $t('subTitle.addNote') }}</h5>
+    <h5 class="text-medium-emphasis">{{ $t('subTitle.addNote') }}</h5>
 
     <v-divider class="mt-8"></v-divider>
 
     <section class="py-6">
       <v-select
+        v-model="fileType"
         class="mt-3"
         variant="outlined"
         density="compact"
@@ -14,16 +15,15 @@
         item-value="value"
         :label="$t('label.selectNoteType')"
         :items="noteTypeOptions"
-      >
-      </v-select>
+      />
 
       <v-file-input
+        v-model="files"
         class="mt-3"
         counter
         multiple
         prepend-inner-icon="mdi-file-document-plus"
         variant="outlined"
-        v-model="files"
         :label="$t('label.selectFiles')"
         :show-size="1000"
       >
@@ -43,7 +43,7 @@
               v-else-if="index === 2"
               class="text-overline text-grey-darken-3 mx-2"
             >
-              +{{ files.length - 2 }} File(s)
+              + {{ files.length - 2 }} {{ $t('hint.files') }}
             </span>
           </template>
         </template>
@@ -75,6 +75,7 @@ const noteTypeOptions = computed(() => [
   },
 ])
 
+const fileType = ref<string | null>()
 const files = ref<any[]>([])
 </script>
 

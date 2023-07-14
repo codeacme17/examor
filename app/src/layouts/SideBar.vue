@@ -51,8 +51,8 @@
     <v-list density="compact" nav>
       <v-list-item
         prepend-icon="mdi-plus"
-        :title="$t('menus.addNote')"
         style="padding-left: 7px"
+        :title="$t('menus.addNote')"
         :border="true"
         :to="'/add'"
         :active="route.path === '/add'"
@@ -80,13 +80,22 @@ export default {
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
-import { useDark } from '@vueuse/core'
+import { useDark, useWindowSize } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
+import { watchEffect } from 'vue'
 
 const isDark = useDark()
 const route = useRoute()
-const rail = useStorage('side-bar-rail', true)
 
+// handle side-bar rail state
+const rail = useStorage('side-bar-rail', true)
+const { width } = useWindowSize()
+watchEffect(() => {
+  if (width.value <= 1030) rail.value = true
+  else rail.value = false
+})
+
+// default nav list
 const { t } = useI18n()
 const defualtNavList = computed(() => [
   {
@@ -101,6 +110,7 @@ const defualtNavList = computed(() => [
   },
 ])
 
+// note list that users uploaded
 const notesList = [
   {
     icon: 'mdi-docker',

@@ -1,16 +1,16 @@
 <template>
   <v-system-bar
     window
-    style="justify-content: space-between; padding: 12px 15px; height: 45px"
     color="transparent"
+    style="justify-content: space-between; padding: 12px 15px; height: 45px"
   >
     <!-- Left -->
     <div class="d-flex align-center">
       <v-btn
         variant="text"
+        size="small"
         :icon="rail ? 'mdi-dock-right' : 'mdi-dock-left'"
         @click.stop="rail = !rail"
-        size="small"
       />
 
       <v-btn
@@ -18,6 +18,7 @@
         size="small"
         elevation="0"
         variant="text"
+        @click="router.back()"
       />
     </div>
 
@@ -42,11 +43,11 @@
         <v-list density="compact" nav>
           <v-list-item
             v-for="(item, index) in languageList"
+            min-height="30px"
             :key="index"
             :value="index"
             :active="storageLang === item.value"
             @click="handleLangSwitch(item.value)"
-            min-height="30px"
           >
             <v-list-item-title>{{ item.label }}</v-list-item-title>
           </v-list-item>
@@ -62,11 +63,11 @@
       />
 
       <v-btn
-        :icon="isDark ? 'mdi-emoticon-cool' : 'mdi-emoticon-wink'"
         size="small"
-        @click="toggleDark()"
         elevation="0"
         variant="text"
+        :icon="isDark ? 'mdi-emoticon-cool' : 'mdi-emoticon-wink'"
+        @click="toggleDark()"
       />
     </div>
   </v-system-bar>

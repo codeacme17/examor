@@ -1,7 +1,7 @@
 <template>
   <v-container class="main_width">
     <h2>{{ $t('title.profile') }}</h2>
-    <h5>{{ $t('subTitle.profile') }}</h5>
+    <h5 class="text-medium-emphasis">{{ $t('subTitle.profile') }}</h5>
 
     <v-divider class="mt-8"></v-divider>
 
@@ -12,11 +12,11 @@
 
         <div style="flex: 1">
           <v-text-field
+            v-model="state.openaiKey.value"
             class="mt-3"
             label="OPENAI_KEY"
             variant="outlined"
             density="compact"
-            v-model="state.openaiKey.value"
             :append-inner-icon="
               state.openaiKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -25,8 +25,8 @@
           />
 
           <v-tooltip
-            :text="$t('hint.openAIBilling')"
             location="start"
+            :text="$t('hint.openAIBilling')"
             :open-delay="3"
             :open-on-hover="true"
           >
@@ -43,16 +43,62 @@
         </div>
       </div>
 
+      <!-- Azure  -->
+      <div class="d-flex">
+        <AzureIcon width="30" class="mb-auto mt-4 mr-4" />
+
+        <div style="flex: 1">
+          <v-text-field
+            v-model="state.azureKey.value"
+            class="mt-3"
+            label="AZURE_KEY"
+            variant="outlined"
+            density="compact"
+            :append-inner-icon="state.azureKey.show ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="state.azureKey.show ? 'text' : 'password'"
+            @click:append-inner="state.azureKey.show = !state.azureKey.show"
+          />
+          <v-text-field
+            v-model="state.azureVersion.value"
+            class="mt-3"
+            label="AZURE_VERSION"
+            variant="outlined"
+            density="compact"
+            :append-inner-icon="
+              state.azureVersion.show ? 'mdi-eye' : 'mdi-eye-off'
+            "
+            :type="state.azureVersion.show ? 'text' : 'password'"
+            @click:append-inner="
+              state.azureVersion.show = !state.azureVersion.show
+            "
+          />
+          <v-text-field
+            v-model="state.azureEndPoint.value"
+            class="mt-3"
+            label="AZURE_END_PONIT"
+            variant="outlined"
+            density="compact"
+            :append-inner-icon="
+              state.azureEndPoint.show ? 'mdi-eye' : 'mdi-eye-off'
+            "
+            :type="state.azureEndPoint.show ? 'text' : 'password'"
+            @click:append-inner="
+              state.azureEndPoint.show = !state.azureEndPoint.show
+            "
+          />
+        </div>
+      </div>
+
       <!-- Pinecone -->
       <div class="d-flex">
         <PineconeIcon width="30" class="mb-3 mr-4" />
 
         <v-text-field
+          v-model="state.pineconeKey.value"
           class="mt-3"
           label="PINECONE_KEY"
           variant="outlined"
           density="compact"
-          v-model="state.pineconeKey.value"
           :append-inner-icon="
             state.pineconeKey.show ? 'mdi-eye' : 'mdi-eye-off'
           "
@@ -66,10 +112,10 @@
         <NotionIcon width="30" class="mb-5 mr-4" />
 
         <v-text-field
+          v-model="state.notionKey.value"
           label="NOTION_KEY"
           variant="outlined"
           density="compact"
-          v-model="state.notionKey.value"
           :append-inner-icon="state.notionKey.show ? 'mdi-eye' : 'mdi-eye-off'"
           :type="state.notionKey.show ? 'text' : 'password'"
           @click:append-inner="state.notionKey.show = !state.notionKey.show"
@@ -77,12 +123,7 @@
       </div>
 
       <div class="mt-5 d-flex justify-end">
-        <v-btn
-          color="primary"
-          elevation="0"
-          :block="true"
-          @click="v$.$validate"
-        >
+        <v-btn color="primary" elevation="0" :block="true">
           {{ $t('button.submit') }}
         </v-btn>
       </div>
@@ -92,15 +133,26 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { useVuelidate } from '@vuelidate/core'
-import { email, required } from '@vuelidate/validators'
 
 import OpenaiIcon from '@/components/icons/Openai.vue'
+import AzureIcon from '@/components/icons/Azure.vue'
 import PineconeIcon from '@/components/icons/Pinecone.vue'
 import NotionIcon from '@/components/icons/Notion.vue'
 
 const initialState = {
   openaiKey: {
+    value: '',
+    show: false,
+  },
+  azureKey: {
+    value: '',
+    show: false,
+  },
+  azureVersion: {
+    value: '',
+    show: false,
+  },
+  azureEndPoint: {
     value: '',
     show: false,
   },
@@ -117,16 +169,6 @@ const initialState = {
 const state = reactive<any>({
   ...initialState,
 })
-
-const rules = {
-  name: { required },
-  email: { required, email },
-  select: { required },
-  items: { required },
-  checkbox: { required },
-}
-
-const v$ = useVuelidate(rules, state)
 </script>
 
 <style scoped lang="scss">
