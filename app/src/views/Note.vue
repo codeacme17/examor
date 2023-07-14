@@ -1,5 +1,5 @@
 <template>
-  <section>Note</section>
+  <section>{{ currentNoteName }}</section>
 </template>
 
 <script lang="ts">
@@ -8,6 +8,13 @@ export default {
 }
 </script>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const currentNoteName = route.params.id
+
+console.log(currentNoteName)
+</script>
 
 <style lang="scss" scoped></style>

@@ -114,12 +114,12 @@ const notesList = [
   {
     icon: 'mdi-docker',
     title: 'docker',
-    value: '/note/2',
+    value: '/note/docker',
   },
   {
     icon: 'mdi-vuejs',
     title: 'vue',
-    value: '/note/2',
+    value: '/note/vue',
   },
 ]
 </script>
