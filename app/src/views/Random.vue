@@ -26,7 +26,7 @@
         </p>
 
         <v-tooltip
-          location="start"
+          location="top right"
           :text="$t('hint.memory')"
           :open-delay="3"
           :open-on-hover="true"

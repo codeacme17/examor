@@ -13,7 +13,7 @@ export const normalCardBgColor = computed(() => {
 
 export const greenCardBgColor = computed(() => {
   const isDark = useDark()
-  return isDark.value ? 'green-accent-3' : 'green-accent-4'
+  return isDark.value ? 'green-accent-3' : 'light-green-accent-2'
 })
 
 export const fontColor = computed(() => {

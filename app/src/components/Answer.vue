@@ -3,12 +3,12 @@
     <v-tabs v-model="currentTab" density="compact">
       <v-tab value="answer"> {{ $t('label.answer') }}</v-tab>
 
-      <v-tab value="aiAnswer" :disabled="!isShowExamine">
+      <v-tab value="aiAnswer" :disabled="!isFinishExamining">
         <v-icon icon="mdi-robot-love" class="mr-2" />
         {{ $t('label.aiAnswer') }}
       </v-tab>
 
-      <v-tab value="document" :disabled="!isShowExamine">
+      <v-tab value="document" :disabled="!isFinishExamining">
         <v-icon icon="mdi-notebook-heart" class="mr-2" />
         {{ $t('label.document') }}
       </v-tab>
@@ -105,6 +105,7 @@ const handleKeyup = () => {
 
 const isShowExamine = ref(false)
 const examineContent = ref('')
+const isFinishExamining = ref(false)
 const handleSubmit = () => {
   isShowExamine.value = !isShowExamine.value
   let index = 0
@@ -114,6 +115,7 @@ const handleSubmit = () => {
 
     if (index >= answer.length) {
       examineContent.value = toMarkdown(examineContent.value)
+      isFinishExamining.value = true
       clearInterval(timer)
     }
   }, 20)

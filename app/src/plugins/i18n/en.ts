@@ -52,6 +52,8 @@ export const en = {
     openAIBilling: 'OpenAI billing',
     files: 'File(s)',
     memory: 'memory progress',
+    questionCounts: 'Please select how many questions are prepared for you',
+    getIcon: 'To get the icon please go to',
   },
 
   errorHint: {

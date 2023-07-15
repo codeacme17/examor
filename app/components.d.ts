@@ -16,6 +16,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TButton: typeof import('tdesign-vue-next')['Button']
     TConfigProvider: typeof import('tdesign-vue-next')['ConfigProvider']
+    TTable: typeof import('tdesign-vue-next')['Table']
     TUpload: typeof import('tdesign-vue-next')['Upload']
   }
 }

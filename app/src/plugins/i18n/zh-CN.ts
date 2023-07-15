@@ -49,6 +49,8 @@ export const zhCN = {
     openAIBilling: 'OpenAI 使用额度',
     files: '文件',
     memory: '记忆进度',
+    questionCounts: '请选择为你准备多少个问题',
+    getIcon: '获取 icon 请到',
   },
 
   errorHint: {

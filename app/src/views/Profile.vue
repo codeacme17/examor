@@ -25,7 +25,8 @@
           />
 
           <v-tooltip
-            location="start"
+            location="bottom left"
+            offset="4"
             :text="$t('hint.openAIBilling')"
             :open-delay="3"
             :open-on-hover="true"
