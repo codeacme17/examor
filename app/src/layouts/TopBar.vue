@@ -1,10 +1,10 @@
 <template>
   <v-system-bar
     window
-    color="transparent"
+    color="background"
     style="justify-content: space-between; padding: 12px 15px; height: 45px"
   >
-    <!-- Left -->
+    <!-- Left Handlers -->
     <div class="d-flex align-center">
       <v-btn
         variant="text"
@@ -82,7 +82,7 @@ import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 
-// side bar trigger
+// side bar trigger rail
 const rail = useStorage('side-bar-rail', true)
 
 // dark theme trigger

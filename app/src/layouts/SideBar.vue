@@ -83,8 +83,9 @@ import { useStorage } from '@vueuse/core'
 import { useDark, useWindowSize } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 
-const isDark = useDark()
 const route = useRoute()
+const isDark = useDark()
+const { t } = useI18n()
 
 // handle side-bar rail state
 const rail = useStorage('side-bar-rail', true)
@@ -95,7 +96,6 @@ watch(width, () => {
 })
 
 // default nav list
-const { t } = useI18n()
 const defualtNavList = computed(() => [
   {
     icon: 'mdi-view-dashboard',

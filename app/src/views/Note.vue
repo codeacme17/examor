@@ -13,8 +13,4 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const currentNoteName = route.params.id
-
-console.log(currentNoteName)
 </script>
-
-<style lang="scss" scoped></style>

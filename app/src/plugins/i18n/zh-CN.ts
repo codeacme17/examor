@@ -25,6 +25,7 @@ export const zhCN = {
     noteName: '笔记名称',
     namespace: '命名空间',
     selectNoteType: '笔记类型',
+    notionDataBaseID: 'notion 数据库 ID',
   },
 
   placeholder: {
@@ -33,7 +34,7 @@ export const zhCN = {
 
   option: {
     localFiles: '本地文件',
-    notion: 'Notion 文档',
+    notion: 'Notion 数据库',
   },
 
   hint: {

@@ -26,6 +26,7 @@ export const en = {
     noteName: 'note name',
     namespace: 'namespace',
     selectNoteType: 'note type',
+    notionDataBaseID: 'notion database ID',
   },
 
   // placeholder of input field

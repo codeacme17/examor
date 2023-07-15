@@ -11,13 +11,7 @@
         class="mt-3"
         variant="outlined"
         density="compact"
-        :color="requiredFieldBorderColor"
-        :base-color="requiredFieldBorderColor"
-        :label="$t('label.noteName') + '*'"
-        :error-messages="
-          v$.noteName.$errors.map(() => $t('errorHint.namespace'))
-        "
-        @input="v$.noteName.$touch"
+        :label="$t('label.noteName')"
       />
 
       <v-text-field
@@ -25,17 +19,11 @@
         class="mt-4"
         variant="outlined"
         density="compact"
-        :color="requiredFieldBorderColor"
-        :base-color="requiredFieldBorderColor"
-        :label="$t('label.namespace') + '*'"
-        :error-messages="
-          v$.namespace.$errors.map(() => $t('errorHint.namespace'))
-        "
-        @input="v$.namespace.$touch"
+        :label="$t('label.namespace')"
       />
 
       <v-select
-        v-model="noteType"
+        v-model="formData.noteType"
         class="mt-4"
         variant="outlined"
         density="compact"
@@ -43,34 +31,36 @@
         item-value="value"
         :label="$t('label.selectNoteType')"
         :items="noteTypeOptions"
+        @update:model-value="handleSelectChange"
       />
 
-      <t-config-provider
-        v-if="noteType === 'files'"
-        :global-config="locale === 'en' ? enConfig : cnConfig"
-      >
+      <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
         <t-upload
+          v-show="formData.noteType === 'files'"
           v-model="formData.files"
-          class="mt-1"
+          class="mt-1 mb-7"
           placeholder=""
           theme="file-flow"
           multiple
           :autoUpload="false"
         />
       </t-config-provider>
-    </form>
 
-    <div class="mt-2 d-flex justify-end">
-      <v-btn
-        v-show="noteType"
-        color="primary"
-        elevation="0"
-        :block="true"
-        :disabled="disabled"
-      >
-        {{ $t('button.submit') }}
-      </v-btn>
-    </div>
+      <v-text-field
+        v-show="formData.noteType === 'notion'"
+        v-model="formData.notion"
+        class="mt-4"
+        variant="outlined"
+        density="compact"
+        :label="$t('label.notionDataBaseID')"
+      />
+
+      <div class="mt-2 d-flex justify-end">
+        <v-btn color="primary" elevation="0" :block="true" :disabled="disabled">
+          {{ $t('button.submit') }}
+        </v-btn>
+      </div>
+    </form>
   </v-container>
 </template>
 
@@ -81,12 +71,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-import { requiredFieldBorderColor } from '@/utils'
-import { useConfirmBtnDisabled } from '@/hooks'
 
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
@@ -107,24 +93,31 @@ const noteTypeOptions = computed(() => [
 const formData = reactive<{
   noteName: string
   namespace: string
+  noteType: 'files' | 'notion' | null
   files: any[]
+  notion: string
 }>({
   noteName: '',
   namespace: '',
+  noteType: null,
   files: [],
+  notion: '',
 })
-const noteType = ref<'files' | 'notion' | null>(null)
 
-const rules = {
-  noteName: { required },
-  namespace: { required },
+const disabled = computed(() => {
+  if (!formData.noteName) return true
+  if (!formData.namespace) return true
+  if (!formData.noteType) return true
+  if (!formData.files.length && formData.noteType === 'files') return true
+  if (!formData.notion && formData.noteType === 'notion') return true
+
+  return false
+})
+
+const handleSelectChange = () => {
+  formData.files = []
+  formData.notion = ''
 }
-const v$ = useVuelidate(rules, formData)
-
-const disabled = useConfirmBtnDisabled(formData, {
-  files: noteType.value === 'files',
-  notion: noteType.value === 'notion',
-})
 </script>
 
 <style scoped lang="scss">
