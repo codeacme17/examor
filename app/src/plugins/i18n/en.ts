@@ -16,6 +16,8 @@ export const en = {
   title: {
     profile: 'Profile',
     addNote: 'Add Note',
+    question: 'Question',
+    random: 'Random Pick',
   },
   subTitle: {
     profile: 'Can be configured here refer to the required options',
@@ -28,6 +30,9 @@ export const en = {
     namespace: 'namespace',
     selectNoteType: 'note type',
     notionDataBaseID: 'notion database ID',
+    answer: 'answer',
+    aiAnswer: 'GPT answer',
+    document: 'Note Content',
   },
 
   // placeholder of input field
@@ -44,6 +49,7 @@ export const en = {
   hint: {
     openAIBilling: 'OpenAI billing',
     files: 'File(s)',
+    memory: 'memory progress',
   },
 
   errorHint: {

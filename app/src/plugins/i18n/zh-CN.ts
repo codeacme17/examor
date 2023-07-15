@@ -15,6 +15,8 @@ export const zhCN = {
   title: {
     profile: '配置文件',
     addNote: '新增笔记',
+    question: '问题',
+    random: '随机选题',
   },
 
   subTitle: {
@@ -27,6 +29,9 @@ export const zhCN = {
     namespace: '命名空间',
     selectNoteType: '笔记类型',
     notionDataBaseID: 'notion 数据库 ID',
+    answer: '回答',
+    aiAnswer: 'GPT 回答',
+    document: '笔记内容',
   },
 
   placeholder: {
@@ -41,6 +46,7 @@ export const zhCN = {
   hint: {
     openAIBilling: 'OpenAI 使用额度',
     files: '文件',
+    memory: '记忆进度',
   },
 
   errorHint: {

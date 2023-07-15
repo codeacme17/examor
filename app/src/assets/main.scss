@@ -14,7 +14,7 @@
 }
 
 html {
-  font-family: 'JetBrains Mono', '微软雅黑', '圆体-简' !important;
+  font-family: 'Poppins', 'JetBrains Mono', '微软雅黑', '圆体-简' !important;
 }
 
 #app {
@@ -22,10 +22,50 @@ html {
 }
 
 .main_width {
-  max-width: 800px !important;
+  max-width: 900px !important;
   margin: 0 auto !important;
 }
 
 .v-btn--disabled {
   opacity: 0.5 !important;
+}
+
+.show-markdown-box {
+  padding: 18px 27px;
+
+  h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  code {
+    padding: 0px 5px;
+    margin: 0px 5px;
+    border-radius: 3px;
+    background-color: var(--td-brand-color-3) !important;
+  }
+
+  ul,
+  ol {
+    padding-left: 20px;
+  }
+
+  li {
+    margin: 5px 0px;
+    line-height: 28px;
+
+    p {
+      margin: 10px 0px 0px 6px;
+    }
+  }
 }
