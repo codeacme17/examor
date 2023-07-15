@@ -15,3 +15,14 @@ export const greenCardBgColor = computed(() => {
   const isDark = useDark()
   return isDark.value ? 'green-accent-3' : 'green-accent-4'
 })
+
+export const fontColor = computed(() => {
+  const isDark = useDark()
+  return isDark.value
+    ? {
+        color: 'white',
+      }
+    : {
+        color: 'black',
+      }
+})

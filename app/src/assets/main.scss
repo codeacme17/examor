@@ -6,19 +6,17 @@
   --td-brand-color: #000 !important;
   --td-brand-color-hover: #000 !important;
   --list-item-font-size: 12px;
+  --code-box-bg: #aacef3;
 }
 
 :root[theme-mode='dark'] {
   --td-brand-color: #fff !important;
   --td-brand-color-hover: #fff !important;
+  --code-box-bg: #0d47a1;
 }
 
 html {
   font-family: 'Poppins', 'JetBrains Mono', '微软雅黑', '圆体-简' !important;
-}
-
-#app {
-  transition: background-color 2s ease-in-out !important;
 }
 
 .main_width {
@@ -52,7 +50,7 @@ html {
     padding: 0px 5px;
     margin: 0px 5px;
     border-radius: 3px;
-    background-color: var(--td-brand-color-3) !important;
+    background-color: var(--code-box-bg) !important;
   }
 
   ul,

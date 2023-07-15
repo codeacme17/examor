@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Answer: typeof import('./src/components/Answer.vue')['default']
     AzureIcon: typeof import('./src/components/icons/AzureIcon.vue')['default']
     NotionIcon: typeof import('./src/components/icons/NotionIcon.vue')['default']
     OpenaiIcon: typeof import('./src/components/icons/OpenaiIcon.vue')['default']

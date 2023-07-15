@@ -33,6 +33,7 @@ export const en = {
     answer: 'answer',
     aiAnswer: 'GPT answer',
     document: 'Note Content',
+    examine: 'examine',
   },
 
   // placeholder of input field

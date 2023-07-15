@@ -32,6 +32,7 @@ export const zhCN = {
     answer: '回答',
     aiAnswer: 'GPT 回答',
     document: '笔记内容',
+    examine: '检测',
   },
 
   placeholder: {
