@@ -17,6 +17,7 @@
     <section v-show="currentTab === 'answer'">
       <!-- answer block -->
       <v-textarea
+        v-model="answerValue"
         variant="solo"
         auto-grow
         :bg-color="normalCardBgColor"
@@ -76,11 +77,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onUnmounted } from 'vue'
+import { useLocalStorage } from '@vueuse/core'
 import { normalCardBgColor, fontColor } from '@/utils'
+
 import MarkdownIt from 'markdown-it'
 
 const currentTab = ref<'answer' | 'aiAnswer' | 'document'>('answer')
+
+const props = defineProps({
+  id: {
+    type: String,
+    require: true,
+  },
+})
+
+const answerValue = useLocalStorage(`pending-answer-value-${props.id}`, '')
 
 const toMarkdown = (text: string) => {
   const md = new MarkdownIt({
@@ -108,6 +120,10 @@ const examineContent = ref('')
 const isFinishExamining = ref(false)
 const handleSubmit = () => {
   isShowExamine.value = !isShowExamine.value
+  const temp = answerValue.value
+  localStorage.removeItem(`pending-answer-value-${props.id}`)
+  answerValue.value = temp
+
   let index = 0
   const timer = setInterval(() => {
     examineContent.value += answer[index]
@@ -133,6 +149,11 @@ const scrollToBottom = () => {
     })
   })
 }
+
+onUnmounted(() => {
+  const id = `pending-answer-value-${props.id}`
+  if (localStorage.getItem(id) === '') localStorage.removeItem(id)
+})
 
 const answer =
   'Vue3 相对于 Vue2 进行了以下方面的优化：\n 1. 更小的体积：Vue3 移除了一些过时或不常用的特性，并对代码进行了优化，使得 Vue3 的体积比 Vue2 更小。此外，Vue3 还将编译器和运行时进行了拆分，使得在运行时只需加载运行时的代码，而编译器的代码只在开发阶段使用。\n 2. 更快的渲染速度：Vue3 的渲染引擎采用了编译时优化技术，通过静态分析模板代码生成优化后的渲染函数，从而提升了渲染速度。此外，Vue3 的编译器在编译模板时会将模板编译成渲染函数并进行缓存，避免了每次渲染时都需要重新编译模板的开销。 \n 3. 更好的 TypeScript 支持：Vue3 提供了更好的 TypeScript 支持，包括更完善的类型定义和类型判断等，使得开发者能够更好地组织代码，提供可读性和可维护性。 \n 4. 虚拟 DOM 优化：Vue3 中引入了静态提升、懒执行和缓存等优化技术。静态提升可以将被标记为静态的节点优化为常量，避免在 diff 算法中进行不必要的比较。懒执行可以使用 `suspense` 和 `lazy` 指令实现组件的懒加载。缓存可以避免不必要的重新渲染，通过 `cacheHandlers` 编译选项来开启缓存。 \n 5. 响应式系统优化：Vue3 使用了 ES6 的 `Proxy` 类来监听对象的变化，相较于 Vue2 中使用的 `Object.defineProperty`，`Proxy` 可以观察整个对象，包括 `Map` 和 `Set` 类型的属性。此外，Vue3 还引入了新的 `reactive` 和 `readonly` API，提供了更细粒度的响应式控制。\n 综上所述，Vue3 在体积、渲染速度、TypeScript 支持、虚拟 DOM 优化、响应式系统优化、Tree-Shaking、代码分割和懒加载、模板编译等方面进行了优化。'

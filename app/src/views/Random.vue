@@ -42,7 +42,7 @@
       </section>
     </v-card>
 
-    <Answer />
+    <Answer :id="currentId" />
   </v-container>
 </template>
 
@@ -53,5 +53,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { greenCardBgColor } from '@/utils'
+
+const currentId = ref('docker-1')
 </script>

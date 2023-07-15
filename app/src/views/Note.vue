@@ -79,7 +79,11 @@
                 :key="item.question"
               >
                 <td style="width: 50px">
-                  <v-checkbox :hide-details="true" :disabled="true" />
+                  <v-checkbox
+                    :indeterminate="(isPending(item) as any)"
+                    :hide-details="true"
+                    :disabled="true"
+                  />
                 </td>
                 <td style="overflow: hidden">{{ item.question }}</td>
                 <td style="width: 180px">
@@ -128,7 +132,7 @@
           </section>
         </v-card>
 
-        <Answer />
+        <Answer :id="currentId" />
       </section>
     </Transition>
   </v-container>
@@ -145,11 +149,19 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLocalStorage } from '@vueuse/core'
 import { normalCardBgColor, greenCardBgColor } from '@/utils'
+import { computed } from 'vue'
+import { ComputedRef } from 'vue'
 
 type TableItem = {
   id: string
   question: string
   progress: number
+}
+
+const isPending = (item: TableItem): ComputedRef<boolean> => {
+  return computed(() => {
+    return !!localStorage.getItem(`pending-answer-value-${item.id}`)
+  })
 }
 
 const route = useRoute()
