@@ -39,6 +39,7 @@ export const en = {
   // placeholder of input field
   placeholder: {
     selectNoteType: 'please select a note type',
+    answer: "please answer here (press 'ctrl' + 'enter' to send)",
   },
 
   // option label on select component
