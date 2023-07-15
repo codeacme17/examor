@@ -1,5 +1,7 @@
 <template>
-  <v-card class="pa-5 border" elevation="0"> Dashboard </v-card>
+  <v-container>
+    <v-card class="pa-5 border" elevation="0"> Dashboard </v-card>
+  </v-container>
 </template>
 
 <script lang="ts">

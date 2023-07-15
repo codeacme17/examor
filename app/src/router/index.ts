@@ -1,4 +1,3 @@
-// Composables
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -33,7 +32,7 @@ const routes = [
         component: () => import('@/views/Profile.vue'),
       },
       {
-        path: '/note/:id',
+        path: '/note/:noteName',
         name: 'Note',
         component: () => import('@/views/Note.vue'),
       },
