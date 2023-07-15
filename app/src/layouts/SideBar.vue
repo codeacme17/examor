@@ -107,6 +107,11 @@ const defualtNavList = computed(() => [
     title: t('menus.notes'),
     value: '/notes',
   },
+  {
+    icon: 'mdi-head-question',
+    title: t('menus.random'),
+    value: '/random',
+  },
 ])
 
 // note list that users uploaded

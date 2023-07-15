@@ -18,6 +18,11 @@ const routes = [
         component: () => import('@/views/Notes.vue'),
       },
       {
+        path: '/random',
+        name: 'Random',
+        component: () => import('@/views/Random.vue'),
+      },
+      {
         path: '/addNote',
         name: 'AddNote',
         component: () => import('@/views/AddNote.vue'),
