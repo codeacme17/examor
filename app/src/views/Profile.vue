@@ -12,16 +12,18 @@
 
         <div style="flex: 1">
           <v-text-field
-            v-model="state.openaiKey.value"
+            v-model="formData.openaiKey.value"
             class="mt-3"
             label="OPENAI_KEY"
             variant="outlined"
             density="compact"
             :append-inner-icon="
-              state.openaiKey.show ? 'mdi-eye' : 'mdi-eye-off'
+              formData.openaiKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
-            :type="state.openaiKey.show ? 'text' : 'password'"
-            @click:append-inner="state.openaiKey.show = !state.openaiKey.show"
+            :type="formData.openaiKey.show ? 'text' : 'password'"
+            @click:append-inner="
+              formData.openaiKey.show = !formData.openaiKey.show
+            "
           />
 
           <v-tooltip
@@ -50,41 +52,45 @@
 
         <div style="flex: 1">
           <v-text-field
-            v-model="state.azureKey.value"
+            v-model="formData.azureKey.value"
             class="mt-3"
             label="AZURE_KEY"
             variant="outlined"
             density="compact"
-            :append-inner-icon="state.azureKey.show ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="state.azureKey.show ? 'text' : 'password'"
-            @click:append-inner="state.azureKey.show = !state.azureKey.show"
+            :append-inner-icon="
+              formData.azureKey.show ? 'mdi-eye' : 'mdi-eye-off'
+            "
+            :type="formData.azureKey.show ? 'text' : 'password'"
+            @click:append-inner="
+              formData.azureKey.show = !formData.azureKey.show
+            "
           />
           <v-text-field
-            v-model="state.azureVersion.value"
+            v-model="formData.azureVersion.value"
             class="mt-3"
             label="AZURE_VERSION"
             variant="outlined"
             density="compact"
             :append-inner-icon="
-              state.azureVersion.show ? 'mdi-eye' : 'mdi-eye-off'
+              formData.azureVersion.show ? 'mdi-eye' : 'mdi-eye-off'
             "
-            :type="state.azureVersion.show ? 'text' : 'password'"
+            :type="formData.azureVersion.show ? 'text' : 'password'"
             @click:append-inner="
-              state.azureVersion.show = !state.azureVersion.show
+              formData.azureVersion.show = !formData.azureVersion.show
             "
           />
           <v-text-field
-            v-model="state.azureEndPoint.value"
+            v-model="formData.azureEndpoint.value"
             class="mt-3"
             label="AZURE_END_PONIT"
             variant="outlined"
             density="compact"
             :append-inner-icon="
-              state.azureEndPoint.show ? 'mdi-eye' : 'mdi-eye-off'
+              formData.azureEndpoint.show ? 'mdi-eye' : 'mdi-eye-off'
             "
-            :type="state.azureEndPoint.show ? 'text' : 'password'"
+            :type="formData.azureEndpoint.show ? 'text' : 'password'"
             @click:append-inner="
-              state.azureEndPoint.show = !state.azureEndPoint.show
+              formData.azureEndpoint.show = !formData.azureEndpoint.show
             "
           />
         </div>
@@ -95,16 +101,18 @@
         <PineconeIcon width="30" class="mb-3 mr-4" />
 
         <v-text-field
-          v-model="state.pineconeKey.value"
+          v-model="formData.pineconeKey.value"
           class="mt-3"
           label="PINECONE_KEY"
           variant="outlined"
           density="compact"
           :append-inner-icon="
-            state.pineconeKey.show ? 'mdi-eye' : 'mdi-eye-off'
+            formData.pineconeKey.show ? 'mdi-eye' : 'mdi-eye-off'
           "
-          :type="state.pineconeKey.show ? 'text' : 'password'"
-          @click:append-inner="state.pineconeKey.show = !state.pineconeKey.show"
+          :type="formData.pineconeKey.show ? 'text' : 'password'"
+          @click:append-inner="
+            formData.pineconeKey.show = !formData.pineconeKey.show
+          "
         />
       </div>
 
@@ -113,18 +121,27 @@
         <NotionIcon width="30" class="mb-5 mr-4" />
 
         <v-text-field
-          v-model="state.notionKey.value"
+          v-model="formData.notionKey.value"
           label="NOTION_KEY"
           variant="outlined"
           density="compact"
-          :append-inner-icon="state.notionKey.show ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="state.notionKey.show ? 'text' : 'password'"
-          @click:append-inner="state.notionKey.show = !state.notionKey.show"
+          :append-inner-icon="
+            formData.notionKey.show ? 'mdi-eye' : 'mdi-eye-off'
+          "
+          :type="formData.notionKey.show ? 'text' : 'password'"
+          @click:append-inner="
+            formData.notionKey.show = !formData.notionKey.show
+          "
         />
       </div>
 
       <div class="mt-5 d-flex justify-end">
-        <v-btn color="primary" elevation="0" :block="true">
+        <v-btn
+          color="primary"
+          elevation="0"
+          :block="true"
+          @click="handleConfirm"
+        >
           {{ $t('button.submit') }}
         </v-btn>
       </div>
@@ -133,9 +150,15 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { onMounted } from 'vue'
+import { CONFIG_API } from '@/apis'
+import { useSessionStorage } from '@vueuse/core'
 
-const initialState = {
+onMounted(async () => {
+  await getConfigKeys()
+})
+
+const formData = useSessionStorage<any>('key_config', {
   openaiKey: {
     value: '',
     show: false,
@@ -148,7 +171,7 @@ const initialState = {
     value: '',
     show: false,
   },
-  azureEndPoint: {
+  azureEndpoint: {
     value: '',
     show: false,
   },
@@ -160,11 +183,30 @@ const initialState = {
     value: '',
     show: false,
   },
+})
+
+const handleConfirm = () => {
+  setConfigKeys()
 }
 
-const state = reactive<any>({
-  ...initialState,
-})
+const getConfigKeys = async () => {
+  const res = await CONFIG_API.getKeys()
+
+  for (const key in res.data) {
+    if (Object.prototype.hasOwnProperty.call(formData.value, key)) {
+      formData.value[key].value = res.data[key]
+    }
+  }
+}
+
+const setConfigKeys = async () => {
+  const data: any = {}
+  for (const key in formData.value) {
+    data[key] = formData.value[key].value
+  }
+
+  await CONFIG_API.setKeys(data)
+}
 </script>
 
 <style scoped lang="scss">
