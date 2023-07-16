@@ -30,8 +30,6 @@ When I'm learning a new technology, I have the habit of taking notes and jotting
 
 Contributions to the project are welcome! If you find a bug or have an idea for a new feature, please submit an issue or pull request.
 
-</br>
-
 ## License
 
 [MIT](/LICENSE) License © 2023-Present [leyoonafr](https://github.com/codeacme17)
