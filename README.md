@@ -6,8 +6,12 @@
 
 <p>
   <strong>
-  A web application that can ask itself questions based on the user's knowledge base
+   A website application that allows you to take exams based on your knowledge notes
   </strong>
+</p>
+
+<p>
+  English | <a href="/docs/cn-doc.md">简写中文</a>
 </p>
 
 </samp>
