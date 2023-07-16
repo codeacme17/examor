@@ -17,6 +17,8 @@
             label="OPENAI_KEY"
             variant="outlined"
             density="compact"
+            :disabled="fetchKeyLoading"
+            :loading="fetchKeyLoading"
             :append-inner-icon="
               formData.openaiKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -57,6 +59,8 @@
             label="AZURE_KEY"
             variant="outlined"
             density="compact"
+            :disabled="fetchKeyLoading"
+            :loading="fetchKeyLoading"
             :append-inner-icon="
               formData.azureKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -71,6 +75,8 @@
             label="AZURE_VERSION"
             variant="outlined"
             density="compact"
+            :disabled="fetchKeyLoading"
+            :loading="fetchKeyLoading"
             :append-inner-icon="
               formData.azureVersion.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -85,6 +91,8 @@
             label="AZURE_END_PONIT"
             variant="outlined"
             density="compact"
+            :disabled="fetchKeyLoading"
+            :loading="fetchKeyLoading"
             :append-inner-icon="
               formData.azureEndpoint.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -106,6 +114,8 @@
           label="PINECONE_KEY"
           variant="outlined"
           density="compact"
+          :disabled="fetchKeyLoading"
+          :loading="fetchKeyLoading"
           :append-inner-icon="
             formData.pineconeKey.show ? 'mdi-eye' : 'mdi-eye-off'
           "
@@ -125,6 +135,8 @@
           label="NOTION_KEY"
           variant="outlined"
           density="compact"
+          :disabled="fetchKeyLoading"
+          :loading="fetchKeyLoading"
           :append-inner-icon="
             formData.notionKey.show ? 'mdi-eye' : 'mdi-eye-off'
           "
@@ -140,6 +152,8 @@
           color="primary"
           elevation="0"
           :block="true"
+          :loading="confirmLoading"
+          :disabled="confirmLoading"
           @click="handleConfirm"
         >
           {{ $t('button.submit') }}
@@ -151,8 +165,9 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { CONFIG_API } from '@/apis'
 import { useSessionStorage } from '@vueuse/core'
+import { CONFIG_API } from '@/apis'
+import { useFetch } from '@/hooks'
 
 onMounted(async () => {
   await getConfigKeys()
@@ -185,12 +200,15 @@ const formData = useSessionStorage<any>('key_config', {
   },
 })
 
-const handleConfirm = () => {
-  setConfigKeys()
+const handleConfirm = async () => {
+  await setConfigKeys()
 }
 
+const [getKeys, fetchKeyLoading] = useFetch(CONFIG_API.getKeys)
+const [setKeys, confirmLoading] = useFetch(CONFIG_API.setKeys)
+
 const getConfigKeys = async () => {
-  const res = await CONFIG_API.getKeys()
+  const res = await getKeys()
 
   for (const key in res.data) {
     if (Object.prototype.hasOwnProperty.call(formData.value, key)) {
@@ -205,7 +223,7 @@ const setConfigKeys = async () => {
     data[key] = formData.value[key].value
   }
 
-  await CONFIG_API.setKeys(data)
+  await setKeys(data)
 }
 </script>
 
