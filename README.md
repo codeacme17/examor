@@ -19,10 +19,17 @@
 </br>
 
 ## Inspiration
-> *'For learners, one of the best habits should be regular self-testing' - **Make It Stick: The Science of Successful Learning***
+
+> \*'For learners, one of the best habits should be regular self-testing' - **Make It Stick: The Science of Successful Learning\***
 
 When I'm learning a new technology, I have the habit of taking notes and jotting down important information. It's a good habit, but I also have a bad habit of not enjoying reading the notes I've written (I'm not sure if this is the case for most people 🫣). This results in my notes becoming mere mementos without substantial use. That's why I choose to create an application that continuously prompts you with questions to review your note contents.
 
+## Contributing
 
+Contributions to the project are welcome! If you find a bug or have an idea for a new feature, please submit an issue or pull request.
+
+## License
+
+[MIT](/LICENSE) License © 2023-Present [leyoonafr](https://github.com/codeacme17)
 
 </samp>
