@@ -1,7 +1,7 @@
 <samp align="center">
 
 <p>
-  <img  width="240"  src="/docs/logo-text.svg" />
+  <img  width="240"  src="/docs/logo-text.png" />
 </p>
 
 <p>
