@@ -20,7 +20,7 @@
         v-model="answerValue"
         variant="solo"
         auto-grow
-        :bg-color="normalCardBgColor"
+        :bg-color="defaultBgColor"
         :flat="true"
         :rows="8"
         :disabled="isShowExamine"
@@ -63,13 +63,13 @@
     </section>
 
     <section v-show="currentTab === 'aiAnswer'">
-      <v-card :elevation="0" :color="normalCardBgColor">
+      <v-card :elevation="0" :color="defaultBgColor">
         <div v-html="toMarkdown(answer)" class="show-markdown-box" />
       </v-card>
     </section>
 
     <section v-show="currentTab === 'document'">
-      <v-card :elevation="0" :color="normalCardBgColor">
+      <v-card :elevation="0" :color="defaultBgColor">
         <div v-html="toMarkdown(temp)" class="show-markdown-box" />
       </v-card>
     </section>
@@ -79,7 +79,7 @@
 <script setup lang="ts">
 import { ref, nextTick, onUnmounted } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
-import { normalCardBgColor, fontColor } from '@/utils'
+import { defaultBgColor, fontColor } from '@/utils'
 
 import MarkdownIt from 'markdown-it'
 

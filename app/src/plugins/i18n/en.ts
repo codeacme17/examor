@@ -10,6 +10,7 @@ export const en = {
 
   button: {
     submit: 'submit',
+    continue: 'continue',
   },
 
   // the title & subtitle on each page
@@ -33,7 +34,7 @@ export const en = {
     answer: 'answer',
     aiAnswer: 'GPT answer',
     document: 'Note Content',
-    examine: 'examine',
+    examine: 'Examine',
   },
 
   // placeholder of input field

@@ -12,6 +12,7 @@ declare module 'vue' {
     NotionIcon: typeof import('./src/components/icons/NotionIcon.vue')['default']
     OpenaiIcon: typeof import('./src/components/icons/OpenaiIcon.vue')['default']
     PineconeIcon: typeof import('./src/components/icons/PineconeIcon.vue')['default']
+    QuestionTable: typeof import('./src/components/QuestionTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TButton: typeof import('tdesign-vue-next')['Button']

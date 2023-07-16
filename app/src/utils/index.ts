@@ -1,1 +1,1 @@
-export * from './share'
+export * from './color-switch'

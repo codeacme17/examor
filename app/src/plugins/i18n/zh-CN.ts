@@ -10,6 +10,7 @@ export const zhCN = {
 
   button: {
     submit: '提交',
+    continue: '继续作答',
   },
 
   title: {

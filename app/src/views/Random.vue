@@ -1,6 +1,6 @@
 <template>
   <v-container style="max-width: 1080px">
-    <v-card class="pa-3" :color="greenCardBgColor">
+    <v-card class="pa-3" :color="greenBgColor">
       <section class="mb-5 d-flex justify-space-between align-center">
         <v-btn
           icon="mdi-arrow-left"
@@ -21,14 +21,14 @@
 
       <section class="px-4">
         <h3 class="mb-2">{{ $t('title.question') }}</h3>
-        <p class="mb-6 text-body-2">
+        <p class="mb-6 text-body-1">
           Composition API 和 Options API 有哪些比较？它们各自的优势是什么？
         </p>
 
         <v-tooltip
           location="top right"
+          open-delay="200"
           :text="$t('hint.memory')"
-          :open-delay="3"
           :open-on-hover="true"
         >
           <template v-slot:activator="{ props }">
@@ -54,7 +54,7 @@ export default {
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { greenCardBgColor } from '@/utils'
+import { greenBgColor } from '@/utils'
 
 const currentId = ref('docker-1')
 </script>
