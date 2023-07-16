@@ -1,44 +1,15 @@
-# default
+<samp>
 
-## Project setup
+### Install
 
-```
-# yarn
-yarn
-
-# npm
-npm install
-
-# pnpm
+```bash
 pnpm install
 ```
 
-### Compiles and hot-reloads for development
+### Run
 
-```
-# yarn
-yarn dev
-
-# npm
-npm run dev
-
-# pnpm
+```bash
 pnpm dev
 ```
 
-### Compiles and minifies for production
-
-```
-# yarn
-yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
+</samp>
