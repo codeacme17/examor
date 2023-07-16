@@ -11,7 +11,6 @@
    A website application that allows you to take exams based on your knowledge notes
   </strong>
 </p>
-</br>
 
 <p align="center">
   English | <a href="/docs/cn-doc.md">简写中文</a>
