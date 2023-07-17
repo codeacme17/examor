@@ -82,7 +82,7 @@
           <v-text-field
             v-model="formData.azureEndpoint.value"
             class="mt-3"
-            label="AZURE_END_PONIT"
+            label="AZURE_ENDPONIT"
             variant="outlined"
             density="compact"
             :append-inner-icon="
