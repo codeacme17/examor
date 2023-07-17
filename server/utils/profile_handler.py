@@ -6,7 +6,7 @@ from typings.profile_types import Profile
 FILE_PATH = "profile.json"
 
 
-def set_key_to_env():
+def set_profile_to_env():
     init_profile_file()
 
     data: Profile = get_profile_from_file()

@@ -1,7 +1,7 @@
 import json
 
 from typings.profile_types import Profile
-from utils.profile_handler import set_key_to_env, get_profile_from_file
+from utils.profile_handler import set_profile_to_env, get_profile_from_file
 
 
 def _set_profile(data: Profile):
@@ -14,7 +14,7 @@ def _set_profile(data: Profile):
                   'proxy': data.proxy,
                   }, file)
 
-    set_key_to_env()
+    set_profile_to_env()
     return {"message": "success"}
 
 

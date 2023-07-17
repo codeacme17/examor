@@ -39,7 +39,7 @@ export default defineConfig({
   },
 
   server: {
-    port: 3000,
+    port: 1818,
     proxy: {
       '/api': {
         target: 'http://0.0.0.0:1717',
