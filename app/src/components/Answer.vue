@@ -22,7 +22,7 @@
         auto-grow
         :bg-color="defaultBgColor"
         :flat="true"
-        :rows="8"
+        :rows="7"
         :disabled="isShowExamine"
         :placeholder="$t('placeholder.answer')"
         @keydown="handleKeydown"

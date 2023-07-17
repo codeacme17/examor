@@ -1,6 +1,6 @@
 <template>
   <section
-    class="d-flex flex-column align-center py-10"
+    class="d-flex flex-column align-center py-10 mt-10"
     style="user-select: none"
   >
     <div style="width: 200px; height: 200px">
