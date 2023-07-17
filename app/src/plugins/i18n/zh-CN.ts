@@ -14,7 +14,7 @@ export const zhCN = {
   },
 
   title: {
-    profile: '配置文件',
+    profile: '配置',
     addNote: '新增笔记',
     question: '问题',
     random: '随机选题',

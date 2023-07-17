@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
+import { PROFILE_API } from '@/apis'
+import { useFetch } from '@/hooks'
 
 type State = {
-  keys: Keys
+  keys: any | Keys
+  confirmLoading: boolean
 }
 
 type Keys = {
@@ -52,8 +55,34 @@ const state: State = {
       error: false,
     },
   },
+  confirmLoading: false,
 }
 
 export const useProfileStore = defineStore('profileStore', {
   state: () => state,
+
+  actions: {
+    async getKeys() {
+      const [_getKeys] = useFetch(PROFILE_API.getKeys)
+      const res = await _getKeys()
+
+      for (const key in res.data) {
+        if (Object.prototype.hasOwnProperty.call(this.$state.keys, key)) {
+          this.$state.keys[key].value = res.data[key]
+        }
+      }
+    },
+
+    async setKeys() {
+      const [_setKeys, loading] = useFetch(PROFILE_API.setKeys)
+      this.$state.confirmLoading = loading
+
+      const data: any = {}
+      for (const key in this.$state.keys) {
+        data[key] = this.$state.keys[key].value
+      }
+
+      await _setKeys(data)
+    },
+  },
 })

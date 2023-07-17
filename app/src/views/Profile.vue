@@ -17,8 +17,6 @@
             label="OPENAI_KEY"
             variant="outlined"
             density="compact"
-            :disabled="fetchKeyLoading"
-            :loading="fetchKeyLoading"
             :append-inner-icon="
               formData.openaiKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -59,8 +57,6 @@
             label="AZURE_KEY"
             variant="outlined"
             density="compact"
-            :disabled="fetchKeyLoading"
-            :loading="fetchKeyLoading"
             :append-inner-icon="
               formData.azureKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -75,8 +71,6 @@
             label="AZURE_VERSION"
             variant="outlined"
             density="compact"
-            :disabled="fetchKeyLoading"
-            :loading="fetchKeyLoading"
             :append-inner-icon="
               formData.azureVersion.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -91,8 +85,6 @@
             label="AZURE_END_PONIT"
             variant="outlined"
             density="compact"
-            :disabled="fetchKeyLoading"
-            :loading="fetchKeyLoading"
             :append-inner-icon="
               formData.azureEndpoint.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -114,8 +106,6 @@
           label="PINECONE_KEY"
           variant="outlined"
           density="compact"
-          :disabled="fetchKeyLoading"
-          :loading="fetchKeyLoading"
           :append-inner-icon="
             formData.pineconeKey.show ? 'mdi-eye' : 'mdi-eye-off'
           "
@@ -135,8 +125,6 @@
           label="NOTION_KEY"
           variant="outlined"
           density="compact"
-          :disabled="fetchKeyLoading"
-          :loading="fetchKeyLoading"
           :append-inner-icon="
             formData.notionKey.show ? 'mdi-eye' : 'mdi-eye-off'
           "
@@ -152,8 +140,8 @@
           color="primary"
           elevation="0"
           :block="true"
-          :loading="confirmLoading"
-          :disabled="confirmLoading || !isUpdateFormData"
+          :loading="PROFILE_STORE.confirmLoading"
+          :disabled="PROFILE_STORE.confirmLoading || !isUpdateFormData"
           @click="handleConfirm"
         >
           {{ $t('button.submit') }}
@@ -164,47 +152,21 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { PROFILE_API } from '@/apis'
-import { useFetch, useWatchChange } from '@/hooks'
+import { watchDeep } from '@vueuse/core'
 import { useProfileStore } from '@/store'
+import { ref } from 'vue'
 
-onMounted(async () => {
-  await getKeys()
-  isUpdateFormData.value = false
+const PROFILE_STORE = useProfileStore()
+const isUpdateFormData = ref(false)
+const formData = PROFILE_STORE.keys
+
+watchDeep(formData, () => {
+  isUpdateFormData.value = true
 })
 
-const { keys: formData } = useProfileStore()
-
-console.log(formData)
-
-const isUpdateFormData = useWatchChange(formData)
-
 const handleConfirm = async () => {
-  await setKeys()
+  await PROFILE_STORE.setKeys()
   isUpdateFormData.value = false
-}
-
-const [_getKeys, fetchKeyLoading] = useFetch(PROFILE_API.getKeys)
-const [_setKeys, confirmLoading] = useFetch(PROFILE_API.setKeys)
-
-const getKeys = async () => {
-  const res = await _getKeys()
-
-  for (const key in res.data) {
-    if (Object.prototype.hasOwnProperty.call(formData, key)) {
-      formData[key].value = res.data[key]
-    }
-  }
-}
-
-const setKeys = async () => {
-  const data: any = {}
-  for (const key in formData) {
-    data[key] = formData[key]
-  }
-
-  await _setKeys(data)
 }
 </script>
 
