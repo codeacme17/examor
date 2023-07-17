@@ -18,11 +18,14 @@ export const zhCN = {
     addNote: '新增笔记',
     question: '问题',
     random: '随机选题',
+    emptyNote: '暂无任何笔记',
   },
 
   subTitle: {
     profile: '可以在此处配置引用所需的选项',
     addNote: '可以在此处新增新的笔记',
+    emptyNoteStart: '可以进入',
+    emptyNoteEnd: '页面创建你的第一个笔记',
   },
 
   label: {

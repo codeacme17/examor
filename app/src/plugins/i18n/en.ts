@@ -19,10 +19,13 @@ export const en = {
     addNote: 'Add Note',
     question: 'Question',
     random: 'Random Pick',
+    emptyNote: 'There is no any notes yet',
   },
   subTitle: {
     profile: 'Can be configured here refer to the required options',
     addNote: 'You can add new notes here',
+    emptyNoteStart: 'You can enter the',
+    emptyNoteEnd: 'page to create your first note',
   },
 
   // label of input field
