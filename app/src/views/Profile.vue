@@ -153,7 +153,7 @@
           elevation="0"
           :block="true"
           :loading="confirmLoading"
-          :disabled="confirmLoading"
+          :disabled="confirmLoading || !isUpdateFormData"
           @click="handleConfirm"
         >
           {{ $t('button.submit') }}
@@ -167,48 +167,58 @@
 import { onMounted } from 'vue'
 import { useSessionStorage } from '@vueuse/core'
 import { CONFIG_API } from '@/apis'
-import { useFetch } from '@/hooks'
+import { useFetch, useWatchChange } from '@/hooks'
 
 onMounted(async () => {
-  await getConfigKeys()
+  await getKeys()
+  isUpdateFormData.value = false
 })
 
 const formData = useSessionStorage<any>('key_config', {
   openaiKey: {
     value: '',
     show: false,
+    error: '',
   },
   azureKey: {
     value: '',
     show: false,
+    error: '',
   },
   azureVersion: {
     value: '',
     show: false,
+    error: '',
   },
   azureEndpoint: {
     value: '',
     show: false,
+    error: '',
   },
   pineconeKey: {
     value: '',
     show: false,
+    error: '',
   },
   notionKey: {
     value: '',
     show: false,
+    error: '',
   },
 })
 
+const isUpdateFormData = useWatchChange(formData)
+
 const handleConfirm = async () => {
-  await setConfigKeys()
+  await setKeys()
+  isUpdateFormData.value = false
 }
 
-const [getKeys, fetchKeyLoading] = useFetch(CONFIG_API.getKeys)
-const [setKeys, confirmLoading] = useFetch(CONFIG_API.setKeys)
+const [_getKeys, fetchKeyLoading] = useFetch(CONFIG_API.getKeys)
+const [_setKeys, confirmLoading] = useFetch(CONFIG_API.setKeys)
 
-const getConfigKeys = async () => {
-  const res = await getKeys()
+const getKeys = async () => {
+  const res = await _getKeys()
 
   for (const key in res.data) {
     if (Object.prototype.hasOwnProperty.call(formData.value, key)) {
@@ -217,13 +227,13 @@ const getConfigKeys = async () => {
   }
 }
 
-const setConfigKeys = async () => {
+const setKeys = async () => {
   const data: any = {}
   for (const key in formData.value) {
     data[key] = formData.value[key].value
   }
 
-  await setKeys(data)
+  await _setKeys(data)
 }
 </script>
 

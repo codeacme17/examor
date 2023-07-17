@@ -1,13 +1,6 @@
 import { AxiosResponse } from 'axios'
 import { ref } from 'vue'
 
-export type ResponseData = {
-  message: string
-  status: string
-  code: number
-  data?: any[]
-}
-
 export function useFetch(
   fun: (data?: any) => Promise<AxiosResponse<any, any>>
 ): any {
