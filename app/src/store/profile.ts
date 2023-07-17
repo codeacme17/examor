@@ -3,48 +3,24 @@ import { PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 
 type State = {
-  keys: any | Keys
+  profile: any | Keys
   confirmLoading: boolean
 }
 
 type Keys = {
-  openaiKey: KeyItem
-  azureKey: KeyItem
-  azureVersion: KeyItem
-  azureEndpoint: KeyItem
-  pineconeKey: KeyItem
-  notionKey: KeyItem
+  openaiKey: ProfileItem
+  notionKey: ProfileItem
 }
 
-type KeyItem = {
+type ProfileItem = {
   value: string
   show: boolean
   error: boolean
 }
 
 const state: State = {
-  keys: {
+  profile: {
     openaiKey: {
-      value: '',
-      show: false,
-      error: false,
-    },
-    azureKey: {
-      value: '',
-      show: false,
-      error: false,
-    },
-    azureVersion: {
-      value: '',
-      show: false,
-      error: false,
-    },
-    azureEndpoint: {
-      value: '',
-      show: false,
-      error: false,
-    },
-    pineconeKey: {
       value: '',
       show: false,
       error: false,
@@ -54,7 +30,13 @@ const state: State = {
       show: false,
       error: false,
     },
+    proxy: {
+      value: '',
+      show: false,
+      error: false,
+    },
   },
+
   confirmLoading: false,
 }
 
@@ -62,24 +44,24 @@ export const useProfileStore = defineStore('profileStore', {
   state: () => state,
 
   actions: {
-    async getKeys() {
-      const [_getKeys] = useFetch(PROFILE_API.getKeys)
+    async getProfile() {
+      const [_getKeys] = useFetch(PROFILE_API.getProfile)
       const res = await _getKeys()
 
       for (const key in res.data) {
-        if (Object.prototype.hasOwnProperty.call(this.$state.keys, key)) {
-          this.$state.keys[key].value = res.data[key]
+        if (Object.prototype.hasOwnProperty.call(this.$state.profile, key)) {
+          this.$state.profile[key].value = res.data[key]
         }
       }
     },
 
-    async setKeys() {
-      const [_setKeys, loading] = useFetch(PROFILE_API.setKeys)
+    async setProfile() {
+      const [_setKeys, loading] = useFetch(PROFILE_API.setProfile)
       this.$state.confirmLoading = loading
 
       const data: any = {}
-      for (const key in this.$state.keys) {
-        data[key] = this.$state.keys[key].value
+      for (const key in this.$state.profile) {
+        data[key] = this.$state.profile[key].value
       }
 
       await _setKeys(data)

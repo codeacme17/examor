@@ -1,21 +1,19 @@
 import os
 import json
 
-from typings.profile_types import ApiKeys
+from typings.profile_types import Profile
 
 FILE_PATH = "profile.json"
 
 
 def set_key_to_env():
     init_profile_file()
-    data: ApiKeys = get_key_from_file()
+
+    data: Profile = get_profile_from_file()
 
     os.environ['OPENAI_KEY'] = data['openaiKey']
-    os.environ['AZURE_KEY'] = data['azureKey']
-    os.environ['AZURE_VERSION'] = data['azureVersion']
-    os.environ['AZURE_ENDPOINT'] = data['azureEndpoint']
-    os.environ['PINECONE_KEY'] = data['pineconeKey']
     os.environ['NOTION_KEY'] = data['notionKey']
+    os.environ['PROXY'] = data['proxy']
 
 
 def init_profile_file():
@@ -25,17 +23,14 @@ def init_profile_file():
     with open(FILE_PATH, "w") as file:
         json.dump({
             'openaiKey': "",
-            'azureKey': "",
-            'azureVersion': "",
-            'azureEndpoint': "",
-            'pineconeKey': "",
             'notionKey': "",
+            'proxy': ""
         }, file)
 
 
-def get_key_from_file() -> ApiKeys:
+def get_profile_from_file() -> Profile:
     with open(FILE_PATH, "r") as file:
-        data: ApiKeys = json.load(file)
+        data: Profile = json.load(file)
     return data
 
 

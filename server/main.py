@@ -1,20 +1,20 @@
 from fastapi import FastAPI
-from typings.profile_types import ApiKeys
-from apis.profile import _set_api_keys, _get_api_keys, set_key_to_env
+from typings.profile_types import Profile
+from apis.profile import _set_profile, _get_profile, set_key_to_env
 
 app = FastAPI()
 
 set_key_to_env()
 
 
-@app.post("/profile/apiKeys")
-def set_api_keys(data: ApiKeys):
-    return _set_api_keys(data)
+@app.post("/profile")
+def set_profile(data: Profile):
+    return _set_profile(data)
 
 
-@app.get("/profile/apiKeys")
-def get_api_keys():
-    return _get_api_keys()
+@app.get("/profile")
+def get_profile():
+    return _get_profile()
 
 
 if __name__ == "__main__":

@@ -6,6 +6,8 @@
     <v-divider class="mt-8"></v-divider>
 
     <form class="py-6">
+      <h3 class="mb-3">{{ $t('title.keys') }}</h3>
+
       <!-- OpenAI  -->
       <div class="d-flex">
         <OpenaiIcon width="30" class="mb-12 mr-4" />
@@ -46,76 +48,6 @@
         </div>
       </div>
 
-      <!-- Azure  -->
-      <div class="d-flex">
-        <AzureIcon width="30" class="mb-auto mt-4 mr-4" />
-
-        <div style="flex: 1">
-          <v-text-field
-            v-model="formData.azureKey.value"
-            class="mt-3"
-            label="AZURE_KEY"
-            variant="outlined"
-            density="compact"
-            :append-inner-icon="
-              formData.azureKey.show ? 'mdi-eye' : 'mdi-eye-off'
-            "
-            :type="formData.azureKey.show ? 'text' : 'password'"
-            @click:append-inner="
-              formData.azureKey.show = !formData.azureKey.show
-            "
-          />
-          <v-text-field
-            v-model="formData.azureVersion.value"
-            class="mt-3"
-            label="AZURE_VERSION"
-            variant="outlined"
-            density="compact"
-            :append-inner-icon="
-              formData.azureVersion.show ? 'mdi-eye' : 'mdi-eye-off'
-            "
-            :type="formData.azureVersion.show ? 'text' : 'password'"
-            @click:append-inner="
-              formData.azureVersion.show = !formData.azureVersion.show
-            "
-          />
-          <v-text-field
-            v-model="formData.azureEndpoint.value"
-            class="mt-3"
-            label="AZURE_ENDPONIT"
-            variant="outlined"
-            density="compact"
-            :append-inner-icon="
-              formData.azureEndpoint.show ? 'mdi-eye' : 'mdi-eye-off'
-            "
-            :type="formData.azureEndpoint.show ? 'text' : 'password'"
-            @click:append-inner="
-              formData.azureEndpoint.show = !formData.azureEndpoint.show
-            "
-          />
-        </div>
-      </div>
-
-      <!-- Pinecone -->
-      <div class="d-flex">
-        <PineconeIcon width="30" class="mb-3 mr-4" />
-
-        <v-text-field
-          v-model="formData.pineconeKey.value"
-          class="mt-3"
-          label="PINECONE_KEY"
-          variant="outlined"
-          density="compact"
-          :append-inner-icon="
-            formData.pineconeKey.show ? 'mdi-eye' : 'mdi-eye-off'
-          "
-          :type="formData.pineconeKey.show ? 'text' : 'password'"
-          @click:append-inner="
-            formData.pineconeKey.show = !formData.pineconeKey.show
-          "
-        />
-      </div>
-
       <!-- Notion -->
       <div class="d-flex mt-3">
         <NotionIcon width="30" class="mb-5 mr-4" />
@@ -132,6 +64,20 @@
           @click:append-inner="
             formData.notionKey.show = !formData.notionKey.show
           "
+        />
+      </div>
+
+      <h3 class="my-6">{{ $t('title.otherConfigurations') }}</h3>
+
+      <!-- Proxy -->
+      <div class="d-flex mt-6">
+        <v-text-field
+          v-model="formData.proxy.value"
+          variant="outlined"
+          density="compact"
+          placeholder="127.0.0.1:1086"
+          :label="$t('label.proxy')"
+          :hint="$t('hint.proxy')"
         />
       </div>
 
@@ -157,7 +103,7 @@ import { watchDeep } from '@vueuse/core'
 import { useProfileStore } from '@/store'
 
 const PROFILE_STORE = useProfileStore()
-const formData = PROFILE_STORE.keys
+const formData = PROFILE_STORE.profile
 const isUpdateFormData = ref(false)
 
 watchDeep(formData, () => {
@@ -165,7 +111,7 @@ watchDeep(formData, () => {
 })
 
 const handleConfirm = async () => {
-  await PROFILE_STORE.setKeys()
+  await PROFILE_STORE.setProfile()
   isUpdateFormData.value = false
 }
 </script>

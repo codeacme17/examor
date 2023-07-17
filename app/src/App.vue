@@ -9,6 +9,6 @@ import { useProfileStore } from '@/store'
 const PROFILE_STORE = useProfileStore()
 
 onMounted(() => {
-  PROFILE_STORE.getKeys()
+  PROFILE_STORE.getProfile()
 })
 </script>

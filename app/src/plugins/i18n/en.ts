@@ -20,6 +20,8 @@ export const en = {
     question: 'Question',
     random: 'Random Pick',
     emptyNote: 'There is no any note yet',
+    keys: 'Keys',
+    otherConfigurations: 'Other Configurations',
   },
   subTitle: {
     profile: 'Can be configured here refer to the required options',
@@ -38,6 +40,7 @@ export const en = {
     aiAnswer: 'GPT answer',
     document: 'Note Content',
     examine: 'Examine',
+    proxy: 'Proxy',
   },
 
   // placeholder of input field
@@ -58,6 +61,8 @@ export const en = {
     memory: 'Memory Progress',
     questionCounts: 'Please select how many questions are prepared for you',
     getIcon: 'To get the icon please go to',
+    proxy:
+      'If you need a VPN to access OpenAI then please fill in your proxy address (plz use "socks5" protocol)',
   },
 
   errorHint: {

@@ -14,11 +14,13 @@ export const zhCN = {
   },
 
   title: {
-    profile: '配置',
+    profile: '个人配置',
     addNote: '新增笔记',
     question: '问题',
     random: '随机选题',
     emptyNote: '暂无任何笔记',
+    keys: '密钥',
+    otherConfigurations: '其他配置',
   },
 
   subTitle: {
@@ -37,6 +39,7 @@ export const zhCN = {
     aiAnswer: 'GPT 回答',
     document: '笔记内容',
     examine: '检测',
+    proxy: '网络代理',
   },
 
   placeholder: {
@@ -55,6 +58,8 @@ export const zhCN = {
     memory: '记忆进度',
     questionCounts: '请选择为你准备多少个问题',
     getIcon: '获取 icon 请到',
+    proxy:
+      '如果你需要 VPN 才能访问 OpenAI 那么请填入你的代理地址（请使用 "socks5" 协议)',
   },
 
   errorHint: {

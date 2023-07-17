@@ -1,10 +1,8 @@
 from pydantic import BaseModel
 
 
-class ApiKeys(BaseModel):
+class Profile(BaseModel):
     openaiKey: str
-    azureKey: str
-    azureVersion: str
-    azureEndpoint: str
-    pineconeKey: str
     notionKey: str
+
+    proxy: str
