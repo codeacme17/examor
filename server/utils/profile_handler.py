@@ -1,13 +1,13 @@
 import os
 import json
 
-from typings.config import ApiKeys
+from typings.profile import ApiKeys
 
-FILE_PATH = "configuration.json"
+FILE_PATH = "profile.json"
 
 
 def set_key_to_env():
-    init_config_file()
+    init_profile_file()
     data: ApiKeys = get_key_from_file()
 
     os.environ['OPENAI_KEY'] = data['openaiKey']
@@ -20,7 +20,7 @@ def set_key_to_env():
     print(os.environ['OPENAI_KEY'])
 
 
-def init_config_file():
+def init_profile_file():
     if os.path.isfile(FILE_PATH):
         return
 

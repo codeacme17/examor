@@ -165,47 +165,18 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useSessionStorage } from '@vueuse/core'
-import { CONFIG_API } from '@/apis'
+import { PROFILE_API } from '@/apis'
 import { useFetch, useWatchChange } from '@/hooks'
+import { useProfileStore } from '@/store'
 
 onMounted(async () => {
   await getKeys()
   isUpdateFormData.value = false
 })
 
-const formData = useSessionStorage<any>('key_config', {
-  openaiKey: {
-    value: '',
-    show: false,
-    error: '',
-  },
-  azureKey: {
-    value: '',
-    show: false,
-    error: '',
-  },
-  azureVersion: {
-    value: '',
-    show: false,
-    error: '',
-  },
-  azureEndpoint: {
-    value: '',
-    show: false,
-    error: '',
-  },
-  pineconeKey: {
-    value: '',
-    show: false,
-    error: '',
-  },
-  notionKey: {
-    value: '',
-    show: false,
-    error: '',
-  },
-})
+const { keys: formData } = useProfileStore()
+
+console.log(formData)
 
 const isUpdateFormData = useWatchChange(formData)
 
@@ -214,23 +185,23 @@ const handleConfirm = async () => {
   isUpdateFormData.value = false
 }
 
-const [_getKeys, fetchKeyLoading] = useFetch(CONFIG_API.getKeys)
-const [_setKeys, confirmLoading] = useFetch(CONFIG_API.setKeys)
+const [_getKeys, fetchKeyLoading] = useFetch(PROFILE_API.getKeys)
+const [_setKeys, confirmLoading] = useFetch(PROFILE_API.setKeys)
 
 const getKeys = async () => {
   const res = await _getKeys()
 
   for (const key in res.data) {
-    if (Object.prototype.hasOwnProperty.call(formData.value, key)) {
-      formData.value[key].value = res.data[key]
+    if (Object.prototype.hasOwnProperty.call(formData, key)) {
+      formData[key].value = res.data[key]
     }
   }
 }
 
 const setKeys = async () => {
   const data: any = {}
-  for (const key in formData.value) {
-    data[key] = formData.value[key].value
+  for (const key in formData) {
+    data[key] = formData[key]
   }
 
   await _setKeys(data)

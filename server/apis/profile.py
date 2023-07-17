@@ -1,11 +1,11 @@
 import json
 
-from typings.config import ApiKeys
-from utils.config_handler import set_key_to_env, get_key_from_file
+from typings.profile import ApiKeys
+from utils.profile_handler import set_key_to_env, get_key_from_file
 
 
-def _config_api_keys(data: ApiKeys):
-    FILE_PATH = "configuration.json"
+def _profile_api_keys(data: ApiKeys):
+    FILE_PATH = "profile.json"
 
     with open(FILE_PATH, "w") as file:
         json.dump({

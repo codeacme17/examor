@@ -1,14 +1,14 @@
 import _axios from '@/plugins/axios'
 
-export const CONFIG_API = {
+export const PROFILE_API = {
   getKeys() {
-    return _axios.get('/api/config/apiKeys')
+    return _axios.get('/api/profile/apiKeys')
   },
 
   setKeys(data: any) {
     return _axios({
       method: 'POST',
-      url: '/api/config/apiKeys',
+      url: '/api/profile/apiKeys',
       data: data,
     })
   },
