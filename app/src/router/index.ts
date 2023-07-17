@@ -48,12 +48,10 @@ const router = createRouter({
 
 router.beforeEach((a, b, next) => {
   NProgress.start()
-  console.log(2)
   next()
 })
 
 router.afterEach(() => {
-  console.log(1)
   NProgress.done()
   NProgress.remove()
 })

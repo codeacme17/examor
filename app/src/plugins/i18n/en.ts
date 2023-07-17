@@ -19,7 +19,7 @@ export const en = {
     addNote: 'Add Note',
     question: 'Question',
     random: 'Random Pick',
-    emptyNote: 'There is no any notes yet',
+    emptyNote: 'There is no any note yet',
   },
   subTitle: {
     profile: 'Can be configured here refer to the required options',
