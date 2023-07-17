@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from typings.profile import ApiKeys
-from apis.profile import _profile_api_keys, _get_api_keys, set_key_to_env
+from typings.profile_types import ApiKeys
+from apis.profile import _set_api_keys, _get_api_keys, set_key_to_env
 
 app = FastAPI()
 
@@ -8,8 +8,8 @@ set_key_to_env()
 
 
 @app.post("/profile/apiKeys")
-def profile_api_keys(data: ApiKeys):
-    return _profile_api_keys(data)
+def set_api_keys(data: ApiKeys):
+    return _set_api_keys(data)
 
 
 @app.get("/profile/apiKeys")

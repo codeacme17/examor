@@ -152,13 +152,13 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { watchDeep } from '@vueuse/core'
 import { useProfileStore } from '@/store'
-import { ref } from 'vue'
 
 const PROFILE_STORE = useProfileStore()
-const isUpdateFormData = ref(false)
 const formData = PROFILE_STORE.keys
+const isUpdateFormData = ref(false)
 
 watchDeep(formData, () => {
   isUpdateFormData.value = true

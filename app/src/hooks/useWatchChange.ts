@@ -2,6 +2,7 @@ import { ref, watch } from 'vue'
 
 export const useWatchChange = (obj: any) => {
   const isChanged = ref(false)
+
   watch(
     obj,
     (oldValue, newValue) => {

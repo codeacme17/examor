@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import { useProfileStore } from '@/store'
 import { onMounted } from 'vue'
+import { useProfileStore } from '@/store'
 
 const PROFILE_STORE = useProfileStore()
 
