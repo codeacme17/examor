@@ -105,7 +105,7 @@ const languageList = [
     label: 'English',
   },
   {
-    value: 'cn',
+    value: 'zh-CN',
     label: '简写中文',
   },
 ]

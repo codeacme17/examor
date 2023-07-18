@@ -5,13 +5,15 @@ import * as zh from './zh-CN'
 import * as en from './en'
 
 const message = {
-  cn: {
+  'zh-CN': {
     ...zh.zhCN,
   },
   en: {
     ...en.en,
   },
 }
+
+console.log(navigator.language)
 
 const lang = useStorage('local-lang', navigator.language)
 
