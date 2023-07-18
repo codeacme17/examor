@@ -6,7 +6,7 @@
       style="user-select: none; transition: padding 0.15s ease-in-out"
       :class="{
         'py-9': !rail,
-        'py-2': rail,
+        'py-3': rail,
       }"
     >
       <template #prepend>
@@ -23,11 +23,15 @@
       </template>
 
       <template #title>
-        <h3>examor</h3>
+        <Transition :name="rail ? '' : 'footer'" mode="out-in">
+          <h3 v-show="!rail">examor</h3>
+        </Transition>
       </template>
 
       <template #subtitle>
-        <p style="font-size: 12px">{{ $t('slogan') }}</p>
+        <Transition :name="rail ? '' : 'footer'" mode="out-in">
+          <p style="font-size: 12px" v-show="!rail">{{ $t('slogan') }}</p>
+        </Transition>
       </template>
     </v-list-item>
 
@@ -67,6 +71,38 @@
         :active="route.path === item.value"
       />
     </v-list>
+
+    <template v-slot:append>
+      <v-divider></v-divider>
+
+      <section class="pa-2 d-flex align-center position-relative">
+        <v-btn
+          class="ext-medium-emphasis mr-1"
+          style="font-size: 15px"
+          icon="mdi-github"
+          size="small"
+          elevation="0"
+          variant="text"
+        />
+
+        <Transition :name="rail ? '' : 'footer'" mode="out-in">
+          <div
+            v-if="!rail"
+            class="text-medium-emphasis mt-1"
+            style="
+              height: 20px;
+              max-width: 170px;
+              overflow: hidden;
+              font-size: 13px;
+              position: absolute;
+              right: 30px;
+            "
+          >
+            © 2023-Present leyoonafr
+          </div>
+        </Transition>
+      </section>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -88,7 +124,7 @@ const isDark = useDark()
 const { t } = useI18n()
 
 // handle side-bar rail state
-const rail = useStorage('side-bar-rail', true)
+const rail = useStorage('side-bar-rail', false)
 const { width } = useWindowSize()
 watch(width, () => {
   if (width.value <= 1030) rail.value = true

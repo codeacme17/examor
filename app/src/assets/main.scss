@@ -71,3 +71,16 @@ html {
 #nprogess-bar {
   background: linear-gradient(to right, red, yellow, blue) !important;
 }
+
+.footer-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.footer-enter-active {
+  transition: opacity 0.2s 0.1s ease;
+}
+
+.footer-enter-from,
+.footer-leave-to {
+  opacity: 0;
+}
