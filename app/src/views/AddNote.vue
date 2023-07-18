@@ -14,14 +14,6 @@
         :label="$t('label.noteName')"
       />
 
-      <v-text-field
-        v-model="formData.namespace"
-        class="mt-4"
-        variant="outlined"
-        density="compact"
-        :label="$t('label.namespace')"
-      />
-
       <v-select
         v-model="formData.noteType"
         class="mt-4"
@@ -55,7 +47,7 @@
         :label="$t('label.notionDataBaseID')"
       />
 
-      <div class="mt-2 d-flex justify-end">
+      <div class="mt-4 d-flex justify-end">
         <v-btn color="primary" elevation="0" :block="true" :disabled="disabled">
           {{ $t('button.submit') }}
         </v-btn>

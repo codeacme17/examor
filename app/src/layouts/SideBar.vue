@@ -3,7 +3,7 @@
     <!-- logo & title -->
     <v-list-item
       class="pl-2"
-      style="user-select: none; transition: padding 0.15s ease-in-out"
+      style="user-select: none; transition: padding 0.2s ease-in-out"
       :class="{
         'py-9': !rail,
         'py-3': rail,
@@ -85,11 +85,12 @@
       <section class="pa-2 d-flex align-center position-relative">
         <v-btn
           class="ext-medium-emphasis mr-1"
-          style="font-size: 15px"
+          style="font-size: 15px; transition: all 0.2s ease-in-out"
           icon="mdi-github"
           size="small"
           elevation="0"
           variant="text"
+          :class="rail ? '' : 'ml-5'"
         />
 
         <Transition :name="rail ? '' : 'footer'" mode="out-in">
@@ -98,14 +99,13 @@
             class="text-medium-emphasis mt-1"
             style="
               height: 20px;
-              max-width: 170px;
               overflow: hidden;
               font-size: 13px;
               position: absolute;
-              right: 30px;
+              right: 46px;
             "
           >
-            © 2023-Present leyoonafr
+            © 2023 <strong>1LLESTGROUP</strong>
           </div>
         </Transition>
       </section>

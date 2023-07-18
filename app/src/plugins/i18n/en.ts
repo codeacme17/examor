@@ -32,11 +32,11 @@ export const en = {
 
   // label of input field
   label: {
-    noteName: 'note name',
+    noteName: 'Note Name',
     namespace: 'namespace',
-    selectNoteType: 'note type',
-    notionDataBaseID: 'notion database ID',
-    answer: 'answer',
+    selectNoteType: 'Note Type',
+    notionDataBaseID: 'Notion Database ID',
+    answer: 'Answer',
     aiAnswer: 'GPT answer',
     document: 'Note Content',
     examine: 'Examine',
