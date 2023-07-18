@@ -10,16 +10,23 @@
       }"
     >
       <template #prepend>
-        <img
-          :src="
-            isDark
-              ? '/src/assets/images/logo-dark.svg'
-              : '/src/assets/images/logo.svg'
-          "
-          :width="rail ? 38 : 50"
-          class="mr-5"
-          style="transition: width 0.15s ease-in-out"
-        />
+        <div>
+          <v-img
+            :src="
+              isDark
+                ? '/src/assets/images/logo-dark.svg'
+                : '/src/assets/images/logo.svg'
+            "
+            :lazy-src="
+              isDark
+                ? '/src/assets/images/logo-dark.svg'
+                : '/src/assets/images/logo.svg'
+            "
+            :width="rail ? 38 : 50"
+            class="mr-5"
+            style="transition: width 0.15s ease-in-out"
+          />
+        </div>
       </template>
 
       <template #title>
