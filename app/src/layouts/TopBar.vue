@@ -112,7 +112,6 @@ const languageList = [
 const handleLangSwitch = (lang: string) => {
   storageLang.value = lang
   locale.value = lang
-  console.log(locale)
 }
 </script>
 

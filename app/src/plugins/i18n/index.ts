@@ -13,8 +13,6 @@ const message = {
   },
 }
 
-console.log(navigator.language)
-
 const lang = useStorage('local-lang', navigator.language)
 
 const i18n = createI18n({
