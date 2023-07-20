@@ -90,7 +90,7 @@
           size="small"
           elevation="0"
           variant="text"
-          :class="rail ? '' : 'ml-5'"
+          :class="rail ? '' : 'ml-7'"
           @click="handleClickGithub"
         />
 
@@ -103,10 +103,10 @@
               overflow: hidden;
               font-size: 13px;
               position: absolute;
-              right: 46px;
+              right: 55px;
             "
           >
-            © 2023 <strong>1LLESTCREW</strong>
+            © 2023 <strong>leyoonafr</strong>
           </div>
         </Transition>
       </section>
@@ -173,6 +173,6 @@ const notesList = [
 ]
 
 const handleClickGithub = () => {
-  window.open('https://github.com/1llestcrew/examor')
+  window.open('https://github.com/codeacme17/examor')
 }
 </script>
