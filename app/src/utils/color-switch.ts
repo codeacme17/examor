@@ -31,3 +31,8 @@ export const greenBorderColor = computed(() => {
   const isDark = useDark()
   return isDark.value ? 'green-accent-2' : 'green-accent-4'
 })
+
+export const reverseTheme = computed(() => {
+  const isDark = useDark()
+  return isDark.value ? 'dark' : 'light'
+})

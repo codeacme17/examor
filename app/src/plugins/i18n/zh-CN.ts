@@ -11,19 +11,26 @@ export const zhCN = {
   button: {
     submit: '提交',
     continue: '继续作答',
+    upload: '上传',
+    update: '更新',
+    addFile: '新增文件',
   },
 
   title: {
     profile: '个人配置',
+    notes: '笔记管理',
     addNote: '新增笔记',
     question: '问题',
     random: '随机选题',
     emptyNote: '暂无任何笔记',
     keys: '密钥',
     otherConfigurations: '其他配置',
+    fileName: '文件名',
+    uploadDate: '上传日期',
   },
 
   subTitle: {
+    notes: '可以在此处管理你的笔记',
     profile: '可以在此处配置引用所需的选项',
     addNote: '可以在此处新增新的笔记',
     emptyNoteStart: '可以进入',

@@ -91,6 +91,7 @@
           elevation="0"
           variant="text"
           :class="rail ? '' : 'ml-5'"
+          @click="handleClickGithub"
         />
 
         <Transition :name="rail ? '' : 'footer'" mode="out-in">
@@ -105,7 +106,7 @@
               right: 46px;
             "
           >
-            © 2023 <strong>1LLESTGROUP</strong>
+            © 2023 <strong>1LLESTCREW</strong>
           </div>
         </Transition>
       </section>
@@ -160,7 +161,7 @@ const defualtNavList = computed(() => [
 // note list that users uploaded
 const notesList = [
   {
-    icon: 'mdi-docker',
+    icon: 'mdi-text-box-outline',
     title: 'docker',
     value: '/note/docker',
   },
@@ -170,4 +171,8 @@ const notesList = [
     value: '/note/vue',
   },
 ]
+
+const handleClickGithub = () => {
+  window.open('https://github.com/1llestcrew/examor')
+}
 </script>

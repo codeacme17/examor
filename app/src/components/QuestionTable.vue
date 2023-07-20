@@ -57,7 +57,7 @@
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
-import { defaultBgColor, greenBgColor, orangeBgColor } from '@/utils'
+import { defaultBgColor, orangeBgColor } from '@/utils'
 
 export type TableItem = {
   id: string
