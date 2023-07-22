@@ -1,5 +1,5 @@
 <template>
-  <v-container style="max-width: 1080px" :loading="getNoteLoading">
+  <v-container style="max-width: 1080px">
     <!-- note name & icon -->
     <h2 class="mb-3 d-flex align-center">
       <v-menu :close-on-content-click="false" offset="6">
@@ -30,7 +30,7 @@
             class="mb-1"
             variant="outlined"
             density="compact"
-            :append-inner-icon="loading ? '' : 'mdi-location-enter'"
+            :append-inner-icon="updateIconLoading ? '' : 'mdi-location-enter'"
             :placeholder="currentNoteIcon"
             :hide-details="true"
             @click:append-inner="handleChangeIcon"
@@ -134,16 +134,16 @@ onMounted(() => {
 
 const currentNoteId = route.params.id
 const currentNoteName = ref('')
-const currentNoteIcon = ref('mdi-docker')
+const currentNoteIcon = ref('mdi-text-box-outline')
 
 const NOTE_STORE = useNoteStore()
-const [getNote, getNoteLoading] = useFetch(NOTE_API.getNote)
-const [updateNoteIcon, loading] = useFetch(NOTE_API.updateNoteIcon)
+const [getNote] = useFetch(NOTE_API.getNote)
+const [updateNoteIcon, updateIconLoading] = useFetch(NOTE_API.updateNoteIcon)
 
 const getNoteInfo = async () => {
-  const res = await getNote(currentNoteId)
-  currentNoteIcon.value = res.icon
-  currentNoteName.value = res.name
+  const { data } = await getNote(currentNoteId)
+  currentNoteIcon.value = data.icon
+  currentNoteName.value = data.name
 }
 
 const inputNoteIcon = ref('')

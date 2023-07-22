@@ -15,6 +15,17 @@ export const NOTE_API = {
     })
   },
 
+  addNote(data: any) {
+    return _axios({
+      method: 'POST',
+      url: `/api/note`,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      data: data,
+    })
+  },
+
   updateNoteIcon(data: any) {
     return _axios({
       method: 'PATCH',

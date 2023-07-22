@@ -5,6 +5,12 @@ const _axios = axios.create({
   timeout: 30 * 1000,
 })
 
+export type ResponseBody = {
+  code: number
+  message: string
+  data: Record<any, any>
+}
+
 _axios.interceptors.request.use(
   (config) => {
     return config
@@ -16,6 +22,14 @@ _axios.interceptors.request.use(
 
 _axios.interceptors.response.use(
   (response) => {
+    const { code, message } = response.data
+
+    if (code !== 0)
+      MessagePlugin.error({
+        content: message,
+        duration: 1000,
+      })
+
     return response.data
   },
   (error) => {

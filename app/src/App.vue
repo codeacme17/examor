@@ -9,8 +9,8 @@ import { useProfileStore, useNoteStore } from '@/store'
 const PROFILE_STORE = useProfileStore()
 const NOTE_STORE = useNoteStore()
 
-onMounted(() => {
-  PROFILE_STORE.getProfile()
-  NOTE_STORE.getNotes()
+onMounted(async () => {
+  await NOTE_STORE.getNotes()
+  await PROFILE_STORE.getProfile()
 })
 </script>

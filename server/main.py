@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, Form, UploadFile
 from typings.profile_types import Profile
 from typings.note_types import Icon
 
 from utils.MySQLHandler import MySQLHandler
-from apis.profile import _set_profile, _get_profile, set_profile_to_env
-from apis.note import _get_notes, _get_note, _update_note_icon
+from utils.profile_handler import set_profile_to_env
+from apis.profile import _set_profile, _get_profile
+from apis.note import _get_notes, _get_note, _add_note, _update_note_icon
 
 from utils.dummy_data import insert, clear
 
@@ -39,9 +40,17 @@ def get_note(id: int):
     return _get_note(id)
 
 
+@app.post("/note")
+def add_note(
+    noteName: str = Form(),
+    files: UploadFile = File(default=None),
+    notionId: str = Form(default=None)
+):
+    return _add_note(noteName, files, notionId)
+
+
 @app.patch("/note/icon")
 def update_note_icon(data: Icon):
-    print(data)
     return _update_note_icon(data)
 
 

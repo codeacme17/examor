@@ -26,8 +26,8 @@ export const useNoteStore = defineStore('noteStore', {
       const [_getNotes, loading] = useFetch(NOTE_API.getNotes)
       this.$state.getNotesLoading = loading
 
-      const res = await _getNotes()
-      this.$state.notes = res
+      const { data } = await _getNotes()
+      this.$state.notes = data
     },
   },
 })

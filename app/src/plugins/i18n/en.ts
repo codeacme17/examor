@@ -76,4 +76,8 @@ export const en = {
     noteName: 'note name is required',
     namespace: 'namespace is required',
   },
+
+  message: {
+    successAddNote: 'Note add successfully',
+  },
 }

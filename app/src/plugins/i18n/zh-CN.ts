@@ -73,4 +73,8 @@ export const zhCN = {
     noteName: '笔记名称不可为空',
     namespace: '命名空间不可为空',
   },
+
+  message: {
+    successAddNote: '笔记新增成功',
+  },
 }

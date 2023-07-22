@@ -48,7 +48,14 @@
       />
 
       <div class="mt-4 d-flex justify-end">
-        <v-btn color="primary" elevation="0" :block="true" :disabled="disabled">
+        <v-btn
+          color="primary"
+          elevation="0"
+          :block="true"
+          :disabled="disabled"
+          :loading="loading"
+          @click="handleConfirmAdd"
+        >
           {{ $t('button.submit') }}
         </v-btn>
       </div>
@@ -65,6 +72,8 @@ export default {
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { NOTE_API } from '@/apis'
+import { useFetch } from '@/hooks'
 
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
@@ -84,13 +93,11 @@ const noteTypeOptions = computed(() => [
 
 const formData = reactive<{
   noteName: string
-  namespace: string
   noteType: 'files' | 'notion' | null
   files: any[]
   notion: string
 }>({
   noteName: '',
-  namespace: '',
   noteType: null,
   files: [],
   notion: '',
@@ -98,7 +105,6 @@ const formData = reactive<{
 
 const disabled = computed(() => {
   if (!formData.noteName) return true
-  if (!formData.namespace) return true
   if (!formData.noteType) return true
   if (!formData.files.length && formData.noteType === 'files') return true
   if (!formData.notion && formData.noteType === 'notion') return true
@@ -109,6 +115,22 @@ const disabled = computed(() => {
 const handleSelectChange = () => {
   formData.files = []
   formData.notion = ''
+}
+
+const [addNote, loading] = useFetch(
+  NOTE_API.addNote,
+  t('message.successAddNote')
+)
+const handleConfirmAdd = async () => {
+  const _formData = new FormData()
+  _formData.append('noteName', formData.noteName)
+  _formData.append('notionId', formData.notion)
+
+  formData.files.forEach((item) => {
+    _formData.append('files', item.raw)
+  })
+
+  await addNote(_formData)
 }
 </script>
 
