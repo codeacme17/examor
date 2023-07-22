@@ -7,14 +7,15 @@ from typings.note_types import Icon
 
 
 def _get_notes():
-    select_query = "SELECT * FROM t_note;"
+    select_query = "SELECT * FROM t_note"
     res = MySQLHandler().execute_query(select_query)
     return api_result.success(res)
 
 
 def _get_note(id: int):
-    select_query = f"SELECT * FROM t_note WHERE id = {id}"
-    res = MySQLHandler().execute_query(select_query, single=True)
+    data = (id,)
+    select_query = "SELECT * FROM t_note WHERE id = %s"
+    res = MySQLHandler().execute_query(select_query, data, single=True)
     return api_result.success(res)
 
 
@@ -23,18 +24,22 @@ def _add_note(
     files: UploadFile = File(default=None),
     notionId: str = Form(default=None)
 ):
-    print(noteName)
-    print(files)
-    print(notionId)
+    data = (noteName,)
+    duplicate_query = "SELECT * FROM t_note WHERE name = %s"
+    insert_query = "INSERT INTO t_note (name) VALUES (%s)"
+
+    duplicate = MySQLHandler().execute_query(duplicate_query, data)
+    if (len(duplicate)):
+        return api_result.error("The same note name cannot be created repeatedly")
+
+    MySQLHandler().insert_table_data(insert_query, data)
     return api_result.success()
 
 
 def _update_note_icon(data: Icon):
-    note_id = data.id
-    new_icon = data.icon
-
     table_name = "t_note"
-    set_values = f"icon = '{new_icon}'"
-    condition = f"id = {note_id}"
-    MySQLHandler().update_table_data(table_name, set_values, condition)
+    id = f"id = {data.id}"
+    icon = f"icon = '{data.icon}'"
+
+    MySQLHandler().update_table_data(table_name, icon, id)
     return api_result.success()

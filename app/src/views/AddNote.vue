@@ -74,6 +74,7 @@ import { reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
+import { useNoteStore } from '@/store'
 
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
@@ -121,6 +122,7 @@ const [addNote, loading] = useFetch(
   NOTE_API.addNote,
   t('message.successAddNote')
 )
+const NOTE_STORE = useNoteStore()
 const handleConfirmAdd = async () => {
   const _formData = new FormData()
   _formData.append('noteName', formData.noteName)
@@ -130,7 +132,8 @@ const handleConfirmAdd = async () => {
     _formData.append('files', item.raw)
   })
 
-  await addNote(_formData)
+  const res = await addNote(_formData)
+  if (res.code === 0) NOTE_STORE.getNotes()
 }
 </script>
 

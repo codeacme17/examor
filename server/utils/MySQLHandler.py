@@ -1,5 +1,4 @@
 import mysql.connector
-from mysql.connector.cursor import MySQLCursor
 
 
 class MySQLHandler:
@@ -17,17 +16,21 @@ class MySQLHandler:
 
     def connect_to_mysql(self):
         try:
-            # Connect to MySQL server
             self.conn = mysql.connector.connect(**self.config)
             self.cursor = self.conn.cursor(buffered=True, dictionary=True)
 
         except mysql.connector.Error as err:
             print("Error: {}".format(err))
 
-    def execute_query(self, query: str, single: bool = False):
+    def execute_query(
+        self,
+        query: str,
+        data=(),
+        single: bool = False
+    ):
         try:
             self.connect_to_mysql()
-            self.cursor.execute(query)
+            self.cursor.execute(query, data)
 
             if (single):
                 return self.cursor.fetchone()
@@ -37,7 +40,12 @@ class MySQLHandler:
             print("Error: {}".format(err))
             return None
 
-    def update_table_data(self, table_name, set_values, condition):
+    def update_table_data(
+        self,
+        table_name,
+        set_values,
+        condition
+    ):
         try:
             self.connect_to_mysql()
 
@@ -46,6 +54,24 @@ class MySQLHandler:
             self.cursor.execute(update_query)
             self.conn.commit()
             print(f"Data in {table_name} updated successfully.")
+
+        except mysql.connector.Error as err:
+            self.conn.rollback()
+            print("Error: {}".format(err))
+
+        finally:
+            self.disconnect_from_mysql()
+
+    def insert_table_data(
+        self,
+        query,
+        data=()
+    ):
+        try:
+            self.connect_to_mysql()
+            self.cursor.execute(query, data)
+            self.conn.commit()
+            print("New data inserted successfully.")
 
         except mysql.connector.Error as err:
             self.conn.rollback()
