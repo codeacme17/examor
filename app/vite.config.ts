@@ -41,10 +41,10 @@ export default defineConfig({
   },
 
   server: {
-    port: 1818,
+    port: 51818,
     proxy: {
       '/api': {
-        target: 'http://0.0.0.0:1717',
+        target: 'http://0.0.0.0:51717',
         changeOrigin: true,
         ws: true,
         rewrite: (pathStr) => pathStr.replace('/api', '/'),

@@ -1,9 +1,9 @@
-import os
+import json
 from fastapi import FastAPI
 from typings.profile_types import Profile
 from apis.profile import _set_profile, _get_profile, set_profile_to_env
 
-app = FastAPI()
+app = FastAPI(validate_headers=False)
 
 
 @app.on_event('startup')
@@ -23,4 +23,4 @@ def set_profile(data: Profile):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=1717)
+    uvicorn.run(app, host="0.0.0.0", port=51717)
