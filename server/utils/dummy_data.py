@@ -14,27 +14,23 @@ config = {
 def insert():
     # Sample data to insert into the tables
     note_data = [
-        (1, 'Note 1'),
-        (2, 'Note 2'),
-        # Add more rows as needed
+        (1, 'Vue'),
+        (2, 'Docker'),
     ]
 
     document_data = [
         (1, 1, 'mdi-text-box-outline', 'file1.md', 'Document content 1'),
         (2, 1, 'mdi-text-box-outline', 'file2.md', 'Document content 2'),
-        # Add more rows as needed
     ]
 
     question_data = [
         (1, 'Question 1', 1, '0', 100, 'Answer 1'),
         (2, 'Question 2', 1, '0', 80, 'Answer 2'),
-        # Add more rows as needed
     ]
 
     record_data = [
         (1, 1, '2023-07-22 12:00:00', 90, '1'),
         (2, 1, '2023-07-23 13:30:00', 70, '1'),
-        # Add more rows as needed
     ]
 
     try:
