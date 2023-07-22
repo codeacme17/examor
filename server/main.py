@@ -15,12 +15,14 @@ def startup():
     MySQLHandler().connect_to_mysql()
 
 
+# Get user profile
 @app.get("/profile")
 def get_profile():
     return profile._get_profile()
 
 
-@app.post("/profile")
+# Update user profile
+@app.put("/profile")
 def set_profile(data: Profile):
     return profile._set_profile(data)
 
