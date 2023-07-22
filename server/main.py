@@ -4,7 +4,7 @@ from typings.note_types import Icon
 
 from utils.MySQLHandler import MySQLHandler
 from apis.profile import _set_profile, _get_profile, set_profile_to_env
-from apis.note import _get_notes, _update_note_icon
+from apis.note import _get_notes, _get_note, _update_note_icon
 
 from utils.dummy_data import insert, clear
 
@@ -32,6 +32,11 @@ def set_profile(data: Profile):
 @app.get("/note/notes")
 def get_notes():
     return _get_notes()
+
+
+@app.get("/note/{id}")
+def get_note(id: int):
+    return _get_note(id)
 
 
 @app.patch("/note/icon")

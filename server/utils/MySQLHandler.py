@@ -24,10 +24,13 @@ class MySQLHandler:
         except mysql.connector.Error as err:
             print("Error: {}".format(err))
 
-    def execute_query(self, query: str):
+    def execute_query(self, query: str, single: bool = False):
         try:
             self.connect_to_mysql()
             self.cursor.execute(query)
+
+            if (single):
+                return self.cursor.fetchone()
             return self.cursor.fetchall()
 
         except mysql.connector.Error as err:

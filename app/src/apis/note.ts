@@ -8,6 +8,13 @@ export const NOTE_API = {
     })
   },
 
+  getNote(id: string) {
+    return _axios({
+      method: 'GET',
+      url: `/api/note/${id}`,
+    })
+  },
+
   updateNoteIcon(data: any) {
     return _axios({
       method: 'PATCH',

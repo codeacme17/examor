@@ -1,5 +1,5 @@
 <template>
-  <v-container style="max-width: 1080px">
+  <v-container style="max-width: 1080px" :loading="getNoteLoading">
     <!-- note name & icon -->
     <h2 class="mb-3 d-flex align-center">
       <v-menu :close-on-content-click="false" offset="6">
@@ -26,7 +26,7 @@
           </div>
 
           <v-text-field
-            v-model.trim="noteIcon"
+            v-model.trim="inputNoteIcon"
             class="mb-1"
             variant="outlined"
             density="compact"
@@ -62,7 +62,7 @@
 
         <!-- question table -->
         <QuestionTable
-          :id="currentId"
+          :id="currentQuestionId"
           :name="currentNoteId"
           @questionPickEmit="handlePickQuestion"
         />
@@ -104,7 +104,7 @@
         </v-card>
 
         <!-- answer block -->
-        <Answer :id="currentId" />
+        <Answer :id="currentQuestionId" />
       </section>
     </Transition>
   </v-container>
@@ -117,7 +117,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLocalStorage } from '@vueuse/core'
 import { useFetch } from '@/hooks'
@@ -127,31 +127,45 @@ import { NOTE_API } from '@/apis'
 import type { TableItem } from '@/components/QuestionTable.vue'
 
 const route = useRoute()
+
+onMounted(() => {
+  getNoteInfo()
+})
+
 const currentNoteId = route.params.id
-const currentNoteName = 'Docker'
-const questionCounts = useLocalStorage(`questionCounts-${currentNoteId}`, 3)
+const currentNoteName = ref('')
+const currentNoteIcon = ref('mdi-docker')
 
 const NOTE_STORE = useNoteStore()
+const [getNote, getNoteLoading] = useFetch(NOTE_API.getNote)
 const [updateNoteIcon, loading] = useFetch(NOTE_API.updateNoteIcon)
-const noteIcon = ref('')
-const currentNoteIcon = ref('mdi-docker')
-const handleChangeIcon = async () => {
-  if (!noteIcon.value) return
-  await updateNoteIcon({
-    id: currentNoteId,
-    icon: noteIcon.value,
-  })
-  await NOTE_STORE.getNotes()
-  currentNoteIcon.value = noteIcon.value
-  noteIcon.value = ''
+
+const getNoteInfo = async () => {
+  const res = await getNote(currentNoteId)
+  currentNoteIcon.value = res.icon
+  currentNoteName.value = res.name
 }
 
+const inputNoteIcon = ref('')
+const handleChangeIcon = async () => {
+  if (!inputNoteIcon.value) return
+  await updateNoteIcon({
+    id: currentNoteId,
+    icon: inputNoteIcon.value,
+  })
+  await NOTE_STORE.getNotes()
+  currentNoteIcon.value = inputNoteIcon.value
+  inputNoteIcon.value = ''
+}
+
+// Handle question
 const isShowAnswer = ref(false)
-const currentId = ref('')
+const currentQuestionId = ref('')
 const currentQuesiton = ref('')
+const questionCounts = useLocalStorage(`questionCounts-${currentNoteId}`, 3)
 const handlePickQuestion = (item: TableItem) => {
   isShowAnswer.value = true
-  currentId.value = item.id
+  currentQuestionId.value = item.id
   currentQuesiton.value = item.question
 }
 </script>

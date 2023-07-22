@@ -8,6 +8,12 @@ def _get_notes():
     return res
 
 
+def _get_note(id: int):
+    select_query = f"SELECT * FROM t_note WHERE id = {id}"
+    res = MySQLHandler().execute_query(select_query, single=True)
+    return res
+
+
 def _update_note_icon(data: Icon):
     note_id = data.id
     new_icon = data.icon
