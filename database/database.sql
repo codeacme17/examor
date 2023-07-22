@@ -1,6 +1,7 @@
 CREATE TABLE t_note (
 	id int(12) auto_increment NOT NULL COMMENT 'note id',
 	name varchar(100) NOT NULL COMMENT 'note name',
+	icon varchar(30) DEFAULT 'mdi-text-box-outline' NULL COMMENT 'document icon',
 	CONSTRAINT t_note_pk PRIMARY KEY (id)
 )
 ENGINE=InnoDB
@@ -10,7 +11,6 @@ DEFAULT CHARSET=utf8;
 CREATE TABLE t_document (
 	id int(12) auto_increment NOT NULL COMMENT 'document id',
 	note_id int(12) NOT NULL COMMENT 'note id',
-	icon varchar(30) DEFAULT 'mdi-text-box-outline' NULL COMMENT 'document icon',
 	file_name varchar(100) NULL COMMENT 'file name',
 	document TEXT NOT NULL COMMENT 'document content',
 	CONSTRAINT t_document_pk PRIMARY KEY (id),

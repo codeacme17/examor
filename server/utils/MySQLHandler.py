@@ -19,7 +19,7 @@ class MySQLHandler:
         try:
             # Connect to MySQL server
             self.conn = mysql.connector.connect(**self.config)
-            self.cursor = self.conn.cursor(buffered=True)
+            self.cursor = self.conn.cursor(buffered=True, dictionary=True)
 
         except mysql.connector.Error as err:
             print("Error: {}".format(err))

@@ -14,13 +14,13 @@ config = {
 def insert():
     # Sample data to insert into the tables
     note_data = [
-        (1, 'Vue'),
-        (2, 'Docker'),
+        (1, 'Vue',  'mdi-text-box-outline'),
+        (2, 'Docker', 'mdi-text-box-outline'),
     ]
 
     document_data = [
-        (1, 1, 'mdi-text-box-outline', 'file1.md', 'Document content 1'),
-        (2, 1, 'mdi-text-box-outline', 'file2.md', 'Document content 2'),
+        (1, 1, 'file1.md', 'Document content 1'),
+        (2, 1, 'file2.md', 'Document content 2'),
     ]
 
     question_data = [
@@ -41,11 +41,11 @@ def insert():
         cursor = conn.cursor()
 
         # Insert data into t_note table
-        insert_note_query = "INSERT INTO t_note (id, name) VALUES (%s, %s)"
+        insert_note_query = "INSERT INTO t_note (id, name, icon) VALUES (%s, %s, %s)"
         cursor.executemany(insert_note_query, note_data)
 
         # Insert data into t_document table
-        insert_document_query = "INSERT INTO t_document (id, note_id, icon, file_name, document) VALUES (%s, %s, %s, %s, %s)"
+        insert_document_query = "INSERT INTO t_document (id, note_id, file_name, document) VALUES (%s, %s, %s, %s)"
         cursor.executemany(insert_document_query, document_data)
 
         # Insert data into t_question table
