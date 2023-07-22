@@ -48,9 +48,9 @@ export const useProfileStore = defineStore('profileStore', {
       const [_getKeys] = useFetch(PROFILE_API.getProfile)
       const res = await _getKeys()
 
-      for (const key in res.data) {
+      for (const key in res) {
         if (Object.prototype.hasOwnProperty.call(this.$state.profile, key)) {
-          this.$state.profile[key].value = res.data[key]
+          this.$state.profile[key].value = res[key]
         }
       }
     },
