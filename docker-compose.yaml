@@ -1,0 +1,9 @@
+services:
+  mysql:
+    build: ./database/
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '52020:52020'

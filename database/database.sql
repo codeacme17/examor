@@ -9,7 +9,7 @@ DEFAULT CHARSET=utf8;
 
 CREATE TABLE t_document (
 	id int(12) auto_increment NOT NULL COMMENT 'document id',
-	note_id NUMERIC NOT NULL COMMENT 'note id',
+	note_id int(12) NOT NULL COMMENT 'note id',
 	icon varchar(30) DEFAULT 'mdi-text-box-outline' NULL COMMENT 'document icon',
 	file_name varchar(100) NULL COMMENT 'file name',
 	document TEXT NOT NULL COMMENT 'document content',
