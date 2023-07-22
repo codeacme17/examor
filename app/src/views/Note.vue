@@ -30,7 +30,7 @@
             class="mb-1"
             variant="outlined"
             density="compact"
-            append-inner-icon="mdi-location-enter"
+            :append-inner-icon="loading ? '' : 'mdi-location-enter'"
             :placeholder="currentNoteIcon"
             :hide-details="true"
             @click:append-inner="handleChangeIcon"
@@ -63,7 +63,7 @@
         <!-- question table -->
         <QuestionTable
           :id="currentId"
-          :name="currentNoteName"
+          :name="currentNoteId"
           @questionPickEmit="handlePickQuestion"
         />
       </section>
@@ -120,17 +120,28 @@ export default {
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLocalStorage } from '@vueuse/core'
+import { useFetch } from '@/hooks'
+import { useNoteStore } from '@/store'
 import { greenBgColor } from '@/utils'
+import { NOTE_API } from '@/apis'
 import type { TableItem } from '@/components/QuestionTable.vue'
 
 const route = useRoute()
-const currentNoteName = route.params.noteName
-const questionCounts = useLocalStorage(`questionCounts-${currentNoteName}`, 3)
+const currentNoteId = route.params.id
+const currentNoteName = 'Docker'
+const questionCounts = useLocalStorage(`questionCounts-${currentNoteId}`, 3)
 
+const NOTE_STORE = useNoteStore()
+const [updateNoteIcon, loading] = useFetch(NOTE_API.updateNoteIcon)
 const noteIcon = ref('')
 const currentNoteIcon = ref('mdi-docker')
-const handleChangeIcon = () => {
+const handleChangeIcon = async () => {
   if (!noteIcon.value) return
+  await updateNoteIcon({
+    id: currentNoteId,
+    icon: noteIcon.value,
+  })
+  await NOTE_STORE.getNotes()
   currentNoteIcon.value = noteIcon.value
   noteIcon.value = ''
 }

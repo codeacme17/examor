@@ -59,7 +59,7 @@
     <v-divider></v-divider>
 
     <!-- notes list -->
-    <v-list density="compact" nav>
+    <v-list density="compact" nav :loading="NOTE_STORE.getNotesLoading">
       <v-list-item
         prepend-icon="mdi-plus"
         style="padding-left: 7px"
@@ -70,12 +70,12 @@
       />
 
       <v-list-item
-        v-for="item in notesList"
-        :key="item.value"
+        v-for="item in NOTE_STORE.notes"
+        :key="item.id"
         :prepend-icon="item.icon"
-        :title="item.title"
-        :to="item.value"
-        :active="route.path === item.value"
+        :title="item.name"
+        :to="'/note/' + item.id"
+        :active="route.path === '/note/' + item.id"
       />
     </v-list>
 
@@ -126,10 +126,13 @@ import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
 import { useDark, useWindowSize } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
+import { useNoteStore } from '@/store'
 
 const route = useRoute()
 const isDark = useDark()
 const { t } = useI18n()
+
+const NOTE_STORE = useNoteStore()
 
 // handle side-bar rail state
 const rail = useStorage('side-bar-rail', false)
@@ -157,20 +160,6 @@ const defualtNavList = computed(() => [
     value: '/random',
   },
 ])
-
-// note list that users uploaded
-const notesList = [
-  {
-    icon: 'mdi-text-box-outline',
-    title: 'docker',
-    value: '/note/docker',
-  },
-  {
-    icon: 'mdi-vuejs',
-    title: 'vue',
-    value: '/note/vue',
-  },
-]
 
 const handleClickGithub = () => {
   window.open('https://github.com/codeacme17/examor')

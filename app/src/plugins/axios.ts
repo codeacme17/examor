@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { MessagePlugin } from 'tdesign-vue-next'
 
 const _axios = axios.create({
   timeout: 30 * 1000,
@@ -18,6 +19,10 @@ _axios.interceptors.response.use(
     return response.data
   },
   (error) => {
+    MessagePlugin.error({
+      content: error,
+      duration: 1000,
+    })
     return Promise.reject(error)
   }
 )

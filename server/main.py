@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from typings.profile_types import Profile
+from typings.note_types import Icon
 
 from utils.MySQLHandler import MySQLHandler
 from apis.profile import _set_profile, _get_profile, set_profile_to_env
-from apis.note import _get_notes
+from apis.note import _get_notes, _update_note_icon
 
 from utils.dummy_data import insert, clear
 
@@ -28,9 +29,15 @@ def set_profile(data: Profile):
     return _set_profile(data)
 
 
-@app.get("/notes")
+@app.get("/note/notes")
 def get_notes():
     return _get_notes()
+
+
+@app.patch("/note/icon")
+def update_note_icon(data: Icon):
+    print(data)
+    return _update_note_icon(data)
 
 
 @app.on_event("shutdown")

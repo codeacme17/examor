@@ -34,6 +34,23 @@ class MySQLHandler:
             print("Error: {}".format(err))
             return None
 
+    def update_table_data(self, table_name, set_values, condition):
+        try:
+            self.connect_to_mysql()
+
+            update_query = f"UPDATE {table_name} SET {set_values} WHERE {condition}"
+
+            self.cursor.execute(update_query)
+            self.conn.commit()
+            print(f"Data in {table_name} updated successfully.")
+
+        except mysql.connector.Error as err:
+            self.conn.rollback()
+            print("Error: {}".format(err))
+
+        finally:
+            self.disconnect_from_mysql()
+
     def disconnect_from_mysql(self):
         try:
             # Close the cursor and connection

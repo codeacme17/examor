@@ -33,7 +33,7 @@ const routes = [
         component: () => import('@/views/Profile.vue'),
       },
       {
-        path: '/note/:noteName',
+        path: '/note/:id',
         name: 'Note',
         component: () => import('@/views/Note.vue'),
       },

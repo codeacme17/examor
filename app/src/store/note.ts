@@ -28,7 +28,6 @@ export const useNoteStore = defineStore('noteStore', {
 
       const res = await _getNotes()
       this.$state.notes = res
-      console.log(res)
     },
   },
 })
