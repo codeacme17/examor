@@ -13,9 +13,9 @@ def _get_notes():
 
 
 def _get_note(id: int):
-    data = (id,)
+    query_data = (id,)
     select_query = "SELECT * FROM t_note WHERE id = %s"
-    res = MySQLHandler().execute_query(select_query, data, single=True)
+    res = MySQLHandler().execute_query(select_query, query_data, single=True)
     return api_result.success(res)
 
 
@@ -24,15 +24,20 @@ def _add_note(
     files: UploadFile = File(default=None),
     notionId: str = Form(default=None)
 ):
-    data = (noteName,)
+    query_data = (noteName,)
     duplicate_query = "SELECT * FROM t_note WHERE name = %s"
     insert_query = "INSERT INTO t_note (name) VALUES (%s)"
 
-    duplicate = MySQLHandler().execute_query(duplicate_query, data)
+    duplicate = MySQLHandler().execute_query(duplicate_query, query_data)
     if (len(duplicate)):
         return api_result.error("The same note name cannot be created repeatedly")
 
-    MySQLHandler().insert_table_data(insert_query, data)
+    MySQLHandler().insert_table_data(insert_query, query_data)
+    return api_result.success()
+
+
+def _delete_note(id: int):
+    MySQLHandler().delete_table_data('t_note', id)
     return api_result.success()
 
 

@@ -7,7 +7,7 @@ type State = {
   getNotesLoading: boolean
 }
 
-type NoteItem = {
+export type NoteItem = {
   id: string
   name: string
   icon: string

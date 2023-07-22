@@ -6,7 +6,7 @@ from utils.MySQLHandler import MySQLHandler
 from utils.profile_handler import set_profile_to_env
 from apis import profile, note
 
-app = FastAPI(validate_headers=False)
+app = FastAPI()
 
 
 @app.on_event('startup')
@@ -15,13 +15,11 @@ def startup():
     MySQLHandler().connect_to_mysql()
 
 
-# Get user profile
 @app.get("/profile")
 def get_profile():
     return profile._get_profile()
 
 
-# Update user profile
 @app.put("/profile")
 def set_profile(data: Profile):
     return profile._set_profile(data)
@@ -44,6 +42,11 @@ def add_note(
     notionId: str = Form(default=None)
 ):
     return note._add_note(noteName, files, notionId)
+
+
+@app.delete("/note")
+def delete_note(id: int):
+    return note._delete_note(id)
 
 
 @app.patch("/note/icon")

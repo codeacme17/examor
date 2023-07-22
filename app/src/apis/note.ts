@@ -8,7 +8,7 @@ export const NOTE_API = {
     })
   },
 
-  getNote(id: string) {
+  getNote(id: number) {
     return _axios({
       method: 'GET',
       url: `/api/note/${id}`,
@@ -23,6 +23,13 @@ export const NOTE_API = {
         'Content-Type': 'multipart/form-data',
       },
       data: data,
+    })
+  },
+
+  deleteNote(id: number) {
+    return _axios({
+      method: 'DELETE',
+      url: `/api/note?id=${id}`,
     })
   },
 

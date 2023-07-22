@@ -40,11 +40,12 @@ class MySQLHandler:
             print("Error: {}".format(err))
             return None
 
+    # update table data
     def update_table_data(
         self,
         table_name,
         set_values,
-        condition
+        condition,
     ):
         try:
             self.connect_to_mysql()
@@ -62,6 +63,7 @@ class MySQLHandler:
         finally:
             self.disconnect_from_mysql()
 
+    # insert table data
     def insert_table_data(
         self,
         query,
@@ -80,9 +82,28 @@ class MySQLHandler:
         finally:
             self.disconnect_from_mysql()
 
+    # delete table data by id
+    def delete_table_data(self, table_name, id):
+        try:
+            self.connect_to_mysql()
+
+            delete_query = f"DELETE FROM `{table_name}` WHERE id = %s"
+            data = (id, )
+
+            self.cursor.execute(delete_query, data)
+            self.conn.commit()
+            print("Note with ID {} deleted successfully.".format(id))
+
+        except mysql.connector.Error as err:
+            self.conn.rollback()
+            print("Error: {}".format(err))
+
+        finally:
+            self.disconnect_from_mysql()
+
+    # disconnect
     def disconnect_from_mysql(self):
         try:
-            # Close the cursor and connection
             if self.cursor is not None:
                 self.cursor.close()
             if self.conn is not None and self.conn.is_connected():

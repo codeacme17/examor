@@ -14,6 +14,7 @@ export const en = {
     upload: 'upload',
     update: 'update',
     addFile: 'add new file',
+    deleteNote: 'delete this note',
   },
 
   // the title & subtitle on each page
@@ -28,6 +29,7 @@ export const en = {
     otherConfigurations: 'Other Configurations',
     fileName: 'File Name',
     uploadDate: 'Upload Date',
+    createDate: 'Create Date',
   },
   subTitle: {
     notes: 'You can manage your notes here',

@@ -14,6 +14,7 @@ export const zhCN = {
     upload: '上传',
     update: '更新',
     addFile: '新增文件',
+    deleteNote: '删除该笔记',
   },
 
   title: {
@@ -27,6 +28,7 @@ export const zhCN = {
     otherConfigurations: '其他配置',
     fileName: '文件名',
     uploadDate: '上传日期',
+    createDate: '创建日期',
   },
 
   subTitle: {
