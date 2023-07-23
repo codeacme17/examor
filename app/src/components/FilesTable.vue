@@ -3,6 +3,7 @@
     fixed-header
     style="background-color: transparent"
     :bg-color="defaultBgColor"
+    :loading="getFilesLoading"
   >
     <thead>
       <tr>
@@ -13,8 +14,8 @@
     </thead>
 
     <tbody>
-      <tr v-for="item in fileList" :key="item.id">
-        <td>{{ item.fileName }}</td>
+      <tr v-for="item in list" :key="item.id">
+        <td>{{ item.file_name }}</td>
         <td style="width: 170px">
           {{ item.uploadDate }}
         </td>
@@ -75,43 +76,42 @@
 <script setup lang="ts">
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
-import { useI18n } from 'vue-i18n'
 
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { defaultBgColor, reverseTheme } from '@/utils'
+import { FILE_API } from '@/apis'
+import { useFetch } from '@/hooks'
 
 const { locale } = useI18n()
 
-const props = defineProps(['noteId'])
+const props = defineProps(['id'])
 
 const isShowUploadDialog = ref(false)
 
 type FileItem = {
   id: number
-  fileName: string
+  file_name: string
   uploadDate: string
-  isShowConfirmDeleteBtn: boolean
+  isShowConfirmDeleteBtn?: boolean
 }
 
-const list = [
-  {
-    id: 1,
-    fileName: 'vue-learn.md',
-    uploadDate: '2023-7-10',
-  },
-  {
-    id: 2,
-    fileName: 'vue-learn.md',
-    uploadDate: '2023-7-10',
-  },
-]
+onMounted(async () => {
+  await gitFileList()
+})
 
-const fileList = reactive<FileItem[]>(
-  list.map((item) => {
-    return {
-      ...item,
-      isShowConfirmDeleteBtn: false,
-    }
-  })
-)
+const list = ref<FileItem[]>([])
+const [getFiles, getFilesLoading] = useFetch(FILE_API.getFiles)
+const gitFileList = async () => {
+  const res = await getFiles(props.id)
+  list.value = reactive<FileItem[]>(
+    res.data.map((item: any) => {
+      return {
+        ...item,
+        uploadDate: '2023-10-2',
+        isShowConfirmDeleteBtn: false,
+      }
+    })
+  )
+}
 </script>

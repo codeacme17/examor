@@ -1,10 +1,9 @@
 from fastapi import UploadFile
 from fastapi import File, Form, UploadFile
 
-from utils import api_result
+from utils import api_result, file_handler
 from utils.MySQLHandler import MySQLHandler
 from typings.note_types import Icon
-from utils import file_handler
 
 
 def _get_notes():
@@ -33,12 +32,14 @@ def _add_note(
     if (len(duplicate)):
         return api_result.error("The same note name cannot be created repeatedly")
 
+    noteId = MySQLHandler().insert_table_data(insert_query, query_data)
+
     if (len(files) > 0):
-        file_handler.save_files(files, noteName)
+        file_handler.upload_file(noteId, files, noteName)
 
-    return
+    if (notionId is not None):
+        file_handler.load_notion(notionId)
 
-    MySQLHandler().insert_table_data(insert_query, query_data)
     return api_result.success()
 
 

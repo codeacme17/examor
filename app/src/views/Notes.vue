@@ -34,11 +34,7 @@
             :elevation="0"
           >
             <!-- note name & icon -->
-            <NoteHeader
-              :id="currentNote.id"
-              :name="currentNote.name"
-              :icon="currentNote.icon"
-            />
+            <NoteHeader v-bind="currentNote" :index="currentIndex" />
 
             <v-progress-linear model-value="20" class="mt-1 mb-2" />
 
@@ -63,16 +59,17 @@
           <!-- Tabs -->
           <v-card
             class="align-self-start"
+            width="240px"
             :color="defaultBgColor"
             :elevation="0"
-            width="240px"
           >
             <v-tabs direction="vertical">
               <v-tab
                 v-for="(item, index) in NOTE_STORE.notes"
                 v-model="currentIndex"
-                :key="index"
-                @click="handleClickTab(item, index)"
+                :value="index"
+                :key="item.id"
+                @click="handleClickTab(index)"
               >
                 <v-icon start> {{ item.icon }} </v-icon>
                 {{ item.name }}
@@ -179,7 +176,7 @@ export default {
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, watch } from 'vue'
 import {
   defaultBgColor,
   reverseTheme,
@@ -187,7 +184,7 @@ import {
   greenBgColor,
 } from '@/utils'
 import { useI18n } from 'vue-i18n'
-import { useNoteStore, NoteItem } from '@/store'
+import { useNoteStore } from '@/store'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 
@@ -198,18 +195,14 @@ const isShowUploadDialog = ref(false)
 
 // Handle click tab event
 let currentNote = NOTE_STORE.notes[0]
+NOTE_STORE.currentIcon = currentNote.icon
 const currentIndex = ref(0)
 const isChangeNote = ref(false)
-const handleClickTab = (item: NoteItem, index: number) => {
-  if (item.id === currentNote.id) return
-  isChangeNote.value = true
-  currentNote = NOTE_STORE.notes[index]
+const handleClickTab = async (index: number) => {
+  if (index === currentIndex.value) return
+
   currentIndex.value = index
   isShowConfirmDeleteBtn.value = false
-
-  nextTick(() => {
-    isChangeNote.value = false
-  })
 }
 
 // Handle delete note event
@@ -225,8 +218,17 @@ const handleDeleteNote = async () => {
   if (currentIndex.value === length - 1) currentIndex.value -= 1
   else currentIndex.value += 1
 
-  currentNote = NOTE_STORE.notes[currentIndex.value]
-  isShowConfirmDeleteBtn.value = false
   await NOTE_STORE.getNotes()
+  await handleClickTab(currentIndex.value)
 }
+
+watch(currentIndex, () => {
+  isChangeNote.value = true
+  currentNote = NOTE_STORE.notes[currentIndex.value]
+  NOTE_STORE.currentIcon = currentNote.icon
+
+  nextTick(() => {
+    isChangeNote.value = false
+  })
+})
 </script>

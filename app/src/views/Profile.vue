@@ -10,7 +10,7 @@
 
       <!-- OpenAI  -->
       <div class="d-flex">
-        <OpenaiIcon width="30" class="mb-12 mr-4" />
+        <OpenaiIcon width="30" class="mb-3 mr-4" />
 
         <div style="flex: 1">
           <v-text-field
@@ -27,24 +27,6 @@
               formData.openaiKey.show = !formData.openaiKey.show
             "
           />
-
-          <v-tooltip
-            location="bottom left"
-            offset="4"
-            :text="$t('hint.openAIBilling')"
-            :open-delay="3"
-            :open-on-hover="true"
-          >
-            <template v-slot:activator="{ props }">
-              <v-progress-linear
-                :height="6"
-                v-bind="props"
-                color="primary"
-                model-value="20"
-                class="mb-8"
-              />
-            </template>
-          </v-tooltip>
         </div>
       </div>
 

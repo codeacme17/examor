@@ -74,6 +74,8 @@ class MySQLHandler:
             self.cursor.execute(query, data)
             self.conn.commit()
             print("New data inserted successfully.")
+            inserted_id = self.cursor.lastrowid
+            return inserted_id
 
         except mysql.connector.Error as err:
             self.conn.rollback()

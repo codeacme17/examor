@@ -6,7 +6,7 @@
           v-bind="props"
           variant="text"
           class="mr-2"
-          :icon="currentIcon"
+          :icon="NOTE_STORE.currentIcon"
           style="font-size: 27px; border-radius: 0px; border-radius: 3px"
         />
       </template>
@@ -29,7 +29,7 @@
           variant="outlined"
           density="compact"
           :append-inner-icon="updateIconLoading ? '' : 'mdi-location-enter'"
-          :placeholder="currentIcon"
+          :placeholder="NOTE_STORE.currentIcon"
           :hide-details="true"
           @click:append-inner="handleChangeIcon"
           @keydown.prevent.enter="handleChangeIcon"
@@ -42,14 +42,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs } from 'vue'
+import { ref } from 'vue'
 import { useFetch } from '@/hooks'
 import { NOTE_API } from '@/apis'
 import { useNoteStore } from '@/store'
 
-const props = defineProps(['id', 'name', 'icon'])
-
-const { icon: currentIcon } = toRefs(props)
+const props = defineProps(['id', 'name'])
 
 const NOTE_STORE = useNoteStore()
 const [updateNoteIcon, updateIconLoading] = useFetch(NOTE_API.updateNoteIcon)
@@ -64,7 +62,7 @@ const handleChangeIcon = async () => {
   })
 
   if (res.code !== 0) return
-  currentIcon!.value = inputIconValue.value
+  NOTE_STORE.currentIcon = inputIconValue.value
   await NOTE_STORE.getNotes()
   inputIconValue.value = ''
 }

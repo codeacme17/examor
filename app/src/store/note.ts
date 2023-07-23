@@ -4,6 +4,7 @@ import { useFetch } from '@/hooks'
 
 type State = {
   notes: NoteItem[]
+  currentIcon: string
   getNotesLoading: boolean
 }
 
@@ -15,6 +16,7 @@ export type NoteItem = {
 
 const state: State = {
   notes: [],
+  currentIcon: '',
   getNotesLoading: false,
 }
 

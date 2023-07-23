@@ -4,7 +4,7 @@ from typings.note_types import Icon
 
 from utils.MySQLHandler import MySQLHandler
 from utils.profile_handler import set_profile_to_env
-from apis import profile, note
+from apis import profile, note, document
 
 app = FastAPI()
 
@@ -52,6 +52,11 @@ def delete_note(id: int):
 @app.patch("/note/icon")
 def update_note_icon(data: Icon):
     return note._update_note_icon(data)
+
+
+@app.get("/files")
+def get_files_by_noteId(id: int):
+    return document._get_files_by_noteId(id)
 
 
 @app.on_event("shutdown")
