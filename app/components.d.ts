@@ -10,6 +10,7 @@ declare module 'vue' {
     Answer: typeof import('./src/components/Answer.vue')['default']
     AzureIcon: typeof import('./src/components/icons/AzureIcon.vue')['default']
     EmptyBlock: typeof import('./src/components/EmptyBlock.vue')['default']
+    NoteHeader: typeof import('./src/components/NoteHeader.vue')['default']
     NotionIcon: typeof import('./src/components/icons/NotionIcon.vue')['default']
     OpenaiIcon: typeof import('./src/components/icons/OpenaiIcon.vue')['default']
     PineconeIcon: typeof import('./src/components/icons/PineconeIcon.vue')['default']
@@ -18,6 +19,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TBtn: typeof import('tdesign-vue-next')['Btn']
     TConfigProvider: typeof import('tdesign-vue-next')['ConfigProvider']
+    TPopconfirm: typeof import('tdesign-vue-next')['Popconfirm']
     TUpload: typeof import('tdesign-vue-next')['Upload']
   }
 }

@@ -34,10 +34,12 @@
             color="transparent"
             :elevation="0"
           >
-            <h2 class="d-flex align-center mt-2 mb-4" id="note_title">
-              <v-icon class="mr-3" :icon="currentNote.icon" />
-              {{ currentNote.name }}
-            </h2>
+            <!-- note name & icon -->
+            <NoteHeader
+              :id="currentNote.id"
+              :name="currentNote.name"
+              :icon="currentNote.icon"
+            />
 
             <v-progress-linear model-value="20" class="mt-1 mb-2" />
 
@@ -52,6 +54,7 @@
               {{ $t('button.addFile') }}
             </v-btn>
 
+            <!-- Files Table -->
             <v-table
               fixed-header
               style="background-color: transparent"
@@ -67,7 +70,9 @@
               <tbody>
                 <tr v-for="item in fileList" :key="item.id">
                   <td>{{ item.fileName }}</td>
-                  <td style="width: 170px">{{ item.uploadDate }}</td>
+                  <td style="width: 170px">
+                    {{ item.uploadDate }}
+                  </td>
                   <td style="width: 170px">
                     <div class="d-flex justify-end align-center">
                       <v-btn
@@ -79,8 +84,15 @@
                         {{ $t('button.update') }}
                       </v-btn>
                       <v-btn
+                        v-if="!item.isShowConfirmDeleteBtn"
                         icon="mdi-delete-empty"
-                        size="small"
+                        style="font-size: 16px"
+                        :flat="true"
+                        @click="item.isShowConfirmDeleteBtn = true"
+                      />
+                      <v-btn
+                        v-else
+                        icon="mdi-check-all"
                         style="font-size: 16px"
                         :flat="true"
                       />
@@ -92,7 +104,9 @@
           </v-card>
         </Transition>
 
+        <!-- Side bar: Tabs & Note Info & Delete Note -->
         <section class="ml-5">
+          <!-- Tabs -->
           <v-card
             class="align-self-start"
             :color="defaultBgColor"
@@ -101,10 +115,10 @@
           >
             <v-tabs direction="vertical">
               <v-tab
-                v-for="item in NOTE_STORE.notes"
-                :value="item.id"
-                :key="item.id"
-                @click="handleClickTab(item)"
+                v-for="(item, index) in NOTE_STORE.notes"
+                v-model="currentIndex"
+                :key="index"
+                @click="handleClickTab(item, index)"
               >
                 <v-icon start> {{ item.icon }} </v-icon>
                 {{ item.name }}
@@ -112,6 +126,7 @@
             </v-tabs>
           </v-card>
 
+          <!-- Note Info -->
           <v-card
             class="align-self-start mt-3"
             :color="defaultBgColor"
@@ -132,26 +147,47 @@
             </Transition>
           </v-card>
 
+          <!-- Delete Note -->
+          <!-- Delete Button -->
           <v-btn
+            v-if="!isShowConfirmDeleteBtn"
             block
-            class="mt-6"
+            class="mt-3"
             id="delete_btn"
             type="icon"
             variant="tonal"
             :color="orangeBgColor"
+            @click="isShowConfirmDeleteBtn = true"
+          >
+            <v-icon
+              icon="mdi-delete-empty"
+              style="font-size: 20px; margin-right: 8px"
+            />
+            {{ $t('button.deleteNote') }}
+          </v-btn>
+          <!-- Confirm Delete Button -->
+          <v-btn
+            v-else
+            block
+            class="mt-3"
+            id="delete_btn"
+            type="icon"
+            variant="tonal"
+            :color="greenBgColor"
             :loading="deleteNodeLoading"
             @click="handleDeleteNote"
           >
             <v-icon
-              icon="mdi-delete-empty"
-              style="font-size: 20px; margin-right: 6px"
+              icon="mdi-check-all"
+              style="font-size: 20px; margin-right: 8px"
             />
-            {{ $t('button.deleteNote') }}
+            {{ $t('button.confirmDelete') }}
           </v-btn>
         </section>
       </section>
     </section>
 
+    <!-- Upload file dialog -->
     <v-dialog
       v-model="isShowUploadDialog"
       theme="light"
@@ -186,15 +222,21 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { reactive, ref, nextTick } from 'vue'
-import { defaultBgColor, reverseTheme, orangeBgColor } from '@/utils'
+import enConfig from 'tdesign-vue-next/es/locale/en_US'
+import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
+
+import { ref, nextTick } from 'vue'
+import {
+  defaultBgColor,
+  reverseTheme,
+  orangeBgColor,
+  greenBgColor,
+} from '@/utils'
 import { useI18n } from 'vue-i18n'
 import { useNoteStore, NoteItem } from '@/store'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
-
-import enConfig from 'tdesign-vue-next/es/locale/en_US'
-import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
+import { reactive } from 'vue'
 
 const { locale } = useI18n()
 const NOTE_STORE = useNoteStore()
@@ -203,9 +245,10 @@ type FileItem = {
   id: number
   fileName: string
   uploadDate: string
+  isShowConfirmDeleteBtn: boolean
 }
 
-const fileList: FileItem[] = [
+const list = [
   {
     id: 1,
     fileName: 'vue-learn.md',
@@ -218,17 +261,27 @@ const fileList: FileItem[] = [
   },
 ]
 
+const fileList = reactive<FileItem[]>(
+  list.map((item) => {
+    return {
+      ...item,
+      isShowConfirmDeleteBtn: false,
+    }
+  })
+)
+
 const isShowUploadDialog = ref(false)
 
 // Handle click tab event
-const currentNote = reactive({ ...NOTE_STORE.notes[0] })
+let currentNote = NOTE_STORE.notes[0]
+const currentIndex = ref(0)
 const isChangeNote = ref(false)
-const handleClickTab = (item: NoteItem) => {
+const handleClickTab = (item: NoteItem, index: number) => {
   if (item.id === currentNote.id) return
   isChangeNote.value = true
-  currentNote.id = item.id
-  currentNote.name = item.name
-  currentNote.icon = item.icon
+  currentNote = NOTE_STORE.notes[index]
+  currentIndex.value = index
+  isShowConfirmDeleteBtn.value = false
 
   nextTick(() => {
     isChangeNote.value = false
@@ -236,12 +289,20 @@ const handleClickTab = (item: NoteItem) => {
 }
 
 // Handle delete note event
+const isShowConfirmDeleteBtn = ref(false)
 const [deleteNote, deleteNodeLoading] = useFetch(
   NOTE_API.deleteNote,
-  `delete note ${currentNote.name} successfully`
+  `delete note ${currentNote && currentNote.name} successfully`
 )
 const handleDeleteNote = async () => {
   await deleteNote(currentNote.id)
+
+  const length = NOTE_STORE.notes.length
+  if (currentIndex.value === length - 1) currentIndex.value -= 1
+  else currentIndex.value += 1
+
+  currentNote = NOTE_STORE.notes[currentIndex.value]
+  isShowConfirmDeleteBtn.value = false
   await NOTE_STORE.getNotes()
 }
 </script>

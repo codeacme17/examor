@@ -1,46 +1,11 @@
 <template>
   <v-container style="max-width: 1080px">
     <!-- note name & icon -->
-    <h2 class="mb-3 d-flex align-center">
-      <v-menu :close-on-content-click="false" offset="6">
-        <template v-slot:activator="{ props }">
-          <v-btn
-            v-bind="props"
-            variant="text"
-            class="mr-2"
-            :icon="currentNoteIcon"
-            style="font-size: 27px; border-radius: 0px; border-radius: 3px"
-          />
-        </template>
-
-        <v-card min-width="420" class="px-5 py-3">
-          <div class="mb-3 text-body-1">
-            {{ $t('hint.getIcon') }}
-            <a
-              href="https://pictogrammers.com/library/mdi/"
-              target="_blank"
-              style="text-decoration: none; font-weight: 600"
-            >
-              Material Design Icons
-            </a>
-          </div>
-
-          <v-text-field
-            v-model.trim="inputNoteIcon"
-            class="mb-1"
-            variant="outlined"
-            density="compact"
-            :append-inner-icon="updateIconLoading ? '' : 'mdi-location-enter'"
-            :placeholder="currentNoteIcon"
-            :hide-details="true"
-            @click:append-inner="handleChangeIcon"
-            @keydown.prevent.enter="handleChangeIcon"
-          />
-        </v-card>
-      </v-menu>
-
-      <div>{{ currentNoteName }}</div>
-    </h2>
+    <NoteHeader
+      :id="currentNoteId"
+      :name="currentNoteName"
+      :icon="currentNoteIcon"
+    />
 
     <Transition
       :name="
@@ -121,7 +86,6 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLocalStorage } from '@vueuse/core'
 import { useFetch } from '@/hooks'
-import { useNoteStore } from '@/store'
 import { greenBgColor } from '@/utils'
 import { NOTE_API } from '@/apis'
 import type { TableItem } from '@/components/QuestionTable.vue'
@@ -136,26 +100,11 @@ const currentNoteId = route.params.id
 const currentNoteName = ref('')
 const currentNoteIcon = ref('mdi-text-box-outline')
 
-const NOTE_STORE = useNoteStore()
 const [getNote] = useFetch(NOTE_API.getNote)
-const [updateNoteIcon, updateIconLoading] = useFetch(NOTE_API.updateNoteIcon)
-
 const getNoteInfo = async () => {
   const { data } = await getNote(currentNoteId)
   currentNoteIcon.value = data.icon
   currentNoteName.value = data.name
-}
-
-const inputNoteIcon = ref('')
-const handleChangeIcon = async () => {
-  if (!inputNoteIcon.value) return
-  await updateNoteIcon({
-    id: currentNoteId,
-    icon: inputNoteIcon.value,
-  })
-  await NOTE_STORE.getNotes()
-  currentNoteIcon.value = inputNoteIcon.value
-  inputNoteIcon.value = ''
 }
 
 // Handle question

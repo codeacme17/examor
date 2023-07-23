@@ -15,6 +15,7 @@ export const zhCN = {
     update: '更新',
     addFile: '新增文件',
     deleteNote: '删除该笔记',
+    confirmDelete: '确认删除',
   },
 
   title: {
