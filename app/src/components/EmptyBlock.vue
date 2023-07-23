@@ -27,5 +27,3 @@ import { useDark } from '@vueuse/core'
 
 const isDark = useDark()
 </script>
-
-<style lang="scss" scoped></style>

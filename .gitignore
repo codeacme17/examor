@@ -25,3 +25,4 @@ pnpm-debug.log*
 # Python dir
 __pycache__
 profile.json
+temp

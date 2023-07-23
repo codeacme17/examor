@@ -34,6 +34,7 @@
           placeholder=""
           theme="file-flow"
           multiple
+          :accept="['.md']"
           :autoUpload="false"
         />
       </t-config-provider>
@@ -71,6 +72,7 @@ export default {
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
+import { MessagePlugin } from 'tdesign-vue-next'
 import { useI18n } from 'vue-i18n'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
@@ -129,6 +131,11 @@ const handleConfirmAdd = async () => {
   _formData.append('notionId', formData.notion)
 
   formData.files.forEach((item) => {
+    if (item.type !== 'text/markdown' && item.type !== 'text/x-markdown') {
+      MessagePlugin.warning("Only '.md' type files are allowed to be uploaded")
+      return
+    }
+
     _formData.append('files', item.raw)
   })
 

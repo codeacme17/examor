@@ -38,7 +38,7 @@ def get_note(id: int):
 @app.post("/note")
 def add_note(
     noteName: str = Form(),
-    files: UploadFile = File(default=None),
+    files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None)
 ):
     return note._add_note(noteName, files, notionId)
