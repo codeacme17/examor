@@ -17,7 +17,6 @@
       </h4>
     </EmptyBlock>
 
-    <!-- Note List -->
     <section v-else>
       <h2>
         {{ $t('title.notes') }}

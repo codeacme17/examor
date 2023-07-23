@@ -6,7 +6,7 @@
           v-bind="props"
           variant="text"
           class="mr-2"
-          :icon="currentNote.icon"
+          :icon="currentIcon"
           style="font-size: 27px; border-radius: 0px; border-radius: 3px"
         />
       </template>
@@ -29,7 +29,7 @@
           variant="outlined"
           density="compact"
           :append-inner-icon="updateIconLoading ? '' : 'mdi-location-enter'"
-          :placeholder="currentNote.icon"
+          :placeholder="currentIcon"
           :hide-details="true"
           @click:append-inner="handleChangeIcon"
           @keydown.prevent.enter="handleChangeIcon"
@@ -37,37 +37,35 @@
       </v-card>
     </v-menu>
 
-    <div>{{ currentNote.name }}</div>
+    <div>{{ props.name }}</div>
   </h2>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useFetch } from '@/hooks'
 import { NOTE_API } from '@/apis'
 import { useNoteStore } from '@/store'
 
 const props = defineProps(['id', 'name', 'icon'])
 
-const [updateNoteIcon, updateIconLoading] = useFetch(NOTE_API.updateNoteIcon)
+const { icon: currentIcon } = toRefs(props)
 
 const NOTE_STORE = useNoteStore()
-const currentNote = reactive({
-  id: props.id,
-  icon: ref(props.icon),
-  name: ref(props.name),
-})
+const [updateNoteIcon, updateIconLoading] = useFetch(NOTE_API.updateNoteIcon)
 
 const inputIconValue = ref('')
 const handleChangeIcon = async () => {
   if (!inputIconValue.value) return
 
-  await updateNoteIcon({
-    id: currentNote.id,
+  const res = await updateNoteIcon({
+    id: props.id,
     icon: inputIconValue.value,
   })
+
+  if (res.code !== 0) return
+  currentIcon!.value = inputIconValue.value
   await NOTE_STORE.getNotes()
-  currentNote.icon = inputIconValue.value
   inputIconValue.value = ''
 }
 </script>

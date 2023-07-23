@@ -1,11 +1,10 @@
 <template>
   <v-container style="max-width: 1080px">
     <!-- note name & icon -->
-    <NoteHeader
-      :id="currentNoteId"
-      :name="currentNoteName"
-      :icon="currentNoteIcon"
-    />
+    <h2 class="mb-3 d-flex align-center">
+      <v-icon class="mr-3" :icon="currentNote.icon" />
+      <div>{{ currentNote.name }}</div>
+    </h2>
 
     <Transition
       :name="
@@ -28,7 +27,8 @@
         <!-- question table -->
         <QuestionTable
           :id="currentQuestionId"
-          :name="currentNoteId"
+          :name="currentNote.name"
+          :questionCounts="questionCounts"
           @questionPickEmit="handlePickQuestion"
         />
       </section>
@@ -82,7 +82,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLocalStorage } from '@vueuse/core'
 import { useFetch } from '@/hooks'
@@ -92,26 +92,28 @@ import type { TableItem } from '@/components/QuestionTable.vue'
 
 const route = useRoute()
 
-onMounted(() => {
-  getNoteInfo()
+onMounted(async () => {
+  await getNoteInfo()
 })
 
-const currentNoteId = route.params.id
-const currentNoteName = ref('')
-const currentNoteIcon = ref('mdi-text-box-outline')
+const currentNote = reactive({
+  id: route.params.id,
+  name: '',
+  icon: 'mdi-text-box-outline',
+})
 
 const [getNote] = useFetch(NOTE_API.getNote)
 const getNoteInfo = async () => {
-  const { data } = await getNote(currentNoteId)
-  currentNoteIcon.value = data.icon
-  currentNoteName.value = data.name
+  const { data } = await getNote(currentNote.id)
+  currentNote.name = data.name
+  currentNote.icon = data.icon
 }
 
 // Handle question
 const isShowAnswer = ref(false)
 const currentQuestionId = ref('')
 const currentQuesiton = ref('')
-const questionCounts = useLocalStorage(`questionCounts-${currentNoteId}`, 3)
+const questionCounts = useLocalStorage(`questionCounts-${currentNote.id}`, 3)
 const handlePickQuestion = (item: TableItem) => {
   isShowAnswer.value = true
   currentQuestionId.value = item.id

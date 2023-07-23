@@ -14,7 +14,7 @@
 
       <tbody>
         <tr
-          v-for="item in desserts.slice(0, questionCounts)"
+          v-for="item in desserts.slice(0, props.questionCounts)"
           :key="item.question"
         >
           <td style="width: 50px">
@@ -56,7 +56,6 @@
 
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue'
-import { useLocalStorage } from '@vueuse/core'
 import { defaultBgColor, orangeBgColor } from '@/utils'
 
 export type TableItem = {
@@ -75,6 +74,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  questionCounts: {
+    type: Number,
+    required: true,
+  },
 })
 
 const emits = defineEmits(['questionPickEmit'])
@@ -84,8 +87,6 @@ const isPending = (item: TableItem): ComputedRef<boolean> => {
     return !!localStorage.getItem(`pending-answer-value-${item.id}`)
   })
 }
-
-const questionCounts = useLocalStorage(`questionCounts-${props.name}`, 3)
 
 const handlePickQuestion = (item: TableItem) => {
   emits('questionPickEmit', item)
