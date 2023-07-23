@@ -82,5 +82,7 @@ export const en = {
 
   message: {
     successAddNote: 'Note add successfully',
+    notionKeyStart: 'Please bind the',
+    notionKeyEnd: 'before uploading',
   },
 }

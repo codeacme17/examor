@@ -67,6 +67,7 @@
               <v-tab
                 v-for="(item, index) in NOTE_STORE.notes"
                 v-model="currentIndex"
+                class="text-body-1"
                 :value="index"
                 :key="item.id"
                 @click="handleClickTab(index)"

@@ -3,14 +3,11 @@ import { PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 
 type State = {
-  profile: any | Keys
+  profile: Record<Key, ProfileItem>
   confirmLoading: boolean
 }
 
-type Keys = {
-  openaiKey: ProfileItem
-  notionKey: ProfileItem
-}
+type Key = 'openaiKey' | 'notionKey' | 'proxy'
 
 type ProfileItem = {
   value: string

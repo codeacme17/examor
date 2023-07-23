@@ -42,6 +42,10 @@
           :append-inner-icon="
             formData.notionKey.show ? 'mdi-eye' : 'mdi-eye-off'
           "
+          :base-color="
+            PROFILE_STORE.profile.notionKey.error ? orangeBgColor : ''
+          "
+          :color="PROFILE_STORE.profile.notionKey.error ? orangeBgColor : ''"
           :type="formData.notionKey.show ? 'text' : 'password'"
           @click:append-inner="
             formData.notionKey.show = !formData.notionKey.show
@@ -80,8 +84,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import { watchDeep } from '@vueuse/core'
+import { orangeBgColor } from '@/utils'
 import { useProfileStore } from '@/store'
 
 const PROFILE_STORE = useProfileStore()
@@ -90,12 +95,20 @@ const isUpdateFormData = ref(false)
 
 watchDeep(formData, () => {
   isUpdateFormData.value = true
+
+  if (formData.notionKey) {
+    PROFILE_STORE.profile.notionKey.error = false
+  }
 })
 
 const handleConfirm = async () => {
   await PROFILE_STORE.setProfile()
   isUpdateFormData.value = false
 }
+
+onUnmounted(() => {
+  PROFILE_STORE.profile.notionKey.error = false
+})
 </script>
 
 <style scoped lang="scss">

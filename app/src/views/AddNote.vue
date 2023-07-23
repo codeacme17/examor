@@ -46,6 +46,7 @@
         variant="outlined"
         density="compact"
         :label="$t('label.notionDataBaseID')"
+        :disabled="!PROFILE_STORE.profile.notionKey.value"
       />
 
       <div class="mt-4 d-flex justify-end">
@@ -61,6 +62,24 @@
         </v-btn>
       </div>
     </form>
+
+    <v-snackbar v-model="isShowSnackbar">
+      {{ $t('message.notionKeyStart') }}
+      <v-btn size="small" variant="text" @click="$router.push('/profile')">
+        NOTION_KEY
+      </v-btn>
+      {{ $t('message.notionKeyEnd') }}
+
+      <template v-slot:actions>
+        <v-btn
+          color="pink"
+          variant="text"
+          icon="mdi-close"
+          size="small"
+          @click="isShowSnackbar = false"
+        />
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -71,12 +90,12 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { reactive, computed } from 'vue'
+import { reactive, computed, ref } from 'vue'
 import { MessagePlugin } from 'tdesign-vue-next'
 import { useI18n } from 'vue-i18n'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
-import { useNoteStore } from '@/store'
+import { useNoteStore, useProfileStore } from '@/store'
 
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
@@ -115,9 +134,20 @@ const disabled = computed(() => {
   return false
 })
 
+const PROFILE_STORE = useProfileStore()
+const isShowSnackbar = ref(false)
 const handleSelectChange = () => {
   formData.files = []
   formData.notion = ''
+
+  if (
+    formData.noteType === 'notion' &&
+    !PROFILE_STORE.profile.notionKey.value
+  ) {
+    isShowSnackbar.value = true
+    PROFILE_STORE.profile.notionKey.error = true
+    return
+  }
 }
 
 const [addNote, loading] = useFetch(

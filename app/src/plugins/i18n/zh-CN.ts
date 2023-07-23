@@ -79,5 +79,7 @@ export const zhCN = {
 
   message: {
     successAddNote: '笔记新增成功',
+    notionKeyStart: '请先绑定',
+    notionKeyEnd: '再进行上传',
   },
 }
