@@ -55,52 +55,7 @@
             </v-btn>
 
             <!-- Files Table -->
-            <v-table
-              fixed-header
-              style="background-color: transparent"
-              :bg-color="defaultBgColor"
-            >
-              <thead>
-                <tr>
-                  <th class="text-left">{{ $t('title.fileName') }}</th>
-                  <th class="text-left">{{ $t('title.uploadDate') }}</th>
-                  <th class="text-right"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in fileList" :key="item.id">
-                  <td>{{ item.fileName }}</td>
-                  <td style="width: 170px">
-                    {{ item.uploadDate }}
-                  </td>
-                  <td style="width: 170px">
-                    <div class="d-flex justify-end align-center">
-                      <v-btn
-                        class="ml-auto"
-                        variant="text"
-                        :flat="true"
-                        @click="isShowUploadDialog = true"
-                      >
-                        {{ $t('button.update') }}
-                      </v-btn>
-                      <v-btn
-                        v-if="!item.isShowConfirmDeleteBtn"
-                        icon="mdi-delete-empty"
-                        style="font-size: 16px"
-                        :flat="true"
-                        @click="item.isShowConfirmDeleteBtn = true"
-                      />
-                      <v-btn
-                        v-else
-                        icon="mdi-check-all"
-                        style="font-size: 16px"
-                        :flat="true"
-                      />
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </v-table>
+            <FilesTable :id="currentNote.id" />
           </v-card>
         </Transition>
 
@@ -236,39 +191,9 @@ import { useI18n } from 'vue-i18n'
 import { useNoteStore, NoteItem } from '@/store'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
-import { reactive } from 'vue'
 
 const { locale } = useI18n()
 const NOTE_STORE = useNoteStore()
-
-type FileItem = {
-  id: number
-  fileName: string
-  uploadDate: string
-  isShowConfirmDeleteBtn: boolean
-}
-
-const list = [
-  {
-    id: 1,
-    fileName: 'vue-learn.md',
-    uploadDate: '2023-7-10',
-  },
-  {
-    id: 1,
-    fileName: 'vue-learn.md',
-    uploadDate: '2023-7-10',
-  },
-]
-
-const fileList = reactive<FileItem[]>(
-  list.map((item) => {
-    return {
-      ...item,
-      isShowConfirmDeleteBtn: false,
-    }
-  })
-)
 
 const isShowUploadDialog = ref(false)
 
