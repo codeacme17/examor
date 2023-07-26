@@ -1,6 +1,4 @@
-from fastapi import UploadFile
 from fastapi import File, Form, UploadFile
-
 from utils import api_result, file_handler
 from utils.MySQLHandler import MySQLHandler
 from typings.note_types import Icon
@@ -22,7 +20,7 @@ def _get_note(id: int):
 def _add_note(
     noteName: str = Form(),
     files: list[UploadFile] = File(default=None),
-    notionId: str = Form(default=None)
+    notionId: str = Form(default=None),
 ):
     query_data = (noteName,)
     duplicate_query = "SELECT * FROM t_note WHERE name = %s"

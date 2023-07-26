@@ -9,8 +9,8 @@ from utils.tools import CustomError
 TEMP_PATH = os.path.join(os.getcwd(), "temp")
 
 
-def upload_file(noteId: int, files: list[UploadFile], folderName):
-    TARGET_FOLDER_PATH = os.path.join(TEMP_PATH, folderName)
+def upload_file(noteId: int, files: list[UploadFile], noteName):
+    TARGET_FOLDER_PATH = os.path.join(TEMP_PATH, noteName)
 
     if not os.path.exists(TARGET_FOLDER_PATH):
         os.makedirs(TARGET_FOLDER_PATH)

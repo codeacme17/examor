@@ -2,6 +2,7 @@ CREATE TABLE t_note (
 	id int(12) auto_increment NOT NULL COMMENT 'note id',
 	name varchar(100) NOT NULL COMMENT 'note name',
 	icon varchar(30) DEFAULT 'mdi-text-box-outline' NULL COMMENT 'document icon',
+	upload_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'record update time',
 	CONSTRAINT t_note_pk PRIMARY KEY (id)
 )
 ENGINE=InnoDB
@@ -13,6 +14,7 @@ CREATE TABLE t_document (
 	note_id int(12) NOT NULL COMMENT 'note id',
 	file_name varchar(100) NULL COMMENT 'file name',
 	document TEXT NOT NULL COMMENT 'document content',
+	upload_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'record update time',
 	CONSTRAINT t_document_pk PRIMARY KEY (id),
 	CONSTRAINT t_document_FK FOREIGN KEY (note_id) REFERENCES t_note(id) ON DELETE CASCADE ON UPDATE CASCADE
 )
@@ -28,6 +30,7 @@ CREATE TABLE t_question (
 	is_pushed char(1) DEFAULT '0' NOT NULL COMMENT 'has pushed to user  0-No  1-Yes',
 	progress NUMERIC NOT NULL COMMENT 'accumulated score',
 	gpt_answer TEXT NULL COMMENT 'gpt`s answer',
+	upload_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'record update time',
 	CONSTRAINT t_question_pk PRIMARY KEY (id),
 	CONSTRAINT t_question_FK FOREIGN KEY (document_id) REFERENCES t_document(id) ON DELETE CASCADE ON UPDATE CASCADE
 )
