@@ -85,14 +85,10 @@ class MySQLHandler:
             self.disconnect_from_mysql()
 
     # delete table data by id
-    def delete_table_data(self, table_name, id):
+    def delete_table_data(self, query, data):
         try:
             self.connect_to_mysql()
-
-            delete_query = f"DELETE FROM `{table_name}` WHERE id = %s"
-            data = (id, )
-
-            self.cursor.execute(delete_query, data)
+            self.cursor.execute(query, data)
             self.conn.commit()
             print("Note with ID {} deleted successfully.".format(id))
 

@@ -92,7 +92,7 @@
               >
                 <v-list-item
                   :title="$t('title.uploadDate')"
-                  subtitle="2023-10-2"
+                  :subtitle="currentNote.upload_date"
                 />
                 <v-list-item :title="$t('hint.memory')" subtitle="50%" />
               </v-list>

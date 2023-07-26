@@ -1,5 +1,9 @@
 <template>
+  <!-- Empty Notice Block -->
+  <section v-if="!list.length" />
+
   <v-table
+    v-else
     fixed-header
     style="background-color: transparent"
     :bg-color="defaultBgColor"
@@ -17,7 +21,7 @@
       <tr v-for="item in list" :key="item.id">
         <td>{{ item.file_name }}</td>
         <td style="width: 170px">
-          {{ item.uploadDate }}
+          {{ item.upload_date }}
         </td>
         <td style="width: 170px">
           <div class="d-flex justify-end align-center">
@@ -41,6 +45,8 @@
               icon="mdi-check-all"
               style="font-size: 16px"
               :flat="true"
+              :loading="deleteFileLoading"
+              @click="handleDeleteFile(item)"
             />
           </div>
         </td>
@@ -92,7 +98,7 @@ const isShowUploadDialog = ref(false)
 type FileItem = {
   id: number
   file_name: string
-  uploadDate: string
+  upload_date: string
   isShowConfirmDeleteBtn?: boolean
 }
 
@@ -104,14 +110,23 @@ const list = ref<FileItem[]>([])
 const [getFiles, getFilesLoading] = useFetch(FILE_API.getFiles)
 const gitFileList = async () => {
   const res = await getFiles(props.id)
+
   list.value = reactive<FileItem[]>(
     res.data.map((item: any) => {
       return {
         ...item,
-        uploadDate: '2023-10-2',
         isShowConfirmDeleteBtn: false,
       }
     })
   )
+}
+
+const [deleteFile, deleteFileLoading] = useFetch(FILE_API.deleteFile)
+const handleDeleteFile = async (item: FileItem) => {
+  await deleteFile({
+    id: props.id,
+    file_name: item.file_name,
+  })
+  await gitFileList()
 }
 </script>

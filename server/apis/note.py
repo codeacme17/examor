@@ -42,7 +42,12 @@ def _add_note(
 
 
 def _delete_note(id: int):
-    MySQLHandler().delete_table_data('t_note', id)
+    query = """
+            DELETE FROM t_note
+            WHERE id = %s;
+            """
+    data = (id, )
+    MySQLHandler().delete_table_data(query, data)
     return api_result.success()
 
 

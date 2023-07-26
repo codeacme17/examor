@@ -167,7 +167,6 @@ const handleConfirmAdd = async () => {
       MessagePlugin.warning("Only '.md' type files are allowed to be uploaded")
       return
     }
-
     _formData.append('files', item.raw)
   })
 

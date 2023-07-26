@@ -59,6 +59,12 @@ def get_files_by_noteId(id: int):
     return document._get_files_by_noteId(id)
 
 
+@app.delete("/file")
+def delete_file(id: int, file_name: str):
+    print(id, file_name)
+    return document._delete_file(id, file_name)
+
+
 @app.on_event("shutdown")
 def shutdown_event():
     MySQLHandler().disconnect_from_mysql()

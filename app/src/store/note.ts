@@ -12,6 +12,7 @@ export type NoteItem = {
   id: string
   name: string
   icon: string
+  upload_date: string
 }
 
 const state: State = {
@@ -29,6 +30,7 @@ export const useNoteStore = defineStore('noteStore', {
       this.$state.getNotesLoading = loading
 
       const { data } = await _getNotes()
+
       this.$state.notes = data
     },
   },
