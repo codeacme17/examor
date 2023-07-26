@@ -6,9 +6,11 @@ from utils.MySQLHandler import MySQLHandler
 
 def _get_files_by_noteId(noteId):
     query = """
-            SELECT DISTINCT file_name, upload_date
+            SELECT file_name, MAX(upload_date) as upload_date
             FROM t_document
             WHERE note_id = %s
+            GROUP BY file_name
+            HAVING COUNT(file_name) > 1;
             """
 
     data = (noteId, )

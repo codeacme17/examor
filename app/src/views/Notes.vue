@@ -195,12 +195,11 @@ const isShowUploadDialog = ref(false)
 
 // Handle click tab event
 let currentNote = NOTE_STORE.notes[0]
-NOTE_STORE.currentIcon = currentNote && currentNote.icon
+NOTE_STORE.currentIcon = currentNote ? currentNote.icon : ''
 const currentIndex = ref(0)
 const isChangeNote = ref(false)
 const handleClickTab = async (index: number) => {
   if (index === currentIndex.value) return
-
   currentIndex.value = index
   isShowConfirmDeleteBtn.value = false
 }
@@ -212,21 +211,23 @@ const [deleteNote, deleteNodeLoading] = useFetch(
   `delete note ${currentNote && currentNote.name} successfully`
 )
 const handleDeleteNote = async () => {
-  await deleteNote(currentNote.id)
-
-  const length = NOTE_STORE.notes.length
-  if (currentIndex.value === length - 1) currentIndex.value -= 1
-  else currentIndex.value += 1
+  const { code } = await deleteNote(currentNote.id)
+  if (code !== 0) return
 
   await NOTE_STORE.getNotes()
-  await handleClickTab(currentIndex.value)
+  const length = NOTE_STORE.notes.length
+  if (!length) return
+  else if (length === 1) currentIndex.value = 0
+  else if (currentIndex.value === length - 1) currentIndex.value -= 1
+  else currentIndex.value += 1
+
   isShowConfirmDeleteBtn.value = false
 }
 
 watch(currentIndex, () => {
   isChangeNote.value = true
   currentNote = NOTE_STORE.notes[currentIndex.value]
-  NOTE_STORE.currentIcon = currentNote.icon
+  NOTE_STORE.currentIcon = currentNote ? currentNote.icon : ''
 
   nextTick(() => {
     isChangeNote.value = false

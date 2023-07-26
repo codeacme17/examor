@@ -15,6 +15,7 @@ def startup():
     MySQLHandler().connect_to_mysql()
 
 
+# Profile APIs
 @app.get("/profile")
 def get_profile():
     return profile._get_profile()
@@ -25,6 +26,7 @@ def set_profile(data: Profile):
     return profile._set_profile(data)
 
 
+# Note APIs
 @app.get("/note/notes")
 def get_notes():
     return note._get_notes()
@@ -54,6 +56,7 @@ def update_note_icon(data: Icon):
     return note._update_note_icon(data)
 
 
+# File APIs
 @app.get("/files")
 def get_files_by_noteId(id: int):
     return document._get_files_by_noteId(id)
@@ -61,7 +64,6 @@ def get_files_by_noteId(id: int):
 
 @app.delete("/file")
 def delete_file(id: int, file_name: str):
-    print(id, file_name)
     return document._delete_file(id, file_name)
 
 
