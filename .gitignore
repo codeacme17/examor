@@ -26,3 +26,4 @@ pnpm-debug.log*
 __pycache__
 profile.json
 temp
+notebook

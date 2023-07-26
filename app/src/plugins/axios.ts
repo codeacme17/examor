@@ -27,7 +27,7 @@ _axios.interceptors.response.use(
     if (code !== 0)
       MessagePlugin.error({
         content: message,
-        duration: 1000,
+        duration: 3000,
       })
 
     return response.data
@@ -35,7 +35,7 @@ _axios.interceptors.response.use(
   (error) => {
     MessagePlugin.error({
       content: error,
-      duration: 1000,
+      duration: 3000,
     })
     return Promise.reject(error)
   }

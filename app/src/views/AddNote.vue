@@ -100,6 +100,13 @@ import { useNoteStore, useProfileStore } from '@/store'
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
+type FormData = {
+  noteName: string
+  noteType: 'files' | 'notion' | null
+  files: any[]
+  notion: string
+}
+
 const { t, locale } = useI18n()
 
 const noteTypeOptions = computed(() => [
@@ -113,12 +120,7 @@ const noteTypeOptions = computed(() => [
   },
 ])
 
-const formData = reactive<{
-  noteName: string
-  noteType: 'files' | 'notion' | null
-  files: any[]
-  notion: string
-}>({
+const formData = reactive<FormData>({
   noteName: '',
   noteType: null,
   files: [],
@@ -170,7 +172,16 @@ const handleConfirmAdd = async () => {
   })
 
   const res = await addNote(_formData)
-  if (res.code === 0) NOTE_STORE.getNotes()
+  if (res.code !== 0) return
+  initFormData()
+  NOTE_STORE.getNotes()
+}
+
+const initFormData = () => {
+  formData.noteName = ''
+  formData.noteType = null
+  formData.files = []
+  formData.notion = ''
 }
 </script>
 

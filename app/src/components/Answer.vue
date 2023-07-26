@@ -3,9 +3,9 @@
     <v-tabs v-model="currentTab" density="compact">
       <v-tab value="answer"> {{ $t('label.answer') }}</v-tab>
 
-      <v-tab value="aiAnswer" :disabled="!isFinishExamining">
-        <v-icon icon="mdi-robot-love" class="mr-2" />
-        {{ $t('label.aiAnswer') }}
+      <v-tab value="lastAnswer" :disabled="!isFinishExamining">
+        <v-icon icon="mdi-clipboard-text-clock" class="mr-2" />
+        {{ $t('label.lastAnswer') }}
       </v-tab>
 
       <v-tab value="document" :disabled="!isFinishExamining">
@@ -62,7 +62,7 @@
       </v-btn>
     </section>
 
-    <section v-show="currentTab === 'aiAnswer'">
+    <section v-show="currentTab === 'lastAnswer'">
       <v-card :elevation="0" :color="defaultBgColor">
         <div v-html="toMarkdown(answer)" class="show-markdown-box" />
       </v-card>
@@ -83,7 +83,7 @@ import { defaultBgColor, fontColor } from '@/utils'
 
 import MarkdownIt from 'markdown-it'
 
-const currentTab = ref<'answer' | 'aiAnswer' | 'document'>('answer')
+const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
 
 const props = defineProps({
   id: {

@@ -99,7 +99,6 @@
             </Transition>
           </v-card>
 
-          <!-- Delete Note -->
           <!-- Delete Button -->
           <v-btn
             v-if="!isShowConfirmDeleteBtn"
@@ -178,16 +177,16 @@ import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
 import { ref, nextTick, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useNoteStore } from '@/store'
+import { NOTE_API } from '@/apis'
+import { useFetch } from '@/hooks'
 import {
   defaultBgColor,
   reverseTheme,
   orangeBgColor,
   greenBgColor,
 } from '@/utils'
-import { useI18n } from 'vue-i18n'
-import { useNoteStore } from '@/store'
-import { NOTE_API } from '@/apis'
-import { useFetch } from '@/hooks'
 
 const { locale } = useI18n()
 const NOTE_STORE = useNoteStore()
@@ -196,7 +195,7 @@ const isShowUploadDialog = ref(false)
 
 // Handle click tab event
 let currentNote = NOTE_STORE.notes[0]
-NOTE_STORE.currentIcon = currentNote.icon
+NOTE_STORE.currentIcon = currentNote && currentNote.icon
 const currentIndex = ref(0)
 const isChangeNote = ref(false)
 const handleClickTab = async (index: number) => {
@@ -221,6 +220,7 @@ const handleDeleteNote = async () => {
 
   await NOTE_STORE.getNotes()
   await handleClickTab(currentIndex.value)
+  isShowConfirmDeleteBtn.value = false
 }
 
 watch(currentIndex, () => {

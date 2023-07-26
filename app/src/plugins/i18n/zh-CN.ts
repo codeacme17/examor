@@ -46,7 +46,7 @@ export const zhCN = {
     selectNoteType: '笔记类型',
     notionDataBaseID: 'notion 数据库 ID',
     answer: '回答',
-    aiAnswer: 'GPT 回答',
+    lastAnswer: '上次的回答',
     document: '笔记内容',
     examine: '检测',
     proxy: '网络代理',

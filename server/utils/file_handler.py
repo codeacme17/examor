@@ -28,23 +28,19 @@ def upload_file(noteId: int, files: list[UploadFile], folderName):
             for doc in docs:
                 save_doc_to_db(noteId, filename, doc.page_content)
 
+    if os.path.exists(TARGET_FOLDER_PATH):
+        shutil.rmtree(TARGET_FOLDER_PATH)
+
 
 def split_file(content):
     md_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1300,
         chunk_overlap=0,
         separators=[
-            "\n#{1,6} ",
-            "```\n",
+            "\n#{1,3} ",
             "\n\*\*\*+\n",
-            "\n---+\n",
             "\n___+\n",
-            "\n\n",
-            "\n",
-            " ",
-            "",
         ]
-
     )
     docs = md_splitter.create_documents([content])
     return docs

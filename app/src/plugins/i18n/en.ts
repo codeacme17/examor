@@ -47,7 +47,7 @@ export const en = {
     selectNoteType: 'Note Type',
     notionDataBaseID: 'Notion Database ID',
     answer: 'Answer',
-    aiAnswer: 'GPT answer',
+    lastAnswer: 'last answer',
     document: 'Note Content',
     examine: 'Examine',
     proxy: 'Proxy',
