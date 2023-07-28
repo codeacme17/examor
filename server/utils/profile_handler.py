@@ -11,7 +11,7 @@ def set_profile_to_env():
 
     data: Profile = get_profile_from_file()
 
-    os.environ['OPENAI_KEY'] = data['openaiKey']
+    os.environ['OPENAI_API_KEY'] = data['openaiKey']
     os.environ['NOTION_KEY'] = data['notionKey']
     os.environ['OPENAI_VERSION'] = data['openaiVersion']
     os.environ['OPENAI_BASE'] = data['openaiBase']

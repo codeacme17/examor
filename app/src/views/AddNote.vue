@@ -159,6 +159,7 @@ const [addNote, loading] = useFetch(
 const NOTE_STORE = useNoteStore()
 const handleConfirmAdd = async () => {
   const _formData = new FormData()
+  _formData.append('language', locale.value)
   _formData.append('noteName', formData.noteName)
   _formData.append('notionId', formData.notion)
 

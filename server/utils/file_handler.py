@@ -1,49 +1,35 @@
-import os
-import shutil
-
-from fastapi import UploadFile, File
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from fastapi import UploadFile
 from utils.MySQLHandler import MySQLHandler
 from utils.tools import CustomError
+from langchain_services.LangchainService import LangchainService
 
-TEMP_PATH = os.path.join(os.getcwd(), "temp")
 
-
-def upload_file(noteId: int, files: list[UploadFile], noteName):
-    TARGET_FOLDER_PATH = os.path.join(TEMP_PATH, noteName)
-
-    if not os.path.exists(TARGET_FOLDER_PATH):
-        os.makedirs(TARGET_FOLDER_PATH)
-
+async def upload_file(
+    language: str,
+    noteId: int,
+    noteName: str,
+    files: list[UploadFile],
+):
     for file in files:
         filename = file.filename
-        save_path = os.path.join(TARGET_FOLDER_PATH, filename)
+        content = await file.read()
 
-        with open(save_path, 'wb') as f:
-            shutil.copyfileobj(file.file, f)
+        langchain_service = LangchainService(
+            language,
+            "question_generate"
+        )
 
-        with open(save_path, 'r') as f:
-            docs = split_file(f.read())
+        docs = langchain_service.split_document(content.decode('utf-8'))
 
-            for doc in docs:
-                save_doc_to_db(noteId, filename, doc.page_content)
+        questions = await langchain_service.agenerate_questions(
+            docs,
+            noteName,
+        )
 
-    if os.path.exists(TARGET_FOLDER_PATH):
-        shutil.rmtree(TARGET_FOLDER_PATH)
+        for doc in docs:
+            save_doc_to_db(noteId, filename, doc.page_content)
 
-
-def split_file(content):
-    md_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1300,
-        chunk_overlap=0,
-        separators=[
-            "\n#{1,3} ",
-            "\n\*\*\*+\n",
-            "\n___+\n",
-        ]
-    )
-    docs = md_splitter.create_documents([content])
-    return docs
+        print(questions)
 
 
 def save_doc_to_db(noteId, filename, doc):

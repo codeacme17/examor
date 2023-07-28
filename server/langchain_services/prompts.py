@@ -77,7 +77,7 @@ def choose_prompt(
         if (prompt_type == "answer_examine"):
             prompt = ANSWER_EXAMINE_PROMPT_CN
 
-    if (prompt_language == "cn-ZH"):
+    if (prompt_language == "zh-CN"):
         if (prompt_type == "question_generate"):
             prompt = QUESTION_GENERATE_PROMPT_CN
         if (prompt_type == "answer_examine"):

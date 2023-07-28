@@ -38,12 +38,14 @@ def get_note(id: int):
 
 
 @app.post("/note")
-def add_note(
+async def add_note(
+    language: str = Form(),
     noteName: str = Form(),
     files: list[UploadFile] = File(default=None),
-    notionId: str = Form(default=None)
+    notionId: str = Form(default=None),
 ):
-    return note._add_note(noteName, files, notionId)
+    res = await note._add_note(language, noteName, files, notionId)
+    return res
 
 
 @app.delete("/note")

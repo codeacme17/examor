@@ -17,23 +17,24 @@ def _get_note(id: int):
     return api_result.success(res)
 
 
-def _add_note(
+async def _add_note(
+    language: str,
     noteName: str = Form(),
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),
 ):
     query_data = (noteName,)
     duplicate_query = "SELECT * FROM t_note WHERE name = %s"
-    insert_query = "INSERT INTO t_note (name) VALUES (%s)"
-
     duplicate = MySQLHandler().execute_query(duplicate_query, query_data)
+
     if (len(duplicate)):
         return api_result.error("The same note name cannot be created repeatedly")
 
+    insert_query = "INSERT INTO t_note (name) VALUES (%s)"
     noteId = MySQLHandler().insert_table_data(insert_query, query_data)
 
     if (len(files) > 0):
-        file_handler.upload_file(noteId, files, noteName)
+        await file_handler.upload_file(language, noteId, noteName, files)
 
     if (notionId is not None):
         file_handler.load_notion(notionId)

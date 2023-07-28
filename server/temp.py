@@ -90,7 +90,7 @@ WSGI 中的组件有 Application、Server、Middleware。
 
 async def exam_an():
     langchain_service = LangchainService(
-        "cn-ZH",
+        "zh-CN",
         "answer_examine",
         streaming=True
     )

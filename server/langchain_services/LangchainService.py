@@ -1,21 +1,16 @@
 import asyncio
 import re
 import os
+import socks
+import socket
 
 from langchain import LLMChain
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.chat_models import AzureChatOpenAI
+from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
 from langchain.callbacks import StdOutCallbackHandler
 
 from .prompts import choose_prompt
-
-OPENAI_API_VERSION = os.environ.get("OPENAI_VERSION")
-OPENAI_API_BASE = os.environ.get("OPENAI_BASE")
-OPENAI_API_KEY = os.environ.get("AZURE_KEY")
-DEPLOYMENT_NAME = os.environ.get("DEPLOYMENT_NAME")
-
-print(OPENAI_API_VERSION, "-------")
 
 
 class LangchainService():
@@ -26,6 +21,12 @@ class LangchainService():
         temperature: int = 0,
         streaming: bool = False
     ):
+        proxy_host = '127.0.0.1'
+        proxy_port = 1086
+
+        socks.set_default_proxy(socks.SOCKS5, proxy_host, proxy_port)
+        socket.socket = socks.socksocket
+
         self.llm_chain = self._init_llm_chain(
             prompt_language,
             prompt_type,
@@ -40,15 +41,21 @@ class LangchainService():
         temperature: int = 0,
         streaming: bool = False
     ):
-        azure_llm = AzureChatOpenAI(
+        llm = AzureChatOpenAI(
             verbose=True,
-            openai_api_base=OPENAI_API_BASE,
-            openai_api_key=OPENAI_API_KEY,
-            openai_api_version=OPENAI_API_VERSION,
-            deployment_name=DEPLOYMENT_NAME,
+            openai_api_base=os.environ["OPENAI_BASE"],
+            openai_api_key=os.environ["AZURE_KEY"],
+            openai_api_version=os.environ["OPENAI_VERSION"],
+            deployment_name=os.environ["DEPLOYMENT_NAME"],
             temperature=temperature,
             streaming=streaming
         )
+
+        # llm = ChatOpenAI(
+        #     model="gpt-3.5-turbo",
+        #     temperature=temperature,
+        #     streaming=streaming
+        # )
 
         prompt = choose_prompt(
             prompt_language,
@@ -57,23 +64,10 @@ class LangchainService():
 
         return LLMChain(
             prompt=prompt,
-            llm=azure_llm,
+            llm=llm,
         )
 
-    async def agenerate_questions(
-        self,
-        doc_content: str,
-        title: str,
-    ):
-        docs = self._split_document(doc_content)
-        tasks = [self._agenerate_questions(
-            doc,
-            title
-        ) for doc in docs]
-        questions = await asyncio.gather(*tasks)
-        return questions
-
-    def _split_document(self, doc_content: str):
+    def split_document(self, doc_content: str) -> list[Document]:
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1300,
             chunk_overlap=0,
@@ -87,11 +81,25 @@ class LangchainService():
         res = []
 
         for doc in docs:
+            print(doc.page_content)
             if (self.is_markdown_heading(doc.page_content)):
                 continue
             res.append(doc)
 
         return res
+
+    async def agenerate_questions(
+        self,
+        docs: list[Document],
+        title: str,
+    ):
+        tasks = [self._agenerate_questions(
+            doc,
+            title
+        ) for doc in docs]
+
+        questions = await asyncio.gather(*tasks)
+        return questions
 
     async def _agenerate_questions(
         self,
@@ -120,8 +128,6 @@ class LangchainService():
             answer=answer,
             callbacks=[StdOutCallbackHandler()]
         )
-
-        print(res)
 
     def is_markdown_heading(self, line):
         pattern = r'^#\s.+'
