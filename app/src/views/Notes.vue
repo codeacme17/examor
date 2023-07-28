@@ -1,7 +1,7 @@
 <template>
   <v-container style="max-width: 1080px">
     <!-- Empty Notice Block -->
-    <EmptyBlock v-if="!NOTE_STORE.notes.length">
+    <empty-block v-if="!NOTE_STORE.notes.length">
       <h2 class="mb-2">{{ $t('title.emptyNote') }}</h2>
       <h4 class="d-flex align-center">
         {{ $t('subTitle.emptyNoteStart') }}
@@ -15,7 +15,7 @@
         </v-btn>
         {{ $t('subTitle.emptyNoteEnd') }}
       </h4>
-    </EmptyBlock>
+    </empty-block>
 
     <section v-else>
       <h2>
@@ -34,7 +34,7 @@
             :elevation="0"
           >
             <!-- note name & icon -->
-            <NoteHeader v-bind="currentNote" :index="currentIndex" />
+            <note-header v-bind="currentNote" :index="currentIndex" />
 
             <v-progress-linear model-value="20" class="mt-1 mb-2" />
 
@@ -50,7 +50,7 @@
             </v-btn>
 
             <!-- Files Table -->
-            <FilesTable :id="currentNote.id" />
+            <files-table :id="currentNote.id" />
           </v-card>
         </Transition>
 

@@ -27,9 +27,10 @@ export const zhCN = {
     emptyNote: '暂无任何笔记',
     keys: '密钥',
     otherConfigurations: '其他配置',
-    fileName: '文件名',
+    filename: '文件名',
     uploadDate: '上传日期',
     createDate: '创建日期',
+    updateFile: '更新文件',
   },
 
   subTitle: {

@@ -28,9 +28,10 @@ export const en = {
     emptyNote: 'There is no any note yet',
     keys: 'Keys',
     otherConfigurations: 'Other Configurations',
-    fileName: 'File Name',
+    filename: 'File Name',
     uploadDate: 'Upload Date',
     createDate: 'Create Date',
+    updateFile: 'Update File',
   },
   subTitle: {
     notes: 'You can manage your notes here',

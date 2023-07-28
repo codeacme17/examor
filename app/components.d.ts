@@ -18,9 +18,9 @@ declare module 'vue' {
     QuestionTable: typeof import('./src/components/QuestionTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TBtn: typeof import('tdesign-vue-next')['Btn']
     TConfigProvider: typeof import('tdesign-vue-next')['ConfigProvider']
     TPopconfirm: typeof import('tdesign-vue-next')['Popconfirm']
     TUpload: typeof import('tdesign-vue-next')['Upload']
+    UploadFileDialog: typeof import('./src/components/UploadFileDialog.vue')['default']
   }
 }

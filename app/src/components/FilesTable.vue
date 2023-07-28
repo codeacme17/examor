@@ -11,7 +11,7 @@
   >
     <thead>
       <tr>
-        <th class="text-left">{{ $t('title.fileName') }}</th>
+        <th class="text-left">{{ $t('title.filename') }}</th>
         <th class="text-left">{{ $t('title.uploadDate') }}</th>
         <th class="text-right"></th>
       </tr>
@@ -29,7 +29,7 @@
               class="ml-auto"
               variant="text"
               :flat="true"
-              @click="isShowUploadDialog = true"
+              @click="handleUpdate(item)"
             >
               {{ $t('button.update') }}
             </v-btn>
@@ -55,45 +55,20 @@
   </v-table>
 
   <!-- Upload file dialog -->
-  <v-dialog
+  <upload-file-dialog
+    v-if="isShowUploadDialog"
     v-model="isShowUploadDialog"
-    theme="light"
-    width="60%"
-    style="margin-bottom: 240px"
-  >
-    <v-card class="pt-5 pb-5 px-5" :theme="reverseTheme">
-      <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
-        <t-upload
-          class="mt-1 mb-5"
-          placeholder=""
-          theme="file-flow"
-          multiple
-          :autoUpload="false"
-        />
-      </t-config-provider>
-
-      <v-btn @click="isShowUploadDialog = false">
-        {{ $t('button.upload') }}
-      </v-btn>
-    </v-card>
-  </v-dialog>
+    :type="'update'"
+    :noteId="props.id"
+    :filename="currentFilename"
+  />
 </template>
 
 <script setup lang="ts">
-import enConfig from 'tdesign-vue-next/es/locale/en_US'
-import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
-
 import { ref, reactive, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { defaultBgColor, reverseTheme } from '@/utils'
+import { defaultBgColor } from '@/utils'
 import { FILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
-
-const { locale } = useI18n()
-
-const props = defineProps(['id'])
-
-const isShowUploadDialog = ref(false)
 
 type FileItem = {
   id: number
@@ -102,23 +77,29 @@ type FileItem = {
   isShowConfirmDeleteBtn?: boolean
 }
 
+const props = defineProps(['id'])
+
 onMounted(async () => {
   await gitFileList()
 })
 
-const list = ref<FileItem[]>([])
 const [getFiles, getFilesLoading] = useFetch(FILE_API.getFiles)
+const list = ref<FileItem[]>([])
 const gitFileList = async () => {
   const res = await getFiles(props.id)
-
   list.value = reactive<FileItem[]>(
-    res.data.map((item: any) => {
-      return {
-        ...item,
-        isShowConfirmDeleteBtn: false,
-      }
-    })
+    res.data.map((item: any) => ({
+      ...item,
+      isShowConfirmDeleteBtn: false,
+    }))
   )
+}
+
+const currentFilename = ref('')
+const isShowUploadDialog = ref(false)
+const handleUpdate = (item: FileItem) => {
+  currentFilename.value = item.file_name
+  isShowUploadDialog.value = true
 }
 
 const [deleteFile, deleteFileLoading] = useFetch(FILE_API.deleteFile)
