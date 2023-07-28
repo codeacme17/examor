@@ -13,6 +13,10 @@ def set_profile_to_env():
 
     os.environ['OPENAI_KEY'] = data['openaiKey']
     os.environ['NOTION_KEY'] = data['notionKey']
+    os.environ['OPENAI_VERSION'] = data['openaiVersion']
+    os.environ['OPENAI_BASE'] = data['openaiBase']
+    os.environ['AZURE_KEY'] = data['azureKey']
+    os.environ['DEPLOYMENT_NAME'] = data['deploymentName']
     os.environ['PROXY'] = data['proxy']
 
 

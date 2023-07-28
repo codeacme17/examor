@@ -29,7 +29,7 @@ CREATE TABLE t_question (
 	document_id int(12) NOT NULL COMMENT 'document id',
 	is_pushed char(1) DEFAULT '0' NOT NULL COMMENT 'has pushed to user  0-No  1-Yes',
 	progress NUMERIC NOT NULL COMMENT 'accumulated score',
-	gpt_answer TEXT NULL COMMENT 'gpt`s answer',
+	last_answer TEXT NULL COMMENT 'record the last time answer',
 	upload_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'record update time',
 	CONSTRAINT t_question_pk PRIMARY KEY (id),
 	CONSTRAINT t_question_FK FOREIGN KEY (document_id) REFERENCES t_document(id) ON DELETE CASCADE ON UPDATE CASCADE
