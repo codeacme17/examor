@@ -14,7 +14,7 @@
         :label="$t('label.noteName')"
       />
 
-      <v-select
+      <!-- <v-select
         v-model="formData.noteType"
         class="mt-4"
         variant="outlined"
@@ -24,7 +24,7 @@
         :label="$t('label.selectNoteType')"
         :items="noteTypeOptions"
         @update:model-value="handleSelectChange"
-      />
+      /> -->
 
       <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
         <t-upload
@@ -109,6 +109,7 @@ type FormData = {
 
 const { t, locale } = useI18n()
 
+// ------ Dont Delete -----------
 const noteTypeOptions = computed(() => [
   {
     label: t('option.localFiles'),
@@ -122,7 +123,7 @@ const noteTypeOptions = computed(() => [
 
 const formData = reactive<FormData>({
   noteName: '',
-  noteType: null,
+  noteType: 'files',
   files: [],
   notion: '',
 })
@@ -138,6 +139,7 @@ const disabled = computed(() => {
 
 const PROFILE_STORE = useProfileStore()
 const isShowSnackbar = ref(false)
+// ------ Dont Delete -----------
 const handleSelectChange = () => {
   formData.files = []
   formData.notion = ''
