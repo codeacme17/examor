@@ -11,11 +11,14 @@ from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
 from langchain.callbacks import StdOutCallbackHandler
 
 from .prompts import choose_prompt
+from utils.MySQLHandler import MySQLHandler
 
 
 class LangchainService():
     def __init__(
         self,
+        noteId: int,
+        filename: str,
         prompt_language: str,
         prompt_type: str,
         temperature: int = 0,
@@ -27,6 +30,8 @@ class LangchainService():
         socks.set_default_proxy(socks.SOCKS5, proxy_host, proxy_port)
         socket.socket = socks.socksocket
 
+        self.noteId = noteId
+        self.filename = filename
         self.llm_chain = self._init_llm_chain(
             prompt_language,
             prompt_type,
@@ -67,7 +72,21 @@ class LangchainService():
             llm=llm,
         )
 
-    def split_document(self, doc_content: str) -> list[Document]:
+    async def agenerate_questions(
+        self,
+        doc_content: str,
+        title: str,
+    ):
+        docs = self._split_document(doc_content)
+        tasks = []
+
+        for doc in docs:
+            doc_id = self._save_doc_to_db(doc.page_content)
+            tasks.append(self._agenerate_questions(doc, title, doc_id))
+
+        await asyncio.gather(*tasks)
+
+    def _split_document(self, doc_content: str) -> list[Document]:
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1300,
             chunk_overlap=0,
@@ -79,32 +98,17 @@ class LangchainService():
 
         docs = text_splitter.create_documents([doc_content])
         res = []
-
         for doc in docs:
-            print(doc.page_content)
             if (self.is_markdown_heading(doc.page_content)):
                 continue
             res.append(doc)
-
         return res
-
-    async def agenerate_questions(
-        self,
-        docs: list[Document],
-        title: str,
-    ):
-        tasks = [self._agenerate_questions(
-            doc,
-            title
-        ) for doc in docs]
-
-        questions = await asyncio.gather(*tasks)
-        return questions
 
     async def _agenerate_questions(
         self,
         doc: Document,
         title: str,
+        doc_id: int
     ):
         res = await self.llm_chain.apredict(
             title=title,
@@ -112,7 +116,12 @@ class LangchainService():
         )
 
         lines = res.split("\n")
-        return lines
+
+        for question_content in lines:
+            self._save_question_to_db(
+                question_content,
+                doc_id
+            )
 
     async def aexamine_answer(
         self,
@@ -132,3 +141,39 @@ class LangchainService():
     def is_markdown_heading(self, line):
         pattern = r'^#\s.+'
         return bool(re.match(pattern, line))
+
+    def _save_doc_to_db(
+        self,
+        doc: str
+    ):
+        query = """
+                INSERT INTO t_document (note_id, file_name, document) 
+                VALUES (%s, %s, %s)
+                """
+        data = (
+            self.noteId,
+            self.filename,
+            doc,
+        )
+        id = MySQLHandler().insert_table_data(
+            query,
+            data
+        )
+
+        return id
+
+    def _save_question_to_db(
+        self,
+        question_content: str,
+        document_id: int,
+    ):
+        query = """
+                INSERT INTO t_question (content, document_id) 
+                VALUES (%s, %s)
+                """
+        data = (question_content, document_id,)
+
+        MySQLHandler().insert_table_data(
+            query,
+            data
+        )

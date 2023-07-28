@@ -1,5 +1,6 @@
 from fastapi import File, Form, UploadFile
-from utils import api_result, file_handler
+from utils import api_result
+from utils.share import upload_file
 from utils.MySQLHandler import MySQLHandler
 from typings.note_types import Icon
 
@@ -34,10 +35,10 @@ async def _add_note(
     noteId = MySQLHandler().insert_table_data(insert_query, query_data)
 
     if (len(files) > 0):
-        await file_handler.upload_file(language, noteId, noteName, files)
+        await upload_file(language, noteId, noteName, files)
 
     if (notionId is not None):
-        file_handler.load_notion(notionId)
+        pass
 
     return api_result.success()
 
