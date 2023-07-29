@@ -26,8 +26,8 @@
 
         <!-- question table -->
         <QuestionTable
-          :id="currentQuestionId"
-          :name="currentNote.name"
+          :loading="listLoading"
+          :quesitonList="quesitonList"
           :questionCounts="questionCounts"
           @questionPickEmit="handlePickQuestion"
         />
@@ -87,13 +87,14 @@ import { useRoute } from 'vue-router'
 import { useLocalStorage } from '@vueuse/core'
 import { useFetch } from '@/hooks'
 import { greenBgColor } from '@/utils'
-import { NOTE_API } from '@/apis'
+import { NOTE_API, QUESTION_API } from '@/apis'
 import type { TableItem } from '@/components/QuestionTable.vue'
 
 const route = useRoute()
 
 onMounted(async () => {
   await getNoteInfo()
+  await getQuestionList()
 })
 
 const currentNote = reactive({
@@ -109,6 +110,13 @@ const getNoteInfo = async () => {
   currentNote.icon = data.icon
 }
 
+const [getQuestions, listLoading] = useFetch(QUESTION_API.getQuestionsByNoteId)
+const quesitonList = ref<TableItem[]>([])
+const getQuestionList = async () => {
+  const { data } = await getQuestions(currentNote.id)
+  quesitonList.value = data
+}
+
 // Handle question
 const isShowAnswer = ref(false)
 const currentQuestionId = ref('')
@@ -117,6 +125,6 @@ const questionCounts = useLocalStorage(`questionCounts-${currentNote.id}`, 3)
 const handlePickQuestion = (item: TableItem) => {
   isShowAnswer.value = true
   currentQuestionId.value = item.id
-  currentQuesiton.value = item.question
+  currentQuesiton.value = item.content
 }
 </script>
