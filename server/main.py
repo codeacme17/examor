@@ -75,6 +75,17 @@ def get_questions_by_note_id(id: int):
     return question._get_questions_by_note_id(id)
 
 
+@app.post("/question/answer")
+async def answer_question(
+    note_id: int,
+    document_id: int,
+    question_content: str,
+    answer: str,
+    language: str
+):
+    return await question._answer_question(note_id, document_id, question_content, answer, language)
+
+
 @app.on_event("shutdown")
 def shutdown_event():
     MySQLHandler().disconnect_from_mysql()

@@ -59,10 +59,14 @@ import { computed, ComputedRef } from 'vue'
 import { defaultBgColor, orangeBgColor } from '@/utils'
 
 export type TableItem = {
-  id: string
+  id: number
   content: string
-  is_answered_today: string
-  progress: number
+  document_id: number
+  is_pushed?: string
+  is_answered_today?: string
+  progress?: number
+  last_answer?: string
+  upload_date?: string
 }
 
 const props = defineProps(['quesitonList', 'questionCounts', 'loading'])

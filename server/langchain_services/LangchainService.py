@@ -4,11 +4,12 @@ import os
 import socks
 import socket
 
+from typing import Awaitable
 from langchain import LLMChain
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
-from langchain.callbacks import StdOutCallbackHandler
+from langchain.callbacks import AsyncIteratorCallbackHandler
 
 from .prompts import choose_prompt
 from utils.MySQLHandler import MySQLHandler
@@ -17,10 +18,10 @@ from utils.MySQLHandler import MySQLHandler
 class LangchainService():
     def __init__(
         self,
-        noteId: int,
-        filename: str,
+        note_id: int,
         prompt_language: str,
         prompt_type: str,
+        filename: str = "",
         temperature: int = 0,
         streaming: bool = False
     ):
@@ -30,7 +31,7 @@ class LangchainService():
         socks.set_default_proxy(socks.SOCKS5, proxy_host, proxy_port)
         socket.socket = socks.socksocket
 
-        self.noteId = noteId
+        self.note_id = note_id
         self.filename = filename
         self.llm_chain = self._init_llm_chain(
             prompt_language,
@@ -99,7 +100,7 @@ class LangchainService():
         docs = text_splitter.create_documents([doc_content])
         res = []
         for doc in docs:
-            if (self.is_markdown_heading(doc.page_content)):
+            if (self._is_markdown_heading(doc.page_content)):
                 continue
             res.append(doc)
         return res
@@ -123,22 +124,7 @@ class LangchainService():
                 doc_id
             )
 
-    async def aexamine_answer(
-        self,
-        title: str,
-        context: str,
-        quesiton: str,
-        answer: str
-    ):
-        res = await self.llm_chain.apredict(
-            title=title,
-            context=context,
-            quesiton=quesiton,
-            answer=answer,
-            callbacks=[StdOutCallbackHandler()]
-        )
-
-    def is_markdown_heading(self, line):
+    def _is_markdown_heading(self, line):
         pattern = r'^#\s.+'
         return bool(re.match(pattern, line))
 
@@ -151,7 +137,7 @@ class LangchainService():
                 VALUES (%s, %s, %s)
                 """
         data = (
-            self.noteId,
+            self.note_id,
             self.filename,
             doc,
         )
@@ -177,3 +163,38 @@ class LangchainService():
             query,
             data
         )
+
+    async def aexamine_answer(
+        self,
+        title: str,
+        context: str,
+        quesiton: str,
+        answer: str
+    ):
+        callback = AsyncIteratorCallbackHandler()
+        coroutine = self._wait_done(self.llm_chain.apredict(
+            title=title,
+            context=context,
+            quesiton=quesiton,
+            answer=answer,
+            callbacks=[callback]
+        ), callback.done)
+        task = asyncio.create_task(coroutine)
+
+        async for token in callback.aiter():
+            yield f"{token}"
+
+        await task
+
+    async def _wait_done(
+        self,
+        fn: Awaitable,
+        event: asyncio.Event
+    ):
+        try:
+            await fn
+        except Exception as e:
+            print(e)
+            event.set()
+        finally:
+            event.set()

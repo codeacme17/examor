@@ -90,7 +90,13 @@ const props = defineProps({
     type: String,
     require: true,
   },
+  document_id: {
+    type: String,
+    require: true,
+  },
 })
+
+console.log(props.document_id)
 
 const answerValue = useLocalStorage(`pending-answer-value-${props.id}`, '')
 

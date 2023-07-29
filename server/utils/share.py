@@ -1,4 +1,5 @@
 from fastapi import UploadFile
+from utils.MySQLHandler import MySQLHandler
 from utils.tools import CustomError
 from langchain_services.LangchainService import LangchainService
 
@@ -14,10 +15,10 @@ async def upload_file(
         content = await file.read()
 
         langchain_service = LangchainService(
-            noteId,
-            filename,
-            language,
-            "question_generate"
+            note_id=noteId,
+            filename=filename,
+            prompt_language=language,
+            prompt_type="question_generate"
         )
 
         questions = await langchain_service.agenerate_questions(
@@ -26,3 +27,45 @@ async def upload_file(
         )
 
         print(questions)
+
+
+def get_note_info(
+    note_id: int
+):
+    query = """
+            SELECT *
+            FROM t_note
+            WHERE id = %s
+            """
+    data = (note_id, )
+
+    res = MySQLHandler().execute_query(query, data, single=True)
+    return res
+
+
+def get_document_info(
+    document_id: int
+):
+    query = """
+            SELECT *
+            FROM t_document
+            WHERE id = %s
+            """
+    data = (document_id, )
+
+    res = MySQLHandler().execute_query(query, data, single=True)
+    return res
+
+
+def get_question_info(
+    question_id: int
+):
+    query = """
+            SELECT *
+            FROM t_question
+            WHERE id = %s
+            """
+    data = (question_id, )
+
+    res = MySQLHandler().execute_query(query, data, single=True)
+    return res

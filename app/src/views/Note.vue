@@ -48,7 +48,7 @@
               {{ $t('title.question') }}
             </h3>
             <p class="mb-6 text-body-1">
-              {{ currentQuesiton }}
+              {{ pickedQuestion.content }}
             </p>
 
             <v-tooltip
@@ -60,8 +60,8 @@
               <template v-slot:activator="{ props }">
                 <v-progress-linear
                   v-bind="props"
-                  model-value="20"
                   class="mt-1 mb-2"
+                  :model-value="pickedQuestion.progress"
                 />
               </template>
             </v-tooltip>
@@ -69,7 +69,10 @@
         </v-card>
 
         <!-- answer block -->
-        <Answer :id="currentQuestionId" />
+        <Answer
+          :id="pickedQuestion.id"
+          :document_id="pickedQuestion.document_id"
+        />
       </section>
     </Transition>
   </v-container>
@@ -102,7 +105,6 @@ const currentNote = reactive({
   name: '',
   icon: 'mdi-text-box-outline',
 })
-
 const [getNote] = useFetch(NOTE_API.getNote)
 const getNoteInfo = async () => {
   const { data } = await getNote(currentNote.id)
@@ -110,6 +112,7 @@ const getNoteInfo = async () => {
   currentNote.icon = data.icon
 }
 
+// Get question list
 const [getQuestions, listLoading] = useFetch(QUESTION_API.getQuestionsByNoteId)
 const quesitonList = ref<TableItem[]>([])
 const getQuestionList = async () => {
@@ -118,13 +121,20 @@ const getQuestionList = async () => {
 }
 
 // Handle question
+const pickedQuestion = reactive<TableItem>({
+  id: 0,
+  content: '',
+  document_id: 0,
+  is_answered_today: '0',
+  progress: 0,
+})
 const isShowAnswer = ref(false)
-const currentQuestionId = ref('')
-const currentQuesiton = ref('')
 const questionCounts = useLocalStorage(`questionCounts-${currentNote.id}`, 3)
 const handlePickQuestion = (item: TableItem) => {
   isShowAnswer.value = true
-  currentQuestionId.value = item.id
-  currentQuesiton.value = item.content
+  pickedQuestion.id = item.id
+  pickedQuestion.document_id = item.document_id
+  pickedQuestion.content = item.content
+  pickedQuestion.progress = item.progress
 }
 </script>
