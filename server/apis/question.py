@@ -34,3 +34,8 @@ def _answer_question(body: dict):
         quesiton=body["question_content"],
         answer=body["answer"]
     )
+
+
+def _get_last_answer(id: int):
+    question_info = get_question_info(id)
+    return api_result.success(question_info["last_answer"])
