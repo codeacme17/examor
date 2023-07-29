@@ -5,9 +5,7 @@ from utils.share import get_note_info, get_document_info, get_question_info
 from langchain_services.LangchainService import LangchainService
 
 
-def _get_questions_by_note_id(
-    note_id: int,
-):
+def _get_questions_by_note_id(note_id: int):
     query = """
             SELECT q.*
             FROM t_question q
@@ -20,29 +18,18 @@ def _get_questions_by_note_id(
     return api_result.success(res)
 
 
-async def _answer_question(
-    note_id: int,
-    document_id: int,
-    question_content: str,
-    answer: str,
-    language: str
-):
-    print(note_id, answer, language)
-
+def _answer_question(body: dict):
     langchain_service = LangchainService(
-        note_id=note_id,
-        prompt_language=language,
-        prompt_type="answer_examine"
+        prompt_language=body["language"],
+        prompt_type="answer_examine",
+        streaming=True
     )
 
-    note_info = get_note_info(note_id)
-    document_info = get_document_info(document_id)
+    document_info = get_document_info(body["document_id"])
 
-    temp = langchain_service.aexamine_answer(
-        title=note_info["name"],
+    return langchain_service.aexamine_answer(
+        title=body["note_name"],
         context=document_info["document"],
-        quesiton=question_content,
-        answer=answer
+        quesiton=body["question_content"],
+        answer=body["answer"]
     )
-
-    return StreamingResponse(temp, media_type="text/event-stream")

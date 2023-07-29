@@ -18,9 +18,9 @@ from utils.MySQLHandler import MySQLHandler
 class LangchainService():
     def __init__(
         self,
-        note_id: int,
-        prompt_language: str,
-        prompt_type: str,
+        note_id: int = 0,
+        prompt_language: str = "",
+        prompt_type: str = "",
         filename: str = "",
         temperature: int = 0,
         streaming: bool = False
@@ -47,21 +47,20 @@ class LangchainService():
         temperature: int = 0,
         streaming: bool = False
     ):
-        llm = AzureChatOpenAI(
-            verbose=True,
-            openai_api_base=os.environ["OPENAI_BASE"],
-            openai_api_key=os.environ["AZURE_KEY"],
-            openai_api_version=os.environ["OPENAI_VERSION"],
-            deployment_name=os.environ["DEPLOYMENT_NAME"],
-            temperature=temperature,
-            streaming=streaming
-        )
-
-        # llm = ChatOpenAI(
-        #     model="gpt-3.5-turbo",
+        # llm = AzureChatOpenAI(
+        #     openai_api_base=os.environ["OPENAI_BASE"],
+        #     openai_api_key=os.environ["AZURE_KEY"],
+        #     openai_api_version=os.environ["OPENAI_VERSION"],
+        #     deployment_name=os.environ["DEPLOYMENT_NAME"],
         #     temperature=temperature,
         #     streaming=streaming
         # )
+
+        llm = ChatOpenAI(
+            model="gpt-3.5-turbo",
+            temperature=temperature,
+            streaming=streaming
+        )
 
         prompt = choose_prompt(
             prompt_language,
@@ -69,6 +68,7 @@ class LangchainService():
         )
 
         return LLMChain(
+            verbose=True,
             prompt=prompt,
             llm=llm,
         )

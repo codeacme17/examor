@@ -8,9 +8,7 @@ FILE_PATH = "profile.json"
 
 def set_profile_to_env():
     init_profile_file()
-
     data: Profile = get_profile_from_file()
-
     os.environ['OPENAI_API_KEY'] = data['openaiKey']
     os.environ['NOTION_KEY'] = data['notionKey']
     os.environ['OPENAI_VERSION'] = data['openaiVersion']

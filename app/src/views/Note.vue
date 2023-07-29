@@ -71,6 +71,8 @@
         <!-- answer block -->
         <Answer
           :id="pickedQuestion.id"
+          :content="pickedQuestion.content"
+          :note_name="currentNote.name"
           :document_id="pickedQuestion.document_id"
         />
       </section>
@@ -136,5 +138,7 @@ const handlePickQuestion = (item: TableItem) => {
   pickedQuestion.document_id = item.document_id
   pickedQuestion.content = item.content
   pickedQuestion.progress = item.progress
+
+  console.log(pickedQuestion.content)
 }
 </script>

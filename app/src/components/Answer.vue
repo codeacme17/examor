@@ -79,27 +79,16 @@
 <script setup lang="ts">
 import { ref, nextTick, onUnmounted } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 import { defaultBgColor, fontColor } from '@/utils'
-
 import MarkdownIt from 'markdown-it'
 
+const { locale } = useI18n()
 const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
 
-const props = defineProps({
-  id: {
-    type: String,
-    require: true,
-  },
-  document_id: {
-    type: String,
-    require: true,
-  },
-})
-
-console.log(props.document_id)
+const props = defineProps(['id', 'note_name', 'document_id', 'content'])
 
 const answerValue = useLocalStorage(`pending-answer-value-${props.id}`, '')
-
 const toMarkdown = (text: string) => {
   const md = new MarkdownIt({
     html: true,
@@ -107,7 +96,6 @@ const toMarkdown = (text: string) => {
     typographer: true,
     breaks: true,
   })
-
   const res = md.render(text)
   return res
 }
@@ -124,23 +112,41 @@ const handleKeyup = () => {
 const isShowExamine = ref(false)
 const examineContent = ref('')
 const isFinishExamining = ref(false)
-const handleSubmit = () => {
-  isShowExamine.value = !isShowExamine.value
+const handleSubmit = async () => {
   const temp = answerValue.value
   localStorage.removeItem(`pending-answer-value-${props.id}`)
   answerValue.value = temp
+  isShowExamine.value = !isShowExamine.value
+  await submitAnswer()
+}
 
-  let index = 0
-  const timer = setInterval(() => {
-    examineContent.value += answer[index]
-    index++
+const submitAnswer = async () => {
+  const response = await fetch('/api/question/answer', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      note_name: props.note_name,
+      document_id: props.document_id,
+      question_content: props.content,
+      answer: answerValue.value,
+      language: locale.value,
+    }),
+  })
 
-    if (index >= answer.length) {
-      examineContent.value = toMarkdown(examineContent.value)
+  const reader = response.body!.getReader()
+  const decoder = new TextDecoder()
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const { value, done } = await reader.read()
+    if (done) {
       isFinishExamining.value = true
-      clearInterval(timer)
+      break
     }
-  }, 20)
+    examineContent.value += decoder.decode(value)
+  }
 }
 
 const scrollToBottom = () => {

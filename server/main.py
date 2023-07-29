@@ -1,4 +1,8 @@
+import socks
+import socket
+
 from fastapi import FastAPI, File, Form, UploadFile
+from fastapi.responses import StreamingResponse
 from typings.profile_types import Profile
 from typings.note_types import Icon
 
@@ -7,6 +11,11 @@ from utils.profile_handler import set_profile_to_env
 from apis import profile, note, document, question
 
 app = FastAPI()
+
+proxy_host = '127.0.0.1'
+proxy_port = 1086
+socks.set_default_proxy(socks.SOCKS5, proxy_host, proxy_port)
+socket.socket = socks.socksocket
 
 
 @app.on_event('startup')
@@ -76,14 +85,11 @@ def get_questions_by_note_id(id: int):
 
 
 @app.post("/question/answer")
-async def answer_question(
-    note_id: int,
-    document_id: int,
-    question_content: str,
-    answer: str,
-    language: str
-):
-    return await question._answer_question(note_id, document_id, question_content, answer, language)
+async def answer_question(body: dict):
+    return StreamingResponse(
+        question._answer_question(body),
+        media_type="text/event-stream"
+    )
 
 
 @app.on_event("shutdown")
