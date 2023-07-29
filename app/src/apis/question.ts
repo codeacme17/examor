@@ -14,4 +14,11 @@ export const QUESTION_API = {
       url: `/api/question/lastAnswer/${id}`,
     })
   },
+
+  getDocument(id: number) {
+    return _axios({
+      method: 'GET',
+      url: `/api/question/document/${id}`,
+    })
+  },
 }
