@@ -42,3 +42,10 @@ def _answer_question(data: types.AnswerQuestion):
 def _get_last_answer(id: int):
     question_info = get_question_info(id)
     return api_result.success(question_info["last_answer"])
+
+
+def _get_document(id: int):
+    question_info = get_question_info(id)
+    document_info = get_document_info(question_info["document_id"])
+
+    return api_result.success(document_info["document"])

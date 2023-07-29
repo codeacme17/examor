@@ -89,6 +89,11 @@ def get_last_answer(id: int):
     return question._get_last_answer(id)
 
 
+@app.get("/question/document/{id}")
+def get_document(id: int):
+    return question._get_document(id)
+
+
 @app.on_event("shutdown")
 def shutdown_event():
     MySQLHandler().disconnect_from_mysql()
