@@ -7,4 +7,11 @@ export const QUESTION_API = {
       url: `/api/questions/note/${id}`,
     })
   },
+
+  getLastAnswer(id: number) {
+    return _axios({
+      method: 'GET',
+      url: `/api/question/lastAnswer/${id}`,
+    })
+  },
 }

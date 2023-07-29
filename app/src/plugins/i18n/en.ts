@@ -32,6 +32,8 @@ export const en = {
     uploadDate: 'Upload Date',
     createDate: 'Create Date',
     updateFile: 'Update File',
+    lastAnswer: 'Last Answer',
+    lastExamine: 'Last Examine',
   },
   subTitle: {
     notes: 'You can manage your notes here',
@@ -48,7 +50,7 @@ export const en = {
     selectNoteType: 'Note Type',
     notionDataBaseID: 'Notion Database ID',
     answer: 'Answer',
-    lastAnswer: 'last answer',
+    lastRecord: 'last record',
     document: 'Note Content',
     examine: 'Examine',
     proxy: 'Proxy',

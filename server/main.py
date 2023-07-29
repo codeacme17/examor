@@ -87,7 +87,7 @@ async def answer_question(body: dict):
     )
 
 
-@app.get("/question/lastAnswer")
+@app.get("/question/lastAnswer/{id}")
 def get_last_answer(id: int):
     return question._get_last_answer(id)
 

@@ -31,6 +31,8 @@ export const zhCN = {
     uploadDate: '上传日期',
     createDate: '创建日期',
     updateFile: '更新文件',
+    lastAnswer: '上次的回答',
+    lastExamine: '上次的检测',
   },
 
   subTitle: {
@@ -47,7 +49,7 @@ export const zhCN = {
     selectNoteType: '笔记类型',
     notionDataBaseID: 'notion 数据库 ID',
     answer: '回答',
-    lastAnswer: '上次的回答',
+    lastRecord: '上次的记录',
     document: '笔记内容',
     examine: '检测',
     proxy: '网络代理',
