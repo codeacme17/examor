@@ -94,6 +94,11 @@ def get_document(id: int):
     return question._get_document(id)
 
 
+@app.get("/question/random")
+def get_random_question():
+    return question._get_random_question()
+
+
 @app.on_event("shutdown")
 def shutdown_event():
     MySQLHandler().disconnect_from_mysql()

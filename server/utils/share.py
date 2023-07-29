@@ -21,12 +21,10 @@ async def upload_file(
             prompt_type="question_generate"
         )
 
-        questions = await langchain_service.agenerate_questions(
+        await langchain_service.agenerate_questions(
             content.decode('utf-8'),
             noteName,
         )
-
-        print(questions)
 
 
 def get_note_info(

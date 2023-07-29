@@ -1,4 +1,3 @@
-from fastapi.responses import StreamingResponse
 from utils.MySQLHandler import MySQLHandler
 from utils import api_result
 from utils.share import get_note_info, get_document_info, get_question_info
@@ -49,3 +48,16 @@ def _get_document(id: int):
     document_info = get_document_info(question_info["document_id"])
 
     return api_result.success(document_info["document"])
+
+
+def _get_random_question():
+    query = """
+            SELECT *
+            FROM t_question
+            WHERE is_pushed != '1' AND is_answered_today != '1'
+            ORDER BY RAND()
+            LIMIT 1;
+            """
+
+    res = MySQLHandler().execute_query(query)
+    return api_result.success(res)
