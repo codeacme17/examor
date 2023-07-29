@@ -185,7 +185,7 @@ class LangchainService():
         await task
 
         temp = f"{answer} ||| {exmine}"
-        await self._save_answer_to_question(id, temp)
+        await self._update_question_state(id, temp)
 
     async def _wait_done(
         self,
@@ -200,15 +200,17 @@ class LangchainService():
         finally:
             event.set()
 
-    async def _save_answer_to_question(
+    async def _update_question_state(
         self,
         id: int,
         answer: str,
     ):
         query = """
                 UPDATE t_question
-                SET last_answer = %s
+                SET last_answer = %s, progress = %s, is_answered_today = %s
                 WHERE id = %s;
                 """
-        data = (answer, id, )
+        data = (answer, 5, "1", id, )
+
+        print(data)
         MySQLHandler().update_table_data(query, data)

@@ -157,11 +157,8 @@ const submitAnswer = async () => {
     },
     body: JSON.stringify({
       id: props.id,
-      note_name: props.note_name,
-      document_id: props.document_id,
-      question_content: props.content,
-      answer: answerValue.value,
       language: locale.value,
+      answer: answerValue.value,
     }),
   })
   isThinking.value = false

@@ -1,14 +1,14 @@
 import os
 import json
 
-from typings.profile_types import Profile
+from utils import types
 
 FILE_PATH = "profile.json"
 
 
 def set_profile_to_env():
     init_profile_file()
-    data: Profile = get_profile_from_file()
+    data: types.Profile = get_profile_from_file()
     os.environ['OPENAI_API_KEY'] = data['openaiKey']
     os.environ['NOTION_KEY'] = data['notionKey']
     os.environ['OPENAI_VERSION'] = data['openaiVersion']
@@ -30,9 +30,9 @@ def init_profile_file():
         }, file)
 
 
-def get_profile_from_file() -> Profile:
+def get_profile_from_file() -> types.Profile:
     with open(FILE_PATH, "r") as file:
-        data: Profile = json.load(file)
+        data: types.Profile = json.load(file)
     return data
 
 

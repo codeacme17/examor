@@ -94,12 +94,12 @@ import { useFetch } from '@/hooks'
 import { greenBgColor } from '@/utils'
 import { NOTE_API, QUESTION_API } from '@/apis'
 import type { TableItem } from '@/components/QuestionTable.vue'
+import { watchEffect } from 'vue'
 
 const route = useRoute()
 
 onMounted(async () => {
   await getNoteInfo()
-  await getQuestionList()
 })
 
 const currentNote = reactive({
@@ -138,7 +138,9 @@ const handlePickQuestion = (item: TableItem) => {
   pickedQuestion.document_id = item.document_id
   pickedQuestion.content = item.content
   pickedQuestion.progress = item.progress
-
-  console.log(pickedQuestion.content)
 }
+
+watchEffect(async () => {
+  if (!isShowAnswer.value) await getQuestionList()
+})
 </script>

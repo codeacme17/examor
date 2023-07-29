@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <TopBar style="position: fixed" />
+    <TopBar />
 
     <v-container class="mt-3">
       <Transition name="fade-transition" mode="out-in">

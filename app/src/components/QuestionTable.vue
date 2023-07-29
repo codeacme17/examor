@@ -19,7 +19,9 @@
         >
           <td style="width: 50px">
             <v-checkbox
-              v-model="item.finished"
+              v-model="item.is_answered_today"
+              true-value="1"
+              false-value="0"
               :indeterminate="(isPending(item) as any)"
               :hide-details="true"
               :disabled="true"
@@ -40,12 +42,15 @@
             </v-btn>
 
             <v-btn
-              v-else
-              :disabled="item.finished"
+              v-else-if="item.is_answered_today === '0'"
               :block="true"
               @click="handlePickQuestion(item)"
             >
               go
+            </v-btn>
+
+            <v-btn v-else :color="greenBgColor" :block="true" :disabled="true">
+              okay
             </v-btn>
           </td>
         </tr>
@@ -56,7 +61,7 @@
 
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue'
-import { defaultBgColor, orangeBgColor } from '@/utils'
+import { defaultBgColor, greenBgColor, orangeBgColor } from '@/utils'
 
 export type TableItem = {
   id: number

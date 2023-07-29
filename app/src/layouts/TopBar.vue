@@ -2,7 +2,12 @@
   <v-system-bar
     window
     color="background"
-    style="justify-content: space-between; padding: 12px 15px; height: 45px"
+    style="
+      justify-content: space-between;
+      padding: 12px 15px;
+      height: 45px;
+      position: fixed;
+    "
   >
     <!-- Left Handlers -->
     <div class="d-flex align-center">

@@ -1,8 +1,7 @@
 from fastapi import File, Form, UploadFile
-from utils import api_result
+from utils import api_result, types
 from utils.share import upload_file
 from utils.MySQLHandler import MySQLHandler
-from typings.note_types import Icon
 
 
 def _get_notes():
@@ -53,7 +52,7 @@ def _delete_note(id: int):
     return api_result.success()
 
 
-def _update_note_icon(data: Icon):
+def _update_note_icon(data: types.Icon):
     query = """
             UPDATE t_note
             SET icon = %s

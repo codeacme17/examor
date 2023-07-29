@@ -3,6 +3,7 @@ from utils.MySQLHandler import MySQLHandler
 from utils import api_result
 from utils.share import get_note_info, get_document_info, get_question_info
 from langchain_services.LangchainService import LangchainService
+from utils import types
 
 
 def _get_questions_by_note_id(note_id: int):
@@ -18,21 +19,23 @@ def _get_questions_by_note_id(note_id: int):
     return api_result.success(res)
 
 
-def _answer_question(body: dict):
+def _answer_question(data: types.AnswerQuestion):
+    question_info = get_question_info(data.id)
+    document_info = get_document_info(question_info["document_id"])
+    note_info = get_note_info(document_info["note_id"])
+
     langchain_service = LangchainService(
-        prompt_language=body["language"],
+        prompt_language=data.language,
         prompt_type="answer_examine",
         streaming=True
     )
 
-    document_info = get_document_info(body["document_id"])
-
     return langchain_service.aexamine_answer(
-        id=body['id'],
-        title=body["note_name"],
+        id=data.id,
+        title=note_info["name"],
         context=document_info["document"],
-        quesiton=body["question_content"],
-        answer=body["answer"]
+        quesiton=question_info["content"],
+        answer=data.answer
     )
 
 

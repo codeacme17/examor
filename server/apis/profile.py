@@ -1,11 +1,9 @@
 import json
 
-from utils import api_result
-from utils import profile_handler
-from typings.profile_types import Profile
+from utils import api_result, profile_handler, types
 
 
-def _set_profile(data: Profile):
+def _set_profile(data: types.Profile):
     FILE_PATH = "profile.json"
 
     with open(FILE_PATH, "w") as file:

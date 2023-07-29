@@ -1,10 +1,7 @@
-import socks
-import socket
 
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import StreamingResponse
-from typings.profile_types import Profile
-from typings.note_types import Icon
+from utils import types
 
 from utils.MySQLHandler import MySQLHandler
 from utils.profile_handler import set_profile_to_env
@@ -26,7 +23,7 @@ def get_profile():
 
 
 @app.put("/profile")
-def set_profile(data: Profile):
+def set_profile(data: types.Profile):
     return profile._set_profile(data)
 
 
@@ -58,7 +55,7 @@ def delete_note(id: int):
 
 
 @app.patch("/note/icon")
-def update_note_icon(data: Icon):
+def update_note_icon(data: types.Icon):
     return note._update_note_icon(data)
 
 
@@ -80,9 +77,9 @@ def get_questions_by_note_id(id: int):
 
 
 @app.post("/question/answer")
-async def answer_question(body: dict):
+async def answer_question(data: types.AnswerQuestion):
     return StreamingResponse(
-        question._answer_question(body),
+        question._answer_question(data),
         media_type="text/event-stream"
     )
 
