@@ -4,7 +4,7 @@ from typings.note_types import Icon
 
 from utils.MySQLHandler import MySQLHandler
 from utils.profile_handler import set_profile_to_env
-from apis import profile, note, document
+from apis import profile, note, document, question
 
 app = FastAPI()
 
@@ -67,6 +67,12 @@ def get_files_by_noteId(id: int):
 @app.delete("/file")
 def delete_file(id: int, file_name: str):
     return document._delete_file(id, file_name)
+
+
+# Question APIs
+@app.get("/questions/note/{id}")
+def get_questions_by_note_id(id: int):
+    return question._get_questions_by_note_id(id)
 
 
 @app.on_event("shutdown")

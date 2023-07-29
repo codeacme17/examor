@@ -28,7 +28,8 @@ CREATE TABLE t_question (
 	content varchar(500) NOT NULL COMMENT 'question content',
 	document_id int(12) NOT NULL COMMENT 'document id',
 	is_pushed char(1) DEFAULT '0' NOT NULL COMMENT 'has pushed to user  0-No  1-Yes',
-	progress NUMERIC NOT NULL COMMENT 'accumulated score',
+	is_answered_today char(1) DEFAULT '0' NOT NULL COMMENT 'has answered this quesiton at today to user  0-No  1-Yes',
+	progress NUMERIC DEFAULT 0 NOT NULL COMMENT 'accumulated score',
 	last_answer TEXT NULL COMMENT 'record the last time answer',
 	upload_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'record update time',
 	CONSTRAINT t_question_pk PRIMARY KEY (id),
@@ -37,6 +38,18 @@ CREATE TABLE t_question (
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8
 COLLATE=utf8_general_ci;
+
+DELIMITER //
+CREATE EVENT update_is_answered_today_event
+ON SCHEDULE EVERY 1 DAY
+STARTS TIMESTAMP(CURRENT_DATE, '00:00:00')
+DO
+BEGIN
+  UPDATE t_question
+  SET is_answered_today = '0'; 
+END;
+//
+DELIMITER ;
 
 CREATE TABLE t_record (
 	id int(12) auto_increment NOT NULL COMMENT 'answer record id',

@@ -92,7 +92,7 @@
               >
                 <v-list-item
                   :title="$t('title.uploadDate')"
-                  :subtitle="currentNote.upload_date"
+                  :subtitle="handleDatetime(currentNote.upload_date)"
                 />
                 <v-list-item :title="$t('hint.memory')" subtitle="50%" />
               </v-list>
@@ -186,6 +186,7 @@ import {
   reverseTheme,
   orangeBgColor,
   greenBgColor,
+  handleDatetime,
 } from '@/utils'
 
 const { locale } = useI18n()

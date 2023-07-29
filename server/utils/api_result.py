@@ -1,6 +1,8 @@
-from fastapi.responses import JSONResponse
-import datetime
 import json
+import datetime
+
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 
 
 class HttpCode(object):
@@ -11,14 +13,13 @@ class HttpCode(object):
 def serialize_datetime(obj):
     if isinstance(obj, datetime.datetime):
         return obj.strftime('%Y-%m-%d')
-    raise TypeError("Object of type datetime is not JSON serializable")
+    return obj
 
 
 def result(
     code=HttpCode.success,
     message='',
     data=None,
-    kwargs=None
 ):
     json_dict = {
         'data': data,
@@ -26,11 +27,7 @@ def result(
         'message': message
     }
 
-    if kwargs and isinstance(kwargs, dict) and kwargs.keys():
-        json_dict.update(kwargs)
-
-    json_str = json.dumps(json_dict, default=serialize_datetime)
-    return JSONResponse(content=json.loads(json_str))
+    return JSONResponse(content=jsonable_encoder(json_dict))
 
 
 def success(data=None):

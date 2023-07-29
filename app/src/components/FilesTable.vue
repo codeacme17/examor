@@ -21,7 +21,7 @@
       <tr v-for="item in list" :key="item.id">
         <td>{{ item.file_name }}</td>
         <td style="width: 170px">
-          {{ item.upload_date }}
+          {{ handleDatetime(item.upload_date) }}
         </td>
         <td style="width: 170px">
           <div class="d-flex justify-end align-center">
@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { defaultBgColor } from '@/utils'
+import { defaultBgColor, handleDatetime } from '@/utils'
 import { FILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 
