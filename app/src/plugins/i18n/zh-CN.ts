@@ -82,5 +82,6 @@ export const zhCN = {
     successAddNote: '笔记新增成功',
     notionKeyStart: '请先绑定',
     notionKeyEnd: '再进行上传',
+    switchLang: '请注意，切换语言会影响 GPT 生成问题和检测的语言',
   },
 }

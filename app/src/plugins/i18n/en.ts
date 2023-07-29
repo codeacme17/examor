@@ -85,5 +85,7 @@ export const en = {
     successAddNote: 'Note add successfully',
     notionKeyStart: 'Please bind the',
     notionKeyEnd: 'before uploading',
+    switchLang:
+      'Note that switching languages affects the language in which GPT generates questions and detects',
   },
 }

@@ -27,7 +27,7 @@
           </td>
           <td style="overflow: hidden">{{ item.content }}</td>
           <td style="width: 230px">
-            <v-progress-linear :model-value="item.progress" max="1000" />
+            <v-progress-linear :model-value="item.progress" max="100" />
           </td>
           <td style="width: 145px">
             <v-btn

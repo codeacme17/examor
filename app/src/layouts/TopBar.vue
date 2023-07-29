@@ -66,6 +66,20 @@
       />
     </div>
   </v-system-bar>
+
+  <v-snackbar v-model="isShowSnackbar">
+    {{ $t('message.switchLang') }}
+
+    <template v-slot:actions>
+      <v-btn
+        color="pink"
+        variant="text"
+        icon="mdi-close"
+        size="small"
+        @click="isShowSnackbar = false"
+      />
+    </template>
+  </v-snackbar>
 </template>
 
 <script lang="ts">
@@ -75,6 +89,7 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useTheme } from 'vuetify'
 import { useDark, useToggle, useStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
@@ -109,9 +124,13 @@ const languageList = [
     label: '简写中文',
   },
 ]
+const isShowSnackbar = ref(false)
 const handleLangSwitch = (lang: string) => {
+  if (lang === locale.value) return
+
   storageLang.value = lang
   locale.value = lang
+  isShowSnackbar.value = true
 }
 </script>
 
