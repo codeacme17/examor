@@ -12,11 +12,6 @@ from apis import profile, note, document, question
 
 app = FastAPI()
 
-proxy_host = '127.0.0.1'
-proxy_port = 1086
-socks.set_default_proxy(socks.SOCKS5, proxy_host, proxy_port)
-socket.socket = socks.socksocket
-
 
 @app.on_event('startup')
 def startup():

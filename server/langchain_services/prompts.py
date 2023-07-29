@@ -51,9 +51,12 @@ my answer:
      {answer}
 
 You need to answer using this format:
-     Score: x
-     Detection: xxx
-     Correct answer: xxx
+     **Score** 
+     /n/n x 
+     **Detection**
+     /n/n xxx
+     **Correct answer**
+     /n/n xxx
 
 Your return (using markdown syntax):
 '''
@@ -81,9 +84,11 @@ ANSWER_EXAMINE_PROMPT_TEMP_CN = '''
     {answer}
 
 你需要使用这种格式进行回答：
-    得分: x
-    检测: xxx
-    正确答案: xxx
+    **得分**: x
+    
+    **检测**: xxx
+    
+    **正确答案**: xxx
 
 
 你的返回(使用 markdown 语法): 

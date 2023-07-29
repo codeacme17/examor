@@ -38,11 +38,13 @@
           :border="true"
           :elevation="0"
           :color="'primary'"
+          :loading="isThinking"
         >
           <h3 class="mx-6 my-3" :style="fontColor">
             {{ $t('label.examine') }}
           </h3>
           <v-divider></v-divider>
+
           <div
             v-html="toMarkdown(examineContent)"
             class="show-markdown-box"
@@ -112,6 +114,7 @@ const handleKeyup = () => {
 const isShowExamine = ref(false)
 const examineContent = ref('')
 const isFinishExamining = ref(false)
+const isThinking = ref(false)
 const handleSubmit = async () => {
   const temp = answerValue.value
   localStorage.removeItem(`pending-answer-value-${props.id}`)
@@ -119,8 +122,8 @@ const handleSubmit = async () => {
   isShowExamine.value = !isShowExamine.value
   await submitAnswer()
 }
-
 const submitAnswer = async () => {
+  isThinking.value = true
   const response = await fetch('/api/question/answer', {
     method: 'POST',
     headers: {
@@ -128,6 +131,7 @@ const submitAnswer = async () => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
+      id: props.id,
       note_name: props.note_name,
       document_id: props.document_id,
       question_content: props.content,
@@ -135,6 +139,7 @@ const submitAnswer = async () => {
       language: locale.value,
     }),
   })
+  isThinking.value = false
 
   const reader = response.body!.getReader()
   const decoder = new TextDecoder()

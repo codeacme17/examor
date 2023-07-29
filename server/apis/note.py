@@ -54,9 +54,13 @@ def _delete_note(id: int):
 
 
 def _update_note_icon(data: Icon):
-    table_name = "t_note"
-    id = f"id = {data.id}"
-    icon = f"icon = '{data.icon}'"
+    query = """
+            UPDATE t_note
+            SET icon = %s
+            WHERE id = %s;
+            """
 
-    MySQLHandler().update_table_data(table_name, icon, id)
+    data = (data.icon, data.id, )
+
+    MySQLHandler().update_table_data(query, data, )
     return api_result.success()

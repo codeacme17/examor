@@ -28,6 +28,7 @@ def _answer_question(body: dict):
     document_info = get_document_info(body["document_id"])
 
     return langchain_service.aexamine_answer(
+        id=body['id'],
         title=body["note_name"],
         context=document_info["document"],
         quesiton=body["question_content"],
