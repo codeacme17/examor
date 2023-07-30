@@ -3,9 +3,15 @@
     <TopBar />
 
     <v-container class="mt-3">
-      <Transition name="fade-transition" mode="out-in">
-        <router-view :key="$route.fullPath" />
-      </Transition>
+      <RouterView v-slot="{ Component }">
+        <template v-if="Component">
+          <Transition name="fade-transition" mode="out-in">
+            <Suspense>
+              <component :is="Component" :key="$route.fullPath"></component>
+            </Suspense>
+          </Transition>
+        </template>
+      </RouterView>
     </v-container>
   </v-main>
 </template>

@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, onUnmounted, onMounted } from 'vue'
+import { ref, onUnmounted, watch } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import { defaultBgColor, fontColor } from '@/utils'
@@ -110,13 +110,8 @@ import { QUESTION_API } from '@/apis'
 import MarkdownIt from 'markdown-it'
 
 const { locale } = useI18n()
-const props = defineProps(['id', 'note_name', 'document_id', 'content'])
+const props = defineProps(['id'])
 const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
-
-onMounted(() => {
-  handleGetLastAnswer()
-  handleGetDocument()
-})
 
 const answerValue = useLocalStorage(`pending-answer-value-${props.id}`, '')
 const toMarkdown = (text: string) => {
@@ -199,6 +194,17 @@ const handleGetDocument = async () => {
   const { data } = await getDocument(props.id)
   document_content.value = data
 }
+
+await handleGetLastAnswer()
+await handleGetDocument()
+
+watch(
+  () => props.id,
+  async () => {
+    await handleGetLastAnswer()
+    await handleGetDocument()
+  }
+)
 
 onUnmounted(() => {
   const id = `pending-answer-value-${props.id}`

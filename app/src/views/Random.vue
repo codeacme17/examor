@@ -1,28 +1,29 @@
 <template>
   <v-container style="max-width: 1080px">
-    <v-card class="pa-3" :color="greenBgColor">
-      <section class="mb-5 d-flex justify-space-between align-center">
+    <v-card class="pa-3" :color="greenBgColor" :loading="getRQLoading">
+      <section class="mb-5 d-flex justify-center align-center">
         <v-btn
-          icon="mdi-arrow-left"
+          icon="mdi-refresh"
           size="small"
           elevation="0"
           variant="text"
+          class="mr-2"
+          style="font-size: 16px"
+          @click="getRandomQuestion"
         />
 
-        <div>{{ $t('title.random') }} <v-chip size="small">Docker</v-chip></div>
-
-        <v-btn
-          icon="mdi-arrow-right"
-          size="small"
-          elevation="0"
-          variant="text"
-        />
+        <div>
+          {{ $t('title.random') }}
+          <v-chip size="small" class="ml-1">
+            {{ questionInfo.note_name }}
+          </v-chip>
+        </div>
       </section>
 
       <section class="px-4">
         <h3 class="mb-2">{{ $t('title.question') }}</h3>
         <p class="mb-6 text-body-1">
-          Composition API 和 Options API 有哪些比较？它们各自的优势是什么？
+          {{ questionInfo.content }}
         </p>
 
         <v-tooltip
@@ -34,15 +35,17 @@
           <template v-slot:activator="{ props }">
             <v-progress-linear
               v-bind="props"
-              model-value="20"
               class="mt-1 mb-2"
+              :model-value="questionInfo.progress"
             />
           </template>
         </v-tooltip>
       </section>
     </v-card>
 
-    <Answer :id="currentId" />
+    <Suspense>
+      <Answer :id="questionInfo.id" />
+    </Suspense>
   </v-container>
 </template>
 
@@ -55,6 +58,17 @@ export default {
 <script setup lang="ts">
 import { ref } from 'vue'
 import { greenBgColor } from '@/utils'
+import { useFetch } from '@/hooks'
+import { QUESTION_API } from '@/apis'
 
-const currentId = ref('docker-1')
+const questionInfo = ref<any>(null)
+const [_getRandomQuestion, getRQLoading] = useFetch(
+  QUESTION_API.getRandomQuestion
+)
+const getRandomQuestion = async () => {
+  const { data } = await _getRandomQuestion()
+  questionInfo.value = data
+}
+
+await getRandomQuestion()
 </script>

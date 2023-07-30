@@ -21,4 +21,11 @@ export const QUESTION_API = {
       url: `/api/question/document/${id}`,
     })
   },
+
+  getRandomQuestion() {
+    return _axios({
+      method: 'GET',
+      url: '/api/question/random',
+    })
+  },
 }

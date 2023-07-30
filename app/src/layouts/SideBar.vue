@@ -90,7 +90,7 @@
           size="small"
           elevation="0"
           variant="text"
-          :class="rail ? '' : 'ml-7'"
+          :class="rail ? '' : 'ml-6'"
           @click="handleClickGithub"
         />
 
@@ -103,7 +103,7 @@
               overflow: hidden;
               font-size: 13px;
               position: absolute;
-              right: 60px;
+              right: 57px;
             "
           >
             © 2023 <strong>leyoonafr</strong>

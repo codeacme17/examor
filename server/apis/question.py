@@ -59,5 +59,15 @@ def _get_random_question():
             LIMIT 1;
             """
 
-    res = MySQLHandler().execute_query(query)
+    question_info = MySQLHandler().execute_query(query, single=True)
+    document_info = get_document_info(question_info["document_id"])
+    note_info = get_note_info(document_info["note_id"])
+
+    res = {
+        "id": question_info["id"],
+        "content": question_info["content"],
+        "progress": question_info["progress"],
+        "note_name": note_info["name"]
+    }
+
     return api_result.success(res)

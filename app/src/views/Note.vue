@@ -69,12 +69,9 @@
         </v-card>
 
         <!-- answer block -->
-        <Answer
-          :id="pickedQuestion.id"
-          :content="pickedQuestion.content"
-          :note_name="currentNote.name"
-          :document_id="pickedQuestion.document_id"
-        />
+        <Suspense>
+          <Answer :id="pickedQuestion.id" />
+        </Suspense>
       </section>
     </Transition>
   </v-container>
