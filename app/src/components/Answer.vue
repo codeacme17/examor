@@ -46,7 +46,7 @@
           :border="true"
           :elevation="0"
           :color="'primary'"
-          :loading="isThinking"
+          :loading="isExaming"
         >
           <h3 class="mx-6 my-3" :style="fontColor">
             {{ $t('label.examine') }}
@@ -144,7 +144,7 @@ const handleKeyup = () => {
 const examineContent = ref('')
 const isShowExamine = ref(false)
 const isFinishExamining = ref(false)
-const isThinking = ref(false)
+const isExaming = ref(false)
 const handleSubmit = async () => {
   if (!answerValue.value.trim()) return
   const temp = answerValue.value
@@ -154,7 +154,7 @@ const handleSubmit = async () => {
   await submitAnswer()
 }
 const submitAnswer = async () => {
-  isThinking.value = true
+  isExaming.value = true
   const response = await fetch('/api/question/answer', {
     method: 'POST',
     headers: {
@@ -167,7 +167,6 @@ const submitAnswer = async () => {
       answer: answerValue.value,
     }),
   })
-  isThinking.value = false
 
   const reader = response.body!.getReader()
   const decoder = new TextDecoder()
@@ -176,6 +175,7 @@ const submitAnswer = async () => {
     const { value, done } = await reader.read()
     if (done) {
       isFinishExamining.value = true
+      isExaming.value = false
       break
     }
     examineContent.value += decoder.decode(value)
