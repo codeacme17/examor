@@ -2,17 +2,23 @@
   $color-pack: false
 );
 
+@import url('./markdown.scss');
+
 :root {
   --td-brand-color: #000 !important;
   --td-brand-color-hover: #000 !important;
   --list-item-font-size: 12px;
   --code-box-bg: #aacef3;
+  --cood-block-bg: #ededed;
+  --thumb-bg: #d8d8d8;
 }
 
 :root[theme-mode='dark'] {
   --td-brand-color: #fff !important;
   --td-brand-color-hover: #fff !important;
   --code-box-bg: #0d47a1;
+  --cood-block-bg: #424242;
+  --thumb-bg: #424242;
 }
 
 html {
@@ -26,46 +32,6 @@ html {
 
 .v-btn--disabled {
   opacity: 0.5 !important;
-}
-
-.show-markdown-box {
-  padding: 18px 27px;
-
-  h1 {
-    font-size: 30px;
-    margin-bottom: 10px;
-  }
-
-  h2 {
-    font-size: 26px;
-    margin-bottom: 8px;
-  }
-
-  h3 {
-    font-size: 22px;
-    margin-bottom: 6px;
-  }
-
-  code {
-    padding: 0px 5px;
-    margin: 0px 5px;
-    border-radius: 3px;
-    background-color: var(--code-box-bg) !important;
-  }
-
-  ul,
-  ol {
-    padding-left: 20px;
-  }
-
-  li {
-    margin: 5px 0px;
-    line-height: 28px;
-
-    p {
-      margin: 10px 0px 0px 6px;
-    }
-  }
 }
 
 #nprogess-bar {
@@ -87,4 +53,15 @@ html {
 
 .t-upload__flow-bottom {
   display: none !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 3px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  height: 3px;
+  background-color: var(--thumb-bg);
 }

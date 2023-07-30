@@ -176,7 +176,7 @@ export default {
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
-import { ref, nextTick, watch } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useNoteStore } from '@/store'
 import { NOTE_API } from '@/apis'
@@ -202,7 +202,7 @@ const isChangeNote = ref(false)
 const handleClickTab = async (index: number) => {
   if (index === currentIndex.value) return
   currentIndex.value = index
-  isShowConfirmDeleteBtn.value = false
+  switchNote()
 }
 
 // Handle delete note event
@@ -214,18 +214,17 @@ const [deleteNote, deleteNodeLoading] = useFetch(
 const handleDeleteNote = async () => {
   const { code } = await deleteNote(currentNote.id)
   if (code !== 0) return
-
   await NOTE_STORE.getNotes()
   const length = NOTE_STORE.notes.length
-  if (!length) return
-  else if (length === 1) currentIndex.value = 0
-  else if (currentIndex.value === length - 1) currentIndex.value -= 1
-  else currentIndex.value += 1
 
-  isShowConfirmDeleteBtn.value = false
+  if (!length) return
+  if (currentIndex.value === length) currentIndex.value = length - 1
+
+  switchNote()
 }
 
-watch(currentIndex, () => {
+const switchNote = () => {
+  isShowConfirmDeleteBtn.value = false
   isChangeNote.value = true
   currentNote = NOTE_STORE.notes[currentIndex.value]
   NOTE_STORE.currentIcon = currentNote ? currentNote.icon : ''
@@ -233,5 +232,5 @@ watch(currentIndex, () => {
   nextTick(() => {
     isChangeNote.value = false
   })
-})
+}
 </script>

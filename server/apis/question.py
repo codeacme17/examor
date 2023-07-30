@@ -60,6 +60,10 @@ def _get_random_question():
             """
 
     question_info = MySQLHandler().execute_query(query, single=True)
+
+    if (question_info is None):
+        return api_result.success("empty")
+
     document_info = get_document_info(question_info["document_id"])
     note_info = get_note_info(document_info["note_id"])
 

@@ -48,6 +48,7 @@
     <v-list density="compact" nav>
       <v-list-item
         v-for="item in defualtNavList"
+        v-show="item.isDisplay"
         :key="item.value"
         :prepend-icon="item.icon"
         :title="item.title"
@@ -148,16 +149,19 @@ const defualtNavList = computed(() => [
     icon: 'mdi-view-dashboard',
     title: t('menus.dashboard'),
     value: '/dashboard',
+    isDisplay: false,
   },
   {
     icon: 'mdi-notebook-multiple',
     title: t('menus.notes'),
     value: '/notes',
+    isDisplay: true,
   },
   {
     icon: 'mdi-head-question',
     title: t('menus.random'),
     value: '/random',
+    isDisplay: !!NOTE_STORE.notes.length,
   },
 ])
 

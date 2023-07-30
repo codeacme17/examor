@@ -108,6 +108,7 @@ import { defaultBgColor, fontColor } from '@/utils'
 import { useFetch } from '@/hooks'
 import { QUESTION_API } from '@/apis'
 import MarkdownIt from 'markdown-it'
+import hljs from 'highlight.js'
 
 const { locale } = useI18n()
 const props = defineProps(['id'])
@@ -116,6 +117,12 @@ const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
 const answerValue = useLocalStorage(`pending-answer-value-${props.id}`, '')
 const toMarkdown = (text: string) => {
   const md = new MarkdownIt({
+    highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        return hljs.highlight(str, { language: lang }).value
+      }
+      return ''
+    },
     html: true,
     linkify: true,
     typographer: true,

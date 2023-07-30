@@ -39,7 +39,7 @@ async def _add_note(
     if (notionId is not None):
         pass
 
-    return api_result.success()
+    return api_result.success("add note successfully")
 
 
 def _delete_note(id: int):
