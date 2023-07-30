@@ -141,8 +141,8 @@ const handleKeyup = () => {
   if (ctrlTrigger.value) ctrlTrigger.value = false
 }
 
-const isShowExamine = ref(false)
 const examineContent = ref('')
+const isShowExamine = ref(false)
 const isFinishExamining = ref(false)
 const isThinking = ref(false)
 const handleSubmit = async () => {
@@ -208,6 +208,11 @@ await handleGetDocument()
 watch(
   () => props.id,
   async () => {
+    currentTab.value = 'answer'
+    answerValue.value = ''
+    isShowExamine.value = false
+    examineContent.value = ''
+    isFinishExamining.value = false
     await handleGetLastAnswer()
     await handleGetDocument()
   }

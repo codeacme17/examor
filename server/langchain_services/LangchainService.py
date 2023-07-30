@@ -10,7 +10,8 @@ from langchain.chat_models import AzureChatOpenAI
 from langchain.callbacks import AsyncIteratorCallbackHandler
 
 from .prompts import choose_prompt
-from utils.MySQLHandler import MySQLHandler
+from db_services.question import _save_question_to_db, _update_question_state
+from db_services.document import _save_doc_to_db
 
 
 class LangchainService():
@@ -79,7 +80,11 @@ class LangchainService():
         tasks = []
 
         for doc in docs:
-            doc_id = self._save_doc_to_db(doc.page_content)
+            doc_id = _save_doc_to_db(
+                self.note_id,
+                self.filename,
+                doc.page_content
+            )
             tasks.append(self._agenerate_questions(doc, title, doc_id))
 
         await asyncio.gather(*tasks)
@@ -115,7 +120,7 @@ class LangchainService():
 
         lines = res.split("\n")
         for question_content in lines:
-            self._save_question_to_db(
+            _save_question_to_db(
                 question_content,
                 doc_id
             )
@@ -123,42 +128,6 @@ class LangchainService():
     def _is_markdown_heading(self, line):
         pattern = r'^#\s.+'
         return bool(re.match(pattern, line))
-
-    def _save_doc_to_db(
-        self,
-        doc: str
-    ):
-        query = """
-                INSERT INTO t_document (note_id, file_name, document) 
-                VALUES (%s, %s, %s)
-                """
-        data = (
-            self.note_id,
-            self.filename,
-            doc,
-        )
-        id = MySQLHandler().insert_table_data(
-            query,
-            data
-        )
-
-        return id
-
-    def _save_question_to_db(
-        self,
-        question_content: str,
-        document_id: int,
-    ):
-        query = """
-                INSERT INTO t_question (content, document_id) 
-                VALUES (%s, %s)
-                """
-        data = (question_content, document_id,)
-
-        MySQLHandler().insert_table_data(
-            query,
-            data
-        )
 
     async def aexamine_answer(
         self,
@@ -185,7 +154,7 @@ class LangchainService():
         await task
 
         temp = f"{answer} ||| {exmine}"
-        await self._update_question_state(id, temp)
+        await _update_question_state(id, temp)
 
     async def _wait_done(
         self,
@@ -199,18 +168,3 @@ class LangchainService():
             event.set()
         finally:
             event.set()
-
-    async def _update_question_state(
-        self,
-        id: int,
-        answer: str,
-    ):
-        query = """
-                UPDATE t_question
-                SET last_answer = %s, progress = %s, is_answered_today = %s
-                WHERE id = %s;
-                """
-        data = (answer, 5, "1", id, )
-
-        print(data)
-        MySQLHandler().update_table_data(query, data)

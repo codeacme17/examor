@@ -46,8 +46,13 @@ export default defineConfig({
       '/api': {
         target: 'http://0.0.0.0:51717',
         changeOrigin: true,
-        ws: true,
         rewrite: (pathStr) => pathStr.replace('/api', '/'),
+      },
+      '/ws': {
+        target: 'ws://127.0.0.1:51717',
+        changeOrigin: true,
+        ws: true,
+        rewrite: (pathStr) => pathStr.replace('/ws', '/'),
       },
     },
   },

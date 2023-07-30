@@ -1,9 +1,8 @@
-
-from fastapi import FastAPI, File, Form, UploadFile
+from fastapi import FastAPI, File, Form, UploadFile, WebSocket
 from fastapi.responses import StreamingResponse
-from utils import types
 
-from utils.MySQLHandler import MySQLHandler
+from utils import types
+from db_services.MySQLHandler import MySQLHandler
 from utils.profile_handler import set_profile_to_env
 from apis import profile, note, document, question
 
@@ -68,6 +67,15 @@ def get_files_by_noteId(id: int):
 @app.delete("/file")
 def delete_file(id: int, file_name: str):
     return document._delete_file(id, file_name)
+
+
+@app.websocket("/ws/file/uploading")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        await websocket.receive_text()
+        uploading_files = document._get_uploading_files()
+        await websocket.send_text(uploading_files)
 
 
 # Question APIs

@@ -1,7 +1,7 @@
 from fastapi import File, Form, UploadFile
 from utils import api_result, types
-from utils.share import upload_file
-from utils.MySQLHandler import MySQLHandler
+from db_services.file import upload_file
+from db_services.MySQLHandler import MySQLHandler
 
 
 def _get_notes():
