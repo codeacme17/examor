@@ -9,7 +9,7 @@ type State = {
 }
 
 export type NoteItem = {
-  id: string
+  id: number
   name: string
   icon: string
   upload_date: string

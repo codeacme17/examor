@@ -77,6 +77,8 @@
         :title="item.name"
         :to="'/note/' + item.id"
         :active="route.path === '/note/' + item.id"
+        :disabled="item.isUploading"
+        :append-icon="item.isUploading ? 'mdi-upload' : ''"
       />
     </v-list>
 
@@ -127,13 +129,14 @@ import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
 import { useDark, useWindowSize } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-import { useNoteStore } from '@/store'
+import { useNoteStore, useFileStore } from '@/store'
 
 const route = useRoute()
 const isDark = useDark()
 const { t } = useI18n()
 
 const NOTE_STORE = useNoteStore()
+const FILE_STORE = useFileStore()
 
 // handle side-bar rail state
 const rail = useStorage('side-bar-rail', false)
@@ -161,7 +164,7 @@ const defualtNavList = computed(() => [
     icon: 'mdi-head-question',
     title: t('menus.random'),
     value: '/random',
-    isDisplay: !!NOTE_STORE.notes.length,
+    isDisplay: !!NOTE_STORE.notes.length && !FILE_STORE.uploadingFiles.length,
   },
 ])
 

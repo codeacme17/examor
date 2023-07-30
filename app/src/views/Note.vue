@@ -43,6 +43,7 @@
                 size="x-small"
                 class="mr-3"
                 theme="dark"
+                style="color: azure"
                 @click="isShowAnswer = false"
               />
               {{ $t('title.question') }}

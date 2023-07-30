@@ -34,6 +34,7 @@
           placeholder=""
           theme="file-flow"
           multiple
+          max="3"
           :accept="['.md']"
           :autoUpload="false"
         />

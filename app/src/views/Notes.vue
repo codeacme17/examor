@@ -70,6 +70,7 @@
                 class="text-body-1"
                 :value="index"
                 :key="item.id"
+                :disabled="item.isUploading"
                 @click="handleClickTab(index)"
               >
                 <v-icon start> {{ item.icon }} </v-icon>

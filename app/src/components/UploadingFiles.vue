@@ -41,11 +41,34 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useFileStore } from '@/store'
+import {
+  useFileStore,
+  useNoteStore,
+  NoteItem,
+  UploadingFileItem,
+} from '@/store'
+import { watchEffect } from 'vue'
 
+const NOTE_STORE = useNoteStore()
 const FILE_STORE = useFileStore()
 
 const isExpend = ref(false)
+
+watchEffect(() => {
+  NOTE_STORE.notes.forEach((note: NoteItem) => {
+    FILE_STORE.uploadingFiles.forEach((uploadingFile: UploadingFileItem) => {
+      if (note.id === uploadingFile.note_id) {
+        note.isUploading = true
+      } else note.isUploading = false
+    })
+  })
+
+  if (!FILE_STORE.uploadingFiles.length) {
+    NOTE_STORE.notes.forEach((note: NoteItem) => {
+      note.isUploading = false
+    })
+  }
+})
 </script>
 
 <style scoped lang="scss">
