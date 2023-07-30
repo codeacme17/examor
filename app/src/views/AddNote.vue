@@ -181,7 +181,7 @@ const handleConfirmAdd = async () => {
 
 const initFormData = () => {
   formData.noteName = ''
-  formData.noteType = null
+  formData.noteType = 'files'
   formData.files = []
   formData.notion = ''
 }

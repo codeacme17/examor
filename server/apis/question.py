@@ -1,6 +1,6 @@
 from utils.MySQLHandler import MySQLHandler
 from utils import api_result
-from utils.share import get_note_info, get_document_info, get_question_info
+from utils.share import get_note_info, get_document_info, get_question_info, get_note_info_by_quesiton_id
 from langchain_services.LangchainService import LangchainService
 from utils import types
 

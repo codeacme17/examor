@@ -23,6 +23,7 @@ export const NOTE_API = {
         'Content-Type': 'multipart/form-data',
       },
       data: data,
+      timeout: 1 * 1000,
     })
   },
 

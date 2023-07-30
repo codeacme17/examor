@@ -67,3 +67,22 @@ def get_question_info(
 
     res = MySQLHandler().execute_query(query, data, single=True)
     return res
+
+
+def get_note_info_by_quesiton_id(
+    question_id: int
+):
+    query = """
+            SELECT n.*
+            FROM t_note n
+            WHERE n.document_id = (
+                SELECT document_id
+                FROM t_question
+                WHERE id = %s
+            );
+            """
+    data = (question_id, )
+    res = MySQLHandler().execute_query(query, data)
+
+    print(res)
+    return res
