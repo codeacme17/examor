@@ -1,7 +1,7 @@
-import json
 from fastapi import File, Form, UploadFile
 from utils import api_result
 from db_services.MySQLHandler import MySQLHandler
+from db_services.file import get_uploading_files
 
 
 def _get_files_by_noteId(noteId):
@@ -47,8 +47,5 @@ def _delete_file(
 
 
 def _get_uploading_files():
-    content = None
-    with open("uploading_files.json", "r", encoding="utf-8") as f:
-        content = f.read()
-
-    return content
+    res = get_uploading_files()
+    return res

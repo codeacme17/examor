@@ -22,5 +22,6 @@ declare module 'vue' {
     TPopconfirm: typeof import('tdesign-vue-next')['Popconfirm']
     TUpload: typeof import('tdesign-vue-next')['Upload']
     UploadFileDialog: typeof import('./src/components/UploadFileDialog.vue')['default']
+    UploadingFiles: typeof import('./src/components/UploadingFiles.vue')['default']
   }
 }

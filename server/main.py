@@ -1,6 +1,7 @@
+import json
+
 from fastapi import FastAPI, File, Form, UploadFile, WebSocket
 from fastapi.responses import StreamingResponse
-
 from utils import types
 from db_services.MySQLHandler import MySQLHandler
 from utils.profile_handler import set_profile_to_env
@@ -74,8 +75,9 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
         await websocket.receive_text()
-        uploading_files = document._get_uploading_files()
-        await websocket.send_text(uploading_files)
+        uploading_files = {"data": document._get_uploading_files()}
+        print(uploading_files)
+        await websocket.send_json(uploading_files)
 
 
 # Question APIs

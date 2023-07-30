@@ -55,7 +55,6 @@
           elevation="0"
           :block="true"
           :disabled="disabled"
-          :loading="loading"
           @click="handleConfirmAdd"
         >
           {{ $t('button.submit') }}
@@ -154,10 +153,7 @@ const handleSelectChange = () => {
   }
 }
 
-const [addNote, loading] = useFetch(
-  NOTE_API.addNote,
-  t('message.successAddNote')
-)
+const [addNote] = useFetch(NOTE_API.addNote)
 const NOTE_STORE = useNoteStore()
 const handleConfirmAdd = async () => {
   const _formData = new FormData()
@@ -173,8 +169,7 @@ const handleConfirmAdd = async () => {
     _formData.append('files', item.raw)
   })
 
-  const res = await addNote(_formData)
-  if (res.code !== 0) return
+  addNote(_formData)
   initFormData()
   NOTE_STORE.getNotes()
 }

@@ -1,15 +1,16 @@
 <template>
   <router-view />
+  <uploading-files />
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, watchEffect } from 'vue'
 import { useWebSocket } from '@vueuse/core'
-import { useProfileStore, useNoteStore } from '@/store'
-import { watch } from 'vue'
+import { useProfileStore, useNoteStore, useFileStore } from '@/store'
 
 const PROFILE_STORE = useProfileStore()
 const NOTE_STORE = useNoteStore()
+const FILE_STORE = useFileStore()
 
 onMounted(async () => {
   await NOTE_STORE.getNotes()
@@ -19,22 +20,16 @@ onMounted(async () => {
 const { data } = useWebSocket('ws://localhost:51717/ws/file/uploading', {
   autoReconnect: {
     retries: 3,
-    delay: 1000,
-    onFailed() {
-      console.log('Failed to connect WebSocket after 3 retries')
-    },
   },
   heartbeat: {
     message: 'ping',
-    interval: 3000,
+    interval: 1000,
     pongTimeout: 1000,
   },
 })
 
-watch(
-  () => data,
-  () => {
-    console.log(JSON.parse(data.value))
-  }
-)
+watchEffect(() => {
+  if (!data.value) return
+  FILE_STORE.uploadingFiles = JSON.parse(data.value).data
+})
 </script>

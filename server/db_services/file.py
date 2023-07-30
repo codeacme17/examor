@@ -10,10 +10,18 @@ async def upload_file(
     noteName: str,
     files: list[UploadFile],
 ):
+    list = []
     for file in files:
         filename = file.filename
-        content = await file.read()
         file_id = add_file_to_db(note_id=noteId, filename=filename)
+        list.append({
+            "file": file,
+            "file_id": file_id
+        })
+
+    for file in list:
+        filename = file["file"].filename
+        content = await file["file"].read()
 
         langchain_service = LangchainService(
             note_id=noteId,
@@ -27,7 +35,7 @@ async def upload_file(
             noteName,
         )
 
-        set_file_is_uploading_state(file_id)
+        set_file_is_uploading_state(file["file_id"])
 
 
 def add_file_to_db(
@@ -54,3 +62,13 @@ def set_file_is_uploading_state(
              """
     data = (file_id, )
     MySQLHandler().update_table_data(query, data)
+
+
+def get_uploading_files():
+    query = """
+            SELECT id, note_id, file_name
+            FROM t_file
+            WHERE is_uploading = "1";
+            """
+    res = MySQLHandler().execute_query(query)
+    return res
