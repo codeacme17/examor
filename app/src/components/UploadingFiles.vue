@@ -55,19 +55,12 @@ const FILE_STORE = useFileStore()
 const isExpend = ref(false)
 
 watchEffect(() => {
+  const noteIdsSet = new Set(
+    FILE_STORE.uploadingFiles.map((item: UploadingFileItem) => item.note_id)
+  )
   NOTE_STORE.notes.forEach((note: NoteItem) => {
-    FILE_STORE.uploadingFiles.forEach((uploadingFile: UploadingFileItem) => {
-      if (note.id === uploadingFile.note_id) {
-        note.isUploading = true
-      } else note.isUploading = false
-    })
+    note.isUploading = noteIdsSet.has(note.id)
   })
-
-  if (!FILE_STORE.uploadingFiles.length) {
-    NOTE_STORE.notes.forEach((note: NoteItem) => {
-      note.isUploading = false
-    })
-  }
 })
 </script>
 

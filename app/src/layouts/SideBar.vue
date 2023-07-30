@@ -164,7 +164,7 @@ const defualtNavList = computed(() => [
     icon: 'mdi-head-question',
     title: t('menus.random'),
     value: '/random',
-    isDisplay: !!NOTE_STORE.notes.length && !FILE_STORE.uploadingFiles.length,
+    isDisplay: true,
   },
 ])
 

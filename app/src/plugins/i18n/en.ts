@@ -26,6 +26,7 @@ export const en = {
     question: 'Question',
     random: 'Random Pick',
     emptyNote: 'There is no any note yet',
+    emptyQuestion: 'Threre is no any questions yet',
     keys: 'Keys',
     otherConfigurations: 'Other Configurations',
     filename: 'File Name',

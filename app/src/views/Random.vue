@@ -1,19 +1,7 @@
 <template>
   <v-container style="max-width: 1080px">
-    <empty-block v-if="questionInfo === 'empty'">
-      <h2 class="mb-2">{{ $t('title.emptyNote') }}</h2>
-      <h4 class="d-flex align-center">
-        {{ $t('subTitle.emptyNoteStart') }}
-        <v-btn
-          variant="text"
-          color="primary"
-          class=""
-          @click="$router.push('/addNote')"
-        >
-          {{ $t('menus.addNote') }}
-        </v-btn>
-        {{ $t('subTitle.emptyNoteEnd') }}
-      </h4>
+    <empty-block v-if="questionInfo === 'empty'" type="question">
+      <h3 class="mb-2">{{ $t('title.emptyQuestion') }}</h3>
     </empty-block>
 
     <section v-else>

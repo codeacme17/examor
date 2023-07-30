@@ -25,6 +25,7 @@ export const zhCN = {
     question: '问题',
     random: '随机选题',
     emptyNote: '暂无任何笔记',
+    emptyQuestion: '暂无任何问题',
     keys: '密钥',
     otherConfigurations: '其他配置',
     filename: '文件名',

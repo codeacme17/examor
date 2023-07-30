@@ -1,7 +1,7 @@
 <template>
   <v-container style="max-width: 1080px">
     <!-- Empty Notice Block -->
-    <empty-block v-if="!NOTE_STORE.notes.length">
+    <empty-block v-if="!NOTE_STORE.notes.length" type="note">
       <h2 class="mb-2">{{ $t('title.emptyNote') }}</h2>
       <h4 class="d-flex align-center">
         {{ $t('subTitle.emptyNoteStart') }}
