@@ -67,7 +67,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { defaultBgColor, handleDatetime } from '@/utils'
-import { FILE_API } from '@/apis'
+import { FILE_API, NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 
 type FileItem = {
@@ -83,7 +83,7 @@ onMounted(async () => {
   await gitFileList()
 })
 
-const [getFiles, getFilesLoading] = useFetch(FILE_API.getFiles)
+const [getFiles, getFilesLoading] = useFetch(NOTE_API.getFiles)
 const list = ref<FileItem[]>([])
 const gitFileList = async () => {
   const res = await getFiles(props.id)

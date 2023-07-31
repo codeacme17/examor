@@ -155,7 +155,7 @@ const handleSubmit = async () => {
 }
 const submitAnswer = async () => {
   isExaming.value = true
-  const response = await fetch('/api/question/answer', {
+  const response = await fetch('/api/question/examine', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

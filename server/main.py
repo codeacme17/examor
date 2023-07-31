@@ -33,6 +33,11 @@ def get_notes():
     return note._get_notes()
 
 
+@app.get("/note/files/{id}")
+def get_files_by_noteId(id: int):
+    return note._get_files_by_noteId(id)
+
+
 @app.get("/note/{id}")
 def get_note(id: int):
     return note._get_note(id)
@@ -49,7 +54,7 @@ async def add_note(
     return res
 
 
-@app.delete("/note")
+@app.delete("/note/{id}")
 def delete_note(id: int):
     return note._delete_note(id)
 
@@ -60,9 +65,6 @@ def update_note_icon(data: types.Icon):
 
 
 # File APIs
-@app.get("/files")
-def get_files_by_noteId(id: int):
-    return document._get_files_by_noteId(id)
 
 
 @app.delete("/file")
@@ -85,10 +87,10 @@ def get_questions_by_note_id(id: int):
     return question._get_questions_by_note_id(id)
 
 
-@app.post("/question/answer")
-async def answer_question(data: types.AnswerQuestion):
+@app.post("/question/examine")
+async def examine_question(data: types.AnswerQuestion):
     return StreamingResponse(
-        question._answer_question(data),
+        question._examine_question(data),
         media_type="text/event-stream"
     )
 

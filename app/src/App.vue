@@ -29,7 +29,6 @@ const { data } = useWebSocket('ws://localhost:51717/ws/file/uploading', {
 })
 
 watchEffect(() => {
-  if (!data.value) return
-  FILE_STORE.uploadingFiles = JSON.parse(data.value).data
+  FILE_STORE.uploadingFiles = data.value ? JSON.parse(data.value).data : []
 })
 </script>

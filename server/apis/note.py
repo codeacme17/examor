@@ -17,6 +17,20 @@ def _get_note(id: int):
     return api_result.success(res)
 
 
+def _get_files_by_noteId(noteId):
+    query = """
+            SELECT file_name, MAX(upload_date) as upload_date
+            FROM t_document
+            WHERE note_id = %s
+            GROUP BY file_name
+            HAVING COUNT(file_name) > 1;
+            """
+
+    data = (noteId, )
+    res = MySQLHandler().execute_query(query, data)
+    return api_result.success(res)
+
+
 async def _add_note(
     language: str,
     noteName: str = Form(),

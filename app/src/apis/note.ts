@@ -15,6 +15,13 @@ export const NOTE_API = {
     })
   },
 
+  getFiles(id: number) {
+    return _axios({
+      method: 'GET',
+      url: `/api/note/files/${id}`,
+    })
+  },
+
   addNote(data: any) {
     return _axios({
       method: 'POST',
@@ -30,7 +37,7 @@ export const NOTE_API = {
   deleteNote(id: number) {
     return _axios({
       method: 'DELETE',
-      url: `/api/note?id=${id}`,
+      url: `/api/note/${id}`,
     })
   },
 

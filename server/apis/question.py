@@ -18,7 +18,7 @@ def _get_questions_by_note_id(note_id: int):
     return api_result.success(res)
 
 
-def _answer_question(data: types.AnswerQuestion):
+def _examine_question(data: types.AnswerQuestion):
     question_info = get_question_info(data.id)
     document_info = get_document_info(question_info["document_id"])
     note_info = get_note_info(document_info["note_id"])

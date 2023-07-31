@@ -4,20 +4,6 @@ from db_services.MySQLHandler import MySQLHandler
 from db_services.file import get_uploading_files
 
 
-def _get_files_by_noteId(noteId):
-    query = """
-            SELECT file_name, MAX(upload_date) as upload_date
-            FROM t_document
-            WHERE note_id = %s
-            GROUP BY file_name
-            HAVING COUNT(file_name) > 1;
-            """
-
-    data = (noteId, )
-    res = MySQLHandler().execute_query(query, data)
-    return api_result.success(res)
-
-
 def _add_file_to_note(
     note_id: str = Form(),
     files: list[UploadFile] = File(default=None),
