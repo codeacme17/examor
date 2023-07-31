@@ -29,6 +29,7 @@
               class="ml-auto"
               variant="text"
               :flat="true"
+              :disabled="props.disabled"
               @click="handleUpdate(item)"
             >
               {{ $t('button.update') }}
@@ -38,6 +39,7 @@
               icon="mdi-delete-empty"
               style="font-size: 16px"
               :flat="true"
+              :disabled="props.disabled"
               @click="item.isShowConfirmDeleteBtn = true"
             />
             <v-btn
@@ -77,7 +79,7 @@ type FileItem = {
   isShowConfirmDeleteBtn?: boolean
 }
 
-const props = defineProps(['id'])
+const props = defineProps(['id', 'disabled'])
 
 onMounted(async () => {
   await gitFileList()

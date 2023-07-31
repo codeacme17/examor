@@ -87,7 +87,10 @@ class LangchainService():
             )
             tasks.append(self._agenerate_questions(doc, title, doc_id))
 
-        await asyncio.gather(*tasks)
+        try:
+            await asyncio.wait_for(asyncio.gather(*tasks), timeout=3 * 60)
+        except asyncio.TimeoutError:
+            await handle_timeout()
 
     def _split_document(self, doc_content: str) -> list[Document]:
         text_splitter = RecursiveCharacterTextSplitter(
@@ -168,3 +171,7 @@ class LangchainService():
             event.set()
         finally:
             event.set()
+
+
+async def handle_timeout():
+    print("Tasks took too long and timed out!")

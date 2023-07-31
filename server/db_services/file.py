@@ -36,6 +36,7 @@ async def upload_file(
         )
 
         set_file_is_uploading_state(file["file_id"])
+        print(f">>>>>>>>> {filename} upload success  <<<<<<<<<")
 
 
 def add_file_to_db(

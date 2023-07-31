@@ -39,18 +39,29 @@
             <v-progress-linear model-value="20" class="mt-1 mb-2" />
 
             <v-btn
-              :block="true"
               variant="outlined"
               class="mt-7 mb-3"
               prepend-icon="mdi-text-box-plus-outline"
               style="height: 40px"
+              :block="true"
+              :disabled="currentNote.isUploading"
               @click="isShowUploadDialog = true"
             >
               {{ $t('button.addFile') }}
             </v-btn>
 
             <!-- Files Table -->
-            <files-table :id="currentNote.id" />
+            <v-card
+              class="pt-1"
+              color="transparent"
+              :loading="currentNote.isUploading"
+              :elevation="0"
+            >
+              <files-table
+                :id="currentNote.id"
+                :disabled="currentNote.isUploading"
+              />
+            </v-card>
           </v-card>
         </Transition>
 
@@ -70,7 +81,6 @@
                 class="text-body-1"
                 :value="index"
                 :key="item.id"
-                :disabled="item.isUploading"
                 @click="handleClickTab(index)"
               >
                 <v-icon start> {{ item.icon }} </v-icon>
@@ -109,6 +119,7 @@
             type="icon"
             variant="tonal"
             :color="orangeBgColor"
+            :disabled="currentNote.isUploading"
             @click="isShowConfirmDeleteBtn = true"
           >
             <v-icon
@@ -177,7 +188,7 @@ export default {
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useNoteStore } from '@/store'
 import { NOTE_API } from '@/apis'

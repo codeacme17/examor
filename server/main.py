@@ -1,6 +1,6 @@
 import json
 
-from fastapi import FastAPI, File, Form, UploadFile, WebSocket
+from fastapi import FastAPI, File, Form, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.responses import StreamingResponse
 from utils import types
 from db_services.MySQLHandler import MySQLHandler
@@ -65,8 +65,6 @@ def update_note_icon(data: types.Icon):
 
 
 # File APIs
-
-
 @app.delete("/file")
 def delete_file(id: int, file_name: str):
     return document._delete_file(id, file_name)
@@ -75,10 +73,13 @@ def delete_file(id: int, file_name: str):
 @app.websocket("/ws/file/uploading")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    while True:
-        await websocket.receive_text()
-        uploading_files = {"data": document._get_uploading_files()}
-        await websocket.send_json(uploading_files)
+    try:
+        while True:
+            await websocket.receive_text()
+            uploading_files = {"data": document._get_uploading_files()}
+            await websocket.send_json(uploading_files)
+    except WebSocketDisconnect:
+        await websocket.close()
 
 
 # Question APIs
