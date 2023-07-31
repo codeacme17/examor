@@ -54,7 +54,7 @@ def _get_random_question():
     query = """
             SELECT *
             FROM t_question
-            WHERE is_pushed != '1' AND is_answered_today != '1'
+            WHERE is_answered_today != '1'
             ORDER BY RAND()
             LIMIT 1;
             """

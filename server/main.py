@@ -79,7 +79,7 @@ async def websocket_endpoint(websocket: WebSocket):
             uploading_files = {"data": document._get_uploading_files()}
             await websocket.send_json(uploading_files)
     except WebSocketDisconnect:
-        await websocket.close()
+        pass
 
 
 # Question APIs

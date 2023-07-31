@@ -25,7 +25,7 @@ QUESTION_GENERATE_PROMPT_TEMP_CN = '''
 
 上下文：“”{context}“””
 
-问题（在语言中使用降价语法，没有数字但列表）：
+问题（以markdown语法，请不要携带数字）：
 '''
 
 QUESTION_GENERATE_PROMPT_CN = PromptTemplate(
@@ -51,12 +51,11 @@ my answer:
      {answer}
 
 You need to answer using this format:
-     **Score** 
-     /n/n x 
-     **Detection**
-     /n/n xxx
-     **Correct answer**
-     /n/n xxx
+     **Score**: x 
+     **Detection**:
+     xxx
+     **Correct answer**:
+     xxx
 
 Your return (using markdown syntax):
 '''
@@ -85,10 +84,10 @@ ANSWER_EXAMINE_PROMPT_TEMP_CN = '''
 
 你需要使用这种格式进行回答：
     **得分**: x
-    
-    **检测**: xxx
-    
-    **正确答案**: xxx
+    **检测**: 
+    xxx
+    **正确答案**: 
+    xxx
 
 
 你的返回(使用 markdown 语法): 

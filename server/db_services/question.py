@@ -1,3 +1,5 @@
+import re
+
 from db_services.MySQLHandler import MySQLHandler
 
 
@@ -5,6 +7,8 @@ def _save_question_to_db(
     question_content: str,
     document_id: int,
 ):
+
+    question_content = remove_prefix_numbers(question_content)
     query = """
             INSERT INTO t_question (content, document_id) 
             VALUES (%s, %s)
@@ -27,3 +31,8 @@ async def _update_question_state(
             """
     data = (answer, 5, "1", id, )
     MySQLHandler().update_table_data(query, data)
+
+
+def remove_prefix_numbers(text):
+    cleaned_text = re.sub(r'^\s*(?:\d+\.|-)\s*', '', text)
+    return cleaned_text.strip()

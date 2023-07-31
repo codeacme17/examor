@@ -39,7 +39,7 @@ CREATE TABLE t_question (
 	id int(12) auto_increment NOT NULL COMMENT 'question id',
 	content varchar(500) NOT NULL COMMENT 'question content',
 	document_id int(12) NOT NULL COMMENT 'document id',
-	is_pushed char(5) DEFAULT '0' NOT NULL COMMENT 'has pushed to user  0-No  1-Yes',
+	push_date VARCHAR(255) DEFAULT NULL COMMENT 'date the question needs to be asked',
 	is_answered_today char(1) DEFAULT '0' NOT NULL COMMENT 'has answered this quesiton at today to user  0-No  1-Yes',
 	progress NUMERIC DEFAULT 0 NOT NULL COMMENT 'accumulated score',
 	last_answer TEXT NULL COMMENT 'record the last time answer',
