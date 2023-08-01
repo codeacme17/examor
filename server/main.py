@@ -3,8 +3,8 @@ from fastapi.responses import StreamingResponse
 
 from utils import types
 from utils.profile_handler import set_profile_to_env
-from db_services import MySQLHandler
-from apis import apis_profile, apis_note, apis_file, apis_question
+from db_services.MySQLHandler import MySQLHandler
+from apis import profiles as apis_profile, note as apis_note, file as apis_file, question as apis_question
 
 app = FastAPI()
 

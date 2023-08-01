@@ -1,5 +1,6 @@
 from utils import api_result
-from db_services import MySQLHandler, dbs_file
+from db_services import file as dbs_file
+from db_services.MySQLHandler import MySQLHandler
 
 
 def _delete_file(

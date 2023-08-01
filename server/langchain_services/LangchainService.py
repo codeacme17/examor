@@ -10,7 +10,7 @@ from langchain.chat_models import AzureChatOpenAI
 from langchain.callbacks import AsyncIteratorCallbackHandler
 
 from .prompts import choose_prompt
-from db_services import dbs_question, dbs_document
+from db_services import document as dbs_document, question as dbs_question
 
 
 class LangchainService():

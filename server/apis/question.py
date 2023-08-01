@@ -1,5 +1,6 @@
 from utils import api_result, types
-from db_services import MySQLHandler, dbs_share
+from db_services.MySQLHandler import MySQLHandler
+from db_services import share as dbs_share
 from langchain_services import LangchainService
 
 
