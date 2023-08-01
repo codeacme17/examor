@@ -139,7 +139,7 @@ class LangchainService():
         quesiton: str,
         answer: str
     ):
-        coroutine = self._wait_done(self.llm_chain.apredict(
+        coroutine = wait_done(self.llm_chain.apredict(
             title=title,
             context=context,
             quesiton=quesiton,
@@ -156,19 +156,19 @@ class LangchainService():
 
         await dbs_question.update_question_state(id, f"{answer} ||| {exmine}")
 
-    async def _wait_done(
-        self,
-        fn: Awaitable,
-        event: asyncio.Event
-    ):
-        try:
-            await fn
-        except Exception as e:
-            print(e)
-            event.set()
-        finally:
-            event.set()
-
 
 async def handle_timeout():
     print("Tasks took too long and timed out!")
+
+
+async def wait_done(
+    fn: Awaitable,
+    event: asyncio.Event
+):
+    try:
+        await fn
+    except Exception as e:
+        print(e)
+        event.set()
+    finally:
+        event.set()
