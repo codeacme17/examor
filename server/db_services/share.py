@@ -56,3 +56,21 @@ def get_note_info_by_document_id(
 
     print(res)
     return res
+
+
+def is_key_name_duplicate_in_table(
+    table_name: str,
+    key_name: str
+) -> bool:
+    query = """
+            SELECT * 
+            FROM %s 
+            WHERE name = %s
+            """
+    data = (table_name, key_name, )
+    queryed_list = MySQLHandler().execute_query(query, data)
+
+    if (len(queryed_list)):
+        return True
+    else:
+        return False
