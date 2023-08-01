@@ -1,7 +1,7 @@
-from fastapi import File, Form, UploadFile
+import db_services as _dbs_
 
+from fastapi import File, Form, UploadFile
 from utils import api_result, types
-from db_services import file as dbs_file, share as dbs_share
 from db_services.MySQLHandler import MySQLHandler
 
 
@@ -44,7 +44,7 @@ async def _add_note(
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),
 ):
-    if (dbs_share.is_duplicate("t_note", noteName)):
+    if (_dbs_.share.is_duplicate_note('t_note', noteName)):
         return api_result.error("The same note name cannot be created repeatedly")
 
     query = """
@@ -55,7 +55,7 @@ async def _add_note(
     noteId = MySQLHandler().insert_table_data(query, data)
 
     if (len(files) > 0):
-        await dbs_file.upload_file(language, noteId, noteName, files)
+        await _dbs_.file.upload_file(language, noteId, noteName, files)
 
     if (notionId is not None):
         pass

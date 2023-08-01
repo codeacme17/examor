@@ -1,5 +1,6 @@
+import db_services as _dbs_
+
 from utils import api_result
-from db_services import file as dbs_file
 from db_services.MySQLHandler import MySQLHandler
 
 
@@ -18,5 +19,5 @@ def _delete_file(
 
 
 def _get_uploading_files():
-    res = dbs_file.get_uploading_files()
+    res = _dbs_.file.get_uploading_files()
     return res

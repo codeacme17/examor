@@ -37,18 +37,15 @@ def get_question_info(
     return MySQLHandler().execute_query(query, data, single=True)
 
 
-def is_duplicate(
+def is_duplicate_note(
     table_name: str,
     key_name: str
 ) -> bool:
-    query = """
-            SELECT * 
-            FROM %s 
-            WHERE name = %s
-            """
-    data = (table_name, key_name, )
+    query = "SELECT * FROM t_note WHERE name = %s"
+    data = (key_name,)
+    duplicate_list = MySQLHandler().execute_query(query, data)
 
-    if (len(MySQLHandler().execute_query(query, data))):
+    if (len(duplicate_list)):
         return True
     else:
         return False

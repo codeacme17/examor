@@ -1,6 +1,8 @@
 import re
 import os
 import asyncio
+import db_services as _dbs_
+
 
 from typing import Awaitable
 from langchain import LLMChain
@@ -8,9 +10,7 @@ from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chat_models import AzureChatOpenAI
 from langchain.callbacks import AsyncIteratorCallbackHandler
-
 from .prompts import choose_prompt
-from db_services import document as dbs_document, question as dbs_question
 
 
 class LangchainService():
@@ -63,7 +63,7 @@ class LangchainService():
         )
 
         return LLMChain(
-            verbose=True,
+            verbose=False,
             prompt=prompt,
             llm=llm,
             callbacks=[self.llm_callback]
@@ -78,7 +78,7 @@ class LangchainService():
         tasks = []
 
         for doc in docs:
-            doc_id = dbs_document.save_doc_to_db(
+            doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id,
                 self.filename,
                 doc.page_content
@@ -124,7 +124,7 @@ class LangchainService():
 
         lines = res.split("\n")
         for question_content in lines:
-            dbs_question.save_question_to_db(
+            _dbs_.question.save_question_to_db(
                 question_content,
                 doc_id
             )
@@ -156,7 +156,7 @@ class LangchainService():
             yield f"{token}"
         await task
 
-        await dbs_question.update_question_state(id, f"{answer} ||| {exmine}")
+        await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
 
 
 async def handle_timeout():

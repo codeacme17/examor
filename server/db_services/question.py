@@ -23,10 +23,12 @@ async def update_question_state(
 ):
     query = """
             UPDATE t_question
-            SET last_answer = %s, progress = %s, is_answered_today = %s, push_date = %s
+            SET last_answer = %s, progress = progress + %s, is_answered_today = %s, push_date = %s
             WHERE id = %s;
             """
     score = extract_score(answer)
+    print(score)
+
     push_date = get_push_date(score)
     data = (answer, score, "1", push_date, id, )
     MySQLHandler().update_table_data(query, data)

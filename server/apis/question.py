@@ -1,6 +1,7 @@
+import db_services as _dbs_
+
 from utils import api_result, types
 from db_services.MySQLHandler import MySQLHandler
-from db_services import share as dbs_share
 from langchain_services import LangchainService
 
 
@@ -18,9 +19,9 @@ def _get_questions_by_note_id(note_id: int):
 
 
 def _examine_question(data: types.AnswerQuestion):
-    question_info = dbs_share.get_question_info(data.id)
-    document_info = dbs_share.get_document_info(question_info["document_id"])
-    note_info = dbs_share.get_note_info(document_info["note_id"])
+    question_info = _dbs_.share.get_question_info(data.id)
+    document_info = _dbs_.share.get_document_info(question_info["document_id"])
+    note_info = _dbs_.share.get_note_info(document_info["note_id"])
 
     langchain_service = LangchainService(
         prompt_language=data.language,
@@ -38,13 +39,13 @@ def _examine_question(data: types.AnswerQuestion):
 
 
 def _get_last_answer(id: int):
-    question_info = dbs_share.get_question_info(id)
+    question_info = _dbs_.share.get_question_info(id)
     return api_result.success(question_info["last_answer"])
 
 
 def _get_document(id: int):
-    question_info = dbs_share.get_question_info(id)
-    document_info = dbs_share.get_document_info(question_info["document_id"])
+    question_info = _dbs_.share.get_question_info(id)
+    document_info = _dbs_.share.get_document_info(question_info["document_id"])
     return api_result.success(document_info["document"])
 
 
@@ -61,8 +62,8 @@ def _get_random_question():
     if (question_info is None):
         return api_result.success("empty")
 
-    document_info = dbs_share.get_document_info(question_info["document_id"])
-    note_info = dbs_share.get_note_info(document_info["note_id"])
+    document_info = _dbs_.share.get_document_info(question_info["document_id"])
+    note_info = _dbs_.share.get_note_info(document_info["note_id"])
 
     return api_result.success({
         "id": question_info["id"],
