@@ -1,6 +1,6 @@
-import asyncio
 import re
 import os
+import asyncio
 
 from typing import Awaitable
 from langchain import LLMChain
@@ -10,8 +10,7 @@ from langchain.chat_models import AzureChatOpenAI
 from langchain.callbacks import AsyncIteratorCallbackHandler
 
 from .prompts import choose_prompt
-from db_services.question import _save_question_to_db, _update_question_state
-from db_services.document import _save_doc_to_db
+from db_services import dbs_question, dbs_document
 
 
 class LangchainService():
@@ -80,7 +79,7 @@ class LangchainService():
         tasks = []
 
         for doc in docs:
-            doc_id = _save_doc_to_db(
+            doc_id = dbs_document.save_doc_to_db(
                 self.note_id,
                 self.filename,
                 doc.page_content
@@ -123,7 +122,7 @@ class LangchainService():
 
         lines = res.split("\n")
         for question_content in lines:
-            _save_question_to_db(
+            dbs_question.save_question_to_db(
                 question_content,
                 doc_id
             )
@@ -157,7 +156,7 @@ class LangchainService():
         await task
 
         temp = f"{answer} ||| {exmine}"
-        await _update_question_state(id, temp)
+        await dbs_question.update_question_state(id, temp)
 
     async def _wait_done(
         self,

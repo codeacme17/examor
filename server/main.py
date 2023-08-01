@@ -1,11 +1,10 @@
-import json
-
 from fastapi import FastAPI, File, Form, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.responses import StreamingResponse
+
 from utils import types
-from db_services.MySQLHandler import MySQLHandler
 from utils.profile_handler import set_profile_to_env
-from apis import profile, note, document, question
+from db_services import MySQLHandler
+from apis import apis_profile, apis_note, apis_file, apis_question
 
 app = FastAPI()
 
@@ -19,28 +18,28 @@ def startup():
 # Profile APIs
 @app.get("/profile")
 def get_profile():
-    return profile._get_profile()
+    return apis_profile._get_profile()
 
 
 @app.put("/profile")
 def set_profile(data: types.Profile):
-    return profile._set_profile(data)
+    return apis_profile._set_profile(data)
 
 
 # Note APIs
 @app.get("/note/notes")
 def get_notes():
-    return note._get_notes()
+    return apis_note._get_notes()
 
 
 @app.get("/note/files/{id}")
 def get_files_by_noteId(id: int):
-    return note._get_files_by_noteId(id)
+    return apis_note._get_files_by_noteId(id)
 
 
 @app.get("/note/{id}")
 def get_note(id: int):
-    return note._get_note(id)
+    return apis_note._get_note(id)
 
 
 @app.post("/note")
@@ -50,24 +49,24 @@ async def add_note(
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),
 ):
-    res = await note._add_note(language, noteName, files, notionId)
+    res = await apis_note._add_note(language, noteName, files, notionId)
     return res
 
 
 @app.delete("/note/{id}")
 def delete_note(id: int):
-    return note._delete_note(id)
+    return apis_note._delete_note(id)
 
 
 @app.patch("/note/icon")
 def update_note_icon(data: types.Icon):
-    return note._update_note_icon(data)
+    return apis_note._update_note_icon(data)
 
 
 # File APIs
 @app.delete("/file")
 def delete_file(id: int, file_name: str):
-    return document._delete_file(id, file_name)
+    return apis_file._delete_file(id, file_name)
 
 
 @app.websocket("/ws/file/uploading")
@@ -76,7 +75,7 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             await websocket.receive_text()
-            uploading_files = {"data": document._get_uploading_files()}
+            uploading_files = {"data": apis_file._get_uploading_files()}
             await websocket.send_json(uploading_files)
     except WebSocketDisconnect:
         pass
@@ -85,30 +84,30 @@ async def websocket_endpoint(websocket: WebSocket):
 # Question APIs
 @app.get("/questions/note/{id}")
 def get_questions_by_note_id(id: int):
-    return question._get_questions_by_note_id(id)
+    return apis_question._get_questions_by_note_id(id)
 
 
 @app.post("/question/examine")
 async def examine_question(data: types.AnswerQuestion):
     return StreamingResponse(
-        question._examine_question(data),
+        apis_question._examine_question(data),
         media_type="text/event-stream"
     )
 
 
 @app.get("/question/lastAnswer/{id}")
 def get_last_answer(id: int):
-    return question._get_last_answer(id)
+    return apis_question._get_last_answer(id)
 
 
 @app.get("/question/document/{id}")
 def get_document(id: int):
-    return question._get_document(id)
+    return apis_question._get_document(id)
 
 
 @app.get("/question/random")
 def get_random_question():
-    return question._get_random_question()
+    return apis_question._get_random_question()
 
 
 @app.on_event("shutdown")

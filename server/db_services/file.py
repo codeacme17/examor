@@ -1,5 +1,5 @@
 from fastapi import UploadFile
-from db_services.MySQLHandler import MySQLHandler
+from db_services import MySQLHandler
 from utils.tools import CustomError
 from langchain_services.LangchainService import LangchainService
 

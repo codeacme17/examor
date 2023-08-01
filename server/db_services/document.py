@@ -1,7 +1,7 @@
 from db_services.MySQLHandler import MySQLHandler
 
 
-def _save_doc_to_db(
+def save_doc_to_db(
     note_id: int,
     filename: str,
     doc: str

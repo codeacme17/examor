@@ -37,19 +37,7 @@ def get_question_info(
     return MySQLHandler().execute_query(query, data, single=True)
 
 
-def get_note_info_by_document_id(
-    document_id: int
-):
-    query = """
-            SELECT *
-            FROM t_note
-            WHERE document_id = %s;
-            """
-    data = (document_id, )
-    return MySQLHandler().execute_query(query, data)
-
-
-def is_key_name_duplicate_in_table(
+def is_duplicate(
     table_name: str,
     key_name: str
 ) -> bool:

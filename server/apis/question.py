@@ -1,8 +1,6 @@
-from db_services.MySQLHandler import MySQLHandler
-from utils import api_result
-from db_services.share import get_note_info, get_document_info, get_question_info
-from langchain_services.LangchainService import LangchainService
-from utils import types
+from utils import api_result, types
+from db_services import MySQLHandler, dbs_share
+from langchain_services import LangchainService
 
 
 def _get_questions_by_note_id(note_id: int):
@@ -19,9 +17,9 @@ def _get_questions_by_note_id(note_id: int):
 
 
 def _examine_question(data: types.AnswerQuestion):
-    question_info = get_question_info(data.id)
-    document_info = get_document_info(question_info["document_id"])
-    note_info = get_note_info(document_info["note_id"])
+    question_info = dbs_share.get_question_info(data.id)
+    document_info = dbs_share.get_document_info(question_info["document_id"])
+    note_info = dbs_share.get_note_info(document_info["note_id"])
 
     langchain_service = LangchainService(
         prompt_language=data.language,
@@ -39,14 +37,13 @@ def _examine_question(data: types.AnswerQuestion):
 
 
 def _get_last_answer(id: int):
-    question_info = get_question_info(id)
+    question_info = dbs_share.get_question_info(id)
     return api_result.success(question_info["last_answer"])
 
 
 def _get_document(id: int):
-    question_info = get_question_info(id)
-    document_info = get_document_info(question_info["document_id"])
-
+    question_info = dbs_share.get_question_info(id)
+    document_info = dbs_share.get_document_info(question_info["document_id"])
     return api_result.success(document_info["document"])
 
 
@@ -58,20 +55,17 @@ def _get_random_question():
             ORDER BY RAND()
             LIMIT 1;
             """
-
     question_info = MySQLHandler().execute_query(query, single=True)
 
     if (question_info is None):
         return api_result.success("empty")
 
-    document_info = get_document_info(question_info["document_id"])
-    note_info = get_note_info(document_info["note_id"])
+    document_info = dbs_share.get_document_info(question_info["document_id"])
+    note_info = dbs_share.get_note_info(document_info["note_id"])
 
-    res = {
+    return api_result.success({
         "id": question_info["id"],
         "content": question_info["content"],
         "progress": question_info["progress"],
         "note_name": note_info["name"]
-    }
-
-    return api_result.success(res)
+    })

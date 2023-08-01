@@ -1,8 +1,7 @@
 from fastapi import File, Form, UploadFile
+
 from utils import api_result, types
-from db_services.file import upload_file
-from db_services.MySQLHandler import MySQLHandler
-from db_services.share import is_key_name_duplicate_in_table
+from db_services import MySQLHandler, dbs_file, dbs_share
 
 
 def _get_notes():
@@ -44,8 +43,7 @@ async def _add_note(
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),
 ):
-
-    if (is_key_name_duplicate_in_table("t_note", noteName)):
+    if (dbs_share.is_duplicate("t_note", noteName)):
         return api_result.error("The same note name cannot be created repeatedly")
 
     query = """
@@ -56,7 +54,7 @@ async def _add_note(
     noteId = MySQLHandler().insert_table_data(query, data)
 
     if (len(files) > 0):
-        await upload_file(language, noteId, noteName, files)
+        await dbs_file.upload_file(language, noteId, noteName, files)
 
     if (notionId is not None):
         pass

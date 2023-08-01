@@ -3,7 +3,7 @@ import re
 from db_services.MySQLHandler import MySQLHandler
 
 
-def _save_question_to_db(
+def save_question_to_db(
     question_content: str,
     document_id: int,
 ):
@@ -20,7 +20,7 @@ def _save_question_to_db(
     )
 
 
-async def _update_question_state(
+async def update_question_state(
     id: int,
     answer: str,
 ):
