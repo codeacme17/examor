@@ -40,7 +40,6 @@ class LangchainService():
         temperature: int = 0,
         streaming: bool = False
     ):
-
         llm = AzureChatOpenAI(
             openai_api_base=os.environ["OPENAI_BASE"],
             openai_api_key=os.environ["AZURE_KEY"],
@@ -91,7 +90,10 @@ class LangchainService():
         except asyncio.TimeoutError:
             await handle_timeout()
 
-    def _split_document(self, doc_content: str) -> list[Document]:
+    def _split_document(
+        self,
+        doc_content: str
+    ) -> list[Document]:
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1300,
             chunk_overlap=0,
