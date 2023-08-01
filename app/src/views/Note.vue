@@ -90,7 +90,7 @@ import { useRoute } from 'vue-router'
 import { useLocalStorage } from '@vueuse/core'
 import { useFetch } from '@/hooks'
 import { greenBgColor } from '@/utils'
-import { NOTE_API, QUESTION_API } from '@/apis'
+import { NOTE_API } from '@/apis'
 import type { TableItem } from '@/components/QuestionTable.vue'
 import { watchEffect } from 'vue'
 
@@ -113,7 +113,7 @@ const getNoteInfo = async () => {
 }
 
 // Get question list
-const [getQuestions, listLoading] = useFetch(QUESTION_API.getQuestionsByNoteId)
+const [getQuestions, listLoading] = useFetch(NOTE_API.getQuestions)
 const quesitonList = ref<TableItem[]>([])
 const getQuestionList = async () => {
   const { data } = await getQuestions(currentNote.id)

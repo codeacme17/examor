@@ -33,9 +33,14 @@ def get_notes():
     return _apis_.note._get_notes()
 
 
-@app.get("/note/files/{id}")
+@app.get("/note/{id}/files")
 def get_files_by_noteId(id: int):
     return _apis_.note._get_files_by_noteId(id)
+
+
+@app.get("/note/{id}/questions")
+def get_questions_by_note_id(id: int):
+    return _apis_.note._get_questions_by_note_id(id)
 
 
 @app.get("/note/{id}")
@@ -83,11 +88,6 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
 # Question APIs
-@app.get("/questions/note/{id}")
-def get_questions_by_note_id(id: int):
-    return _apis_.question._get_questions_by_note_id(id)
-
-
 @app.post("/question/examine")
 async def examine_question(data: types.AnswerQuestion):
     return StreamingResponse(
@@ -96,12 +96,12 @@ async def examine_question(data: types.AnswerQuestion):
     )
 
 
-@app.get("/question/lastAnswer/{id}")
+@app.get("/question/{id}/lastAnswer")
 def get_last_answer(id: int):
     return _apis_.question._get_last_answer(id)
 
 
-@app.get("/question/document/{id}")
+@app.get("/question/{id}/document")
 def get_document(id: int):
     return _apis_.question._get_document(id)
 

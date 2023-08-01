@@ -18,7 +18,14 @@ export const NOTE_API = {
   getFiles(id: number) {
     return _axios({
       method: 'GET',
-      url: `/api/note/files/${id}`,
+      url: `/api/note/${id}/files`,
+    })
+  },
+
+  getQuestions(id: number) {
+    return _axios({
+      method: 'GET',
+      url: `/api/note/${id}/questions`,
     })
   },
 
