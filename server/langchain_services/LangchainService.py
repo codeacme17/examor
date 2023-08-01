@@ -146,17 +146,15 @@ class LangchainService():
             answer=answer,
             callbacks=[self.llm_callback]
         ), self.llm_callback.done)
-        task = asyncio.create_task(coroutine)
 
+        task = asyncio.create_task(coroutine)
         exmine = ""
         async for token in self.llm_callback.aiter():
             exmine += token
             yield f"{token}"
-
         await task
 
-        temp = f"{answer} ||| {exmine}"
-        await dbs_question.update_question_state(id, temp)
+        await dbs_question.update_question_state(id, f"{answer} ||| {exmine}")
 
     async def _wait_done(
         self,
