@@ -10,9 +10,7 @@ def get_note_info(
             WHERE id = %s
             """
     data = (note_id, )
-
-    res = MySQLHandler().execute_query(query, data, single=True)
-    return res
+    return MySQLHandler().execute_query(query, data, single=True)
 
 
 def get_document_info(
@@ -24,9 +22,7 @@ def get_document_info(
             WHERE id = %s
             """
     data = (document_id, )
-
-    res = MySQLHandler().execute_query(query, data, single=True)
-    return res
+    return MySQLHandler().execute_query(query, data, single=True)
 
 
 def get_question_info(
@@ -38,9 +34,7 @@ def get_question_info(
             WHERE id = %s
             """
     data = (question_id, )
-
-    res = MySQLHandler().execute_query(query, data, single=True)
-    return res
+    return MySQLHandler().execute_query(query, data, single=True)
 
 
 def get_note_info_by_document_id(
@@ -52,10 +46,7 @@ def get_note_info_by_document_id(
             WHERE document_id = %s;
             """
     data = (document_id, )
-    res = MySQLHandler().execute_query(query, data)
-
-    print(res)
-    return res
+    return MySQLHandler().execute_query(query, data)
 
 
 def is_key_name_duplicate_in_table(
@@ -68,9 +59,8 @@ def is_key_name_duplicate_in_table(
             WHERE name = %s
             """
     data = (table_name, key_name, )
-    queryed_list = MySQLHandler().execute_query(query, data)
 
-    if (len(queryed_list)):
+    if (len(MySQLHandler().execute_query(query, data))):
         return True
     else:
         return False
