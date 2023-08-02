@@ -70,7 +70,7 @@ export const zhCN = {
     openAIBilling: 'OpenAI 使用额度',
     files: '文件',
     memory: '记忆进度',
-    questionCounts: '请选择为你准备多少个问题',
+    questionCounts: '请选择每天为你准备多少个问题',
     getIcon: '获取 icon 请到',
     proxy:
       '如果你需要 VPN 才能访问 OpenAI 那么请填入你的代理地址（请使用 "socks5" 协议)',

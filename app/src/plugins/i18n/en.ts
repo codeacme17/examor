@@ -73,7 +73,8 @@ export const en = {
     openAIBilling: 'OpenAI billing',
     files: 'File(s)',
     memory: 'Memory Progress',
-    questionCounts: 'Please select how many questions are prepared for you',
+    questionCounts:
+      'Please select how many questions are prepared for you each day',
     getIcon: 'To get the icon please go to',
     proxy:
       'If you need a VPN to access OpenAI then please fill in your proxy address (plz use "socks5" protocol)',

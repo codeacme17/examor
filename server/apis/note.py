@@ -1,3 +1,5 @@
+import datetime
+import os
 import db_services as _dbs_
 
 from fastapi import File, Form, UploadFile
@@ -39,16 +41,26 @@ def _get_files_by_noteId(noteId):
 
 
 def _get_questions_by_note_id(note_id: int):
-    query = """
-            SELECT q.*
-            FROM t_question q
-            JOIN t_document d ON q.document_id = d.id
-            WHERE d.note_id = %s
-            LIMIT 10;            
-            """
-    data = (note_id, )
-    res = MySQLHandler().execute_query(query, data)
-    return api_result.success(res)
+    LIMIT_QUESTIONS = int(os.environ["QUESTION_AMOUNT"])
+
+    expired_questions = _dbs_.question.get_expired_questions(note_id)
+    gap = 0 if LIMIT_QUESTIONS - \
+        len(expired_questions) < 0 else LIMIT_QUESTIONS - len(expired_questions)
+
+    today_questions = _dbs_.question.get_today_questions(note_id, gap)
+    gap = 0 if gap - \
+        len(today_questions) < 0 else LIMIT_QUESTIONS - len(today_questions)
+
+    supplement_questions = _dbs_.question.get_supplement_questions(
+        note_id,
+        gap
+    )
+
+    return api_result.success({
+        "expired": expired_questions,
+        "today":  today_questions,
+        "supplement": supplement_questions
+    })
 
 
 async def _add_note(

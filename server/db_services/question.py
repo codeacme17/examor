@@ -61,3 +61,43 @@ def get_push_date(score: int):
         days = 14
 
     return ((now+datetime.timedelta(days)).strftime("%Y-%m-%d"))
+
+
+def get_expired_questions(note_id: int):
+    now_date = datetime.date.today().strftime('%Y-%m-%d')
+    query = """
+            SELECT q.*
+            FROM t_question q
+            JOIN t_document d ON q.document_id = d.id
+            WHERE d.note_id = %s AND q.push_date < %s
+            ORDER BY q.push_date DESC
+            LIMIT 10;
+            """
+    data = (note_id, now_date, )
+    return MySQLHandler().execute_query(query, data)
+
+
+def get_today_questions(note_id: int, gap_count: int):
+    now_date = datetime.date.today().strftime('%Y-%m-%d')
+    query = """
+            SELECT q.*
+            FROM t_question q
+            JOIN t_document d ON q.document_id = d.id
+            WHERE d.note_id = %s AND q.push_date = %s
+            LIMIT %s;            
+            """
+    data = (note_id, now_date, gap_count, )
+    return MySQLHandler().execute_query(query, data)
+
+
+def get_supplement_questions(note_id: int, gap_count: int):
+    query = """
+            SELECT q.*
+            FROM t_question q
+            JOIN t_document d ON q.document_id = d.id
+            WHERE d.note_id = %s AND q.push_date IS NULL
+            ORDER BY RAND()        
+            LIMIT %s;                
+            """
+    data = (note_id, gap_count, )
+    return MySQLHandler().execute_query(query, data)

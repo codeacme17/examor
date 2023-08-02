@@ -2,7 +2,12 @@ from pydantic import BaseModel
 
 
 class Profile(BaseModel):
+    questionAmount: str
     openaiKey: str
+    azureKey: str
+    openaiBase: str
+    openaiVersion: str
+    deploymentName: str
     notionKey: str
     proxy: str
 

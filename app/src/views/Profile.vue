@@ -5,7 +5,20 @@
 
     <v-divider class="mt-8"></v-divider>
 
-    <form class="py-6">
+    <form class="pb-6">
+      <h3 class="my-6">{{ $t('hint.questionCounts') }}</h3>
+
+      <v-slider
+        v-model:model-value="PROFILE_STORE.profile.questionAmount.value"
+        show-ticks
+        thumb-label
+        density="compact"
+        prepend-icon="mdi-beaker-question"
+        :min="3"
+        :max="10"
+        :step="1"
+      />
+
       <h3 class="mb-3">{{ $t('title.keys') }}</h3>
 
       <!-- OpenAI  -->
@@ -119,5 +132,9 @@ onUnmounted(() => {
   .v-field__input {
     padding-top: 4px !important;
   }
+}
+:deep(.v-input__prepend) {
+  font-size: 22px !important;
+  margin: 0px 5px 0px -5px;
 }
 </style>

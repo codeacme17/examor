@@ -7,7 +7,7 @@ type State = {
   confirmLoading: boolean
 }
 
-type Key = 'openaiKey' | 'notionKey' | 'proxy'
+type Key = 'openaiKey' | 'notionKey' | 'questionAmount' | 'proxy'
 
 type ProfileItem = {
   value: string
@@ -24,6 +24,11 @@ const state: State = {
     },
     notionKey: {
       value: '',
+      show: false,
+      error: false,
+    },
+    questionAmount: {
+      value: '3',
       show: false,
       error: false,
     },
@@ -47,7 +52,8 @@ export const useProfileStore = defineStore('profileStore', {
 
       for (const key in data) {
         if (Object.prototype.hasOwnProperty.call(this.$state.profile, key)) {
-          this.$state.profile[key].value = data[key]
+          const profileKey = key as Key
+          this.$state.profile[profileKey].value = data[key]
         }
       }
     },
@@ -58,7 +64,8 @@ export const useProfileStore = defineStore('profileStore', {
 
       const data: any = {}
       for (const key in this.$state.profile) {
-        data[key] = this.$state.profile[key].value
+        const profileKey = key as Key
+        data[key] = this.$state.profile[profileKey].value
       }
 
       await _setKeys(data)

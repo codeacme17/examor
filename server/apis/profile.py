@@ -8,10 +8,15 @@ def _set_profile(data: types.Profile):
 
     with open(FILE_PATH, "w") as file:
         json.dump({
-                  'openaiKey': data.openaiKey,
-                  'notionKey': data.notionKey,
-                  'proxy': data.proxy,
-                  }, file)
+            'questionAmount': data.questionAmount,
+            'openaiKey': data.openaiKey,
+            'azureKey': data.azureKey,
+            'openaiBase': data.openaiBase,
+            'openaiVersion': data.openaiVersion,
+            'deploymentName': data.deploymentName,
+            'notionKey': data.notionKey,
+            'proxy': data.proxy,
+        }, file)
 
     profile_handler.set_profile_to_env()
     return api_result.success()
