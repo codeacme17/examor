@@ -96,7 +96,6 @@ def get_supplement_questions(note_id: int, gap_count: int):
             FROM t_question q
             JOIN t_document d ON q.document_id = d.id
             WHERE d.note_id = %s AND q.push_date IS NULL
-            ORDER BY RAND()        
             LIMIT %s;                
             """
     data = (note_id, gap_count, )

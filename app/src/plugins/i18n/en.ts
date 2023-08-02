@@ -35,6 +35,9 @@ export const en = {
     updateFile: 'Update File',
     lastAnswer: 'Last Answer',
     lastExamine: 'Last Examine',
+    today: 'Questions to review today',
+    expired: 'Expired Questions',
+    supplement: 'New Questions',
   },
   subTitle: {
     notes: 'You can manage your notes here',

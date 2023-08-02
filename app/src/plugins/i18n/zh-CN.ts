@@ -34,6 +34,9 @@ export const zhCN = {
     updateFile: '更新文件',
     lastAnswer: '上次的回答',
     lastExamine: '上次的检测',
+    today: '需要今天复习的题目',
+    expired: '已过期的题目',
+    supplement: '新的题目',
   },
 
   subTitle: {

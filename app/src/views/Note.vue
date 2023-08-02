@@ -1,7 +1,7 @@
 <template>
   <v-container style="max-width: 1080px">
     <!-- note name & icon -->
-    <h2 class="mb-3 d-flex align-center">
+    <h2 class="mb-5 d-flex align-center">
       <v-icon class="mr-3" :icon="currentNote.icon" />
       <div>{{ currentNote.name }}</div>
     </h2>
@@ -13,22 +13,27 @@
       mode="out-in"
     >
       <section v-if="!isShowAnswer">
-        <!-- question counts pick -->
-        <div>{{ $t('hint.questionCounts') }}</div>
-        <v-slider
-          v-model:model-value="questionCounts"
-          show-ticks
-          density="compact"
-          :min="3"
-          :max="10"
-          :step="1"
-        />
-
-        <!-- question table -->
         <QuestionTable
+          v-if="!!todayList.length"
+          class="mb-5"
+          type="today"
           :loading="listLoading"
-          :quesitonList="quesitonList"
-          :questionCounts="questionCounts"
+          :quesitonList="todayList"
+          @questionPickEmit="handlePickQuestion"
+        />
+        <QuestionTable
+          v-if="!!expiredList.length"
+          class="mb-5"
+          type="expired"
+          :loading="listLoading"
+          :quesitonList="expiredList"
+          @questionPickEmit="handlePickQuestion"
+        />
+        <QuestionTable
+          v-if="!!supplementList.length"
+          type="supplement"
+          :loading="listLoading"
+          :quesitonList="supplementList"
           @questionPickEmit="handlePickQuestion"
         />
       </section>
@@ -85,14 +90,12 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import { useLocalStorage } from '@vueuse/core'
 import { useFetch } from '@/hooks'
 import { greenBgColor } from '@/utils'
 import { NOTE_API } from '@/apis'
 import type { TableItem } from '@/components/QuestionTable.vue'
-import { watchEffect } from 'vue'
 
 const route = useRoute()
 
@@ -114,10 +117,14 @@ const getNoteInfo = async () => {
 
 // Get question list
 const [getQuestions, listLoading] = useFetch(NOTE_API.getQuestions)
-const quesitonList = ref<TableItem[]>([])
+const todayList = ref<TableItem[]>([])
+const expiredList = ref<TableItem[]>([])
+const supplementList = ref<TableItem[]>([])
 const getQuestionList = async () => {
   const { data } = await getQuestions(currentNote.id)
-  quesitonList.value = data
+  todayList.value = data.today
+  expiredList.value = data.expired
+  supplementList.value = data.supplement
 }
 
 // Handle question
@@ -129,7 +136,6 @@ const pickedQuestion = reactive<TableItem>({
   progress: 0,
 })
 const isShowAnswer = ref(false)
-const questionCounts = useLocalStorage(`questionCounts-${currentNote.id}`, 3)
 const handlePickQuestion = (item: TableItem) => {
   isShowAnswer.value = true
   pickedQuestion.id = item.id
