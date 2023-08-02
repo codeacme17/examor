@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class Profile(BaseModel):
     questionAmount: str
+    currentModel: str
     openaiKey: str
     azureKey: str
     openaiBase: str

@@ -6,10 +6,10 @@
     <v-divider class="mt-8"></v-divider>
 
     <form class="pb-6">
-      <h3 class="my-6">{{ $t('hint.questionCounts') }}</h3>
-
+      <!-- Quesiton amount -->
+      <h3 class="mt-6 mb-3">{{ $t('hint.questionCounts') }}</h3>
       <v-slider
-        v-model:model-value="PROFILE_STORE.profile.questionAmount.value"
+        v-model:model-value="formData.questionAmount.value"
         show-ticks
         thumb-label
         density="compact"
@@ -19,12 +19,22 @@
         :step="1"
       />
 
-      <h3 class="mb-3">{{ $t('title.keys') }}</h3>
+      <!-- Choose Model -->
+      <h3 class="mt-4 mb-3">{{ $t('title.model') }}</h3>
+      <t-radio-group
+        v-model="formData.currentModel.value"
+        class="mb-4"
+        variant="default-filled"
+      >
+        <t-radio-button value="OpenAI">OpenAI</t-radio-button>
+        <t-radio-button value="Azure">Azure</t-radio-button>
+      </t-radio-group>
 
+      <!-- Keys -->
+      <h3 class="mt-4 mb-3">{{ $t('title.keys') }}</h3>
       <!-- OpenAI  -->
-      <div class="d-flex">
+      <div v-if="formData.currentModel.value == 'OpenAI'" class="d-flex">
         <OpenaiIcon width="30" class="mb-3 mr-4" />
-
         <div style="flex: 1">
           <v-text-field
             v-model="formData.openaiKey.value"
@@ -39,6 +49,52 @@
             @click:append-inner="
               formData.openaiKey.show = !formData.openaiKey.show
             "
+          />
+        </div>
+      </div>
+
+      <!-- Azure -->
+      <div
+        v-if="PROFILE_STORE.profile.currentModel.value === 'Azure'"
+        class="d-flex"
+      >
+        <AzureIcon width="30" class="mb-auto mt-4 mr-4" />
+
+        <div style="flex: 1">
+          <v-text-field
+            v-model="PROFILE_STORE.profile.azureKey.value"
+            class="mt-3"
+            label="AZURE_KEY"
+            variant="outlined"
+            density="compact"
+            :append-inner-icon="
+              formData.azureKey.show ? 'mdi-eye' : 'mdi-eye-off'
+            "
+            :type="formData.azureKey.show ? 'text' : 'password'"
+            @click:append-inner="
+              formData.azureKey.show = !formData.azureKey.show
+            "
+          />
+          <v-text-field
+            v-model="formData.openaiVersion.value"
+            class="mt-3"
+            label="AZURE_VERSION"
+            variant="outlined"
+            density="compact"
+          />
+          <v-text-field
+            v-model="formData.openaiBase.value"
+            class="mt-3"
+            label="AZURE_END_PONIT"
+            variant="outlined"
+            density="compact"
+          />
+          <v-text-field
+            v-model="formData.deploymentName.value"
+            class="mt-3"
+            label="AZURE_END_PONIT"
+            variant="outlined"
+            density="compact"
           />
         </div>
       </div>
@@ -66,10 +122,10 @@
         />
       </div>
 
-      <h3 class="my-6">{{ $t('title.otherConfigurations') }}</h3>
-
+      <!-- Other configuration -->
+      <h3 class="my-4">{{ $t('title.otherConfigurations') }}</h3>
       <!-- Proxy -->
-      <div class="d-flex mt-6">
+      <div class="d-flex">
         <v-text-field
           v-model="formData.proxy.value"
           variant="outlined"

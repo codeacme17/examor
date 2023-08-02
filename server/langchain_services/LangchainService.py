@@ -8,7 +8,7 @@ from typing import Awaitable
 from langchain import LLMChain
 from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.chat_models import AzureChatOpenAI
+from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
 from langchain.callbacks import AsyncIteratorCallbackHandler
 from .prompts import choose_prompt
 
@@ -40,22 +40,26 @@ class LangchainService():
         temperature: int = 0,
         streaming: bool = False
     ):
-        llm = AzureChatOpenAI(
-            openai_api_base=os.environ["OPENAI_BASE"],
-            openai_api_key=os.environ["AZURE_KEY"],
-            openai_api_version=os.environ["OPENAI_VERSION"],
-            deployment_name=os.environ["DEPLOYMENT_NAME"],
-            temperature=temperature,
-            streaming=streaming,
-        )
+        llm = None
 
-        # llm = ChatOpenAI(
-        #     model="gpt-3.5-turbo",
-        #     temperature=temperature,
-        #     streaming=streaming,
-        #     verbose=True,
-        #     openai_proxy=os.environ['PROXY']
-        # )
+        if (os.environ["CURRENT_MODEL"] == "Azure"):
+            llm = AzureChatOpenAI(
+                openai_api_base=os.environ["OPENAI_BASE"],
+                openai_api_key=os.environ["AZURE_KEY"],
+                openai_api_version=os.environ["OPENAI_VERSION"],
+                deployment_name=os.environ["DEPLOYMENT_NAME"],
+                temperature=temperature,
+                streaming=streaming,
+            )
+
+        if (os.environ["CURRENT_MODEL"] == "OpenAI"):
+            llm = ChatOpenAI(
+                model="gpt-3.5-turbo",
+                temperature=temperature,
+                streaming=streaming,
+                verbose=True,
+                openai_proxy=os.environ['PROXY']
+            )
 
         prompt = choose_prompt(
             prompt_language,

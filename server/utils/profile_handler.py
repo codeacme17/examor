@@ -11,6 +11,7 @@ def set_profile_to_env():
     data: types.Profile = get_profile_from_file()
 
     os.environ['QUESTION_AMOUNT'] = data['questionAmount']
+    os.environ['CURRENT_MODEL'] = data['currentModel']
     os.environ['OPENAI_API_KEY'] = data['openaiKey']
     os.environ['NOTION_KEY'] = data['notionKey']
     os.environ['OPENAI_VERSION'] = data['openaiVersion']

@@ -20,6 +20,8 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TConfigProvider: typeof import('tdesign-vue-next')['ConfigProvider']
     TPopconfirm: typeof import('tdesign-vue-next')['Popconfirm']
+    TRadioButton: typeof import('tdesign-vue-next')['RadioButton']
+    TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
     TUpload: typeof import('tdesign-vue-next')['Upload']
     UploadFileDialog: typeof import('./src/components/UploadFileDialog.vue')['default']
     UploadingFiles: typeof import('./src/components/UploadingFiles.vue')['default']

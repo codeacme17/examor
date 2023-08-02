@@ -9,6 +9,7 @@ def _set_profile(data: types.Profile):
     with open(FILE_PATH, "w") as file:
         json.dump({
             'questionAmount': data.questionAmount,
+            'currentModel': data.currentModel,
             'openaiKey': data.openaiKey,
             'azureKey': data.azureKey,
             'openaiBase': data.openaiBase,

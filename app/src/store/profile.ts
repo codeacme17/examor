@@ -7,19 +7,53 @@ type State = {
   confirmLoading: boolean
 }
 
-type Key = 'openaiKey' | 'notionKey' | 'questionAmount' | 'proxy'
+type Key =
+  | 'questionAmount'
+  | 'currentModel'
+  | 'openaiKey'
+  | 'notionKey'
+  | 'proxy'
+  | 'azureKey'
+  | 'openaiBase'
+  | 'openaiVersion'
+  | 'deploymentName'
+
+type Model = 'OpenAI' | 'Azure'
 
 type ProfileItem = {
-  value: string
-  show: boolean
-  error: boolean
+  value: string | Model
+  show?: boolean
+  error?: boolean
 }
 
 const state: State = {
   profile: {
+    questionAmount: {
+      value: '3',
+    },
+    currentModel: {
+      value: 'OpenAI',
+    },
     openaiKey: {
       value: '',
       show: false,
+      error: false,
+    },
+    azureKey: {
+      value: '',
+      show: false,
+      error: false,
+    },
+    openaiBase: {
+      value: '',
+      error: false,
+    },
+    openaiVersion: {
+      value: '',
+      error: false,
+    },
+    deploymentName: {
+      value: '',
       error: false,
     },
     notionKey: {
@@ -27,15 +61,8 @@ const state: State = {
       show: false,
       error: false,
     },
-    questionAmount: {
-      value: '3',
-      show: false,
-      error: false,
-    },
     proxy: {
       value: '',
-      show: false,
-      error: false,
     },
   },
 

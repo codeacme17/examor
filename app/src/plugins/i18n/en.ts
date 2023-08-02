@@ -38,6 +38,7 @@ export const en = {
     today: 'Questions to review today',
     expired: 'Expired Questions',
     supplement: 'New Questions',
+    model: 'Choose the model to use',
   },
   subTitle: {
     notes: 'You can manage your notes here',

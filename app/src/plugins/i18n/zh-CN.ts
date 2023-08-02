@@ -37,6 +37,7 @@ export const zhCN = {
     today: '需要今天复习的题目',
     expired: '已过期的题目',
     supplement: '新的题目',
+    model: '选择要使用的模型',
   },
 
   subTitle: {
