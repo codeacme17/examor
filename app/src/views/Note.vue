@@ -90,42 +90,39 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive, watchEffect } from 'vue'
+import { ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
-import { useFetch } from '@/hooks'
+import { useFetch, useTodayListCache } from '@/hooks'
 import { greenBgColor } from '@/utils'
 import { NOTE_API } from '@/apis'
 import type { TableItem } from '@/components/QuestionTable.vue'
 
 const route = useRoute()
 
-onMounted(async () => {
-  await getNoteInfo()
-})
+type Note = {
+  id: number | string
+  name: string
+  icon: string
+}
 
-const currentNote = reactive({
-  id: route.params.id,
+const currentNote = reactive<Note>({
+  id: route.params.id as string,
   name: '',
   icon: 'mdi-text-box-outline',
 })
 const [getNote] = useFetch(NOTE_API.getNote)
-const getNoteInfo = async () => {
-  const { data } = await getNote(currentNote.id)
-  currentNote.name = data.name
-  currentNote.icon = data.icon
-}
+const noteRes = await getNote(currentNote.id)
+currentNote.name = noteRes.data.name
+currentNote.icon = noteRes.data.icon
 
 // Get question list
-const [getQuestions, listLoading] = useFetch(NOTE_API.getQuestions)
-const todayList = ref<TableItem[]>([])
-const expiredList = ref<TableItem[]>([])
-const supplementList = ref<TableItem[]>([])
-const getQuestionList = async () => {
-  const { data } = await getQuestions(currentNote.id)
-  todayList.value = data.today
-  expiredList.value = data.expired
-  supplementList.value = data.supplement
-}
+const [listData, listLoading] = await useTodayListCache(
+  Number(currentNote.id),
+  NOTE_API.getQuestions
+)
+const todayList = ref<TableItem[]>(listData.value.today)
+const expiredList = ref<TableItem[]>(listData.value.expired)
+const supplementList = ref<TableItem[]>(listData.value.supplement)
 
 // Handle question
 const pickedQuestion = reactive<TableItem>({
@@ -143,8 +140,4 @@ const handlePickQuestion = (item: TableItem) => {
   pickedQuestion.content = item.content
   pickedQuestion.progress = item.progress
 }
-
-watchEffect(async () => {
-  if (!isShowAnswer.value) await getQuestionList()
-})
 </script>

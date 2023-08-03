@@ -8,7 +8,7 @@ export function useFetch(
 ): any {
   const loading = ref(false)
 
-  const run = async (data: any) => {
+  const fetch = async (data: any) => {
     loading.value = true
 
     try {
@@ -23,5 +23,5 @@ export function useFetch(
     }
   }
 
-  return [run, loading]
+  return [fetch, loading]
 }
