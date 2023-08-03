@@ -5,7 +5,7 @@
       <v-tab
         value="lastAnswer"
         :loading="getLALoading"
-        :disabled="!isFinishExamining"
+        :disabled="isExaming && isShowExamine"
       >
         <v-icon icon="mdi-clipboard-text-clock" class="mr-2" />
         {{ $t('label.lastRecord') }}
@@ -13,7 +13,7 @@
       <v-tab
         value="document"
         :loading="getDocumentLoading"
-        :disabled="!isFinishExamining"
+        :disabled="isExaming && isShowExamine"
       >
         <v-icon icon="mdi-notebook-heart" class="mr-2" />
         {{ $t('label.document') }}
@@ -24,7 +24,7 @@
     <section v-show="currentTab === 'answer'">
       <!-- Answer block -->
       <v-textarea
-        v-model="answerValue"
+        v-model="currentData.answer"
         variant="solo"
         auto-grow
         :bg-color="defaultBgColor"
@@ -52,7 +52,7 @@
           </h3>
           <v-divider></v-divider>
           <div
-            v-html="toMarkdown(examineContent)"
+            v-html="toMarkdown(currentData.examine)"
             class="show-markdown-box"
             :style="fontColor"
           />
@@ -64,7 +64,7 @@
         :elevation="0"
         :block="true"
         :border="true"
-        :disabled="!answerValue"
+        :disabled="!currentData.answer"
         @click="handleSubmit"
       >
         {{ $t('button.submit') }}
@@ -101,36 +101,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted, watch } from 'vue'
-import { useLocalStorage } from '@vueuse/core'
+import { ref, onUnmounted, watch, computed } from 'vue'
+import { useLocalStorage, useNow, useDateFormat } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 
 import { defaultBgColor, fontColor } from '@/utils'
-import { useFetch } from '@/hooks'
+import { useFetch, useListState } from '@/hooks'
 import { QUESTION_API } from '@/apis'
 
 const { locale } = useI18n()
 const props = defineProps(['id'])
 const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
 
-// Make raw-content render as markdown formatting content
-const toMarkdown = (text: string) => {
-  const md = new MarkdownIt({
-    highlight: function (str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-        return hljs.highlight(str, { language: lang }).value
-      }
-      return ''
-    },
-    html: true,
-    linkify: true,
-    typographer: true,
-    breaks: true,
-  })
-  return md.render(text)
-}
+// Get data cache
+const today = useDateFormat(useNow(), 'YYYY-MM-DD')
+const currentData = useLocalStorage(`${today.value}:${props.id}:answer-data`, {
+  answer: '',
+  examine: '',
+  lastRecord: '',
+})
+const [pendingList, finishedList] = useListState()
 
 // Handle key press events, does press `Crtl + Enter`
 const ctrlTrigger = ref(false)
@@ -144,37 +136,33 @@ const handleKeyup = () => {
 
 // Handle submit answer event
 // submitAnswer() is a SSE connect to fetch streaming response
-const answerValue = useLocalStorage(`pending-answer-value-${props.id}`, '')
-const examineContent = ref('')
-const isShowExamine = ref(false)
-const isFinishExamining = ref(false)
+const isShowExamine = computed(() => {
+  if (currentData.value.examine) return true
+  else return false
+})
 const isExaming = ref(false)
 const handleSubmit = async () => {
-  if (!answerValue.value.trim()) return
-  const temp = answerValue.value
-  localStorage.removeItem(`pending-answer-value-${props.id}`)
-  answerValue.value = temp
-  isShowExamine.value = !isShowExamine.value
+  if (!currentData.value.answer.trim()) return
   await submitAnswer()
+  finishedList.value.add(props.id)
+  pendingList.value.delete(props.id)
 }
 const submitAnswer = async () => {
   isExaming.value = true
   const response = await QUESTION_API.examingAnswer({
     id: props.id,
     language: locale.value,
-    answer: answerValue.value,
+    answer: currentData.value.answer,
   })
-
   const reader = response.body!.getReader()
   const decoder = new TextDecoder()
   while (true) {
     const { value, done } = await reader.read()
     if (done) {
-      isFinishExamining.value = true
       isExaming.value = false
       break
     }
-    examineContent.value += decoder.decode(value)
+    currentData.value.examine += decoder.decode(value)
   }
 }
 
@@ -183,9 +171,11 @@ const lastAnswer = ref('')
 const lastExamine = ref('')
 const [getLastAnswer, getLALoading] = useFetch(QUESTION_API.getLastAnswer)
 const handleGetLastAnswer = async () => {
-  const { data } = await getLastAnswer(props.id)
-  if (!data) return
-  const chunks = data.split('|||')
+  if (!currentData.value.lastRecord) {
+    const res = await getLastAnswer(props.id)
+    currentData.value.lastRecord = res.data
+  }
+  const chunks = currentData.value.lastRecord.split('|||')
   lastAnswer.value = chunks[0]
   lastExamine.value = chunks[1]
 }
@@ -198,20 +188,40 @@ const handleGetDocument = async () => {
   document_content.value = data
 }
 
+// Make raw-content render as markdown formatting content
+const toMarkdown = (text: string) => {
+  const md = new MarkdownIt({
+    highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang))
+        return hljs.highlight(str, { language: lang }).value
+      return ''
+    },
+    html: true,
+    linkify: true,
+    typographer: true,
+    breaks: true,
+  })
+  return md.render(text)
+}
+
 // Watching if current question id is changed
 watch(
   () => props.id,
   async () => {
     currentTab.value = 'answer'
-    answerValue.value = ''
-    isShowExamine.value = false
-    examineContent.value = ''
-    isFinishExamining.value = false
     await handleGetLastAnswer()
     await handleGetDocument()
   },
   {
     immediate: true,
+  }
+)
+
+watch(
+  () => currentData.value.answer,
+  () => {
+    if (currentData.value.answer) pendingList.value.add(props.id)
+    else pendingList.value.delete(props.id)
   }
 )
 

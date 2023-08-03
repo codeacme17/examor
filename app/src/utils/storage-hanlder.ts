@@ -20,3 +20,18 @@ const checkIsExpired = (day: string) => {
   if (date1 < date2) return true
   else false
 }
+
+export const checkAnswerIsInCache = (questionId: string) => {
+  let i = 0
+  while (localStorage.key(i)) {
+    const key: string = localStorage.key(i)!
+    let chunks: string[] = []
+    if (key.includes(':')) chunks = key.split(':')
+    if (chunks[1] === questionId) {
+      console.log(questionId)
+      return true
+    }
+    i++
+  }
+  return false
+}

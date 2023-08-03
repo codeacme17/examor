@@ -15,9 +15,7 @@
           <!-- Question status td -->
           <td style="width: 50px">
             <v-checkbox
-              v-model="item.is_answered_today"
-              true-value="1"
-              false-value="0"
+              :model-value="isFinished(item)"
               :indeterminate="(isPending(item) as any)"
               :hide-details="true"
               :disabled="true"
@@ -31,7 +29,7 @@
           <td style="width: 145px">
             <!-- Answer button -->
             <v-btn
-              v-if="item.is_answered_today === '0'"
+              v-if="!isFinished(item).value && !isPending(item).value"
               :block="true"
               @click="handlePickQuestion(item)"
             >
@@ -40,7 +38,7 @@
 
             <!-- Continue answer button -->
             <v-btn
-              v-else-if="isPending(item).value === true"
+              v-if="isPending(item).value"
               :color="orangeBgColor"
               :block="true"
               @click="handlePickQuestion(item)"
@@ -50,7 +48,7 @@
 
             <!-- Finished button -->
             <v-btn
-              v-else
+              v-if="isFinished(item).value"
               :color="greenBgColor"
               :block="true"
               @click="handlePickQuestion(item)"
@@ -66,8 +64,9 @@
 
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue'
-import { greenBgColor, orangeBgColor } from '@/utils'
 import { useI18n } from 'vue-i18n'
+import { greenBgColor, orangeBgColor } from '@/utils'
+import { useListState } from '@/hooks'
 
 const { t } = useI18n()
 
@@ -85,10 +84,18 @@ export type TableItem = {
 const props = defineProps(['quesitonList', 'loading', 'type'])
 const emits = defineEmits(['questionPickEmit'])
 
+const [pendingList, finishedList] = useListState()
 // Whether the current question is in pending status
 const isPending = (item: TableItem): ComputedRef<boolean> => {
   return computed(() => {
-    return !!localStorage.getItem(`pending-answer-value-${item.id}`)
+    if (pendingList.value.has(item.id)) return true
+    else return false
+  })
+}
+const isFinished = (item: TableItem): ComputedRef<boolean> => {
+  return computed(() => {
+    if (finishedList.value.has(item.id)) return true
+    else return false
   })
 }
 

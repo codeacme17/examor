@@ -30,8 +30,9 @@
         <!-- Action buttons td -->
         <td style="width: 170px">
           <div class="d-flex justify-end align-center">
+            <!-- Dont delete! ------------- -->
             <!-- Update file button -->
-            <v-btn
+            <!-- <v-btn
               class="ml-auto"
               variant="text"
               :flat="true"
@@ -39,27 +40,27 @@
               @click="handleUpdate(item)"
             >
               {{ $t('button.update') }}
-            </v-btn>
+            </v-btn> -->
 
             <!-- Delete button -->
-            <v-btn
+            <!-- <v-btn
               v-if="!item.isShowConfirmDeleteBtn"
               icon="mdi-delete-empty"
               style="font-size: 16px"
               :flat="true"
               :disabled="props.disabled"
               @click="item.isShowConfirmDeleteBtn = true"
-            />
+            /> -->
 
             <!-- Confirm delete button -->
-            <v-btn
+            <!-- <v-btn
               v-else
               icon="mdi-check-all"
               style="font-size: 16px"
               :flat="true"
               :loading="deleteFileLoading"
               @click="handleDeleteFile(item)"
-            />
+            /> -->
           </div>
         </td>
       </tr>
