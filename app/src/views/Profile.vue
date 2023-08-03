@@ -199,5 +199,6 @@ onUnmounted(() => {
 :deep(.v-input__prepend) {
   font-size: 22px !important;
   margin: 0px 5px 0px -5px;
+  padding-right: 13px !important;
 }
 </style>
