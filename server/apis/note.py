@@ -52,7 +52,9 @@ def get_questions_by_note_id(note_id: int):
 
     today_questions = _dbs_.question.get_today_questions(note_id, gap)
     gap = 0 if gap - \
-        len(today_questions) < 0 else LIMIT_QUESTIONS - len(today_questions)
+        len(today_questions) < 0 else gap - len(today_questions)
+
+    print(gap)
 
     supplement_questions = _dbs_.question.get_supplement_questions(
         note_id,
