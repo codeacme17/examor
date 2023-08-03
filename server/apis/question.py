@@ -5,7 +5,7 @@ from db_services.MySQLHandler import MySQLHandler
 from langchain_services import LangchainService
 
 
-def _examine_question(data: types.AnswerQuestion):
+def examine_question(data: types.AnswerQuestion):
     question_info = _dbs_.share.get_question_info(data.id)
     document_info = _dbs_.share.get_document_info(question_info["document_id"])
     note_info = _dbs_.share.get_note_info(document_info["note_id"])
@@ -25,18 +25,18 @@ def _examine_question(data: types.AnswerQuestion):
     )
 
 
-def _get_last_answer(id: int):
+def get_last_answer(id: int):
     question_info = _dbs_.share.get_question_info(id)
     return api_result.success(question_info["last_answer"])
 
 
-def _get_document(id: int):
+def get_document(id: int):
     question_info = _dbs_.share.get_question_info(id)
     document_info = _dbs_.share.get_document_info(question_info["document_id"])
     return api_result.success(document_info["document"])
 
 
-def _get_random_question():
+def get_random_question():
     query = """
             SELECT *
             FROM t_question

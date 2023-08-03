@@ -4,7 +4,8 @@ from utils import api_result
 from db_services.MySQLHandler import MySQLHandler
 
 
-def _delete_file(
+# Delete file
+def delete_file(
     note_id: str,
     file_name: str
 ):
@@ -18,6 +19,7 @@ def _delete_file(
     return api_result.success("delete file success")
 
 
-def _get_uploading_files():
+# Get uploading file list
+def get_uploading_files():
     res = _dbs_.file.get_uploading_files()
     return res

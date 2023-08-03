@@ -6,7 +6,8 @@ from utils import api_result, types
 from db_services.MySQLHandler import MySQLHandler
 
 
-def _get_notes():
+# Get notes list
+def get_notes():
     query = """
             SELECT * 
             FROM t_note
@@ -15,7 +16,8 @@ def _get_notes():
     return api_result.success(res)
 
 
-def _get_note(id: int):
+# Get note info
+def get_note(id: int):
     query = """
             SELECT * 
             FROM t_note 
@@ -26,7 +28,8 @@ def _get_note(id: int):
     return api_result.success(res)
 
 
-def _get_files_by_noteId(noteId):
+# Get file list by note id
+def get_files_by_noteId(noteId):
     query = """
             SELECT file_name, MAX(upload_date) as upload_date
             FROM t_document
@@ -39,7 +42,8 @@ def _get_files_by_noteId(noteId):
     return api_result.success(res)
 
 
-def _get_questions_by_note_id(note_id: int):
+# Get question list by note id
+def get_questions_by_note_id(note_id: int):
     LIMIT_QUESTIONS = int(os.environ["QUESTION_AMOUNT"])
 
     expired_questions = _dbs_.question.get_expired_questions(note_id)
@@ -62,7 +66,8 @@ def _get_questions_by_note_id(note_id: int):
     })
 
 
-async def _add_note(
+# Add new note
+async def add_note(
     language: str,
     noteName: str = Form(),
     files: list[UploadFile] = File(default=None),
@@ -87,7 +92,8 @@ async def _add_note(
     return api_result.success("add note successfully")
 
 
-def _delete_note(id: int):
+# Delete note by note id
+def delete_note(id: int):
     query = """
             DELETE FROM t_note
             WHERE id = %s;
@@ -97,7 +103,8 @@ def _delete_note(id: int):
     return api_result.success()
 
 
-def _update_note_icon(data: types.Icon):
+# Update note icon
+def update_note_icon(data: types.Icon):
     query = """
             UPDATE t_note
             SET icon = %s
