@@ -104,11 +104,12 @@
 import { ref, onUnmounted, watch } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
+import MarkdownIt from 'markdown-it'
+import hljs from 'highlight.js'
+
 import { defaultBgColor, fontColor } from '@/utils'
 import { useFetch } from '@/hooks'
 import { QUESTION_API } from '@/apis'
-import MarkdownIt from 'markdown-it'
-import hljs from 'highlight.js'
 
 const { locale } = useI18n()
 const props = defineProps(['id'])

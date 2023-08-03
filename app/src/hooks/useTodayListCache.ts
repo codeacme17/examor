@@ -11,12 +11,9 @@ const today = useDateFormat(useNow(), 'YYYY-MM-DD')
  *  then the list is cached, and when user enter the problem list page again,
  *  the interface is no longer called
  *
- *  @params
- *  noteId: whitch note list needs to be cached
- *  fun: if there isnt any cache of this note, will trigger this function to fetch list data
- *
- *  @return
- *  [list]: the quesiton list
+ *  @params noteId: whitch note list needs to be cached
+ *  @params fun: if there isnt any cache of this note, will trigger this function to fetch list data
+ *  @return [list, loading]
  */
 export const useTodayListCache = async (
   noteId: string,
