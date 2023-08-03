@@ -47,6 +47,8 @@ export const en = {
     addNote: 'You can add new notes here',
     emptyNoteStart: 'You can enter the',
     emptyNoteEnd: 'page to create your first note',
+    changePlan:
+      'The new plan will be implemented tomorrow after submitting the changes',
   },
 
   // label of input field

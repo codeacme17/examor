@@ -7,7 +7,8 @@
 
     <form class="pb-6">
       <!---------- Quesiton amount ---------->
-      <h3 class="mt-6 mb-3">{{ $t('hint.questionCounts') }}</h3>
+      <h3 class="mt-6 mb-1">{{ $t('hint.questionCounts') }}</h3>
+      <h5 class="mb-3 text-medium-emphasis">{{ $t('subTitle.changePlan') }}</h5>
 
       <v-slider
         v-model:model-value="formData.questionAmount.value"
