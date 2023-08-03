@@ -155,17 +155,10 @@ const handleSubmit = async () => {
 }
 const submitAnswer = async () => {
   isExaming.value = true
-  const response = await fetch('/api/question/examine', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      id: props.id,
-      language: locale.value,
-      answer: answerValue.value,
-    }),
+  const response = await QUESTION_API.examingAnswer({
+    id: props.id,
+    language: locale.value,
+    answer: answerValue.value,
   })
 
   const reader = response.body!.getReader()

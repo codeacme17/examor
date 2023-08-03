@@ -21,4 +21,19 @@ export const QUESTION_API = {
       url: '/api/question/random',
     })
   },
+
+  examingAnswer(data: any) {
+    return fetch('/api/question/examine', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: data.id,
+        language: data.value,
+        answer: data.value,
+      }),
+    })
+  },
 }
