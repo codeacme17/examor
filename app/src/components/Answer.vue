@@ -195,9 +195,6 @@ const handleGetDocument = async () => {
   document_content.value = data
 }
 
-await handleGetLastAnswer()
-await handleGetDocument()
-
 watch(
   () => props.id,
   async () => {
@@ -208,6 +205,9 @@ watch(
     isFinishExamining.value = false
     await handleGetLastAnswer()
     await handleGetDocument()
+  },
+  {
+    immediate: true,
   }
 )
 
