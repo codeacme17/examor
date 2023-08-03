@@ -1,12 +1,14 @@
 <template>
   <v-system-bar
     window
-    color="background"
     style="
       justify-content: space-between;
       padding: 12px 15px;
       height: 45px;
       position: fixed;
+      backdrop-filter: blur(8px) drop-shadow(4px 4px 10px rgb(226, 202, 202))
+        saturate(150%) grayscale(90%);
+      background-color: transparent;
     "
   >
     <!-- Left Handlers -->

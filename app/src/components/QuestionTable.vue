@@ -3,7 +3,12 @@
     {{ switchTitle }}
   </h3>
 
-  <v-card class="my-3" :loading="props.loading" :border="true" :elevation="0">
+  <v-card
+    class="mt-3 mb-6"
+    :loading="props.loading"
+    :border="true"
+    :elevation="0"
+  >
     <v-table fixed-header style="background-color: transparent">
       <tbody>
         <tr v-for="item in props.quesitonList" :key="item.question">
