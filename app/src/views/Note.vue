@@ -1,6 +1,5 @@
 <template>
   <v-container style="max-width: 1080px">
-    <!-- note name & icon -->
     <h2 class="mb-5 d-flex align-center">
       <v-icon class="mr-3" :icon="currentNote.icon" />
       <div>{{ currentNote.name }}</div>
@@ -12,7 +11,9 @@
       "
       mode="out-in"
     >
+      <!-- Question tables -->
       <section v-if="!isShowAnswer">
+        <!-- Today -->
         <QuestionTable
           v-if="!!todayList.length"
           class="mb-5"
@@ -21,6 +22,7 @@
           :quesitonList="todayList"
           @questionPickEmit="handlePickQuestion"
         />
+        <!-- Expired -->
         <QuestionTable
           v-if="!!expiredList.length"
           class="mb-5"
@@ -29,6 +31,7 @@
           :quesitonList="expiredList"
           @questionPickEmit="handlePickQuestion"
         />
+        <!-- Supplement -->
         <QuestionTable
           v-if="!!supplementList.length"
           type="supplement"
@@ -38,8 +41,9 @@
         />
       </section>
 
+      <!-- Exmine section -->
       <section v-else>
-        <!-- question block -->
+        <!-- Question block -->
         <v-card class="pa-3" :color="greenBgColor">
           <section class="px-4">
             <h3 class="mt-1 mb-3 d-flex align-center">
@@ -53,10 +57,13 @@
               />
               {{ $t('title.question') }}
             </h3>
+
+            <!-- Quesiton content -->
             <p class="mb-6 text-body-1">
               {{ pickedQuestion.content }}
             </p>
 
+            <!-- Memory progress -->
             <v-tooltip
               location="top right"
               open-delay="200"
@@ -74,10 +81,8 @@
           </section>
         </v-card>
 
-        <!-- answer block -->
-        <Suspense>
-          <Answer :id="pickedQuestion.id" />
-        </Suspense>
+        <!-- Answer block -->
+        <Answer :id="pickedQuestion.id" />
       </section>
     </Transition>
   </v-container>

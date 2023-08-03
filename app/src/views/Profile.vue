@@ -6,8 +6,9 @@
     <v-divider class="mt-8"></v-divider>
 
     <form class="pb-6">
-      <!-- Quesiton amount -->
+      <!---------- Quesiton amount ---------->
       <h3 class="mt-6 mb-3">{{ $t('hint.questionCounts') }}</h3>
+
       <v-slider
         v-model:model-value="formData.questionAmount.value"
         show-ticks
@@ -19,8 +20,9 @@
         :step="1"
       />
 
-      <!-- Choose Model -->
+      <!---------- Choose Model ---------->
       <h3 class="mt-4 mb-3">{{ $t('title.model') }}</h3>
+
       <t-radio-group
         v-model="formData.currentModel.value"
         class="mb-4"
@@ -30,8 +32,9 @@
         <t-radio-button value="Azure">Azure</t-radio-button>
       </t-radio-group>
 
-      <!-- Keys -->
+      <!---------- Keys ---------->
       <h3 class="mt-4 mb-3">{{ $t('title.keys') }}</h3>
+
       <!-- OpenAI  -->
       <div v-if="formData.currentModel.value == 'OpenAI'" class="d-flex">
         <OpenaiIcon width="30" class="mb-3 mr-4" />
@@ -54,15 +57,13 @@
       </div>
 
       <!-- Azure -->
-      <div
-        v-if="PROFILE_STORE.profile.currentModel.value === 'Azure'"
-        class="d-flex"
-      >
+      <div v-if="formData.currentModel.value === 'Azure'" class="d-flex">
         <AzureIcon width="30" class="mb-auto mt-4 mr-4" />
 
         <div style="flex: 1">
+          <!-- Azure key -->
           <v-text-field
-            v-model="PROFILE_STORE.profile.azureKey.value"
+            v-model="formData.azureKey.value"
             class="mt-3"
             label="AZURE_KEY"
             variant="outlined"
@@ -75,6 +76,7 @@
               formData.azureKey.show = !formData.azureKey.show
             "
           />
+          <!-- Azure version -->
           <v-text-field
             v-model="formData.openaiVersion.value"
             class="mt-3"
@@ -82,6 +84,7 @@
             variant="outlined"
             density="compact"
           />
+          <!-- Azure end-point -->
           <v-text-field
             v-model="formData.openaiBase.value"
             class="mt-3"
@@ -89,10 +92,11 @@
             variant="outlined"
             density="compact"
           />
+          <!-- Deployment name -->
           <v-text-field
             v-model="formData.deploymentName.value"
             class="mt-3"
-            label="AZURE_END_PONIT"
+            label="DEPLOYMENT_NAME"
             variant="outlined"
             density="compact"
           />
@@ -122,8 +126,9 @@
         />
       </div>
 
-      <!-- Other configuration -->
+      <!---------- Other configuration ---------->
       <h3 class="my-4">{{ $t('title.otherConfigurations') }}</h3>
+
       <!-- Proxy -->
       <div class="d-flex">
         <v-text-field
@@ -136,6 +141,7 @@
         />
       </div>
 
+      <!-- Submit button -->
       <div class="mt-5 d-flex justify-end">
         <v-btn
           color="primary"

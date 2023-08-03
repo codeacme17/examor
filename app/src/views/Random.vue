@@ -1,5 +1,6 @@
 <template>
   <v-container style="max-width: 1080px">
+    <!-- Empty block -->
     <empty-block v-if="questionInfo === 'empty'" type="question">
       <h3 class="mb-2">{{ $t('title.emptyQuestion') }}</h3>
     </empty-block>
@@ -7,6 +8,7 @@
     <section v-else>
       <v-card class="pa-3" :color="greenBgColor" :loading="getRQLoading">
         <section class="mb-5 d-flex justify-center align-center">
+          <!-- Refresh buttom -->
           <v-btn
             icon="mdi-refresh"
             size="small"
@@ -17,6 +19,7 @@
             @click="getRandomQuestion"
           />
 
+          <!-- Note name tag -->
           <div>
             {{ $t('title.random') }}
             <v-chip size="small" class="ml-1">
@@ -31,6 +34,7 @@
             {{ questionInfo.content }}
           </p>
 
+          <!-- Memory progress -->
           <v-tooltip
             location="top right"
             open-delay="200"
@@ -48,9 +52,8 @@
         </section>
       </v-card>
 
-      <Suspense>
-        <Answer :id="questionInfo.id" />
-      </Suspense>
+      <!-- Answer block -->
+      <Answer :id="questionInfo.id" />
     </section>
   </v-container>
 </template>
@@ -67,6 +70,7 @@ import { greenBgColor } from '@/utils'
 import { useFetch } from '@/hooks'
 import { QUESTION_API } from '@/apis'
 
+// Handle get random question
 const questionInfo = ref<any>(null)
 const [_getRandomQuestion, getRQLoading] = useFetch(
   QUESTION_API.getRandomQuestion

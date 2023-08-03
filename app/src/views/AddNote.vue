@@ -6,6 +6,7 @@
     <v-divider class="mt-8"></v-divider>
 
     <form class="py-6">
+      <!-- Note's name input field -->
       <v-text-field
         v-model="formData.noteName"
         class="mt-3"
@@ -26,6 +27,7 @@
         @update:model-value="handleSelectChange"
       /> -->
 
+      <!-- File upload component -->
       <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
         <t-upload
           v-show="formData.noteType === 'files'"
@@ -40,6 +42,7 @@
         />
       </t-config-provider>
 
+      <!-- NotionDB input field -->
       <v-text-field
         v-show="formData.noteType === 'notion'"
         v-model="formData.notion"
@@ -50,6 +53,7 @@
         :disabled="!PROFILE_STORE.profile.notionKey.value"
       />
 
+      <!-- Submit button -->
       <div class="mt-4 d-flex justify-end">
         <v-btn
           color="primary"
@@ -63,6 +67,7 @@
       </div>
     </form>
 
+    <!-- Hint message when there is not set NOTION_KEY in profile -->
     <v-snackbar v-model="isShowSnackbar">
       {{ $t('message.notionKeyStart') }}
       <v-btn size="small" variant="text" @click="$router.push('/profile')">
@@ -128,6 +133,7 @@ const formData = reactive<FormData>({
   notion: '',
 })
 
+// Form item disable computed
 const disabled = computed(() => {
   if (!formData.noteName) return true
   if (!formData.noteType) return true
@@ -154,6 +160,7 @@ const handleSelectChange = () => {
   }
 }
 
+// Handle add note event
 const [addNote] = useFetch(NOTE_API.addNote)
 const NOTE_STORE = useNoteStore()
 const handleConfirmAdd = async () => {

@@ -19,12 +19,18 @@
 
     <tbody>
       <tr v-for="item in list" :key="item.id">
+        <!-- File name td -->
         <td>{{ item.file_name }}</td>
+
+        <!-- Update time td -->
         <td style="width: 170px">
           {{ handleDatetime(item.upload_date) }}
         </td>
+
+        <!-- Action buttons td -->
         <td style="width: 170px">
           <div class="d-flex justify-end align-center">
+            <!-- Update file button -->
             <v-btn
               class="ml-auto"
               variant="text"
@@ -34,6 +40,8 @@
             >
               {{ $t('button.update') }}
             </v-btn>
+
+            <!-- Delete button -->
             <v-btn
               v-if="!item.isShowConfirmDeleteBtn"
               icon="mdi-delete-empty"
@@ -42,6 +50,8 @@
               :disabled="props.disabled"
               @click="item.isShowConfirmDeleteBtn = true"
             />
+
+            <!-- Confirm delete button -->
             <v-btn
               v-else
               icon="mdi-check-all"
@@ -79,12 +89,13 @@ type FileItem = {
   isShowConfirmDeleteBtn?: boolean
 }
 
-const props = defineProps(['id', 'disabled'])
-
 onMounted(async () => {
   await gitFileList()
 })
 
+const props = defineProps(['id', 'disabled'])
+
+// Get file list event
 const [getFiles, getFilesLoading] = useFetch(NOTE_API.getFiles)
 const list = ref<FileItem[]>([])
 const gitFileList = async () => {
@@ -97,6 +108,7 @@ const gitFileList = async () => {
   )
 }
 
+// Handle update file event
 const currentFilename = ref('')
 const isShowUploadDialog = ref(false)
 const handleUpdate = (item: FileItem) => {
@@ -104,6 +116,7 @@ const handleUpdate = (item: FileItem) => {
   isShowUploadDialog.value = true
 }
 
+// Handle delete file event
 const [deleteFile, deleteFileLoading] = useFetch(FILE_API.deleteFile)
 const handleDeleteFile = async (item: FileItem) => {
   await deleteFile({

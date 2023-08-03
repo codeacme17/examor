@@ -3,6 +3,7 @@
     class="d-flex flex-column align-center py-10 mt-10"
     style="user-select: none"
   >
+    <!-- Empty image to `/note` page -->
     <div v-show="props.type === 'note'" style="width: 200px; height: 200px">
       <v-img
         v-show="isDark"
@@ -16,6 +17,7 @@
       />
     </div>
 
+    <!-- Empty image to `/random` page -->
     <div v-show="props.type === 'question'" style="width: 200px; height: 200px">
       <v-img
         v-show="isDark"

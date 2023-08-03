@@ -1,5 +1,7 @@
 <template>
   <router-view />
+
+  <!-- Uploading file float box -->
   <uploading-files />
 </template>
 
@@ -17,6 +19,7 @@ onMounted(async () => {
   await PROFILE_STORE.getProfile()
 })
 
+// Connect ws to backend to watch loading files
 const { data } = useWebSocket('ws://localhost:51717/ws/file/uploading', {
   autoReconnect: {
     retries: 3,
@@ -27,7 +30,6 @@ const { data } = useWebSocket('ws://localhost:51717/ws/file/uploading', {
     pongTimeout: 1000,
   },
 })
-
 watchEffect(() => {
   FILE_STORE.uploadingFiles = data.value ? JSON.parse(data.value).data : []
 })

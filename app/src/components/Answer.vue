@@ -2,7 +2,6 @@
   <section class="mt-8">
     <v-tabs v-model="currentTab" density="compact">
       <v-tab value="answer"> {{ $t('label.answer') }}</v-tab>
-
       <v-tab
         value="lastAnswer"
         :loading="getLALoading"
@@ -11,7 +10,6 @@
         <v-icon icon="mdi-clipboard-text-clock" class="mr-2" />
         {{ $t('label.lastRecord') }}
       </v-tab>
-
       <v-tab
         value="document"
         :loading="getDocumentLoading"
@@ -22,8 +20,9 @@
       </v-tab>
     </v-tabs>
 
+    <!-- Answer tab connent -->
     <section v-show="currentTab === 'answer'">
-      <!-- answer block -->
+      <!-- Answer block -->
       <v-textarea
         v-model="answerValue"
         variant="solo"
@@ -37,7 +36,7 @@
         @keyup="handleKeyup"
       />
 
-      <!-- examine block -->
+      <!-- Examine block -->
       <Transition name="scroll-x-reverse-transition">
         <v-card
           v-if="isShowExamine"
@@ -52,7 +51,6 @@
             {{ $t('label.examine') }}
           </h3>
           <v-divider></v-divider>
-
           <div
             v-html="toMarkdown(examineContent)"
             class="show-markdown-box"
@@ -73,6 +71,7 @@
       </v-btn>
     </section>
 
+    <!-- Last answer tab connent -->
     <section v-show="currentTab === 'lastAnswer'">
       <v-card
         v-if="lastAnswer && lastExamine"
@@ -92,6 +91,7 @@
       </div>
     </section>
 
+    <!-- Document refrence tab connent -->
     <section v-show="currentTab === 'document'">
       <v-card :elevation="0" :color="defaultBgColor">
         <div v-html="toMarkdown(document_content)" class="show-markdown-box" />
@@ -115,7 +115,7 @@ const { locale } = useI18n()
 const props = defineProps(['id'])
 const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
 
-const answerValue = useLocalStorage(`pending-answer-value-${props.id}`, '')
+// Make raw-content render as markdown formatting content
 const toMarkdown = (text: string) => {
   const md = new MarkdownIt({
     highlight: function (str, lang) {
@@ -129,10 +129,10 @@ const toMarkdown = (text: string) => {
     typographer: true,
     breaks: true,
   })
-  const res = md.render(text)
-  return res
+  return md.render(text)
 }
 
+// Handle key press events, does press `Crtl + Enter`
 const ctrlTrigger = ref(false)
 const handleKeydown = (e: KeyboardEvent) => {
   if (e.code === 'ControlLeft') ctrlTrigger.value = true
@@ -142,6 +142,9 @@ const handleKeyup = () => {
   if (ctrlTrigger.value) ctrlTrigger.value = false
 }
 
+// Handle submit answer event
+// submitAnswer() is a SSE connect to fetch streaming response
+const answerValue = useLocalStorage(`pending-answer-value-${props.id}`, '')
 const examineContent = ref('')
 const isShowExamine = ref(false)
 const isFinishExamining = ref(false)
@@ -164,7 +167,6 @@ const submitAnswer = async () => {
 
   const reader = response.body!.getReader()
   const decoder = new TextDecoder()
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     const { value, done } = await reader.read()
     if (done) {
@@ -196,6 +198,7 @@ const handleGetDocument = async () => {
   document_content.value = data
 }
 
+// Watching if current question id is changed
 watch(
   () => props.id,
   async () => {

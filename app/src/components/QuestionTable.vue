@@ -7,6 +7,7 @@
     <v-table fixed-header style="background-color: transparent">
       <tbody>
         <tr v-for="item in props.quesitonList" :key="item.question">
+          <!-- Question status td -->
           <td style="width: 50px">
             <v-checkbox
               v-model="item.is_answered_today"
@@ -17,27 +18,38 @@
               :disabled="true"
             />
           </td>
+
+          <!-- Question content td -->
           <td style="overflow: hidden">{{ item.content }}</td>
 
+          <!-- Action buttons td -->
           <td style="width: 145px">
+            <!-- Answer button -->
             <v-btn
-              v-if="isPending(item).value === true"
-              :block="true"
-              :color="orangeBgColor"
-              @click="handlePickQuestion(item)"
-            >
-              {{ $t('button.continue') }}
-            </v-btn>
-
-            <v-btn
-              v-else-if="item.is_answered_today === '0'"
+              v-if="item.is_answered_today === '0'"
               :block="true"
               @click="handlePickQuestion(item)"
             >
               go
             </v-btn>
 
-            <v-btn v-else :color="greenBgColor" :block="true" :disabled="true">
+            <!-- Continue answer button -->
+            <v-btn
+              v-else-if="isPending(item).value === true"
+              :color="orangeBgColor"
+              :block="true"
+              @click="handlePickQuestion(item)"
+            >
+              {{ $t('button.continue') }}
+            </v-btn>
+
+            <!-- Finished button -->
+            <v-btn
+              v-else
+              :color="greenBgColor"
+              :block="true"
+              @click="handlePickQuestion(item)"
+            >
               {{ $t('button.finished') }}
             </v-btn>
           </td>
@@ -68,24 +80,25 @@ export type TableItem = {
 const props = defineProps(['quesitonList', 'loading', 'type'])
 const emits = defineEmits(['questionPickEmit'])
 
+// Whether the current question is in pending status
 const isPending = (item: TableItem): ComputedRef<boolean> => {
   return computed(() => {
     return !!localStorage.getItem(`pending-answer-value-${item.id}`)
   })
 }
 
+// Emit event while click a question button
 const handlePickQuestion = (item: TableItem) => {
   emits('questionPickEmit', item)
 }
 
+// Switch different title content by `porps.type`
 const switchTitle = computed(() => {
   switch (props.type) {
     case 'today':
       return t('title.today')
-
     case 'expired':
       return t('title.expired')
-
     case 'supplement':
       return t('title.supplement')
 
