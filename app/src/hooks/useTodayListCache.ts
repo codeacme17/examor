@@ -19,12 +19,14 @@ const today = useDateFormat(useNow(), 'YYYY-MM-DD')
  *  [list]: the quesiton list
  */
 export const useTodayListCache = async (
-  noteId: number,
+  noteId: string,
   fun: (id: number) => Promise<ResponseBody | any>
 ): Promise<Ref[]> => {
   const [fetch, loading] = useFetch(fun)
   const list = ref<TableItem[]>([])
   const key = `${today.value}:${noteId}`
+
+  clearExipredData()
 
   if (localStorage.getItem(key))
     list.value = JSON.parse(localStorage.getItem(key)!)
@@ -34,7 +36,6 @@ export const useTodayListCache = async (
     localStorage.setItem(key, JSON.stringify(list.value))
   }
 
-  clearExipredData()
   return [list, loading]
 }
 

@@ -100,7 +100,7 @@ import type { TableItem } from '@/components/QuestionTable.vue'
 const route = useRoute()
 
 type Note = {
-  id: number | string
+  id: string
   name: string
   icon: string
 }
@@ -117,7 +117,7 @@ currentNote.icon = noteRes.data.icon
 
 // Get question list
 const [listData, listLoading] = await useTodayListCache(
-  Number(currentNote.id),
+  currentNote.id,
   NOTE_API.getQuestions
 )
 const todayList = ref<TableItem[]>(listData.value.today)

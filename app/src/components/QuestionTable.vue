@@ -38,7 +38,7 @@
             </v-btn>
 
             <v-btn v-else :color="greenBgColor" :block="true" :disabled="true">
-              okay
+              {{ $t('button.finished') }}
             </v-btn>
           </td>
         </tr>

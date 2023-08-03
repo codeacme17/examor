@@ -16,6 +16,7 @@ export const en = {
     addFile: 'add new file',
     deleteNote: 'delete this note',
     confirmDelete: 'confirm delete',
+    finished: 'finished',
   },
 
   // the title & subtitle on each page
