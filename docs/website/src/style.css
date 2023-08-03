@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: Poppins, "JetBrains Mono";
+}
+
+.main_size {
+  max-width: 1360px;
+  min-width: 1080px;
+  padding: 0px 30px;
+  margin: 0px auto;
+}
