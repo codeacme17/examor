@@ -23,8 +23,6 @@ export const useTodayListCache = async (
   const list = ref<TableItem[]>([])
   const key = `${today.value}:${noteId}`
 
-  clearExipredData()
-
   if (localStorage.getItem(key))
     list.value = JSON.parse(localStorage.getItem(key)!)
   else {
@@ -34,23 +32,4 @@ export const useTodayListCache = async (
   }
 
   return [list, loading]
-}
-
-const clearExipredData = () => {
-  let i = 0
-  while (localStorage.key(i)) {
-    const key: string = localStorage.key(i)!
-    let chunks: string[] = []
-    if (key.includes(':')) chunks = key.split(':')
-    if (checkIsExpired(chunks[0])) localStorage.removeItem(key)
-    i++
-  }
-}
-
-const checkIsExpired = (day: string) => {
-  if (!day) return false
-  const date1 = new Date(day).getTime()
-  const date2 = new Date(today.value).getTime()
-  if (date1 < date2) return true
-  else false
 }

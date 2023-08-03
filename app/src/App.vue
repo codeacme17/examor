@@ -9,6 +9,7 @@
 import { onMounted, watchEffect } from 'vue'
 import { useWebSocket } from '@vueuse/core'
 import { useProfileStore, useNoteStore, useFileStore } from '@/store'
+import { clearExipredStorageData } from '@/utils'
 
 const PROFILE_STORE = useProfileStore()
 const NOTE_STORE = useNoteStore()
@@ -17,6 +18,7 @@ const FILE_STORE = useFileStore()
 onMounted(async () => {
   await NOTE_STORE.getNotes()
   await PROFILE_STORE.getProfile()
+  clearExipredStorageData()
 })
 
 // Connect ws to backend to watch loading files
