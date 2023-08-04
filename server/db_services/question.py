@@ -95,9 +95,20 @@ def get_supplement_questions(note_id: int, gap_count: int):
             SELECT q.*
             FROM t_question q
             JOIN t_document d ON q.document_id = d.id
-            WHERE d.note_id = %s AND q.push_date IS NULL
+            WHERE d.note_id = %s AND q.push_date IS NULL AND q.is_pushed_today = '0'
             ORDER BY RAND()
             LIMIT %s;                
             """
     data = (note_id, gap_count, )
-    return MySQLHandler().execute_query(query, data)
+    questions = MySQLHandler().execute_query(query, data)
+    print(questions)
+    if questions:
+        question_ids = [question['id'] for question in questions]
+        update_query = """
+                        UPDATE t_question
+                        SET is_pushed_today = '1'
+                        WHERE id IN ({});
+                        """.format(','.join(map(str, question_ids)))
+        MySQLHandler().update_table_data(update_query)
+
+    return questions

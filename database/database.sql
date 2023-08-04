@@ -40,7 +40,8 @@ CREATE TABLE t_question (
 	content varchar(500) NOT NULL COMMENT 'question content',
 	document_id int(12) NOT NULL COMMENT 'document id',
 	push_date DATE DEFAULT NULL COMMENT 'date the question needs to be asked',
-	is_answered_today char(1) DEFAULT '0' NOT NULL COMMENT 'has answered this quesiton at today to user  0-No  1-Yes',
+	is_pushed_today char(1) DEFAULT '0' NOT NULL COMMENT 'has pushed this quesiton at today to user  0-No  1-Yes',
+	is_answered_today char(1) DEFAULT '0' NOT NULL COMMENT 'user has answered this quesiton at today 0-No  1-Yes',
 	progress NUMERIC DEFAULT 0 NOT NULL COMMENT 'accumulated score',
 	last_answer TEXT NULL COMMENT 'record the last time answer',
 	upload_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'record update time',
@@ -58,7 +59,8 @@ STARTS TIMESTAMP(CURRENT_DATE, '00:00:00')
 DO
 BEGIN
   UPDATE t_question
-  SET is_answered_today = '0'; 
+  SET is_pushed_today = '0', 
+			is_answered_today = '0'; 
 END;
 //
 DELIMITER ;
