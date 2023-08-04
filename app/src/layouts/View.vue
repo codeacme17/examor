@@ -2,7 +2,7 @@
   <v-main>
     <TopBar />
 
-    <v-container class="mt-3">
+    <section class="mt-3">
       <RouterView v-slot="{ Component }">
         <template v-if="Component">
           <Transition name="fade-transition" mode="out-in">
@@ -12,7 +12,7 @@
           </Transition>
         </template>
       </RouterView>
-    </v-container>
+    </section>
   </v-main>
 </template>
 

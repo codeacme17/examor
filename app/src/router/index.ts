@@ -5,8 +5,16 @@ const routes = [
   {
     path: '/',
     component: () => import('@/layouts/Default.vue'),
-    redirect: '/dashboard',
+    redirect: () => {
+      if (!JSON.parse(localStorage.getItem('isWelcome')!)) return '/welcome'
+      else return '/notes'
+    },
     children: [
+      {
+        path: '/welcome',
+        name: 'Welcome',
+        component: () => import('@/views/Welcome.vue'),
+      },
       {
         path: '/dashboard',
         name: 'Dashboard',
