@@ -85,6 +85,7 @@ export const en = {
     getIcon: 'To get the icon please go to',
     proxy:
       'If you need a VPN to access OpenAI then please fill in your proxy address (plz use "socks5" protocol)',
+    lastRecord: 'No reord yet',
   },
 
   errorHint: {

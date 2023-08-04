@@ -5,7 +5,7 @@
       <v-tab
         value="lastAnswer"
         :loading="getLALoading"
-        :disabled="isExaming && isShowExamine"
+        :disabled="!isFinishExaming"
       >
         <v-icon icon="mdi-clipboard-text-clock" class="mr-2" />
         {{ $t('label.lastRecord') }}
@@ -13,7 +13,7 @@
       <v-tab
         value="document"
         :loading="getDocumentLoading"
-        :disabled="isExaming && isShowExamine"
+        :disabled="!isFinishExaming"
       >
         <v-icon icon="mdi-notebook-heart" class="mr-2" />
         {{ $t('label.document') }}
@@ -27,6 +27,7 @@
         v-model="currentData.answer"
         variant="solo"
         auto-grow
+        :autofocus="true"
         :bg-color="defaultBgColor"
         :flat="true"
         :rows="7"
@@ -87,7 +88,7 @@
       </v-card>
 
       <div v-else class="text-disabled" style="user-select: none">
-        <h4 class="mt-10 ml-6">No record yet</h4>
+        <h4 class="mt-10 ml-6">{{ $t('hint.lastRecord') }}</h4>
       </div>
     </section>
 
@@ -101,7 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted, watch, computed, nextTick } from 'vue'
+import { ref, onUnmounted, watch } from 'vue'
 import { useLocalStorage, useNow, useDateFormat } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import MarkdownIt from 'markdown-it'
@@ -140,19 +141,19 @@ const handleKeyup = () => {
 
 // Handle submit answer event
 // submitAnswer() is a SSE connect to fetch streaming response
-const isShowExamine = computed(() => {
-  if (currentData.value.examine) return true
-  else return false
-})
+const isShowExamine = ref(false)
 const isExaming = ref(false)
+const isFinishExaming = ref(false)
 const handleSubmit = async () => {
   if (!currentData.value.answer.trim()) return
+  isShowExamine.value = true
+  isExaming.value = true
   await submitAnswer()
+  isFinishExaming.value = true
   finishedList.value.add(props.id)
   pendingList.value.delete(props.id)
 }
 const submitAnswer = async () => {
-  isExaming.value = true
   const response = await QUESTION_API.examingAnswer({
     id: props.id,
     language: locale.value,
@@ -175,7 +176,7 @@ const lastAnswer = ref('')
 const lastExamine = ref('')
 const [getLastAnswer, getLALoading] = useFetch(QUESTION_API.getLastAnswer)
 const handleGetLastAnswer = async () => {
-  if (!currentData.value.lastRecord) {
+  if (!currentData.value.lastRecord && !currentData.value.examine) {
     const res = await getLastAnswer(props.id)
     currentData.value.lastRecord = res.data
   }
@@ -213,9 +214,13 @@ const toMarkdown = (text: string) => {
 watch(
   () => props.id,
   async () => {
-    currentTab.value = 'answer'
     await handleGetLastAnswer()
     await handleGetDocument()
+
+    if (currentData.value.examine) {
+      isShowExamine.value = true
+      isFinishExaming.value = true
+    }
   },
   {
     immediate: true,
