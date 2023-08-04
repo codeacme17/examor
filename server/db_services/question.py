@@ -26,9 +26,8 @@ async def update_question_state(
             SET last_answer = %s, progress = progress + %s, is_answered_today = %s, push_date = %s
             WHERE id = %s;
             """
-    score = extract_score(answer)
-    print(score)
-
+    chunks = answer.split("|||")
+    score = extract_score(chunks[1])
     push_date = get_push_date(score)
     data = (answer, score, "1", push_date, id, )
     MySQLHandler().update_table_data(query, data)
@@ -41,8 +40,9 @@ def remove_prefix_numbers(text):
 
 def extract_score(anwser: str):
     score = re.findall(r"\d+\.?\d*", anwser)
+    print(score, "raw score")
     if score:
-        return int(score[0])
+        return int(float(score[0]))
     else:
         return 0
 

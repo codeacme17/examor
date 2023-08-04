@@ -23,6 +23,7 @@ class LangchainService():
         temperature: int = 0,
         streaming: bool = False
     ):
+        self.semaphore = asyncio.Semaphore(1)
         self.note_id = note_id
         self.filename = filename
         self.llm_callback = AsyncIteratorCallbackHandler()
@@ -80,7 +81,6 @@ class LangchainService():
     ):
         docs = self._split_document(doc_content)
         tasks = []
-
         for doc in docs:
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id,
@@ -90,7 +90,7 @@ class LangchainService():
             tasks.append(self._agenerate_questions(doc, title, doc_id))
 
         try:
-            await asyncio.wait_for(asyncio.gather(*tasks), timeout=3 * 60)
+            await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * 20)
         except asyncio.TimeoutError:
             await handle_timeout()
 
@@ -121,17 +121,18 @@ class LangchainService():
         title: str,
         doc_id: int
     ):
-        res = await self.llm_chain.apredict(
-            title=title,
-            context=doc.page_content
-        )
-
-        lines = res.split("\n")
-        for question_content in lines:
-            _dbs_.question.save_question_to_db(
-                question_content,
-                doc_id
+        async with self.semaphore:
+            res = await self.llm_chain.apredict(
+                title=title,
+                context=doc.page_content
             )
+
+            lines = res.split("\n")
+            for question_content in lines:
+                _dbs_.question.save_question_to_db(
+                    question_content,
+                    doc_id
+                )
 
     def _is_markdown_heading(self, line):
         pattern = r'^#\s.+'

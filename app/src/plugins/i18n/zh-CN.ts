@@ -33,6 +33,7 @@ export const zhCN = {
     uploadDate: '上传日期',
     createDate: '创建日期',
     updateFile: '更新文件',
+    uploadFile: '上传文件',
     lastAnswer: '上次的回答',
     lastExamine: '上次的检测',
     today: '需要今天复习的题目',

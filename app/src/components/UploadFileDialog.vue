@@ -4,11 +4,15 @@
     v-model="_isShowUploadDialog"
     theme="light"
     width="60%"
-    style="margin-bottom: 240px"
+    style="margin-bottom: 240px; min-width: 300px"
     @update:model-value="handleVisible"
   >
-    <v-card class="pt-5 pb-5 px-5" :theme="reverseTheme">
-      <h3 class="mb-3">{{ $t('title.updateFile') }}</h3>
+    <v-card
+      class="pt-5 pb-5 px-5"
+      style="min-width: 300px"
+      :theme="reverseTheme"
+    >
+      <h3 class="mb-3">{{ $t('title.uploadFile') }}</h3>
 
       <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
         <t-upload
@@ -20,7 +24,7 @@
         />
       </t-config-provider>
 
-      <v-btn @click="_isShowUploadDialog = false">
+      <v-btn @click="_isShowUploadDialog = false" :border="true" :elevation="0">
         {{ $t('button.upload') }}
       </v-btn>
     </v-card>

@@ -153,30 +153,7 @@
     </section>
 
     <!-- Upload file dialog -->
-    <v-dialog
-      v-model="isShowUploadDialog"
-      theme="light"
-      width="60%"
-      style="margin-bottom: 240px"
-    >
-      <v-card class="pt-5 pb-5 px-5" :theme="reverseTheme">
-        <t-config-provider
-          :global-config="locale === 'en' ? enConfig : cnConfig"
-        >
-          <t-upload
-            class="mt-1 mb-5"
-            placeholder=""
-            theme="file-flow"
-            multiple
-            :autoUpload="false"
-          />
-        </t-config-provider>
-
-        <v-btn @click="isShowUploadDialog = false">
-          {{ $t('button.upload') }}
-        </v-btn>
-      </v-card>
-    </v-dialog>
+    <upload-file-dialog v-model="isShowUploadDialog"></upload-file-dialog>
   </v-container>
 </template>
 
@@ -187,23 +164,17 @@ export default {
 </script>
 
 <script setup lang="ts">
-import enConfig from 'tdesign-vue-next/es/locale/en_US'
-import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
-
 import { ref, nextTick } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useNoteStore } from '@/store'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 import {
   defaultBgColor,
-  reverseTheme,
   orangeBgColor,
   greenBgColor,
   handleDatetime,
 } from '@/utils'
 
-const { locale } = useI18n()
 const NOTE_STORE = useNoteStore()
 
 const isShowUploadDialog = ref(false)
