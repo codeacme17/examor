@@ -45,6 +45,7 @@
               <v-progress-linear
                 v-bind="props"
                 class="mt-1 mb-2"
+                max="100"
                 :model-value="questionInfo.progress"
               />
             </template>
