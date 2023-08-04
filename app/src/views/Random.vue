@@ -53,7 +53,7 @@
       </v-card>
 
       <!-- Answer block -->
-      <Answer :id="questionInfo.id" />
+      <Answer :id="questionInfo.id" v-if="trigger" />
     </section>
   </v-container>
 </template>
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { greenBgColor } from '@/utils'
 import { useFetch } from '@/hooks'
 import { QUESTION_API } from '@/apis'
@@ -75,9 +75,15 @@ const questionInfo = ref<any>(null)
 const [_getRandomQuestion, getRQLoading] = useFetch(
   QUESTION_API.getRandomQuestion
 )
+const trigger = ref(true)
 const getRandomQuestion = async () => {
   const { data } = await _getRandomQuestion()
   questionInfo.value = data
+
+  trigger.value = false
+  nextTick(() => {
+    trigger.value = true
+  })
 }
 
 await getRandomQuestion()

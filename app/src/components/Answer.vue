@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted, watch, computed } from 'vue'
+import { ref, onUnmounted, watch, computed, nextTick } from 'vue'
 import { useLocalStorage, useNow, useDateFormat } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import MarkdownIt from 'markdown-it'
@@ -123,6 +123,10 @@ const currentData = useLocalStorage(`${today.value}:${props.id}:answer-data`, {
   lastRecord: '',
 })
 const [pendingList, finishedList] = useListState()
+const clearEmptyCache = () => {
+  if (!currentData.value.answer && !currentData.value.examine)
+    localStorage.removeItem(`${today.value}:${props.id}:answer-data`)
+}
 
 // Handle key press events, does press `Crtl + Enter`
 const ctrlTrigger = ref(false)
@@ -175,6 +179,7 @@ const handleGetLastAnswer = async () => {
     const res = await getLastAnswer(props.id)
     currentData.value.lastRecord = res.data
   }
+  if (!currentData.value.lastRecord) return
   const chunks = currentData.value.lastRecord.split('|||')
   lastAnswer.value = chunks[0]
   lastExamine.value = chunks[1]
@@ -217,6 +222,7 @@ watch(
   }
 )
 
+// Watching if there is answer value changing the pending list
 watch(
   () => currentData.value.answer,
   () => {
@@ -226,7 +232,6 @@ watch(
 )
 
 onUnmounted(() => {
-  const id = `pending-answer-value-${props.id}`
-  if (localStorage.getItem(id) === '') localStorage.removeItem(id)
+  clearEmptyCache()
 })
 </script>
