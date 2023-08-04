@@ -1,5 +1,6 @@
 <template>
   <spline-viewer
+    loading-anim
     url="https://prod.spline.design/DPERWwhvUp3zeOP8/scene.splinecode"
     style="
       position: absolute;

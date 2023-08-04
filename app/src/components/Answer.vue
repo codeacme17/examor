@@ -30,7 +30,7 @@
         :autofocus="true"
         :bg-color="defaultBgColor"
         :flat="true"
-        :rows="3"
+        :rows="4"
         :disabled="isShowExamine"
         :placeholder="$t('placeholder.answer')"
         @keydown="handleKeydown"
