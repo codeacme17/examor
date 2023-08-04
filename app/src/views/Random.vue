@@ -16,7 +16,7 @@
             variant="text"
             class="mr-2"
             style="font-size: 16px"
-            @click="getRandomQuestion"
+            @click="hanleClickRefresh"
           />
 
           <!-- Note name tag -->
@@ -66,25 +66,30 @@ export default {
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 import { greenBgColor } from '@/utils'
 import { useFetch } from '@/hooks'
 import { QUESTION_API } from '@/apis'
 
 // Handle get random question
 const questionInfo = ref<any>(null)
+const trigger = ref(true)
 const [_getRandomQuestion, getRQLoading] = useFetch(
   QUESTION_API.getRandomQuestion
 )
-const trigger = ref(true)
 const getRandomQuestion = async () => {
   const { data } = await _getRandomQuestion()
   questionInfo.value = data
-
   trigger.value = false
   nextTick(() => {
     trigger.value = true
   })
 }
+
+// Debounce click refresh button to pick a new question
+const hanleClickRefresh = useDebounceFn(async () => {
+  await getRandomQuestion()
+}, 500)
 
 await getRandomQuestion()
 </script>
