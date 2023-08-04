@@ -36,11 +36,9 @@
             <!-- note name & icon -->
             <note-header v-bind="currentNote" :index="currentIndex" />
 
-            <v-progress-linear model-value="20" class="mt-1 mb-2" />
-
             <v-btn
               variant="outlined"
-              class="mt-7 mb-3"
+              class="mt-3 mb-3"
               prepend-icon="mdi-text-box-plus-outline"
               style="height: 40px"
               :block="true"
@@ -105,7 +103,11 @@
                   :title="$t('title.uploadDate')"
                   :subtitle="handleDatetime(currentNote.upload_date)"
                 />
-                <v-list-item :title="$t('hint.memory')" subtitle="50%" />
+                <v-list-item
+                  :title="$t('title.finishedAmount')"
+                  subtitle="10"
+                />
+                <v-list-item :title="$t('title.totalAmount')" subtitle="200" />
               </v-list>
             </Transition>
           </v-card>
@@ -188,7 +190,7 @@ export default {
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
-import { ref, nextTick, computed } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useNoteStore } from '@/store'
 import { NOTE_API } from '@/apis'

@@ -54,8 +54,6 @@ def get_questions_by_note_id(note_id: int):
     gap = 0 if gap - \
         len(today_questions) < 0 else gap - len(today_questions)
 
-    print(gap)
-
     supplement_questions = _dbs_.question.get_supplement_questions(
         note_id,
         gap

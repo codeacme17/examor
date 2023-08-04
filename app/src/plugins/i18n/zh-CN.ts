@@ -39,6 +39,8 @@ export const zhCN = {
     expired: '已过期的题目',
     supplement: '新的题目',
     model: '选择要使用的模型',
+    totalAmount: '问题总数',
+    finishedAmount: '已回答',
   },
 
   subTitle: {

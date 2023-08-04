@@ -106,7 +106,8 @@
               overflow: hidden;
               font-size: 13px;
               position: absolute;
-              right: 57px;
+              right: 60px;
+              user-select: none;
             "
           >
             © 2023 <strong>leyoonafr</strong>

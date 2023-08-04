@@ -40,6 +40,8 @@ export const en = {
     expired: 'Expired Questions',
     supplement: 'New Questions',
     model: 'Choose the model to use',
+    totalAmount: 'Total questions',
+    finishedAmount: 'Already answered',
   },
   subTitle: {
     notes: 'You can manage your notes here',
