@@ -3,7 +3,6 @@ import os
 import asyncio
 import db_services as _dbs_
 
-
 from typing import Awaitable
 from langchain import LLMChain
 from langchain.schema import Document
@@ -23,7 +22,7 @@ class LangchainService():
         temperature: int = 0,
         streaming: bool = False
     ):
-        self.semaphore = asyncio.Semaphore(1)
+        self.semaphore = asyncio.Semaphore(3)
         self.note_id = note_id
         self.filename = filename
         self.llm_callback = AsyncIteratorCallbackHandler()

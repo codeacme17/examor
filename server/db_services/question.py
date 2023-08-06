@@ -40,7 +40,6 @@ def remove_prefix_numbers(text):
 
 def extract_score(anwser: str):
     score = re.findall(r"\d+\.?\d*", anwser)
-    print(score, "raw score")
     if score:
         return int(float(score[0]))
     else:
@@ -101,7 +100,7 @@ def get_supplement_questions(note_id: int, gap_count: int):
             """
     data = (note_id, gap_count, )
     questions = MySQLHandler().execute_query(query, data)
-    print(questions)
+
     if questions:
         question_ids = [question['id'] for question in questions]
         update_query = """
