@@ -3,7 +3,7 @@
 </br>
 
 <p>
-  <img  width="220"  src="/docs/logo-text.png" />
+  <img  width="190"  src="/docs/logo-text.png" />
 </p>
 
 <p>
