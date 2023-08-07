@@ -18,7 +18,7 @@
 
 </br>
 
-## 💡Inspiration
+## 💡 Inspiration
 
 > 'For learners, one of the best habits should be regular self-testing' - **Make It Stick: The Science of Successful Learning**
 
