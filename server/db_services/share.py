@@ -38,12 +38,32 @@ def get_question_info(
 
 
 def is_duplicate_note(
-    table_name: str,
     key_name: str
 ) -> bool:
     query = "SELECT * FROM t_note WHERE name = %s"
     data = (key_name,)
     duplicate_list = MySQLHandler().execute_query(query, data)
+
+    if (len(duplicate_list)):
+        return True
+    else:
+        return False
+
+
+def is_duplicate_file(
+    note_id: int,
+    file_name: str
+) -> bool:
+    query = """
+            SELECT *
+            FROM t_file
+            WHERE note_id = %s
+            AND file_name = %s;
+            """
+    data = (note_id, file_name, )
+    duplicate_list = MySQLHandler().execute_query(query, data)
+
+    print(duplicate_list)
 
     if (len(duplicate_list)):
         return True

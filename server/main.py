@@ -38,6 +38,16 @@ def get_notes():
     return _apis_.note.get_notes()
 
 
+@app.post("/note")
+async def add_note(
+    language: str = Form(),
+    noteName: str = Form(),
+    files: list[UploadFile] = File(default=None),
+    notionId: str = Form(default=None),
+):
+    return await _apis_.note.add_note(language, noteName, files, notionId)
+
+
 @app.get("/note/{id}")
 def get_note(id: int):
     return _apis_.note.get_note(id)
@@ -48,20 +58,21 @@ def get_files_by_noteId(id: int):
     return _apis_.note.get_files_by_noteId(id)
 
 
+@app.post("/note/{id}/file")
+async def add_files_to_note(
+    language: str = Form(),
+    noteId: int = Form(),
+    noteName: str = Form(),
+    files: list[UploadFile] = File(default=None),
+    notionId: str = Form(default=None)
+):
+    print(language, noteId, noteName, files, notionId)
+    return await _apis_.note.add_file(language, noteId, noteName, files, notionId)
+
+
 @app.get("/note/{id}/questions")
 def get_questions_by_note_id(id: int):
     return _apis_.note.get_questions_by_note_id(id)
-
-
-@app.post("/note")
-async def add_note(
-    language: str = Form(),
-    noteName: str = Form(),
-    files: list[UploadFile] = File(default=None),
-    notionId: str = Form(default=None),
-):
-    res = await _apis_.note.add_note(language, noteName, files, notionId)
-    return res
 
 
 @app.delete("/note/{id}")

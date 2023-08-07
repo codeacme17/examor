@@ -73,15 +73,42 @@ async def add_note(
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),
 ):
-    if (_dbs_.share.is_duplicate_note('t_note', noteName)):
+    if (_dbs_.share.is_duplicate_note(noteName)):
         return api_result.error("The same note name cannot be created repeatedly")
 
-    query = """
-            INSERT INTO t_note (name) 
-            VALUES (%s)
-            """
-    data = (noteName,)
-    noteId = MySQLHandler().insert_table_data(query, data)
+    if (len(files) > 3):
+        return api_result.error("It is not possible to upload more than three files at one time")
+
+    if (len(files) > 0):
+        await _dbs_.file.upload_file(
+            language,
+            _dbs_.note.get_inserted_note_id(noteName),
+            noteName,
+            files
+        )
+
+    if (notionId is not None):
+        pass
+
+    return api_result.success("add note successfully")
+
+
+# Add new files to note
+async def add_file(
+    language: str = Form(),
+    noteId: int = Form(),
+    noteName: str = Form(),
+    files: list[UploadFile] = File(default=None),
+    notionId: str = Form(default=None)
+):
+
+    for file in files:
+        print(file.filename)
+        if (_dbs_.share.is_duplicate_file(noteId, file.filename)):
+            return api_result.error("The same file cannot be uploaded under one note")
+
+    if (len(files) > 3):
+        return api_result.error("It is not possible to upload more than three files at one time")
 
     if (len(files) > 0):
         await _dbs_.file.upload_file(language, noteId, noteName, files)
@@ -89,7 +116,7 @@ async def add_note(
     if (notionId is not None):
         pass
 
-    return api_result.success("add note successfully")
+    return api_result.success("add files successfully")
 
 
 # Delete note by note id

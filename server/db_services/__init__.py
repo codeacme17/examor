@@ -2,6 +2,7 @@ from . import document
 from . import file
 from . import question
 from . import share
+from . import note
 
 
 __all__ = [
@@ -9,4 +10,5 @@ __all__ = [
     "file",
     "question",
     "share",
+    "note"
 ]
