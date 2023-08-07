@@ -38,7 +38,9 @@ After the user gets the question of the day, the user can answer the question, w
 
 #### Ebbinghaus Memory
 
-I implemented a beggar's version of Ebbinghaus, which currently only has 8 lines of code, and I will optimize this function in the future. Talking about the actual function, after GPT generates the test, I will record the score value in the test, and affect the date of future review by the level of the score, that is, the higher the score, the farther the date of the next review
+> I implemented a beggar's version of Ebbinghaus, which currently only has 8 lines of code, and I will optimize this function in the future. 
+
+Talking about the actual function, after GPT generates the test, I will record the score value in the test, and affect the date of future review by the level of the score, that is, the higher the score, the farther the date of the next review
 
 ## Module
 
