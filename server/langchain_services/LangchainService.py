@@ -50,6 +50,7 @@ class LangchainService():
                 deployment_name=os.environ["DEPLOYMENT_NAME"],
                 temperature=temperature,
                 streaming=streaming,
+                callbacks=[self.llm_callback]
             )
 
         if (os.environ["CURRENT_MODEL"] == "OpenAI"):
@@ -58,7 +59,8 @@ class LangchainService():
                 temperature=temperature,
                 streaming=streaming,
                 verbose=True,
-                openai_proxy=os.environ['PROXY']
+                openai_proxy=os.environ['PROXY'],
+                callbacks=[self.llm_callback]
             )
 
         prompt = choose_prompt(
@@ -70,7 +72,6 @@ class LangchainService():
             verbose=False,
             prompt=prompt,
             llm=llm,
-            callbacks=[self.llm_callback]
         )
 
     async def agenerate_questions(

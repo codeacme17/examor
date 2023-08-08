@@ -18,7 +18,7 @@ def set_profile_to_env():
     os.environ['OPENAI_BASE'] = data['openaiBase']
     os.environ['AZURE_KEY'] = data['azureKey']
     os.environ['DEPLOYMENT_NAME'] = data['deploymentName']
-    os.environ['PROXY'] = f"https://{data['proxy']}"
+    os.environ['PROXY'] = f"http://{data['proxy']}"
 
 
 def init_profile_file():
