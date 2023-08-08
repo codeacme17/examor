@@ -60,14 +60,14 @@ def get_files_by_noteId(id: int):
 
 @app.post("/note/{id}/file")
 async def add_files_to_note(
+    id: int,
     language: str = Form(),
-    noteId: int = Form(),
     noteName: str = Form(),
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None)
 ):
-    print(language, noteId, noteName, files, notionId)
-    return await _apis_.note.add_file(language, noteId, noteName, files, notionId)
+    print(language, id, noteName, files, notionId)
+    return await _apis_.note.add_file(language, id, noteName, files, notionId)
 
 
 @app.get("/note/{id}/questions")

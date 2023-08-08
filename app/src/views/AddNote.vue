@@ -96,11 +96,11 @@ export default {
 
 <script setup lang="ts">
 import { reactive, computed, ref } from 'vue'
-import { MessagePlugin } from 'tdesign-vue-next'
 import { useI18n } from 'vue-i18n'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 import { useNoteStore, useProfileStore } from '@/store'
+import { detectLegalFileName } from '@/utils'
 
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
@@ -170,11 +170,7 @@ const handleConfirmAdd = async () => {
   _formData.append('notionId', formData.notion)
 
   formData.files.forEach((item) => {
-    if (item.type !== 'text/markdown' && item.type !== 'text/x-markdown') {
-      MessagePlugin.warning("Only '.md' type files are allowed to be uploaded")
-      return
-    }
-    _formData.append('files', item.raw)
+    if (detectLegalFileName(item)) _formData.append('files', item.raw)
   })
 
   addNote(_formData)

@@ -41,6 +41,18 @@ export const NOTE_API = {
     })
   },
 
+  addFile(data: any) {
+    return _axios({
+      method: 'POST',
+      url: `/api/note/${data.id}/file`,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      data: data.formData,
+      timeout: 100000 * 1000,
+    })
+  },
+
   deleteNote(id: number) {
     return _axios({
       method: 'DELETE',

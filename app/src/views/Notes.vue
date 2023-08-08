@@ -26,7 +26,7 @@
       <v-divider class="mt-8"></v-divider>
 
       <section class="d-flex flex-row pt-5">
-        <Transition name="scroll-x-reverse-transition">
+        <Transition name="v-fade-transition">
           <v-card
             v-if="!isChangeNote"
             class="flex-1-1 px-3"
@@ -153,7 +153,12 @@
     </section>
 
     <!-- Upload file dialog -->
-    <upload-file-dialog v-model="isShowUploadDialog"></upload-file-dialog>
+    <upload-file-dialog
+      v-model="isShowUploadDialog"
+      :noteId="currentNote.id"
+      :noteName="currentNote.name"
+      @submitted="handleUploadSubmit"
+    />
   </v-container>
 </template>
 
@@ -176,7 +181,6 @@ import {
 } from '@/utils'
 
 const NOTE_STORE = useNoteStore()
-
 const isShowUploadDialog = ref(false)
 
 // Handle click tab event
@@ -208,11 +212,22 @@ const handleDeleteNote = async () => {
   switchNote()
 }
 
+// Handle switch note tab event
 const switchNote = () => {
   isShowConfirmDeleteBtn.value = false
   isChangeNote.value = true
   currentNote = NOTE_STORE.notes[currentIndex.value]
   NOTE_STORE.currentIcon = currentNote ? currentNote.icon : ''
+
+  nextTick(() => {
+    isChangeNote.value = false
+  })
+}
+
+// Handle submitted upload files event
+const handleUploadSubmit = () => {
+  isShowUploadDialog.value = false
+  isChangeNote.value = true
 
   nextTick(() => {
     isChangeNote.value = false

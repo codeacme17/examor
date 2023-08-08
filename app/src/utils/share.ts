@@ -4,3 +4,11 @@ export const handleDatetime = (datatime: string): string => {
   if (chunks.length <= 1) return datatime
   return chunks[0]
 }
+
+import { MessagePlugin } from 'tdesign-vue-next'
+export const detectLegalFileName = (file: any) => {
+  if (file.type !== 'text/markdown' && file.type !== 'text/x-markdown') {
+    MessagePlugin.warning("Only '.md' type files are allowed to be uploaded")
+    return false
+  } else return true
+}
