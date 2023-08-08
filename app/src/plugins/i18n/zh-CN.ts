@@ -82,7 +82,7 @@ export const zhCN = {
     questionCounts: '请选择每天为你准备多少个问题',
     getIcon: '获取 icon 请到',
     proxy:
-      '如果你需要 VPN 才能访问 OpenAI 那么请填入你的代理地址（请使用 "socks5" 协议)',
+      '如果你需要 VPN 才能访问 OpenAI 那么请填入你的代理地址（请使用 "http" 协议)',
     lastRecord: '暂无记录',
   },
 

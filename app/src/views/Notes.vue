@@ -100,7 +100,7 @@
                 :bg-color="defaultBgColor"
               >
                 <v-list-item
-                  :title="$t('title.uploadDate')"
+                  :title="$t('title.createDate')"
                   :subtitle="handleDatetime(currentNote.upload_date)"
                 />
                 <v-list-item

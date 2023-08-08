@@ -87,7 +87,7 @@ export const en = {
       'Please select how many questions are prepared for you each day',
     getIcon: 'To get the icon please go to',
     proxy:
-      'If you need a VPN to access OpenAI then please fill in your proxy address (plz use "socks5" protocol)',
+      'If you need a VPN to access OpenAI then please fill in your proxy address (use "http" protocol)',
     lastRecord: 'No reord yet',
   },
 
