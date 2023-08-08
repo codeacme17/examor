@@ -43,6 +43,7 @@ export const en = {
     model: 'Choose the model to use',
     totalAmount: 'Total questions',
     finishedAmount: 'Already answered',
+    uploading: 'Uploading',
   },
   subTitle: {
     notes: 'You can manage your notes here',

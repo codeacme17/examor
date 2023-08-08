@@ -42,6 +42,7 @@ export const zhCN = {
     model: '选择要使用的模型',
     totalAmount: '问题总数',
     finishedAmount: '已回答',
+    uploading: '正在上传',
   },
 
   subTitle: {

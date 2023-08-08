@@ -155,8 +155,8 @@
     <!-- Upload file dialog -->
     <upload-file-dialog
       v-model="isShowUploadDialog"
-      :noteId="currentNote.id"
-      :noteName="currentNote.name"
+      :noteId="currentNote && currentNote.id"
+      :noteName="currentNote && currentNote.name"
       @submitted="handleUploadSubmit"
     />
   </v-container>

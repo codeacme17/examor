@@ -12,7 +12,7 @@
         <v-list lines="one" :bg-color="'transparent'" density="compact">
           <v-list-subheader>
             <div class="d-flex justify-space-between align-center">
-              正在上传
+              {{ $t('title.uploading') }}
               <v-btn
                 icon="mdi-close"
                 class="ml-auto"

@@ -27,7 +27,12 @@
         />
       </t-config-provider>
 
-      <v-btn @click="handleSubmit" :border="true" :elevation="0">
+      <v-btn
+        @click="handleSubmit"
+        :border="true"
+        :elevation="0"
+        :disabled="disabled"
+      >
         {{ $t('button.upload') }}
       </v-btn>
     </v-card>
@@ -38,7 +43,7 @@
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
-import { toRef, reactive } from 'vue'
+import { toRef, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
@@ -92,4 +97,13 @@ const initFormData = () => {
   formData.files = []
   formData.notion = ''
 }
+
+// Form item disable computed
+const disabled = computed(() => {
+  if (!formData.noteType) return true
+  if (!formData.files.length && formData.noteType === 'files') return true
+  if (!formData.notion && formData.noteType === 'notion') return true
+
+  return false
+})
 </script>
