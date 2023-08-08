@@ -18,59 +18,59 @@
 
 </br>
 
-## 💡Inspiration
+## 💡 Inspiration
 
 > 'For learners, one of the best habits should be regular self-testing' - **Make It Stick: The Science of Successful Learning**
 
 When I'm learning a new technology, I have the habit of taking notes and jotting down important information. It's a good habit, but I also have a bad habit of not enjoying reading the notes I've written (I'm not sure if this is the case for most people 🫣). This results in my notes becoming mere mementos without substantial use. That's why I choose to create an application that continuously prompts you with questions to review your note contents.
 
-## ✨Features
+## ✨ Features
 
-The project is primarily a question generation and answer detection based on the user's documentation, and in the initial version, I implemented a beggar's version of Ebbinghaus memory curve that can be periodically reviewed based on how accurately you answered the question
+This project primarily focuses on question generation and answer detection based on user documentation. In the initial version, I've implemented a simplified version of the Ebbinghaus memory curve, which allows periodic reviews based on the accuracy of your answers.
 
-#### Generate issues based on documentation
+#### Generate Issues from Documentation
 
-When the user creates notes, they need to upload documents at the same time, and the application will generate a certain number of questions from these documents, which are generated based on the content of the document, and these questions will be pushed to the user in the future
+When users create notes, they can upload associated documents. The application generates a set of questions from these documents, based on their content. These questions will be presented to the users in the future.
 
-#### Detect based on answers
+#### Answer Detection
 
-After the user gets the question of the day, the user can answer the question, where GPT will score, correct and give the correct answer to the user's answer. The score is based on the evaluation of the correctness of the answer and the transmitted document (0 ~ 10 points), and this score will affect the subsequent Ebbinghaus record
+After users receive daily questions, they can provide answers. GPT will score, validate, and provide the correct answers. The score is determined by evaluating the correctness of the answers and the linked document (0 ~ 10 points). This score influences the subsequent Ebbinghaus review process.
 
 #### Ebbinghaus Memory
 
-> I implemented a beggar's version of Ebbinghaus, which currently only has 8 lines of code, and I will optimize this function in the future. 
+> I've implemented a simplified version of Ebbinghaus memory, currently consisting of only 8 lines of code. I plan to optimize this function further in the future.
 
-Talking about the actual function, after GPT generates the test, I will record the score value in the test, and affect the date of future review by the level of the score, that is, the higher the score, the farther the date of the next review
+Regarding the actual function, once GPT generates a test, the score is recorded and affects the future review date. Higher scores result in longer intervals until the next review.
 
-## 📦️Modules
+## 📦️ Modules
 
 #### Notes Management
 
-**Notes Management** is a module to manage all the documents you have uploaded, in this gate block you can delete or add new files to your uploaded notes, of course, if you delete all documents under a note, the problem will be cleared
+**Notes Management** is a module to oversee all uploaded documents. Within this module, you can delete or add new files to your uploaded notes. Note that deleting all documents under a note will clear the associated questions.
 
 #### Random Question
 
-**Random Question** is a module that randomly draws a question from an existing question bank, and can be implemented in this module
+**Random Question** is a module that randomly selects a question from the existing question bank. Implementation of this module enables this feature.
 
 #### Note
 
-A note is an abstract module that generates a note module in your app for each note you create, where you can answer the questions in that note. And the push of questions is implemented according to the Ebbinghaus memory curve, for example, you will receive three types of problem data:
+A note is a virtual module generated in your app for each note you create. In this module, you can answer questions. Question pushing is implemented according to the Ebbinghaus memory curve. You will receive three types of question data:
 
-- Questions to review today: As the name suggests, this is the data of questions that need to be reviewed on the day for questions that have been answered in the past
+- Questions for Today's Review: As the name suggests, this data pertains to questions that need review on the current day for questions answered in the past.
 
-- Expired questions: This is due to not completing the questions that need to be reviewed on time on the same day, so this question data will be collected
+- Expired Questions: These are questions not completed within the required review timeframe on the same day, resulting in this data being collected.
 
-- New questions: When the number of daily questions defined by the user is not met in the above two data sets, this data set will be pushed to the user as a supplement to the questions
+- New Questions: When the user-defined daily question count is not met from the above two data sets, this supplementary data set is pushed to the user.
 
 #### Examine
 
-**Examine** is the most central module in which users can answer questions, allowing GPT to score and test the answers. There are three components in the module:
+**Examine** is a central module where users answer questions, allowing GPT to score and validate answers. The module comprises three components:
 
-- Answer: The user enters the answer, and the content of the test can be displayed after submission
+- Answer: Users enter their answers, and test content can be displayed after submission.
 
-- Last Record: Record the user's last answer to the question and the content of the detection
+- Last Record: Records the user's previous answer to the question and the detection outcome.
 
-- Document content: This component will display the actual uploaded document content of the user, that is, the basis and final answer to this question
+- Document Content: This component displays the actual uploaded document content, serving as the basis and final answer for the question.
 
 </br>
 
