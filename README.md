@@ -26,9 +26,9 @@
 </samp>
 </br>
 
-## 🚀 Use Case
-
 <img width="650" src = "https://github.com/codeacme17/examor/blob/main/docs/usecase.gif?raw=true"></img>
+</br>
+</br>
 
 ## 💡 Inspiration
 
