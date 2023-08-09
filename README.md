@@ -3,7 +3,7 @@
 </br>
 
 <p>
-  <img  width="190"  src="/docs/logo-text.png" />
+  <img  width="200"  src="/docs/logo-text.png" />
 </p>
 
 <p>
@@ -26,7 +26,7 @@
 </samp>
 </br>
 
-<img width="650" src = "https://github.com/codeacme17/examor/blob/main/docs/usecase.gif?raw=true"></img>
+<img width="860" src = "https://github.com/codeacme17/examor/blob/main/docs/usecase.gif?raw=true"></img>
 </br>
 </br>
 
