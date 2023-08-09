@@ -20,7 +20,7 @@
     <img height="21" src="https://img.shields.io/badge/License-MIT-ffffff?style=flat-square&labelColor=fff&color=7d09f1" alt="">
   </a>
 </p>
-
+</samp>
 </br>
 
 ## 💡 Inspiration
@@ -33,15 +33,15 @@ When I'm learning a new technology, I have the habit of taking notes and jotting
 
 This project primarily focuses on question generation and answer detection based on user documentation. In the initial version, I've implemented a simplified version of the Ebbinghaus memory curve, which allows periodic reviews based on the accuracy of your answers.
 
-#### Generate Issues from Documentation
+### Generate Issues from Documentation
 
 When users create notes, they can upload associated documents. The application generates a set of questions from these documents, based on their content. These questions will be presented to the users in the future.
 
-#### Answer Detection
+### Answer Detection
 
 After users receive daily questions, they can provide answers. GPT will score, validate, and provide the correct answers. The score is determined by evaluating the correctness of the answers and the linked document (0 ~ 10 points). This score influences the subsequent Ebbinghaus review process.
 
-#### Ebbinghaus Memory
+### Ebbinghaus Memory
 
 > I've implemented a simplified version of Ebbinghaus memory, currently consisting of only 8 lines of code. I plan to optimize this function further in the future.
 
@@ -49,15 +49,15 @@ Regarding the actual function, once GPT generates a test, the score is recorded 
 
 ## 📦️ Modules
 
-#### Notes Management
+### Notes Management
 
 Notes Management is a module to oversee all uploaded documents. Within this module, you can delete or add new files to your uploaded notes. Note that deleting all documents under a note will clear the associated questions.
 
-#### Random Question
+### Random Question
 
 **Random Question** is a module that randomly selects a question from the existing question bank. Implementation of this module enables this feature.
 
-#### Note
+### Note
 
 Note is a virtual module generated in your app for each note you create. In this module, you can answer questions. Question pushing is implemented according to the Ebbinghaus memory curve. You will receive three types of question data:
 
@@ -67,7 +67,7 @@ Note is a virtual module generated in your app for each note you create. In this
 
 - New Questions: When the user-defined daily question count is not met from the above two data sets, this supplementary data set is pushed to the user.
 
-#### Examine
+### Examine
 
 Examine is a central module where users answer questions, allowing GPT to score and validate answers. The module comprises three components:
 
@@ -87,4 +87,4 @@ Contributions to the project are welcome! If you find a bug or have an idea for 
 
 [MIT](/LICENSE) License © 2023-Present [leyoonafr](https://github.com/codeacme17)
 
-</samp>
+
