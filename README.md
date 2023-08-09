@@ -28,7 +28,7 @@
 
 ## Use Case
 
-<img width="540" scr="/docs/use-case.gif">
+<img width="540" scr="/docs/usecase.gif">
 
 ## 💡 Inspiration
 
