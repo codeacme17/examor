@@ -14,7 +14,7 @@
 
 <p>
   <a href="https://github.com/codeacme17/examor/blob/main/docs/cn-doc.md">
-    <img height="21" src="https://img.shields.io/badge/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3-ffffff?style=flat-square&logo=googletranslate&logoColor=7d09f1" alt="">
+    <img height="21" src="https://img.shields.io/badge/zh--CN-ffffff?style=flat-square&logo=googletranslate&logoColor=7d09f1" alt="">
   </a>
   <a href="https://discordapp.com/channels/974519864045756446/1138743595097149450">
     <img height="21" src="https://img.shields.io/badge/Chat%20Room-7d09f1?style=flat-square&logo=discord&logoColor=7d09f1&labelColor=fff&color=fff" alt="">
