@@ -26,6 +26,10 @@
 </samp>
 </br>
 
+## Use Case
+
+<img width="540" scr="/docs/use-case.gif">
+
 ## 💡 Inspiration
 
 > 'For learners, one of the best habits should be regular self-testing' - **Make It Stick: The Science of Successful Learning**
@@ -89,5 +93,3 @@ Contributions to the project are welcome! If you find a bug or have an idea for 
 ## License
 
 [MIT](/LICENSE) License © 2023-Present [leyoonafr](https://github.com/codeacme17)
-
-
