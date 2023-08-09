@@ -55,7 +55,7 @@ Notes Management is a module to oversee all uploaded documents. Within this modu
 
 ### Random Question
 
-**Random Question** is a module that randomly selects a question from the existing question bank. Implementation of this module enables this feature.
+Random Question is a module that randomly selects a question from the existing question bank. Implementation of this module enables this feature.
 
 ### Note
 
