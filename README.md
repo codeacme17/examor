@@ -54,15 +54,15 @@ Regarding the actual function, once GPT generates a test, the score is recorded 
 
 ### Notes Management
 
-Notes Management is a module to oversee all uploaded documents. Within this module, you can delete or add new files to your uploaded notes. Note that deleting all documents under a note will clear the associated questions.
+`Notes Management` is a module to oversee all uploaded documents. Within this module, you can delete or add new files to your uploaded notes. Note that deleting all documents under a note will clear the associated questions.
 
 ### Random Question
 
-Random Question is a module that randomly selects a question from the existing question bank. Implementation of this module enables this feature.
+`Random Question` is a module that randomly selects a question from the existing question bank. Implementation of this module enables this feature.
 
 ### Note
 
-Note is a virtual module generated in your app for each note you create. In this module, you can answer questions. Question pushing is implemented according to the Ebbinghaus memory curve. You will receive three types of question data:
+`Note` is a virtual module generated in your app for each note you create. In this module, you can answer questions. Question pushing is implemented according to the Ebbinghaus memory curve. You will receive three types of question data:
 
 - Questions for Today's Review: As the name suggests, this data pertains to questions that need review on the current day for questions answered in the past.
 
@@ -72,7 +72,7 @@ Note is a virtual module generated in your app for each note you create. In this
 
 ### Examine
 
-Examine is a central module where users answer questions, allowing GPT to score and validate answers. The module comprises three components:
+`Examine` is a central module where users answer questions, allowing GPT to score and validate answers. The module comprises three components:
 
 - Answer: Users enter their answers, and test content can be displayed after submission.
 
