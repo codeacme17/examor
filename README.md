@@ -12,11 +12,19 @@
   </strong>
 </p>
 
+
+
 <p>
-  English | <a href="/docs/cn-doc.md">简写中文</a>
+  <a href="https://github.com/codeacme17/examor/blob/main/docs/cn-doc.md">
+    <img height="21" src="https://img.shields.io/badge/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3-ffffff?style=flat-square&logo=googletranslate&logoColor=7d09f1" alt="">
+  </a>
+  <a href="https://github.com/codeacme17/examor/blob/main/LICENSE">
+    <img height="21" src="https://img.shields.io/badge/License-MIT-ffffff?style=flat-square&labelColor=fff&color=7d09f1" alt="">
+  </a>
 </p>
 
 </br>
+
 
 ## 💡 Inspiration
 
