@@ -27,9 +27,15 @@ def init_profile_file():
 
     with open(FILE_PATH, "w") as file:
         json.dump({
-            'openaiKey': "",
-            'notionKey': "",
-            'proxy': ""
+            "questionAmount": "3",
+            "currentModel": "OpenAI",
+            "openaiKey": "",
+            "azureKey": "",
+            "openaiBase": "",
+            "openaiVersion": "",
+            "deploymentName": "",
+            "notionKey": "",
+            "proxy": ""
         }, file)
 
 
