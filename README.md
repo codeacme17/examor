@@ -28,7 +28,9 @@
 
 ## Use Case
 
-<img width="540" scr="/docs/usecase.gif">
+<p>
+  <img src = "https://github.com/codeacme17/examor/blob/main/docs/usecase.gif?raw=true"></img>
+</p>
 
 ## 💡 Inspiration
 
