@@ -23,12 +23,17 @@
     <img height="21" src="https://img.shields.io/badge/License-MIT-ffffff?style=flat-square&labelColor=fff&color=7d09f1" alt="">
   </a>
 </p>
+
+> ⚠️ The project is still under development and the first version will be released soon
+
 </samp>
 </br>
 
 <img width="650" src = "https://github.com/codeacme17/examor/blob/main/docs/usecase.gif?raw=true"></img>
 </br>
 </br>
+
+
 
 ## 💡 Inspiration
 
