@@ -20,7 +20,7 @@
     <img height="21" src="https://img.shields.io/badge/Chat%20Room-7d09f1?style=flat-square&logo=discord&logoColor=7d09f1&labelColor=fff&color=fff" alt="">
   </a>
   <a href="https://github.com/codeacme17/examor/blob/main/LICENSE">
-    <img height="21" src="https://img.shields.io/badge/License-MIT-ffffff?style=flat-square&labelColor=fff&color=7d09f1" alt="">
+    <img height="21" src="https://img.shields.io/badge/License-AGPL--3.0-ffffff?style=flat-square&labelColor=fff&color=7d09f1" alt="">
   </a>
 </p>
 
