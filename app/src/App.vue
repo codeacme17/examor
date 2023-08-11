@@ -34,5 +34,6 @@ const { data } = useWebSocket('ws://localhost:51717/ws/file/uploading', {
 })
 watchEffect(() => {
   FILE_STORE.uploadingFiles = data.value ? JSON.parse(data.value).data : []
+  NOTE_STORE.setIsUploadingNotes()
 })
 </script>

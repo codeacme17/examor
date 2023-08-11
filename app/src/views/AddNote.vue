@@ -175,7 +175,9 @@ const handleConfirmAdd = async () => {
 
   addNote(_formData)
   initFormData()
-  NOTE_STORE.getNotes()
+  setTimeout(() => {
+    NOTE_STORE.getNotes()
+  }, 300)
 }
 
 const initFormData = () => {

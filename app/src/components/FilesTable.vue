@@ -18,7 +18,11 @@
     </thead>
 
     <tbody>
-      <tr v-for="item in list" :key="item.id">
+      <tr
+        v-for="item in list"
+        :key="item.id"
+        :class="isUploadingFile(item.id) ? 'text-disabled' : ''"
+      >
         <!-- File name td -->
         <td>{{ item.file_name }}</td>
 
@@ -36,7 +40,7 @@
               class="ml-auto"
               variant="text"
               :flat="true"
-              :disabled="props.disabled"
+              :disabled="isUploadingFile(item.id)"
               @click="handleUpdate(item)"
             >
               {{ $t('button.update') }}
@@ -48,7 +52,7 @@
               icon="mdi-delete-empty"
               style="font-size: 16px"
               :flat="true"
-              :disabled="props.disabled"
+              :disabled="isUploadingFile(item.id)"
               @click="item.isShowConfirmDeleteBtn = true"
             /> -->
 
@@ -82,6 +86,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { defaultBgColor, handleDatetime } from '@/utils'
 import { FILE_API, NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
+import { useFileStore } from '@/store'
 
 type FileItem = {
   id: number
@@ -94,7 +99,16 @@ onMounted(async () => {
   await gitFileList()
 })
 
-const props = defineProps(['id', 'disabled'])
+const props = defineProps(['id'])
+const FILE_STORE = useFileStore()
+
+const isUploadingFile = (id: number): boolean => {
+  let res = false
+  FILE_STORE.uploadingFiles.forEach(
+    (item) => (res = item.id === id ? true : false)
+  )
+  return res
+}
 
 // Get file list event
 const [getFiles, getFilesLoading] = useFetch(NOTE_API.getFiles)

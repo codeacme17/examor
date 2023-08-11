@@ -31,11 +31,9 @@ def get_note(id: int):
 # Get file list by note id
 def get_files_by_noteId(noteId):
     query = """
-            SELECT file_name, MAX(upload_date) as upload_date
-            FROM t_document
+            SELECT *
+            FROM t_file
             WHERE note_id = %s
-            GROUP BY file_name
-            HAVING COUNT(file_name) > 1;
             """
     data = (noteId, )
     res = MySQLHandler().execute_query(query, data)

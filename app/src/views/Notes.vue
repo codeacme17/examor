@@ -42,23 +42,14 @@
               prepend-icon="mdi-text-box-plus-outline"
               style="height: 40px"
               :block="true"
-              :disabled="currentNote.isUploading"
               @click="isShowUploadDialog = true"
             >
               {{ $t('button.addFile') }}
             </v-btn>
 
             <!-- Files Table -->
-            <v-card
-              class="pt-1"
-              color="transparent"
-              :loading="currentNote.isUploading"
-              :elevation="0"
-            >
-              <files-table
-                :id="currentNote.id"
-                :disabled="currentNote.isUploading"
-              />
+            <v-card class="pt-1" color="transparent" :elevation="0">
+              <files-table :id="currentNote.id" />
             </v-card>
           </v-card>
         </Transition>
@@ -114,7 +105,7 @@
 
           <!-- Delete Button -->
           <v-btn
-            v-if="!isShowConfirmDeleteBtn"
+            v-if="!isChangeNote && !isShowConfirmDeleteBtn"
             block
             class="mt-3"
             id="delete_btn"
@@ -132,7 +123,7 @@
           </v-btn>
           <!-- Confirm Delete Button -->
           <v-btn
-            v-else
+            v-show="isShowConfirmDeleteBtn"
             block
             class="mt-3"
             id="delete_btn"
@@ -140,6 +131,7 @@
             variant="tonal"
             :color="greenBgColor"
             :loading="deleteNodeLoading"
+            :disabled="currentNote.isUploading"
             @click="handleDeleteNote"
           >
             <v-icon
@@ -218,7 +210,6 @@ const switchNote = () => {
   isChangeNote.value = true
   currentNote = NOTE_STORE.notes[currentIndex.value]
   NOTE_STORE.currentIcon = currentNote ? currentNote.icon : ''
-
   nextTick(() => {
     isChangeNote.value = false
   })
@@ -228,7 +219,6 @@ const switchNote = () => {
 const handleUploadSubmit = () => {
   isShowUploadDialog.value = false
   isChangeNote.value = true
-
   nextTick(() => {
     isChangeNote.value = false
   })

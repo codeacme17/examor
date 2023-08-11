@@ -41,27 +41,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import {
-  useFileStore,
-  useNoteStore,
-  NoteItem,
-  UploadingFileItem,
-} from '@/store'
-import { watchEffect } from 'vue'
+import { useFileStore } from '@/store'
 
-const NOTE_STORE = useNoteStore()
 const FILE_STORE = useFileStore()
-
 const isExpend = ref(false)
-
-watchEffect(() => {
-  const noteIdsSet = new Set(
-    FILE_STORE.uploadingFiles.map((item: UploadingFileItem) => item.note_id)
-  )
-  NOTE_STORE.notes.forEach((note: NoteItem) => {
-    note.isUploading = noteIdsSet.has(note.id)
-  })
-})
 </script>
 
 <style scoped lang="scss">
