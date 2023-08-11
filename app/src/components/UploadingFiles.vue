@@ -2,13 +2,13 @@
   <section class="container" v-if="!!FILE_STORE.uploadingFiles.length">
     <Transition name="scale-transition" mode="out-in">
       <v-btn
-        icon="mdi-folder-upload"
         v-if="isExpend"
+        icon="mdi-folder-upload"
         @click="isExpend = !isExpend"
       >
       </v-btn>
 
-      <v-card :loading="true" v-else width="330px" elevation="6">
+      <v-card v-else width="330px" elevation="6" :loading="true">
         <v-list lines="one" :bg-color="'transparent'" density="compact">
           <v-list-subheader>
             <div class="d-flex justify-space-between align-center">

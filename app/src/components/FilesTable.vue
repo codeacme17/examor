@@ -1,6 +1,6 @@
 <template>
   <!-- Empty Notice Block -->
-  <section v-if="!list.length" />
+  <section v-if="!files.length" />
 
   <v-table
     v-else
@@ -19,9 +19,9 @@
 
     <tbody>
       <tr
-        v-for="item in list"
+        v-for="item in files"
         :key="item.id"
-        :class="isUploadingFile(item.id) ? 'text-disabled' : ''"
+        :class="item.isUploading ? 'text-disabled' : ''"
       >
         <!-- File name td -->
         <td>{{ item.file_name }}</td>
@@ -82,46 +82,38 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive } from 'vue'
 import { defaultBgColor, handleDatetime } from '@/utils'
 import { FILE_API, NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
-import { useFileStore } from '@/store'
+import { useFileStore, type UploadingFileItem } from '@/store'
+import { watchEffect } from 'vue'
 
 type FileItem = {
   id: number
   file_name: string
   upload_date: string
   isShowConfirmDeleteBtn?: boolean
+  isUploading?: boolean
 }
-
-onMounted(async () => {
-  await gitFileList()
-})
 
 const props = defineProps(['id'])
 const FILE_STORE = useFileStore()
 
-const isUploadingFile = (id: number): boolean => {
-  let res = false
-  FILE_STORE.uploadingFiles.forEach(
-    (item) => (res = item.id === id ? true : false)
-  )
-  return res
-}
-
-// Get file list event
+// Get file files event
 const [getFiles, getFilesLoading] = useFetch(NOTE_API.getFiles)
-const list = ref<FileItem[]>([])
+const files = ref<FileItem[]>([])
 const gitFileList = async () => {
   const res = await getFiles(props.id)
-  list.value = reactive<FileItem[]>(
+  files.value = reactive<FileItem[]>(
     res.data.map((item: any) => ({
       ...item,
       isShowConfirmDeleteBtn: false,
+      isUploading: true,
     }))
   )
 }
+await gitFileList()
 
 // Handle update file event
 const currentFilename = ref('')
@@ -140,4 +132,13 @@ const handleDeleteFile = async (item: FileItem) => {
   })
   await gitFileList()
 }
+
+watchEffect(() => {
+  const fileIdsSet = new Set(
+    FILE_STORE.uploadingFiles.map((item: UploadingFileItem) => item.id)
+  )
+  files.value.forEach((file: FileItem) => {
+    file.isUploading = fileIdsSet.has(file.id)
+  })
+})
 </script>
