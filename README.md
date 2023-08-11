@@ -97,4 +97,4 @@ Contributions to the project are welcome! If you find a bug or have an idea for 
 
 ## License
 
-[AGPL-3.0 license](/LICENSE) License © 2023-Present [leyoonafr](https://github.com/codeacme17)
+[AGPL-3.0 license](/LICENSE) © 2023-Present [leyoonafr](https://github.com/codeacme17)
