@@ -87,8 +87,8 @@ def update_note_icon(data: types.Icon):
 
 # -------- File APIs --------
 @app.delete("/file")
-def delete_file(id: int, file_name: str):
-    return _apis_.file.delete_file(id, file_name)
+def delete_file(id: int):
+    return _apis_.file.delete_file(id)
 
 
 @app.websocket("/ws/file/uploading")

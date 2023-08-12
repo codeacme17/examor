@@ -16,14 +16,17 @@ class LangchainService():
     def __init__(
         self,
         note_id: int = 0,
+        file_id: int = 0,
+        filename: str = "",
+
         prompt_language: str = "",
         prompt_type: str = "",
-        filename: str = "",
         temperature: int = 0,
         streaming: bool = False
     ):
         self.semaphore = asyncio.Semaphore(3)
         self.note_id = note_id
+        self.file_id = file_id
         self.filename = filename
         self.llm_callback = AsyncIteratorCallbackHandler()
         self.llm_chain = self._init_llm_chain(
@@ -84,6 +87,7 @@ class LangchainService():
         for doc in docs:
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id,
+                self.file_id,
                 self.filename,
                 doc.page_content
             )

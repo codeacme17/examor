@@ -5,16 +5,12 @@ from db_services.MySQLHandler import MySQLHandler
 
 
 # Delete file
-def delete_file(
-    note_id: str,
-    file_name: str
-):
+def delete_file(file_id: str):
     query = """
-            DELETE FROM t_document
-            WHERE note_id = %s
-            AND file_name = %s;
+            DELETE FROM t_file
+            WHERE file_id = %s;
             """
-    data = (note_id, file_name, )
+    data = (file_id,  )
     MySQLHandler().delete_table_data(query, data)
     return api_result.success("delete file success")
 

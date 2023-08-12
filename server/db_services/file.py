@@ -20,11 +20,13 @@ async def upload_file(
         })
 
     for file in list:
+        file_id = file["file_id"]
         filename = file["file"].filename
         content = await file["file"].read()
 
         langchain_service = LangchainService(
             note_id=noteId,
+            file_id=file_id,
             filename=filename,
             prompt_language=language,
             prompt_type="question_generate"
@@ -35,7 +37,7 @@ async def upload_file(
             noteName,
         )
 
-        set_file_is_uploading_state(file["file_id"])
+        set_file_is_uploading_state(file_id)
         print(f">>>>>>>>> {filename} upload success  <<<<<<<<<")
 
 

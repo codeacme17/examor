@@ -24,11 +24,12 @@ COLLATE=utf8_general_ci;
 CREATE TABLE t_document (
 	id int(12) auto_increment NOT NULL COMMENT 'document id',
 	note_id int(12) NOT NULL COMMENT 'note id',
+	file_id int(12) NOT NULL COMMENT 'file id',
 	file_name varchar(100) NULL COMMENT 'file name',
 	document TEXT NOT NULL COMMENT 'document content',
 	upload_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'record update time',
 	CONSTRAINT t_document_pk PRIMARY KEY (id),
-	CONSTRAINT t_document_FK FOREIGN KEY (note_id) REFERENCES t_note(id) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT t_document_FK FOREIGN KEY (file_id) REFERENCES t_file(id) ON DELETE CASCADE ON UPDATE CASCADE
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8
