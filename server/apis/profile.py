@@ -1,7 +1,7 @@
 import json
 
 from utils import api_result, profile_handler, types
-from langchain_services import check_key_correct
+from langchain_services import check_key_correct as _check_key_correct
 
 # Get user profile
 
@@ -35,7 +35,7 @@ def set_profile(data: types.Profile):
 
 def check_key_correct():
     try:
-        check_key_correct()
+        _check_key_correct()
     except BaseException as e:
         return api_result.error(e.error.message)
     return api_result.success()

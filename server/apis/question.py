@@ -2,7 +2,7 @@ import db_services as _dbs_
 
 from utils import api_result, types
 from db_services.MySQLHandler import MySQLHandler
-from langchain_services import LangchainService, check_key_correct
+from langchain_services import LangchainService
 
 
 def examine_question(data: types.AnswerQuestion):
