@@ -23,18 +23,16 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   (response) => {
     const { code, message } = response.data
-
     if (code !== 0)
       MessagePlugin.error({
         content: message,
         duration: 3000,
       })
-
     return response.data
   },
   (error) => {
     MessagePlugin.error({
-      content: error,
+      content: error.message,
       duration: 3000,
     })
     return Promise.reject(error)

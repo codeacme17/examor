@@ -38,4 +38,5 @@ def check_key_correct():
         _check_key_correct()
     except BaseException as e:
         return api_result.error(e.error.message)
+
     return api_result.success()

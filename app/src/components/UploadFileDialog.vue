@@ -80,7 +80,7 @@ const [checkKeyCorrect, checkKeyLoading] = useFetch(PROFILE_API.checkKeyCorrect)
 const handleSubmit = async () => {
   if (!PROFILE_STORE.checkHasSettedModel()) return
   const res = await checkKeyCorrect()
-  if (res.code !== '0') return
+  if (res.code !== 0) return
 
   const _formData = new FormData()
   _formData.append('language', locale.value)
