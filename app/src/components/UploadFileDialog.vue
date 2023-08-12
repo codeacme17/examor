@@ -48,12 +48,14 @@ import { useI18n } from 'vue-i18n'
 import { NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 import { reverseTheme, detectLegalFileName } from '@/utils'
+import { useProfileStore } from '@/store'
 
 export type FormData = {
   noteType: 'files' | 'notion' | null
   files: any[]
   notion: string
 }
+const PROFILE_STORE = useProfileStore()
 
 const { locale } = useI18n()
 const props = defineProps(['isShowUploadDialog', 'noteId', 'noteName'])
@@ -74,6 +76,8 @@ const formData = reactive<FormData>({
 })
 const [addFile] = useFetch(NOTE_API.addFile)
 const handleSubmit = async () => {
+  if (!PROFILE_STORE.checkHasSettedModel()) return
+
   const _formData = new FormData()
   _formData.append('language', locale.value)
   _formData.append('noteName', props.noteName)

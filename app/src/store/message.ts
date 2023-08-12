@@ -11,18 +11,18 @@ type State = {
 }
 
 const state: State = {
-  isShow: true,
+  isShow: false,
   message: '',
   type: 'default',
-  duration: 1000,
   path: '',
+  duration: 1500,
 }
 
 export const useMessageStore = defineStore('messageStore', {
   state: () => state,
 
   actions: {
-    show(message: string, type: MessageType, duration?: number, path?: string) {
+    show(message: string, type: MessageType, path?: string, duration?: number) {
       this.$state.message = message
       this.$state.type = type
       this.$state.isShow = true

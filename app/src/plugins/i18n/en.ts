@@ -103,5 +103,7 @@ export const en = {
     notionKeyEnd: 'before uploading',
     switchLang:
       'Note that switching languages affects the language in which GPT generates questions and detects',
+    OpenAIKeyError: 'Please configure the API key of OpenAI',
+    AzureKeyError: 'Please configure the configuration items required by Azure',
   },
 }

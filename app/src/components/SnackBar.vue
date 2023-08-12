@@ -1,14 +1,14 @@
 <template>
   <v-snackbar v-model="MESSAGE_STORE.isShow" :timeout="MESSAGE_STORE.duration">
-    {{ MESSAGE_STORE.message }}
+    {{ $t(MESSAGE_STORE.message) }}
 
     <v-btn
       v-if="MESSAGE_STORE.type === 'button'"
       size="small"
-      variant="text"
+      icon="mdi-open-in-new"
+      variant="plain"
       @click="$router.push(`${MESSAGE_STORE.path}`)"
     >
-      NOTION_KEY
     </v-btn>
 
     <template v-slot:actions>

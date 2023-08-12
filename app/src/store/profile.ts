@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
-import { MessagePlugin } from 'tdesign-vue-next'
+import { useI18n } from 'vue-i18n'
 import { PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
+import { useMessageStore } from './message'
 
 type State = {
   profile: Record<Key, ProfileItem>
@@ -23,8 +24,8 @@ type Model = 'OpenAI' | 'Azure'
 
 type ProfileItem = {
   value: string | Model
-  show?: boolean
-  error?: boolean
+  show?: boolean // show or hide key
+  error?: boolean // error field
 }
 
 const state: State = {
@@ -100,18 +101,14 @@ export const useProfileStore = defineStore('profileStore', {
     },
 
     checkHasSettedModel() {
+      const MESSAGE_STORE = useMessageStore()
       const { profile } = this.$state
-
-      if (!this._checkIsSettedOpenai() && !this._checkIsSettedAzure()) {
-        MessagePlugin.warning('请先配置模型的 API KEY')
-        return false
-      }
 
       if (
         profile.currentModel.value === 'OpenAI' &&
         !this._checkIsSettedOpenai()
       ) {
-        MessagePlugin.warning('请配置 OpenAI 所需的 API KEY')
+        MESSAGE_STORE.show('message.OpenAIKeyError', 'button', '/profile')
         return false
       }
 
@@ -119,7 +116,7 @@ export const useProfileStore = defineStore('profileStore', {
         profile.currentModel.value === 'Azure' &&
         !this._checkIsSettedAzure()
       ) {
-        MessagePlugin.warning('请配置 Azure 所需的 KEYs')
+        MESSAGE_STORE.show('message.AzureKeyError', 'button', '/profile')
         return false
       }
 
@@ -128,21 +125,45 @@ export const useProfileStore = defineStore('profileStore', {
 
     _checkIsSettedOpenai() {
       const { profile } = this.$state
-      if (!profile.openaiKey) {
+      if (!profile.openaiKey.value) {
+        profile.openaiKey.error = true
         return false
       } else return true
     },
 
     _checkIsSettedAzure() {
       const { profile } = this.$state
-      if (
-        !profile.azureKey ||
-        !profile.openaiBase ||
-        !profile.deploymentName ||
-        !profile.openaiVersion
-      ) {
-        return false
-      } else return true
+      let res = true
+      if (!profile.azureKey.value) {
+        profile.azureKey.error = true
+        res = false
+      }
+
+      if (!profile.openaiBase.value) {
+        profile.openaiBase.error = true
+        res = false
+      }
+
+      if (!profile.deploymentName.value) {
+        profile.deploymentName.error = true
+        res = false
+      }
+
+      if (!profile.openaiVersion.value) {
+        profile.openaiVersion.error = true
+        res = false
+      }
+      return res
+    },
+
+    clearError() {
+      const { profile } = this.$state
+      for (const key in profile) {
+        if (Object.prototype.hasOwnProperty.call(profile, key)) {
+          const profileKey = key as Key
+          if (profile[profileKey].error) profile[profileKey].error = false
+        }
+      }
     },
   },
 })

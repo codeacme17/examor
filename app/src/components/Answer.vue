@@ -111,8 +111,10 @@ import hljs from 'highlight.js'
 import { defaultBgColor, fontColor } from '@/utils'
 import { useFetch, useListState } from '@/hooks'
 import { QUESTION_API } from '@/apis'
+import { useProfileStore } from '@/store'
 
 const { locale } = useI18n()
+const PROFILE_STORE = useProfileStore()
 const props = defineProps(['id'])
 const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
 
@@ -145,6 +147,7 @@ const isShowExamine = ref(false)
 const isExaming = ref(false)
 const isFinishExaming = ref(false)
 const handleSubmit = async () => {
+  if (!PROFILE_STORE.checkHasSettedModel()) return
   if (!currentData.value.answer.trim()) return
   isShowExamine.value = true
   isExaming.value = true

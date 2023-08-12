@@ -66,25 +66,6 @@
         </v-btn>
       </div>
     </form>
-
-    <!-- Hint message when there is not set NOTION_KEY in profile -->
-    <v-snackbar v-model="isShowSnackbar">
-      {{ $t('message.notionKeyStart') }}
-      <v-btn size="small" variant="text" @click="$router.push('/profile')">
-        NOTION_KEY
-      </v-btn>
-      {{ $t('message.notionKeyEnd') }}
-
-      <template v-slot:actions>
-        <v-btn
-          color="pink"
-          variant="text"
-          icon="mdi-close"
-          size="small"
-          @click="isShowSnackbar = false"
-        />
-      </template>
-    </v-snackbar>
   </v-container>
 </template>
 
@@ -113,6 +94,7 @@ type FormData = {
 }
 
 const { t, locale } = useI18n()
+const PROFILE_STORE = useProfileStore()
 
 // ------ Dont Delete -----------
 const noteTypeOptions = computed(() => [
@@ -142,23 +124,6 @@ const disabled = computed(() => {
 
   return false
 })
-
-const PROFILE_STORE = useProfileStore()
-const isShowSnackbar = ref(false)
-// ------ Dont Delete -----------
-const handleSelectChange = () => {
-  formData.files = []
-  formData.notion = ''
-
-  if (
-    formData.noteType === 'notion' &&
-    !PROFILE_STORE.profile.notionKey.value
-  ) {
-    isShowSnackbar.value = true
-    PROFILE_STORE.profile.notionKey.error = true
-    return
-  }
-}
 
 // Handle add note event
 const [addNote] = useFetch(NOTE_API.addNote)

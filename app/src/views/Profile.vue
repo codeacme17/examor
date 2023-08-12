@@ -50,6 +50,10 @@
               formData.openaiKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
             :type="formData.openaiKey.show ? 'text' : 'password'"
+            :base-color="
+              PROFILE_STORE.profile.openaiKey.error ? orangeBgColor : ''
+            "
+            :color="PROFILE_STORE.profile.openaiKey.error ? orangeBgColor : ''"
             @click:append-inner="
               formData.openaiKey.show = !formData.openaiKey.show
             "
@@ -73,6 +77,10 @@
               formData.azureKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
             :type="formData.azureKey.show ? 'text' : 'password'"
+            :base-color="
+              PROFILE_STORE.profile.azureKey.error ? orangeBgColor : ''
+            "
+            :color="PROFILE_STORE.profile.azureKey.error ? orangeBgColor : ''"
             @click:append-inner="
               formData.azureKey.show = !formData.azureKey.show
             "
@@ -84,6 +92,12 @@
             label="AZURE_VERSION"
             variant="outlined"
             density="compact"
+            :base-color="
+              PROFILE_STORE.profile.openaiVersion.error ? orangeBgColor : ''
+            "
+            :color="
+              PROFILE_STORE.profile.openaiVersion.error ? orangeBgColor : ''
+            "
           />
           <!-- Azure end-point -->
           <v-text-field
@@ -92,6 +106,10 @@
             label="AZURE_END_PONIT"
             variant="outlined"
             density="compact"
+            :base-color="
+              PROFILE_STORE.profile.openaiBase.error ? orangeBgColor : ''
+            "
+            :color="PROFILE_STORE.profile.openaiBase.error ? orangeBgColor : ''"
           />
           <!-- Deployment name -->
           <v-text-field
@@ -100,6 +118,12 @@
             label="DEPLOYMENT_NAME"
             variant="outlined"
             density="compact"
+            :base-color="
+              PROFILE_STORE.profile.deploymentName.error ? orangeBgColor : ''
+            "
+            :color="
+              PROFILE_STORE.profile.deploymentName.error ? orangeBgColor : ''
+            "
           />
         </div>
       </div>
@@ -183,7 +207,7 @@ const handleConfirm = async () => {
 }
 
 onUnmounted(() => {
-  PROFILE_STORE.profile.notionKey.error = false
+  PROFILE_STORE.clearError()
 })
 </script>
 
