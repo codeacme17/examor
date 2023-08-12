@@ -15,4 +15,11 @@ export const PROFILE_API = {
       data: data,
     })
   },
+
+  checkKeyCorrect() {
+    return _axios({
+      method: 'GET',
+      url: '/api/profile/auth/key',
+    })
+  },
 }

@@ -60,6 +60,7 @@
           elevation="0"
           :block="true"
           :disabled="disabled"
+          :loading="checkKeyLoading"
           @click="handleConfirmAdd"
         >
           {{ $t('button.submit') }}
@@ -76,9 +77,9 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { reactive, computed, ref } from 'vue'
+import { reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { NOTE_API } from '@/apis'
+import { NOTE_API, PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 import { useNoteStore, useProfileStore } from '@/store'
 import { detectLegalFileName } from '@/utils'
@@ -127,9 +128,12 @@ const disabled = computed(() => {
 
 // Handle add note event
 const [addNote] = useFetch(NOTE_API.addNote)
+const [checkKeyCorrect, checkKeyLoading] = useFetch(PROFILE_API.checkKeyCorrect)
 const NOTE_STORE = useNoteStore()
 const handleConfirmAdd = async () => {
   if (!PROFILE_STORE.checkHasSettedModel()) return
+  const res = await checkKeyCorrect()
+  if (res.code !== '0') return
 
   const _formData = new FormData()
   _formData.append('language', locale.value)

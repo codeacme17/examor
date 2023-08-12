@@ -31,6 +31,7 @@
         @click="handleSubmit"
         :border="true"
         :elevation="0"
+        :loading="checkKeyLoading"
         :disabled="disabled"
       >
         {{ $t('button.upload') }}
@@ -45,7 +46,7 @@ import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
 import { toRef, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { NOTE_API } from '@/apis'
+import { NOTE_API, PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 import { reverseTheme, detectLegalFileName } from '@/utils'
 import { useProfileStore } from '@/store'
@@ -75,8 +76,11 @@ const formData = reactive<FormData>({
   notion: '',
 })
 const [addFile] = useFetch(NOTE_API.addFile)
+const [checkKeyCorrect, checkKeyLoading] = useFetch(PROFILE_API.checkKeyCorrect)
 const handleSubmit = async () => {
   if (!PROFILE_STORE.checkHasSettedModel()) return
+  const res = await checkKeyCorrect()
+  if (res.code !== '0') return
 
   const _formData = new FormData()
   _formData.append('language', locale.value)

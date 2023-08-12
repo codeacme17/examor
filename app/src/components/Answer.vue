@@ -65,6 +65,7 @@
         :elevation="0"
         :block="true"
         :border="true"
+        :loading="checkKeyLoading"
         :disabled="!currentData.answer"
         @click="handleSubmit"
       >
@@ -110,7 +111,7 @@ import hljs from 'highlight.js'
 
 import { defaultBgColor, fontColor } from '@/utils'
 import { useFetch, useListState } from '@/hooks'
-import { QUESTION_API } from '@/apis'
+import { QUESTION_API, PROFILE_API } from '@/apis'
 import { useProfileStore } from '@/store'
 
 const { locale } = useI18n()
@@ -146,9 +147,13 @@ const handleKeyup = () => {
 const isShowExamine = ref(false)
 const isExaming = ref(false)
 const isFinishExaming = ref(false)
+const [checkKeyCorrect, checkKeyLoading] = useFetch(PROFILE_API.checkKeyCorrect)
 const handleSubmit = async () => {
   if (!PROFILE_STORE.checkHasSettedModel()) return
+  const res = await checkKeyCorrect()
+  if (res.code !== '0') return
   if (!currentData.value.answer.trim()) return
+
   isShowExamine.value = true
   isExaming.value = true
   await submitAnswer()
