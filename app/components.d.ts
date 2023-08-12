@@ -18,6 +18,7 @@ declare module 'vue' {
     QuestionTable: typeof import('./src/components/QuestionTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SnackBar: typeof import('./src/components/SnackBar.vue')['default']
     TConfigProvider: typeof import('tdesign-vue-next')['ConfigProvider']
     TRadioButton: typeof import('tdesign-vue-next')['RadioButton']
     TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']

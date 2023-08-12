@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { MessagePlugin } from 'tdesign-vue-next'
 import { PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 
@@ -67,7 +68,7 @@ const state: State = {
   },
 
   confirmLoading: false,
-}
+} as const
 
 export const useProfileStore = defineStore('profileStore', {
   state: () => state,
@@ -96,6 +97,52 @@ export const useProfileStore = defineStore('profileStore', {
       }
 
       await _setKeys(data)
+    },
+
+    checkHasSettedModel() {
+      const { profile } = this.$state
+
+      if (!this._checkIsSettedOpenai() && !this._checkIsSettedAzure()) {
+        MessagePlugin.warning('请先配置模型的 API KEY')
+        return false
+      }
+
+      if (
+        profile.currentModel.value === 'OpenAI' &&
+        !this._checkIsSettedOpenai()
+      ) {
+        MessagePlugin.warning('请配置 OpenAI 所需的 API KEY')
+        return false
+      }
+
+      if (
+        profile.currentModel.value === 'Azure' &&
+        !this._checkIsSettedAzure()
+      ) {
+        MessagePlugin.warning('请配置 Azure 所需的 KEYs')
+        return false
+      }
+
+      return true
+    },
+
+    _checkIsSettedOpenai() {
+      const { profile } = this.$state
+      if (!profile.openaiKey) {
+        return false
+      } else return true
+    },
+
+    _checkIsSettedAzure() {
+      const { profile } = this.$state
+      if (
+        !profile.azureKey ||
+        !profile.openaiBase ||
+        !profile.deploymentName ||
+        !profile.openaiVersion
+      ) {
+        return false
+      } else return true
     },
   },
 })

@@ -3,6 +3,9 @@
 
   <!-- Uploading file float box -->
   <uploading-files />
+
+  <!-- Global message snack bar -->
+  <snack-bar />
 </template>
 
 <script setup lang="ts">

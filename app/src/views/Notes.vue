@@ -105,14 +105,13 @@
 
           <!-- Delete Button -->
           <v-btn
-            v-if="!isChangeNote && !isShowConfirmDeleteBtn"
+            v-if="!isShowConfirmDeleteBtn"
             block
             class="mt-3"
             id="delete_btn"
             type="icon"
             variant="tonal"
             :color="orangeBgColor"
-            :disabled="currentNote.isUploading"
             @click="isShowConfirmDeleteBtn = true"
           >
             <v-icon
@@ -131,7 +130,6 @@
             variant="tonal"
             :color="greenBgColor"
             :loading="deleteNodeLoading"
-            :disabled="currentNote.isUploading"
             @click="handleDeleteNote"
           >
             <v-icon
