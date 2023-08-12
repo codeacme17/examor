@@ -94,11 +94,11 @@
                   :title="$t('title.createDate')"
                   :subtitle="handleDatetime(currentNote.upload_date)"
                 />
-                <v-list-item
+                <!-- <v-list-item
                   :title="$t('title.finishedAmount')"
                   subtitle="10"
                 />
-                <v-list-item :title="$t('title.totalAmount')" subtitle="200" />
+                <v-list-item :title="$t('title.totalAmount')" subtitle="200" /> -->
               </v-list>
             </Transition>
           </v-card>
