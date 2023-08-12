@@ -32,6 +32,11 @@ def set_profile(data: types.Profile):
     return _apis_.profile.set_profile(data)
 
 
+@app.get("/profile/auth/key")
+def check_key_correct():
+    return _apis_.profile.check_key_correct()
+
+
 # -------- Note APIs --------
 @app.get("/note/notes")
 def get_notes():

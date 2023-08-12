@@ -1,6 +1,5 @@
 from fastapi import UploadFile
 from db_services.MySQLHandler import MySQLHandler
-from utils.tools import CustomError
 from langchain_services.LangchainService import LangchainService
 
 
@@ -10,19 +9,10 @@ async def upload_file(
     noteName: str,
     files: list[UploadFile],
 ):
-    list = []
     for file in files:
         filename = file.filename
         file_id = add_file_to_db(note_id=noteId, filename=filename)
-        list.append({
-            "file": file,
-            "file_id": file_id
-        })
-
-    for file in list:
-        file_id = file["file_id"]
-        filename = file["file"].filename
-        content = await file["file"].read()
+        content = await file.read()
 
         langchain_service = LangchainService(
             note_id=noteId,
@@ -50,9 +40,7 @@ def add_file_to_db(
             VALUES (%s, %s)
             """
     data = (note_id, filename, )
-
-    res = MySQLHandler().insert_table_data(query, data)
-    return res
+    return MySQLHandler().insert_table_data(query, data)
 
 
 def set_file_is_uploading_state(
@@ -73,5 +61,4 @@ def get_uploading_files():
             FROM t_file
             WHERE is_uploading = "1";
             """
-    res = MySQLHandler().execute_query(query)
-    return res
+    return MySQLHandler().execute_query(query)

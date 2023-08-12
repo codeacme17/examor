@@ -4,6 +4,7 @@ import db_services as _dbs_
 from fastapi import File, Form, UploadFile
 from utils import api_result, types
 from db_services.MySQLHandler import MySQLHandler
+from langchain_services import check_key_correct
 
 
 # Get notes list
@@ -99,6 +100,10 @@ async def add_file(
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None)
 ):
+    try:
+        check_key_correct()
+    except BaseException as e:
+        return api_result.error(e.error.message)
 
     for file in files:
         print(file.filename)
