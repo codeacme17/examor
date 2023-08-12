@@ -106,7 +106,7 @@ export const useProfileStore = defineStore('profileStore', {
 
       if (
         profile.currentModel.value === 'OpenAI' &&
-        !this._checkIsSettedOpenai()
+        !this._checkHasSettedOpenai()
       ) {
         MESSAGE_STORE.show('message.OpenAIKeyError', 'button', '/profile')
         return false
@@ -114,7 +114,7 @@ export const useProfileStore = defineStore('profileStore', {
 
       if (
         profile.currentModel.value === 'Azure' &&
-        !this._checkIsSettedAzure()
+        !this._checkHasSettedAzure()
       ) {
         MESSAGE_STORE.show('message.AzureKeyError', 'button', '/profile')
         return false
@@ -123,7 +123,7 @@ export const useProfileStore = defineStore('profileStore', {
       return true
     },
 
-    _checkIsSettedOpenai() {
+    _checkHasSettedOpenai() {
       const { profile } = this.$state
       if (!profile.openaiKey.value) {
         profile.openaiKey.error = true
@@ -131,7 +131,7 @@ export const useProfileStore = defineStore('profileStore', {
       } else return true
     },
 
-    _checkIsSettedAzure() {
+    _checkHasSettedAzure() {
       const { profile } = this.$state
       let res = true
       if (!profile.azureKey.value) {
