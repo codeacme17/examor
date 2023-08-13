@@ -1,4 +1,5 @@
 import mysql.connector
+import os
 
 
 class MySQLHandler:
@@ -6,8 +7,8 @@ class MySQLHandler:
         self.config = {
             'user': 'root',
             'password': 'root',
-            'host': 'localhost',
-            'port': "52020",
+            'host': 'database' if os.environ["DOCKER"] else 'localhost',
+            'port': '3306' if os.environ["DOCKER"] else '52020',
             'database': 'db',
             'raise_on_warnings': True,
         }
@@ -18,7 +19,6 @@ class MySQLHandler:
         try:
             self.conn = mysql.connector.connect(**self.config)
             self.cursor = self.conn.cursor(buffered=True, dictionary=True)
-
         except mysql.connector.Error as err:
             print("Error: {}".format(err))
 

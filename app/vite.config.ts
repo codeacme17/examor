@@ -44,20 +44,16 @@ export default defineConfig({
     port: 51818,
     proxy: {
       '/api': {
-        target: 'http://0.0.0.0:51717',
+        target: `http://${process.env.DOCKER ? 'server' : '0.0.0.0'}:51717`,
         changeOrigin: true,
         rewrite: (pathStr) => pathStr.replace('/api', '/'),
       },
       '/ws': {
-        target: 'ws://127.0.0.1:51717',
+        target: `ws://${process.env.DOCKER ? 'server' : 'localhost'}:51717`,
         changeOrigin: true,
         ws: true,
         rewrite: (pathStr) => pathStr.replace('/ws', '/'),
       },
     },
-  },
-
-  optimizeDeps: {
-    force: false,
   },
 })
