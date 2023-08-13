@@ -29,7 +29,7 @@
 </samp>
 </br>
 
-<img width="610" src = "https://github.com/codeacme17/examor/blob/main/docs/usecase.gif?raw=true"></img>
+<img width="810" src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
 </br>
 </br>
 
