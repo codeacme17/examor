@@ -51,7 +51,7 @@ cd examor
 ```bash
 docker-compose up
 ```
-> Make sure you have installed Docker on your local machine
+> Please make sure Docker is installed on your local machine, and ports `51717`, `51818`, and `52020` are available on your local host
 
 Open `http://localhost:51818` in your browser to access Examor.
 
