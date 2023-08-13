@@ -19,7 +19,7 @@
   <a href="https://discordapp.com/channels/974519864045756446/1138743595097149450">
     <img height="21" src="https://img.shields.io/badge/Chat%20Room-7d09f1?style=flat-square&logo=discord&logoColor=7d09f1&labelColor=fff&color=fff" alt="discord">
   </a>
-  <a href="https://www.producthunt.com/posts/examor">
+  <a href="https://www.producthunt.com/posts/examor?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-examor">
     <img height="21" src="https://img.shields.io/badge/Product%20Hunt-fff?style=flat-square&logo=producthunt&logoColor=7d09f1" alt="producthunt">
   </a>
   <a href="https://github.com/codeacme17/examor/blob/main/LICENSE">
