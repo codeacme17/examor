@@ -24,11 +24,7 @@
   </a>
 </p>
 </samp>
-</br>
-
-<img width="810" src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
-</br>
-</br>
+<img width="870" src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
 
 
 
