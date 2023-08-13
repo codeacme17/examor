@@ -28,7 +28,6 @@
 </p>
 </samp>
 
-
 </br>
 <img width="870" src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
 </br>
@@ -40,15 +39,20 @@
 When I'm learning a new technology, I have the habit of taking notes and jotting down important information. It's a good habit, but I also have a bad habit of not enjoying reading the notes I've written (I'm not sure if this is the case for most people 🫣). This results in my notes becoming mere mementos without substantial use. That's why I choose to create an application that continuously prompts you with questions to review your note contents.
 
 ## 🏁 Start
+
 #### Clone this repo
+
 ```bash
 git clone https://github.com/codeacme17/examor.git
 cd examor
 ```
+
 #### Run docker compose
+
 ```bash
 docker-compose up
 ```
+
 > Please make sure Docker is installed on your local machine, and ports `51717`, `51818`, and `52020` are available on your local host
 
 Open `http://localhost:51818` in your browser to access Examor.
