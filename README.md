@@ -8,7 +8,7 @@
 
 <p>
   <strong>
-   A website application that allows you to take exams based on your knowledge notes
+   A website application that allows you to take exams based on your knowledge notes. Let you really remember the notes you wrote
   </strong>
 </p>
 
