@@ -10,7 +10,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
 from langchain.callbacks import AsyncIteratorCallbackHandler
 
-from .prompts import choose_prompt
+from prompts import choose_prompt
 
 
 class LangchainService():
