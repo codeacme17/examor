@@ -1,5 +1,4 @@
 import re
-import os
 import asyncio
 import db_services as _dbs_
 
@@ -7,10 +6,10 @@ from typing import Awaitable
 from langchain import LLMChain
 from langchain.schema import Document, HumanMessage
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
 from langchain.callbacks import AsyncIteratorCallbackHandler
 
-from .prompts import choose_prompt
+from prompts import choose_prompt
+from .llm import LLM
 
 
 class LangchainService():
@@ -19,7 +18,6 @@ class LangchainService():
         note_id: int = 0,
         file_id: int = 0,
         filename: str = "",
-
         prompt_language: str = "",
         prompt_type: str = "",
         temperature: int = 0,
@@ -29,7 +27,7 @@ class LangchainService():
         self.note_id = note_id
         self.file_id = file_id
         self.filename = filename
-        self.llm_callback = AsyncIteratorCallbackHandler()
+        self.llm_callbacks = [AsyncIteratorCallbackHandler()]
         self.llm_chain = self._init_llm_chain(
             prompt_language,
             prompt_type,
@@ -44,10 +42,10 @@ class LangchainService():
         temperature: int = 0,
         streaming: bool = False
     ):
-        llm = init_llm(
-            temperature,
-            streaming,
-            [self.llm_callback]
+        llm_instance = LLM(
+            temperature=temperature,
+            streaming=streaming,
+            callbacks=self.llm_callbacks
         )
 
         prompt = choose_prompt(
@@ -56,9 +54,8 @@ class LangchainService():
         )
 
         return LLMChain(
-            verbose=False,
             prompt=prompt,
-            llm=llm,
+            llm=llm_instance.llm,
         )
 
     async def agenerate_questions(
@@ -137,50 +134,21 @@ class LangchainService():
             context=context,
             quesiton=quesiton,
             answer=answer,
-            callbacks=[self.llm_callback]
-        ), self.llm_callback.done)
+            callbacks=self.llm_callbacks
+        ), self.llm_callbacks[0].done)
 
         task = asyncio.create_task(coroutine)
         exmine = ""
-        async for token in self.llm_callback.aiter():
+        async for token in self.llm_callbacks[0].aiter():
             exmine += token
             yield f"{token}"
         await task
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
 
 
-def init_llm(
-    temperature: int = 0,
-    streaming: bool = False,
-    callbacks: list = []
-) -> ChatOpenAI:
-    llm = None
-    if (os.environ["CURRENT_MODEL"] == "Azure"):
-        llm = AzureChatOpenAI(
-            openai_api_base=os.environ["OPENAI_BASE"],
-            openai_api_key=os.environ["AZURE_KEY"],
-            openai_api_version=os.environ["OPENAI_VERSION"],
-            deployment_name=os.environ["DEPLOYMENT_NAME"],
-            temperature=temperature,
-            streaming=streaming,
-            callbacks=callbacks
-        )
-    if (os.environ["CURRENT_MODEL"] == "OpenAI"):
-        llm = ChatOpenAI(
-            model="gpt-3.5-turbo",
-            temperature=temperature,
-            streaming=streaming,
-            verbose=True,
-            openai_proxy=os.environ['PROXY'],
-            callbacks=callbacks
-        )
-    return llm
-
-
 def check_key_correct():
     try:
-        llm = init_llm()
-        llm([HumanMessage(content="hi")])
+        LLM(max_tokens=1).llm([HumanMessage(content="hi")])
     except BaseException as e:
         raise e
     return True
@@ -197,7 +165,6 @@ async def wait_done(
     try:
         await fn
     except Exception as e:
-        print(e, "====================== errorrr")
         event.set()
         raise e
     finally:
