@@ -3,7 +3,6 @@ import asyncio
 from typing import Awaitable
 from langchain import LLMChain
 from langchain.schema import Document, HumanMessage
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks import AsyncIteratorCallbackHandler
 
 import db_services as _dbs_
@@ -11,7 +10,7 @@ from .llm import LLM
 from prompts import choose_prompt
 
 
-class LangchainService():
+class Chain:
     def __init__(
         self,
         note_id: int = 0,
@@ -94,10 +93,6 @@ class LangchainService():
                     question_content,
                     doc_id
                 )
-
-    def _is_markdown_heading(self, line):
-        pattern = r'^#\s.+'
-        return bool(re.match(pattern, line))
 
     async def aexamine_answer(
         self,

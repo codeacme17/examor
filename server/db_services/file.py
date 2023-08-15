@@ -1,7 +1,7 @@
 from fastapi import UploadFile
 
 from db_services.MySQLHandler import MySQLHandler
-from langchain_services.LangchainService import LangchainService
+from lang_chain.chain import Chain
 from loaders import split_doc
 
 
@@ -18,7 +18,7 @@ async def upload_file(
         file_content = await file.read()
         docs = split_doc(file_type, file_content.decode('utf-8'))
 
-        langchain_service = LangchainService(
+        langchain_service = Chain(
             note_id=noteId,
             file_id=file_id,
             filename=filename,

@@ -1,8 +1,8 @@
 import db_services as _dbs_
 
 from utils import api_result, types
+from lang_chain import Chain
 from db_services.MySQLHandler import MySQLHandler
-from langchain_services import LangchainService
 
 
 def examine_question(data: types.AnswerQuestion):
@@ -10,7 +10,7 @@ def examine_question(data: types.AnswerQuestion):
     document_info = _dbs_.share.get_document_info(question_info["document_id"])
     note_info = _dbs_.share.get_note_info(document_info["note_id"])
 
-    langchain_service = LangchainService(
+    langchain_service = Chain(
         prompt_language=data.language,
         prompt_type="answer_examine",
         streaming=True
