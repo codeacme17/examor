@@ -1,15 +1,14 @@
 import re
 import asyncio
-import db_services as _dbs_
-
 from typing import Awaitable
 from langchain import LLMChain
 from langchain.schema import Document, HumanMessage
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks import AsyncIteratorCallbackHandler
 
-from prompts import choose_prompt
+import db_services as _dbs_
 from .llm import LLM
+from prompts import choose_prompt
 
 
 class LangchainService():
@@ -60,10 +59,9 @@ class LangchainService():
 
     async def agenerate_questions(
         self,
-        doc_content: str,
+        docs: list[Document],
         title: str,
     ):
-        docs = self._split_document(doc_content)
         tasks = []
         for doc in docs:
             doc_id = _dbs_.document.save_doc_to_db(
@@ -78,26 +76,6 @@ class LangchainService():
             await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * 20)
         except asyncio.TimeoutError:
             await handle_timeout()
-
-    def _split_document(
-        self,
-        doc_content: str
-    ) -> list[Document]:
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1300,
-            chunk_overlap=0,
-            separators=[
-                "\n#{1,6} ",
-                "\n\*\*\*+\n",
-                "\n___+\n",
-            ])
-        docs = text_splitter.create_documents([doc_content])
-        res = []
-        for doc in docs:
-            if (self._is_markdown_heading(doc.page_content)):
-                continue
-            res.append(doc)
-        return res
 
     async def _agenerate_questions(
         self,
