@@ -4,6 +4,7 @@ import db_services as _dbs_
 from fastapi import File, Form, UploadFile
 from utils import api_result, types
 from db_services.MySQLHandler import MySQLHandler
+from utils import upload_file
 
 
 # Get notes list
@@ -78,7 +79,7 @@ async def add_note(
         return api_result.error("It is not possible to upload more than three files at one time")
 
     if (len(files) > 0):
-        await _dbs_.file.upload_file(
+        await upload_file(
             language,
             _dbs_.note.get_inserted_note_id(noteName),
             noteName,
@@ -100,7 +101,6 @@ async def add_file(
     notionId: str = Form(default=None)
 ):
     for file in files:
-        print(file.filename)
         if (_dbs_.share.is_duplicate_file(noteId, file.filename)):
             return api_result.error("The same file cannot be uploaded under one note")
 
@@ -108,7 +108,7 @@ async def add_file(
         return api_result.error("It is not possible to upload more than three files at one time")
 
     if (len(files) > 0):
-        await _dbs_.file.upload_file(language, noteId, noteName, files)
+        await upload_file(language, noteId, noteName, files)
 
     if (notionId is not None):
         pass

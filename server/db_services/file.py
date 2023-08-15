@@ -1,38 +1,4 @@
-from fastapi import UploadFile
-
 from db_services.MySQLHandler import MySQLHandler
-from lang_chain.chain import Chain
-from loaders import split_doc
-
-
-async def upload_file(
-    language: str,
-    noteId: int,
-    noteName: str,
-    files: list[UploadFile],
-):
-    for file in files:
-        filename = file.filename
-        file_type = file.content_type
-        file_id = add_file_to_db(note_id=noteId, filename=filename)
-        file_content = await file.read()
-        docs = split_doc(file_type, file_content.decode('utf-8'))
-
-        langchain_service = Chain(
-            note_id=noteId,
-            file_id=file_id,
-            filename=filename,
-            prompt_language=language,
-            prompt_type="question_generate"
-        )
-
-        await langchain_service.agenerate_questions(
-            docs,
-            noteName,
-        )
-
-        set_file_is_uploading_state(file_id)
-        print(f">>>>>>>>> {filename} upload success  <<<<<<<<<")
 
 
 def add_file_to_db(
