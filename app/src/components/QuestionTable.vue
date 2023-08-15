@@ -119,3 +119,14 @@ const switchTitle = computed(() => {
   }
 })
 </script>
+
+<style lang="scss" scoped>
+:deep(.v-table__wrapper) {
+  tr {
+    p {
+      padding: 13px 0px;
+      margin-bottom: auto;
+    }
+  }
+}
+</style>
