@@ -53,8 +53,8 @@
         </section>
       </v-card>
 
-      <!-- Answer block -->
-      <Answer :id="questionInfo.id" v-if="trigger" />
+      <!-- Enswer block -->
+      <examine :id="questionInfo.id" v-if="trigger" />
     </section>
   </v-container>
 </template>

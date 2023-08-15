@@ -82,8 +82,8 @@
           </section>
         </v-card>
 
-        <!-- Answer block -->
-        <Answer :id="pickedQuestion.id" />
+        <!-- Examine block -->
+        <examine :id="pickedQuestion.id" />
       </section>
     </Transition>
   </v-container>
