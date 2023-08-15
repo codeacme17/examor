@@ -192,6 +192,13 @@ html[theme-mode='dark'] {
     margin-bottom: 6px;
   }
 
+  code {
+    padding: 0px 5px;
+    margin: 0px 5px;
+    border-radius: 3px;
+    background-color: var(--code-box-bg) !important;
+  }
+
   pre {
     padding: 10px 30px;
     margin: 10px 0px;
@@ -201,13 +208,6 @@ html[theme-mode='dark'] {
     code {
       background-color: transparent !important;
     }
-  }
-
-  code {
-    padding: 0px 5px;
-    margin: 0px 5px;
-    border-radius: 3px;
-    background-color: var(--code-box-bg) !important;
   }
 
   ul,
@@ -223,4 +223,12 @@ html[theme-mode='dark'] {
       margin: 10px 0px 0px 6px;
     }
   }
+}
+
+code {
+  padding: 0px 5px;
+  margin: 0px 5px;
+  border-radius: 3px;
+  background-color: var(--cood-block-bg) !important;
+  color: var(--td-brand-color) !important;
 }

@@ -59,9 +59,10 @@
             </h3>
 
             <!-- Quesiton content -->
-            <p class="mb-6 text-body-1">
-              {{ pickedQuestion.content }}
-            </p>
+            <p
+              class="mb-6 text-body-1"
+              v-html="toMarkdown(pickedQuestion.content)"
+            />
 
             <!-- Memory progress -->
             <v-tooltip
@@ -99,7 +100,7 @@ export default {
 import { ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useFetch, useTodayListCache } from '@/hooks'
-import { greenBgColor } from '@/utils'
+import { greenBgColor, toMarkdown } from '@/utils'
 import { NOTE_API } from '@/apis'
 import type { TableItem } from '@/components/QuestionTable.vue'
 

@@ -106,10 +106,8 @@
 import { ref, onUnmounted, watch } from 'vue'
 import { useLocalStorage, useNow, useDateFormat } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-import MarkdownIt from 'markdown-it'
-import hljs from 'highlight.js'
 
-import { defaultBgColor, fontColor } from '@/utils'
+import { defaultBgColor, fontColor, toMarkdown } from '@/utils'
 import { useFetch, useListState } from '@/hooks'
 import { QUESTION_API, PROFILE_API } from '@/apis'
 import { useProfileStore } from '@/store'
@@ -200,22 +198,6 @@ const [getDocument, getDocumentLoading] = useFetch(QUESTION_API.getDocument)
 const handleGetDocument = async () => {
   const { data } = await getDocument(props.id)
   document_content.value = data
-}
-
-// Make raw-content render as markdown formatting content
-const toMarkdown = (text: string) => {
-  const md = new MarkdownIt({
-    highlight: function (str, lang) {
-      if (lang && hljs.getLanguage(lang))
-        return hljs.highlight(str, { language: lang }).value
-      return ''
-    },
-    html: true,
-    linkify: true,
-    typographer: true,
-    breaks: true,
-  })
-  return md.render(text)
 }
 
 // Watching if current question id is changed

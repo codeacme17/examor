@@ -23,7 +23,7 @@
           </td>
 
           <!-- Question content td -->
-          <td style="overflow: hidden">{{ item.content }}</td>
+          <td style="overflow: hidden" v-html="toMarkdown(item.content)" />
 
           <!-- Action buttons td -->
           <td style="width: 145px">
@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { greenBgColor, orangeBgColor } from '@/utils'
+import { greenBgColor, orangeBgColor, toMarkdown } from '@/utils'
 import { useListState } from '@/hooks'
 
 const { t } = useI18n()
