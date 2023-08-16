@@ -43,7 +43,3 @@ def get_profile_from_file() -> types.Profile:
     with open(FILE_PATH, "r") as file:
         data: types.Profile = json.load(file)
     return data
-
-
-def check_has_key():
-    return ""
