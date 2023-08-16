@@ -71,7 +71,6 @@ async def add_files_to_note(
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None)
 ):
-    print(language, id, noteName, files, notionId)
     return await _apis_.note.add_file(language, id, noteName, files, notionId)
 
 
