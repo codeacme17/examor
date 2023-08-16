@@ -9,7 +9,6 @@
       <!---------- Quesiton amount ---------->
       <h3 class="mt-6 mb-1">{{ $t('hint.questionCounts') }}</h3>
       <h5 class="mb-3 text-medium-emphasis">{{ $t('subTitle.changePlan') }}</h5>
-
       <v-slider
         v-model:model-value="formData.questionAmount.value"
         show-ticks
@@ -21,9 +20,32 @@
         :step="1"
       />
 
+      <!---------- Roles ---------->
+      <h3 class="mt-4 mb-3">{{ $t('title.role') }}</h3>
+      <h5 class="mb-3 text-medium-emphasis">
+        {{ $t('subTitle.role') }},
+        <a
+          href="https://github.com/codeacme17/examor#-inspiration"
+          target="_blank"
+        >
+          {{ $t('button.role') }}
+          <v-icon icon="mdi-open-in-new" style="font-size: 16px" />
+        </a>
+      </h5>
+      <t-radio-group variant="default-filled" default-value="1" class="mb-3">
+        <t-radio-button value="1">
+          🥷 {{ $t('button.examiner') }}
+        </t-radio-button>
+        <t-radio-button value="2">
+          👩‍🏫 {{ $t('button.teacher') }}
+        </t-radio-button>
+        <t-radio-button value="3">
+          👨‍💻 {{ $t('button.interviewer') }}
+        </t-radio-button>
+      </t-radio-group>
+
       <!---------- Choose Model ---------->
       <h3 class="mt-4 mb-3">{{ $t('title.model') }}</h3>
-
       <t-radio-group
         v-model="formData.currentModel.value"
         class="mb-4"
@@ -131,7 +153,6 @@
       <!-- Notion -->
       <div class="d-flex mt-3">
         <NotionIcon width="30" class="mb-5 mr-4" />
-
         <v-text-field
           v-model="formData.notionKey.value"
           label="NOTION_KEY"
@@ -153,7 +174,6 @@
 
       <!---------- Other configuration ---------->
       <h3 class="my-4">{{ $t('title.otherConfigurations') }}</h3>
-
       <!-- Proxy -->
       <div class="d-flex">
         <v-text-field
@@ -166,7 +186,7 @@
         />
       </div>
 
-      <!-- Submit button -->
+      <!---------- Submit button ---------->
       <div class="mt-5 d-flex justify-end">
         <v-btn
           color="primary"

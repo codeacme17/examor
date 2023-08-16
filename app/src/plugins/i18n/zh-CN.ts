@@ -17,6 +17,10 @@ export const zhCN = {
     deleteNote: '删除该笔记',
     confirmDelete: '确认删除',
     finished: '已完成',
+    role: '角色介绍',
+    teacher: '教师',
+    interviewer: '面试官',
+    examiner: '考官',
   },
 
   title: {
@@ -43,6 +47,7 @@ export const zhCN = {
     totalAmount: '问题总数',
     finishedAmount: '已回答',
     uploading: '正在上传',
+    role: '请选择角色',
   },
 
   subTitle: {
@@ -52,6 +57,7 @@ export const zhCN = {
     emptyNoteStart: '可以进入',
     emptyNoteEnd: '页面创建你的第一个笔记',
     changePlan: '提交更改后将于明日实行新的计划',
+    role: '角色会影响问题的生成和检测的结果',
   },
 
   label: {

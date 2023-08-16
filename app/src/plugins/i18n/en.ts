@@ -17,6 +17,10 @@ export const en = {
     deleteNote: 'delete this note',
     confirmDelete: 'confirm delete',
     finished: 'finished',
+    role: 'Role introduction',
+    teacher: 'Teacher',
+    interviewer: 'Interviewer',
+    examiner: 'Examiner',
   },
 
   // the title & subtitle on each page
@@ -44,6 +48,7 @@ export const en = {
     totalAmount: 'Total questions',
     finishedAmount: 'Already answered',
     uploading: 'Uploading',
+    role: 'Please select your desired role',
   },
   subTitle: {
     notes: 'You can manage your notes here',
@@ -53,6 +58,7 @@ export const en = {
     emptyNoteEnd: 'page to create your first note',
     changePlan:
       'The new plan will be implemented tomorrow after submitting the changes',
+    role: 'Roles will affect the generation of problems and the results of detection',
   },
 
   // label of input field
