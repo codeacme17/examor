@@ -207,6 +207,7 @@ const handleConfirm = async () => {
 }
 
 onUnmounted(() => {
+  PROFILE_STORE.getProfile()
   PROFILE_STORE.clearError()
 })
 </script>
