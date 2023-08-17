@@ -6,11 +6,28 @@ from utils import types
 FILE_PATH = "profile.json"
 
 
+def set_profile_to_file(data: types.Profile):
+    with open(FILE_PATH, "w") as file:
+        json.dump({
+            'questionAmount': data.questionAmount,
+            'role': data.role,
+            'currentModel': data.currentModel,
+            'openaiKey': data.openaiKey,
+            'azureKey': data.azureKey,
+            'openaiBase': data.openaiBase,
+            'openaiVersion': data.openaiVersion,
+            'deploymentName': data.deploymentName,
+            'notionKey': data.notionKey,
+            'proxy': data.proxy,
+        }, file)
+
+
 def set_profile_to_env():
     init_profile_file()
     data: types.Profile = get_profile_from_file()
 
     os.environ['QUESTION_AMOUNT'] = data['questionAmount']
+    os.environ['ROLE'] = data['role']
     os.environ['CURRENT_MODEL'] = data['currentModel']
     os.environ['OPENAI_API_KEY'] = data['openaiKey']
     os.environ['NOTION_KEY'] = data['notionKey']
@@ -28,6 +45,7 @@ def init_profile_file():
     with open(FILE_PATH, "w") as file:
         json.dump({
             "questionAmount": "5",
+            "role": "examiner",
             "currentModel": "OpenAI",
             "openaiKey": "",
             "azureKey": "",
