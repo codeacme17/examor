@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { useI18n } from 'vue-i18n'
 import { PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 import { useMessageStore } from './message'
@@ -11,6 +10,7 @@ type State = {
 
 type Key =
   | 'questionAmount'
+  | 'role'
   | 'currentModel'
   | 'openaiKey'
   | 'notionKey'
@@ -32,6 +32,9 @@ const state: State = {
   profile: {
     questionAmount: {
       value: '3',
+    },
+    role: {
+      value: 'examiner',
     },
     currentModel: {
       value: 'OpenAI',

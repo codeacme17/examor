@@ -32,14 +32,19 @@
           <v-icon icon="mdi-open-in-new" style="font-size: 16px" />
         </a>
       </h5>
-      <t-radio-group variant="default-filled" default-value="1" class="mb-3">
-        <t-radio-button value="1">
+      <t-radio-group
+        v-model="formData.role.value"
+        variant="default-filled"
+        default-value="examiner"
+        class="mb-3"
+      >
+        <t-radio-button value="examiner">
           🥷 {{ $t('button.examiner') }}
         </t-radio-button>
-        <t-radio-button value="2">
+        <t-radio-button value="teacher">
           👩‍🏫 {{ $t('button.teacher') }}
         </t-radio-button>
-        <t-radio-button value="3">
+        <t-radio-button value="interviewer">
           👨‍💻 {{ $t('button.interviewer') }}
         </t-radio-button>
       </t-radio-group>
