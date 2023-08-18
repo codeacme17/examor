@@ -26,6 +26,7 @@ def examine_question(data: types.AnswerQuestion):
 
 def get_last_answer(id: int):
     question_info = _dbs_.share.get_question_info(id)
+    print(question_info)
     return api_result.success(question_info["last_answer"])
 
 

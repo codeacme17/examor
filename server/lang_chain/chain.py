@@ -26,26 +26,9 @@ class Chain:
         self.filename = filename
         self.prompt_language = prompt_language
         self.prompt_type = prompt_type
+        self.temperature = temperature
+        self.streaming = streaming
         self.llm_callbacks = [AsyncIteratorCallbackHandler()]
-        self.temperature = temperature,
-        self.streaming = streaming,
-
-    def _init_llm_chain(self):
-        llm_instance = LLM(
-            temperature=self.temperature,
-            streaming=self.streaming,
-            callbacks=self.llm_callbacks
-        )
-
-        prompt = choose_prompt(
-            self.prompt_language,
-            self.prompt_type
-        )
-
-        return LLMChain(
-            prompt=prompt,
-            llm=llm_instance.llm,
-        )
 
     async def agenerate_questions(
         self,
@@ -53,6 +36,7 @@ class Chain:
         title: str,
     ):
         tasks = []
+        llm_chain = self._init_llm_chain("")
         for doc in docs:
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id,
@@ -60,7 +44,8 @@ class Chain:
                 self.filename,
                 doc.page_content
             )
-            tasks.append(self._agenerate_questions(doc, title, doc_id))
+            tasks.append(self._agenerate_questions(
+                llm_chain, doc, title, doc_id))
 
         try:
             await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * 20)
@@ -69,11 +54,11 @@ class Chain:
 
     async def _agenerate_questions(
         self,
+        llm_chain: LLMChain,
         doc: Document,
         title: str,
         doc_id: int
     ):
-        llm_chain = self._init_llm_chain()
         async with self.semaphore:
             res = await llm_chain.apredict(
                 title=title,
@@ -91,9 +76,10 @@ class Chain:
         id: int,
         context: str,
         question: str,
-        answer: str
+        answer: str,
+        role: str
     ):
-        llm_chain = self._init_llm_chain()
+        llm_chain = self._init_llm_chain(role)
         coroutine = wait_done(llm_chain.apredict(
             context=context,
             question=question,
@@ -108,6 +94,24 @@ class Chain:
             yield f"{token}"
         await task
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
+
+    def _init_llm_chain(self, role: str):
+        llm_instance = LLM(
+            temperature=self.temperature,
+            streaming=self.streaming,
+            callbacks=self.llm_callbacks
+        )
+
+        prompt = choose_prompt(
+            role,
+            self.prompt_language,
+            self.prompt_type
+        )
+
+        return LLMChain(
+            prompt=prompt,
+            llm=llm_instance.llm,
+        )
 
 
 def check_key_correct():

@@ -44,16 +44,20 @@ xxx
 '''
 
 
-def get_role():
-    if (os.environ.get("CURRENT_ROLE") == "examiner"):
+def _get_role_prompt(role: str):
+    if role == "examiner":
         return examiner
-    if (os.environ.get("CURRENT_ROLE") == "teacher"):
+    elif role == "teacher":
         return teacher
-    if (os.environ.get("CURRENT_ROLE") == "interviewer"):
+    elif role == "interviewer":
         return interviewer
+    else:
+        return examiner
 
 
-ANSWER_EXAMINE_PROMPT_CN = PromptTemplate(
-    template=PROMPT_TEMP,
-    input_variables=["context", "question", "answer"]
-)
+def get_exmine_prompt_cn(role: str):
+    ANSWER_EXAMINE_PROMPT_CN = PromptTemplate(
+        template=_get_role_prompt(role) + PROMPT_TEMP,
+        input_variables=["context", "question", "answer"]
+    )
+    return ANSWER_EXAMINE_PROMPT_CN

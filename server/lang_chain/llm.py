@@ -13,7 +13,7 @@ class LLM:
         max_retries=3,
         max_tokens=None
     ):
-        self.temperature = temperature if temperature != 0 else self._switch_temperature()
+        self.temperature = temperature if temperature != 0 else self._get_role_temperature()
         self.streaming = streaming
         self.callbacks = callbacks
         self.max_retries = max_retries
@@ -53,7 +53,7 @@ class LLM:
             openai_proxy=os.environ['PROXY']
         )
 
-    def _switch_temperature(self):
+    def _get_role_temperature(self):
         if (os.environ.get("CURRENT_ROLE") == "examiner"):
             return 0
         if (os.environ.get("CURRENT_ROLE") == "teacher"):
