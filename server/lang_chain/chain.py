@@ -8,6 +8,7 @@ from langchain.callbacks import AsyncIteratorCallbackHandler
 import db_services as _dbs_
 from .llm import LLM
 from prompts import choose_prompt
+from prompts import get_qg_role_command
 
 
 class Chain:
@@ -84,6 +85,7 @@ class Chain:
     ):
         async with self.semaphore:
             res = await self.llm_chain.apredict(
+                command=get_qg_role_command(),
                 title=title,
                 context=doc.page_content
             )
