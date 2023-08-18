@@ -1,7 +1,8 @@
-from .answer_examine import ANSWER_EXAMINE_PROMPT_EN
 from .cn.question_generate import QUESTION_GENERATE_PROMPT_CN
-from .cn.answer_exmine import ANSWER_EXAMINE_PROMPT_CN
 from .en.question_generate import QUESTION_GENERATE_PROMPT_EN
+
+from .cn.answer_exmine import ANSWER_EXAMINE_PROMPT_CN
+from .en.answer_exmine import ANSWER_EXAMINE_PROMPT_EN
 
 
 def choose_prompt(
