@@ -3,6 +3,7 @@ from . import file
 from . import question
 from . import share
 from . import note
+from . import profile
 
 
 __all__ = [
@@ -10,5 +11,6 @@ __all__ = [
     "file",
     "question",
     "share",
-    "note"
+    "note",
+    "profile"
 ]

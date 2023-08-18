@@ -10,7 +10,7 @@ type State = {
 
 type Key =
   | 'questionAmount'
-  | 'role'
+  | 'currentRole'
   | 'currentModel'
   | 'openaiKey'
   | 'notionKey'
@@ -33,7 +33,7 @@ const state: State = {
     questionAmount: {
       value: '3',
     },
-    role: {
+    currentRole: {
       value: 'examiner',
     },
     currentModel: {
