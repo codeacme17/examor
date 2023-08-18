@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class Profile(BaseModel):
     questionAmount: str
-    role: str
+    currentRole: str
     currentModel: str
     openaiKey: str
     azureKey: str

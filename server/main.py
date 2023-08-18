@@ -1,18 +1,20 @@
-import apis as _apis_
 
 from fastapi import FastAPI, File, Form, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.responses import StreamingResponse
 
+import apis as _apis_
+import db_services as _dbs_
+
 from utils import types
-from utils.profile_handler import set_profile_to_env
 from db_services.MySQLHandler import MySQLHandler
+
 
 app = FastAPI()
 
 
 @app.on_event('startup')
 def startup():
-    set_profile_to_env()
+    _dbs_.profile.set_profile_to_env()
     MySQLHandler().connect_to_mysql()
 
 

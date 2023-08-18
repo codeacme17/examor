@@ -1,19 +1,16 @@
-import json
-
-from utils import api_result, profile_handler, types
+import db_services as _dbs_
+from utils import api_result, types
 from lang_chain import check_key_correct as _check_key_correct
 
 
-# Get user profile
 def get_profile():
-    data = profile_handler.get_profile_from_file()
+    data = _dbs_.profile.get_profile()
     return api_result.success(data)
 
 
-# Set user profile to `profile.json` file
 def set_profile(data: types.Profile):
-    profile_handler.set_profile_to_file(data)
-    profile_handler.set_profile_to_env()
+    _dbs_.profile.set_profile(data)
+    _dbs_.profile.set_profile_to_env()
     return api_result.success()
 
 

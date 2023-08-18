@@ -33,7 +33,7 @@
         </a>
       </h5>
       <t-radio-group
-        v-model="formData.role.value"
+        v-model="formData.currentRole.value"
         variant="default-filled"
         default-value="examiner"
         class="mb-3"
