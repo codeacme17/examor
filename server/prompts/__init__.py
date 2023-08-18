@@ -1,6 +1,6 @@
 from .answer_examine import ANSWER_EXAMINE_PROMPT_CN, ANSWER_EXAMINE_PROMPT_EN
-from .cn.question_generate import QUESTION_GENERATE_PROMPT_CN, get_role_command as get_qg_role_command
-from .question_generate import QUESTION_GENERATE_PROMPT_CN, QUESTION_GENERATE_PROMPT_EN
+from .cn.question_generate import QUESTION_GENERATE_PROMPT_CN
+from .en.question_generate import QUESTION_GENERATE_PROMPT_EN
 
 
 def choose_prompt(
@@ -26,5 +26,4 @@ def choose_prompt(
 
 __all__ = [
     "choose_prompt",
-    "get_qg_role_command"
 ]

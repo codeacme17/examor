@@ -16,9 +16,7 @@ interviewer = """
 我会给您一个标题表示上下文对应的主题，您可以以上下文内容为基础扩展性的出题。也就是说，问题不必非在上下文中产生，但您不可以捏造您不知道的知识。
 """
 
-QUESTION_GENERATE_PROMPT_TEMP_CN = '''
-{command}
-
+PROMPT_TEMPLATE = '''
 ### 标题 ###
 {title}
 
@@ -31,16 +29,19 @@ QUESTION_GENERATE_PROMPT_TEMP_CN = '''
 '''
 
 
-def get_role_command():
-    if (os.environ.get("CURRENT_ROLE") == "examiner"):
+def _get_role():
+    current_role = os.environ.get("CURRENT_ROLE")
+    if current_role == "examiner":
         return examiner
-    if (os.environ.get("CURRENT_ROLE") == "teacher"):
+    elif current_role == "teacher":
         return teacher
-    if (os.environ.get("CURRENT_ROLE") == "interviewer"):
+    elif current_role == "interviewer":
         return interviewer
+    else:
+        return examiner
 
 
 QUESTION_GENERATE_PROMPT_CN = PromptTemplate(
-    template=QUESTION_GENERATE_PROMPT_TEMP_CN,
-    input_variables=["command", "title", "context"]
+    template=_get_role() + PROMPT_TEMPLATE,
+    input_variables=["title", "context"]
 )

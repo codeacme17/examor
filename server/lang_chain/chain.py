@@ -8,7 +8,6 @@ from langchain.callbacks import AsyncIteratorCallbackHandler
 import db_services as _dbs_
 from .llm import LLM
 from prompts import choose_prompt
-from prompts import get_qg_role_command
 
 
 class Chain:
@@ -26,18 +25,16 @@ class Chain:
         self.note_id = note_id
         self.file_id = file_id
         self.filename = filename
+        self.prompt_language = prompt_language
+        self.prompt_type = prompt_type
         self.llm_callbacks = [AsyncIteratorCallbackHandler()]
         self.llm_chain = self._init_llm_chain(
-            prompt_language,
-            prompt_type,
             temperature,
             streaming
         )
 
     def _init_llm_chain(
         self,
-        prompt_language: str,
-        prompt_type: str,
         temperature: int = 0,
         streaming: bool = False
     ):
@@ -48,8 +45,8 @@ class Chain:
         )
 
         prompt = choose_prompt(
-            prompt_language,
-            prompt_type
+            self.prompt_language,
+            self.prompt_type
         )
 
         return LLMChain(
@@ -85,7 +82,6 @@ class Chain:
     ):
         async with self.semaphore:
             res = await self.llm_chain.apredict(
-                command=get_qg_role_command(),
                 title=title,
                 context=doc.page_content
             )
