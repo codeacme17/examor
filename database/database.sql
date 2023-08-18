@@ -66,13 +66,19 @@ END;
 //
 DELIMITER ;
 
-CREATE TABLE t_record (
-	id int(12) auto_increment NOT NULL COMMENT 'answer record id',
-	question_id int(12) NOT NULL COMMENT 'question id',
-	answer_time DATETIME NOT NULL COMMENT 'last answer time',
-	score NUMERIC(3) DEFAULT 0 NULL COMMENT 'record answer score',
-	is_answered char(5) DEFAULT '0' NOT NULL COMMENT 'has finished answer  0-No  1-Yes',
-	CONSTRAINT t_record_pk PRIMARY KEY (id)
+CREATE TABLE t_profile (
+	id int(12) auto_increment NOT NULL COMMENT 'profile id',
+	question_amount int(12) DEFAULT 5 NOT NULL COMMENT 'how many questions need push to user',
+	current_role char(20) DEFAULT "examniner" NOT NULL COMMENT 'the role',
+	current_model char(20) DEFAULT "OpenAI" NOT NULL COMMENT 'the model',
+	openai_key varchar(100) NOT NULL COMMENT '',
+	azure_key varchar(100) NOT NULL COMMENT '',
+	openai_base varchar(100) NOT NULL COMMENT '',
+	openai_version varchar(100) NOT NULL COMMENT '',
+	deployment_name varchar(100) NOT NULL COMMENT '',
+	notion_key varchar(100) NOT NULL COMMENT '',
+	proxy varchar(100) NOT NULL COMMENT '',
+	CONSTRAINT t_profile_pk PRIMARY KEY (id)
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8
