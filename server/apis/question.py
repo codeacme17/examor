@@ -20,7 +20,7 @@ def examine_question(data: types.AnswerQuestion):
         id=data.id,
         title=note_info["name"],
         context=document_info["document"],
-        quesiton=question_info["content"],
+        question=question_info["content"],
         answer=data.answer
     )
 

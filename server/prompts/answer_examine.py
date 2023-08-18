@@ -11,7 +11,7 @@ Reference content:
      {context}
 
 Topic question:
-     {quesiton}
+     {question}
 
 my answer: 
      {answer}
@@ -30,7 +30,7 @@ Your return (using markdown syntax):
 
 ANSWER_EXAMINE_PROMPT_EN = PromptTemplate(
     template=ANSWER_EXAMINE_PROMPT_TEMP_EN,
-    input_variables=["title", "context", "quesiton", "answer"]
+    input_variables=["title", "context", "question", "answer"]
 )
 
 
@@ -45,7 +45,7 @@ ANSWER_EXAMINE_PROMPT_TEMP_CN = '''
     {context}
 
 题目问题: 
-    {quesiton}
+    {question}
 
 我的答案: 
     {answer}
@@ -64,5 +64,5 @@ ANSWER_EXAMINE_PROMPT_TEMP_CN = '''
 
 ANSWER_EXAMINE_PROMPT_CN = PromptTemplate(
     template=ANSWER_EXAMINE_PROMPT_TEMP_CN,
-    input_variables=["title", "context", "quesiton", "answer"]
+    input_variables=["title", "context", "question", "answer"]
 )

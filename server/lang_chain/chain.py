@@ -1,4 +1,3 @@
-import re
 import asyncio
 from typing import Awaitable
 from langchain import LLMChain
@@ -97,13 +96,12 @@ class Chain:
         id: int,
         title: str,
         context: str,
-        quesiton: str,
+        question: str,
         answer: str
     ):
         coroutine = wait_done(self.llm_chain.apredict(
-            title=title,
             context=context,
-            quesiton=quesiton,
+            question=question,
             answer=answer,
             callbacks=self.llm_callbacks
         ), self.llm_callbacks[0].done)
