@@ -40,6 +40,7 @@ CREATE TABLE t_question (
 	id int(12) auto_increment NOT NULL COMMENT 'question id',
 	content varchar(500) NOT NULL COMMENT 'question content',
 	document_id int(12) NOT NULL COMMENT 'document id',
+	designated_role char(20) NOT NULL COMMENT 'role when generating this question',
 	push_date DATE DEFAULT NULL COMMENT 'date the question needs to be asked',
 	is_pushed_today char(1) DEFAULT '0' NOT NULL COMMENT 'has pushed this quesiton at today to user  0-No  1-Yes',
 	is_answered_today char(1) DEFAULT '0' NOT NULL COMMENT 'user has answered this quesiton at today 0-No  1-Yes',

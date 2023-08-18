@@ -1,4 +1,5 @@
 import re
+import os
 import datetime
 
 from db_services.MySQLHandler import MySQLHandler
@@ -10,10 +11,10 @@ def save_question_to_db(
 ):
     question_content = remove_prefix_numbers(question_content)
     query = """
-            INSERT INTO t_question (content, document_id) 
-            VALUES (%s, %s)
+            INSERT INTO t_question (content, document_id, designated_role) 
+            VALUES (%s, %s, %s)
             """
-    data = (question_content, document_id, )
+    data = (question_content, document_id, os.environ.get("CURRENT_ROLE"), )
     MySQLHandler().insert_table_data(query, data)
 
 

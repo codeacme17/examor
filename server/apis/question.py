@@ -8,7 +8,6 @@ from db_services.MySQLHandler import MySQLHandler
 def examine_question(data: types.AnswerQuestion):
     question_info = _dbs_.share.get_question_info(data.id)
     document_info = _dbs_.share.get_document_info(question_info["document_id"])
-    note_info = _dbs_.share.get_note_info(document_info["note_id"])
 
     langchain_service = Chain(
         prompt_language=data.language,
@@ -18,9 +17,9 @@ def examine_question(data: types.AnswerQuestion):
 
     return langchain_service.aexamine_answer(
         id=data.id,
-        title=note_info["name"],
         context=document_info["document"],
         question=question_info["content"],
+        role=question_info["designated_role"],
         answer=data.answer
     )
 

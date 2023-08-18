@@ -27,19 +27,13 @@ class Chain:
         self.prompt_language = prompt_language
         self.prompt_type = prompt_type
         self.llm_callbacks = [AsyncIteratorCallbackHandler()]
-        self.llm_chain = self._init_llm_chain(
-            temperature,
-            streaming
-        )
+        self.temperature = temperature,
+        self.streaming = streaming,
 
-    def _init_llm_chain(
-        self,
-        temperature: int = 0,
-        streaming: bool = False
-    ):
+    def _init_llm_chain(self):
         llm_instance = LLM(
-            temperature=temperature,
-            streaming=streaming,
+            temperature=self.temperature,
+            streaming=self.streaming,
             callbacks=self.llm_callbacks
         )
 
@@ -79,8 +73,9 @@ class Chain:
         title: str,
         doc_id: int
     ):
+        llm_chain = self._init_llm_chain()
         async with self.semaphore:
-            res = await self.llm_chain.apredict(
+            res = await llm_chain.apredict(
                 title=title,
                 context=doc.page_content
             )
@@ -94,12 +89,12 @@ class Chain:
     async def aexamine_answer(
         self,
         id: int,
-        title: str,
         context: str,
         question: str,
         answer: str
     ):
-        coroutine = wait_done(self.llm_chain.apredict(
+        llm_chain = self._init_llm_chain()
+        coroutine = wait_done(llm_chain.apredict(
             context=context,
             question=question,
             answer=answer,
