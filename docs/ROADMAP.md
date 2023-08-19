@@ -16,7 +16,7 @@
 - [ ] Add more model options
 - [ ] Set up local proxy in Docker containers
 - [ ] Added data import and export features to back up data
-- [ ] Provide identity selection, allowing users to set the identity of teachers, examiners, interviewers, etc. that affect the strictness of detection and the divergence of generated questions
+- [x] Provide identity selection, allowing users to set the identity of teachers, examiners, interviewers, etc. that affect the strictness of detection and the divergence of generated questions
 
   | Role        | Divergence | Strictness |
   | ----------- | ---------- | ---------- |
