@@ -17,7 +17,7 @@ export const zhCN = {
     deleteNote: '删除该笔记',
     confirmDelete: '确认删除',
     finished: '已完成',
-    role: '角色介绍',
+    role: '角色手册',
     teacher: '教师',
     interviewer: '面试官',
     examiner: '考官',

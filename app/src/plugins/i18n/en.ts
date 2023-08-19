@@ -17,7 +17,7 @@ export const en = {
     deleteNote: 'delete this note',
     confirmDelete: 'confirm delete',
     finished: 'finished',
-    role: 'Role introduction',
+    role: 'Role Manual',
     teacher: 'Teacher',
     interviewer: 'Interviewer',
     examiner: 'Examiner',
