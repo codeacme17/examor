@@ -13,7 +13,7 @@ class LLM:
         max_retries=3,
         max_tokens=None
     ):
-        self.temperature = temperature
+        self.temperature = temperature if temperature != 0 else self._get_role_temperature()
         self.streaming = streaming
         self.callbacks = callbacks
         self.max_retries = max_retries
@@ -29,6 +29,7 @@ class LLM:
         return llm
 
     def _init_azure(self) -> AzureChatOpenAI:
+        print(self.temperature, "+++++++++++++")
         return AzureChatOpenAI(
             openai_api_base=os.environ["OPENAI_BASE"],
             openai_api_key=os.environ["AZURE_KEY"],
@@ -51,3 +52,11 @@ class LLM:
             max_tokens=self.max_tokens,
             openai_proxy=os.environ['PROXY']
         )
+
+    def _get_role_temperature(self):
+        if (os.environ.get("CURRENT_ROLE") == "examiner"):
+            return 0
+        if (os.environ.get("CURRENT_ROLE") == "teacher"):
+            return 0.5
+        if (os.environ.get("CURRENT_ROLE") == "interviewer"):
+            return 0.9

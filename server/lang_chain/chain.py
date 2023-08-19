@@ -1,4 +1,3 @@
-import re
 import asyncio
 from typing import Awaitable
 from langchain import LLMChain
@@ -25,36 +24,11 @@ class Chain:
         self.note_id = note_id
         self.file_id = file_id
         self.filename = filename
+        self.prompt_language = prompt_language
+        self.prompt_type = prompt_type
+        self.temperature = temperature
+        self.streaming = streaming
         self.llm_callbacks = [AsyncIteratorCallbackHandler()]
-        self.llm_chain = self._init_llm_chain(
-            prompt_language,
-            prompt_type,
-            temperature,
-            streaming
-        )
-
-    def _init_llm_chain(
-        self,
-        prompt_language: str,
-        prompt_type: str,
-        temperature: int = 0,
-        streaming: bool = False
-    ):
-        llm_instance = LLM(
-            temperature=temperature,
-            streaming=streaming,
-            callbacks=self.llm_callbacks
-        )
-
-        prompt = choose_prompt(
-            prompt_language,
-            prompt_type
-        )
-
-        return LLMChain(
-            prompt=prompt,
-            llm=llm_instance.llm,
-        )
 
     async def agenerate_questions(
         self,
@@ -62,6 +36,7 @@ class Chain:
         title: str,
     ):
         tasks = []
+        llm_chain = self._init_llm_chain("")
         for doc in docs:
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id,
@@ -69,7 +44,8 @@ class Chain:
                 self.filename,
                 doc.page_content
             )
-            tasks.append(self._agenerate_questions(doc, title, doc_id))
+            tasks.append(self._agenerate_questions(
+                llm_chain, doc, title, doc_id))
 
         try:
             await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * 20)
@@ -78,12 +54,13 @@ class Chain:
 
     async def _agenerate_questions(
         self,
+        llm_chain: LLMChain,
         doc: Document,
         title: str,
         doc_id: int
     ):
         async with self.semaphore:
-            res = await self.llm_chain.apredict(
+            res = await llm_chain.apredict(
                 title=title,
                 context=doc.page_content
             )
@@ -97,15 +74,15 @@ class Chain:
     async def aexamine_answer(
         self,
         id: int,
-        title: str,
         context: str,
-        quesiton: str,
-        answer: str
+        question: str,
+        answer: str,
+        role: str
     ):
-        coroutine = wait_done(self.llm_chain.apredict(
-            title=title,
+        llm_chain = self._init_llm_chain(role)
+        coroutine = wait_done(llm_chain.apredict(
             context=context,
-            quesiton=quesiton,
+            question=question,
             answer=answer,
             callbacks=self.llm_callbacks
         ), self.llm_callbacks[0].done)
@@ -117,6 +94,24 @@ class Chain:
             yield f"{token}"
         await task
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
+
+    def _init_llm_chain(self, role: str):
+        llm_instance = LLM(
+            temperature=self.temperature,
+            streaming=self.streaming,
+            callbacks=self.llm_callbacks
+        )
+
+        prompt = choose_prompt(
+            role,
+            self.prompt_language,
+            self.prompt_type
+        )
+
+        return LLMChain(
+            prompt=prompt,
+            llm=llm_instance.llm,
+        )
 
 
 def check_key_correct():

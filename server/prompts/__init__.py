@@ -1,8 +1,12 @@
-from .answer_examine import ANSWER_EXAMINE_PROMPT_CN, ANSWER_EXAMINE_PROMPT_EN
-from .question_generate import QUESTION_GENERATE_PROMPT_CN, QUESTION_GENERATE_PROMPT_EN
+from .cn.question_generate import QUESTION_GENERATE_PROMPT_CN
+from .en.question_generate import QUESTION_GENERATE_PROMPT_EN
+
+from .cn.answer_exmine import get_exmine_prompt_cn
+from .en.answer_exmine import get_exmine_prompt_en
 
 
 def choose_prompt(
+    role: str,
     prompt_language: str,
     prompt_type: str,
 ):
@@ -12,17 +16,17 @@ def choose_prompt(
         if (prompt_type == "question_generate"):
             prompt = QUESTION_GENERATE_PROMPT_EN
         if (prompt_type == "answer_examine"):
-            prompt = ANSWER_EXAMINE_PROMPT_EN
+            prompt = get_exmine_prompt_en(role)
 
     if (prompt_language == "zh-CN"):
         if (prompt_type == "question_generate"):
             prompt = QUESTION_GENERATE_PROMPT_CN
         if (prompt_type == "answer_examine"):
-            prompt = ANSWER_EXAMINE_PROMPT_CN
+            prompt = get_exmine_prompt_cn(role)
 
     return prompt
 
 
 __all__ = [
-    "choose_prompt"
+    "choose_prompt",
 ]

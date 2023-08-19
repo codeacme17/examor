@@ -25,7 +25,11 @@
       <h5 class="mb-3 text-medium-emphasis">
         {{ $t('subTitle.role') }},
         <a
-          href="https://github.com/codeacme17/examor#-inspiration"
+          :href="
+            locale === 'en'
+              ? 'https://github.com/codeacme17/examor/blob/main/docs/role.md'
+              : 'https://github.com/codeacme17/examor/blob/main/docs/cn-role.md'
+          "
           target="_blank"
         >
           {{ $t('button.role') }}
@@ -211,9 +215,11 @@
 <script setup lang="ts">
 import { ref, onUnmounted } from 'vue'
 import { watchDeep } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 import { orangeBgColor } from '@/utils'
 import { useProfileStore } from '@/store'
 
+const { locale } = useI18n()
 const PROFILE_STORE = useProfileStore()
 const formData = PROFILE_STORE.profile
 const isUpdateFormData = ref(false)

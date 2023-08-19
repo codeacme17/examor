@@ -17,7 +17,7 @@ export const en = {
     deleteNote: 'delete this note',
     confirmDelete: 'confirm delete',
     finished: 'finished',
-    role: 'Role introduction',
+    role: 'Role Manual',
     teacher: 'Teacher',
     interviewer: 'Interviewer',
     examiner: 'Examiner',
@@ -58,7 +58,7 @@ export const en = {
     emptyNoteEnd: 'page to create your first note',
     changePlan:
       'The new plan will be implemented tomorrow after submitting the changes',
-    role: 'Roles will affect the generation of problems and the results of detection',
+    role: 'Roles affect question generation and answer detection results',
   },
 
   // label of input field
