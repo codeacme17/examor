@@ -74,11 +74,13 @@ After users receive daily questions, they can provide answers. GPT will score, v
 
 ### Ebbinghaus Memory
 
-> I've implemented a simplified version of Ebbinghaus memory, currently consisting of only 8 lines of code. I plan to optimize this function further in the future.
+> I've implemented a simplified version of Ebbinghaus memory, currently consisting of only 8 lines of code. I plan to optimize this function further in the future (v0.1).
 
 Regarding the actual function, once GPT generates a test, the score is recorded and affects the future review date. Higher scores result in longer intervals until the next review.
 
 ### Role Selection
+
+> ⚠️ The feature in the current version might not be entirely stable. In the upcoming plans, I will continue to optimize this feature (v0.1).
 
 <img width="500" src="/docs/screen-shot/role-en.png" />
 
