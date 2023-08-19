@@ -78,6 +78,12 @@ After users receive daily questions, they can provide answers. GPT will score, v
 
 Regarding the actual function, once GPT generates a test, the score is recorded and affects the future review date. Higher scores result in longer intervals until the next review.
 
+### Role Selection
+
+<img width="500" src="/docs/screen-shot/role-en.png" />
+
+Roles can provide more possibilities for question generation and assessment. You can set roles in the configuration page. For more information about various roles, it's recommended to refer to the [Role Manual](/docs/role.md).
+
 ## 📦️ Modules
 
 ### Notes Management
