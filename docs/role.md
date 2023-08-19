@@ -1,6 +1,6 @@
 # Role Manual
 
-> Version: 0.0.0
+> Version: 0.1
 
 ### Attribute Introduction
 
