@@ -21,6 +21,8 @@
 
 ## 🏁 开始
 
+> 我十分抱歉，docker-compose 的启动方式目前版本存在一些问题，**我会尽快修复**。当前如果想体验 examor 可以使用 [开发者方式](https://github.com/codeacme17/examor/blob/main/CONTRIBUTING.md#development-setup) 进行尝试
+
 #### 克隆当前的仓库
 
 ```bash
