@@ -9,6 +9,7 @@ services:
 
   server:
     build: ./server/
+    command: ["sh", "-c", "sleep 30 && uvicorn main:app --host 0.0.0.0 --port 51717"]
     depends_on:
       - database
     ports:
