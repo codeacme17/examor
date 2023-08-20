@@ -21,7 +21,7 @@
 
 ## 🏁 开始
 
-> 我十分抱歉，docker-compose 的启动方式目前版本存在一些问题，**我会尽快修复**。当前如果想体验 examor 可以使用 [开发者方式](https://github.com/codeacme17/examor/blob/main/CONTRIBUTING.md#development-setup) 进行尝试
+> 我十分抱歉，在使用 docker-compose 启动项目时，可能 proxy 无法使用，**我会尽快修复**。当前可以使用 [开发者方式](https://github.com/codeacme17/examor/blob/main/CONTRIBUTING.md#development-setup) 避免该问题。
 
 #### 克隆当前的仓库
 
@@ -38,7 +38,7 @@ docker-compose up
 
 > 请确保您的本机安装了 Docker，并且本地的 `51717`、`51818` 和 `52020` 端口没有被占用
 
-在浏览器中打开 `http://localhost:51818` 开始使用 examor
+在浏览器中打开 `http://localhost:51818` 开始使用 examor（因为模块优化方案，在第一次加载项目或切换页面时会比较缓慢）
 
 ## ✨ 功能
 

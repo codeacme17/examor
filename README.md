@@ -43,7 +43,7 @@ When I'm learning a new technology, I have the habit of taking notes and jotting
 
 ## 🏁 Start
 
-> I am very sorry, there are some problems in the current version of the docker-compose startup method, **I will fix it as soon as possible**. At present, if you want to experience examor, you can use the [developer method](https://github.com/codeacme17/examor/blob/main/CONTRIBUTING.md#development-setup) to try it out.
+> I'm very sorry, the proxy may not be available when starting the project with docker-compose, **I'll fix it as soon as possible**. This problem can currently be avoided by using the [developer method](https://github.com/codeacme17/examor/blob/main/CONTRIBUTING.md#development-setup).
 
 #### Clone this repo
 
@@ -60,7 +60,7 @@ docker-compose up
 
 > Please make sure Docker is installed on your local machine, and ports `51717`, `51818`, and `52020` are available on your local host
 
-Open `http://localhost:51818` in your browser to access Examor.
+Open `http://localhost:51818` in your browser to access Examor. (Due to optimization scheme for modules, it may be slow when loading the program or entering a certain page for the first time)
 
 ## ✨ Features
 
