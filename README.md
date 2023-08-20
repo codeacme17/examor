@@ -120,7 +120,7 @@ Roles can provide more possibilities for question generation and assessment. You
 
 ## Contributing
 
-Contributions to the project are welcome! If you find a bug or have an idea for a new feature, please submit an issue or pull request.
+Contributions to the project are welcome! If you find a bug or have an idea for a new feature, please submit an issue or pull request. See more in [CONTRIBUTING](/CONTRIBUTING.md).
 
 ## License
 
