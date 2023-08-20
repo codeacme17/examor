@@ -13,5 +13,3 @@ COPY . /app
 ENV DOCKER=true
 
 EXPOSE 51818
-
-CMD ["pnpm", "dev"]

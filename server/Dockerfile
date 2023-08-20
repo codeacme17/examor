@@ -1,4 +1,3 @@
-# Use the Python base image
 FROM python:3.11.2-bullseye
 
 WORKDIR /app
