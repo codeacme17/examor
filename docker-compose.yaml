@@ -15,10 +15,6 @@ services:
       - database
     ports:
       - '51717:51717'
-      - "1717:1717"
-    environment:
-      - HTTP_PROXY=http://127.0.0.1:1717
-      - HTTPS_PROXY=http://127.0.0.1:1717
 
   database:
     build: ./database/
