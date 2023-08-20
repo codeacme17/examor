@@ -43,7 +43,7 @@ When I'm learning a new technology, I have the habit of taking notes and jotting
 
 ## 🏁 Start
 
-> I am very sorry, there are some problems in the current version of the docker-compose startup method, I will fix it as soon as possible. At present, if you want to experience examor, you can use the developer method to try it out., there are some problems in the current version of the docker-compose startup method, and **I will fix it as soon as possible**. At present, if you want to experience examor, you can use the [developer method](https://github.com/codeacme17/examor/blob/main/CONTRIBUTING.md#development-setup) to try it out.
+> I am very sorry, there are some problems in the current version of the docker-compose startup method, **I will fix it as soon as possible**. At present, if you want to experience examor, you can use the [developer method](https://github.com/codeacme17/examor/blob/main/CONTRIBUTING.md#development-setup) to try it out.
 
 #### Clone this repo
 
