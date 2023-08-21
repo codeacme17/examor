@@ -63,8 +63,6 @@ def is_duplicate_file(
     data = (note_id, file_name, )
     duplicate_list = MySQLHandler().execute_query(query, data)
 
-    print(duplicate_list)
-
     if (len(duplicate_list)):
         return True
     else:

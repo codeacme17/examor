@@ -29,7 +29,6 @@ class LLM:
         return llm
 
     def _init_azure(self) -> AzureChatOpenAI:
-        print(self.temperature, "+++++++++++++")
         return AzureChatOpenAI(
             openai_api_base=os.environ["OPENAI_BASE"],
             openai_api_key=os.environ["AZURE_KEY"],
