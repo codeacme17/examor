@@ -1,6 +1,6 @@
 # Roadmap
 
-## v1.3 - 70% Progress
+## v0.3.0 - 70% Progress
 
 ### Features
 
