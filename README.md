@@ -1,4 +1,3 @@
-<samp>
 </br>
 </br>
 
@@ -29,7 +28,6 @@
     <img height="21" src="https://img.shields.io/badge/License-AGPL--3.0-ffffff?style=flat-square&labelColor=fff&color=7d09f1" alt="license">
   </a>
 </p>
-</samp>
 
 </br>
 <img width="870" src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
