@@ -55,7 +55,7 @@
       </v-card>
 
       <!-- Enswer block -->
-      <examine :id="questionInfo.id" v-if="trigger" />
+      <examine-block :id="questionInfo.id" v-if="trigger" />
     </section>
   </v-container>
 </template>

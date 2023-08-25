@@ -84,7 +84,7 @@
         </v-card>
 
         <!-- Examine block -->
-        <examine :id="pickedQuestion.id" />
+        <examine-block :id="pickedQuestion.id" />
       </section>
     </Transition>
   </v-container>
@@ -102,7 +102,7 @@ import { useRoute } from 'vue-router'
 import { useFetch, useTodayListCache } from '@/hooks'
 import { greenBgColor, toMarkdown } from '@/utils'
 import { NOTE_API } from '@/apis'
-import type { TableItem } from '@/components/QuestionTable.vue'
+import type { TableItem } from '@/components/tables/QuestionTable.vue'
 
 const route = useRoute()
 
