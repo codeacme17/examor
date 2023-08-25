@@ -28,7 +28,6 @@ export const checkAnswerIsInCache = (questionId: string) => {
     let chunks: string[] = []
     if (key.includes(':')) chunks = key.split(':')
     if (chunks[1] === questionId) {
-      console.log(questionId)
       return true
     }
     i++

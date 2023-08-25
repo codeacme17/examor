@@ -6,7 +6,6 @@ export const useWatchChange = (obj: any) => {
   watch(
     obj,
     (oldValue, newValue) => {
-      console.log(oldValue, newValue)
       if (oldValue === newValue) isChanged.value = false
       else isChanged.value = true
     },
