@@ -30,9 +30,10 @@
 
         <section class="px-4">
           <h3 class="mb-2">{{ $t('title.question') }}</h3>
-          <p class="mb-6 text-body-1">
-            {{ questionInfo.content }}
-          </p>
+          <p
+            class="mb-6 text-body-1"
+            v-html="toMarkdown(questionInfo.content)"
+          />
 
           <!-- Memory progress -->
           <v-tooltip
@@ -68,7 +69,7 @@ export default {
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
-import { greenBgColor } from '@/utils'
+import { greenBgColor, toMarkdown } from '@/utils'
 import { useFetch } from '@/hooks'
 import { QUESTION_API } from '@/apis'
 
