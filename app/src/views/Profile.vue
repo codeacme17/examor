@@ -12,7 +12,7 @@
       <v-slider
         v-model:model-value="formData.questionAmount.value"
         show-ticks
-        thumb-label
+        thumb-label·
         density="compact"
         prepend-icon="mdi-beaker-question"
         :min="3"
@@ -27,8 +27,8 @@
         <a
           :href="
             locale === 'en'
-              ? 'https://github.com/codeacme17/examor/blob/main/docs/role.md'
-              : 'https://github.com/codeacme17/examor/blob/main/docs/cn-role.md'
+              ? 'https://github.com/codeacme17/examor/blob/main/docs/en-role.md'
+              : 'https://github.com/codeacme17/examor/blob/main/docs/zh-role.md'
           "
           target="_blank"
         >
