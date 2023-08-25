@@ -11,7 +11,7 @@ class LLM:
         callbacks: list = [],
         max_retries=3,
         max_tokens=None,
-        timeout=120
+        timeout=10
     ):
         self.temperature = temperature if temperature != 0 else self._get_role_temperature()
         self.streaming = streaming
@@ -40,7 +40,7 @@ class LLM:
             callbacks=self.callbacks,
             max_retries=self.max_retries,
             max_tokens=self.max_tokens,
-            request_timeout=self.timeout
+            request_timeout=self.timeout,
         )
 
     def _init_openai(self) -> ChatOpenAI:

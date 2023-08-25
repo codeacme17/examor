@@ -122,8 +122,9 @@ class Chain:
 
 def check_key_correct():
     try:
-        LLM(max_tokens=1).llm([HumanMessage(content="hi")])
-    except BaseException as e:
+        LLM(max_tokens=1, max_retries=0).llm(
+            [HumanMessage(content="hi")])
+    except Exception as e:
         raise e
     return True
 
