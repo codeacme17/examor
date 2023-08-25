@@ -97,6 +97,7 @@ class Chain:
             await task
         except Exception as e:
             yield str(e)
+            return
 
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
 
