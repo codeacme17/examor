@@ -34,8 +34,6 @@ export const useTodayListCache = async (
   return [list, loading]
 }
 
-export const useCurrentData = () => {}
-
 export const useListState = () => {
   const pendingList = useLocalStorage(`${today.value}:pendingList`, new Set())
   const finishedList = useLocalStorage(`${today.value}:finishedList`, new Set())
