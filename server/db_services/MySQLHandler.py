@@ -86,7 +86,7 @@ class MySQLHandler:
             self.connect_to_mysql()
             self.cursor.execute(query, data)
             self.conn.commit()
-            print("Note with ID {} deleted successfully.".format(id))
+            print("Data deleted successfully.")
 
         except mysql.connector.Error as err:
             self.conn.rollback()

@@ -79,12 +79,15 @@ async def add_note(
         return api_result.error("It is not possible to upload more than three files at one time")
 
     if (len(files) > 0):
-        await upload_file(
-            language,
-            _dbs_.note.get_inserted_note_id(noteName),
-            noteName,
-            files
-        )
+        try:
+            await upload_file(
+                language=language,
+                noteId=_dbs_.note.get_inserted_note_id(noteName),
+                noteName=noteName,
+                files=files
+            )
+        except Exception as e:
+            return api_result.error(str(e))
 
     if (notionId is not None):
         pass
@@ -108,7 +111,10 @@ async def add_file(
         return api_result.error("It is not possible to upload more than three files at one time")
 
     if (len(files) > 0):
-        await upload_file(language, noteId, noteName, files)
+        try:
+            await upload_file(language, noteId, noteName, files)
+        except Exception as e:
+            return api_result.error(str(e))
 
     if (notionId is not None):
         pass

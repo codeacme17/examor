@@ -36,21 +36,18 @@ class Chain:
         title: str,
     ):
         tasks = []
-        llm_chain = self._init_llm_chain("")
+        llm_chain = self._init_llm_chain(20, "")
         for doc in docs:
             doc_id = _dbs_.document.save_doc_to_db(
-                self.note_id,
-                self.file_id,
-                self.filename,
-                doc.page_content
-            )
+                self.note_id, self.file_id, self.filename, doc.page_content)
             tasks.append(self._agenerate_questions(
                 llm_chain, doc, title, doc_id))
 
         try:
             await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * 20)
-        except asyncio.TimeoutError:
-            await handle_timeout()
+        except Exception as e:
+            _dbs_.file.delete_file(self.file_id)
+            raise e
 
     async def _agenerate_questions(
         self,
@@ -79,7 +76,7 @@ class Chain:
         answer: str,
         role: str
     ):
-        llm_chain = self._init_llm_chain(role)
+        llm_chain = self._init_llm_chain(60, role)
         coroutine = wait_done(llm_chain.apredict(
             context=context,
             question=question,
@@ -101,11 +98,12 @@ class Chain:
 
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
 
-    def _init_llm_chain(self, role: str):
+    def _init_llm_chain(self, timeout: int, role: str):
         llm_instance = LLM(
             temperature=self.temperature,
             streaming=self.streaming,
-            callbacks=self.llm_callbacks
+            callbacks=self.llm_callbacks,
+            timeout=timeout
         )
 
         prompt = choose_prompt(
@@ -126,10 +124,6 @@ def check_key_correct():
     except BaseException as e:
         raise e
     return True
-
-
-async def handle_timeout():
-    print("Tasks took too long and timed out!")
 
 
 async def wait_done(

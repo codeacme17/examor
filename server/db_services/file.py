@@ -32,3 +32,14 @@ def get_uploading_files():
             WHERE is_uploading = "1";
             """
     return MySQLHandler().execute_query(query)
+
+
+def delete_file(
+    file_id: int
+):
+    query = """
+            DELETE FROM t_file
+            WHERE id = %s;
+             """
+    data = (file_id, )
+    MySQLHandler().delete_table_data(query, data)

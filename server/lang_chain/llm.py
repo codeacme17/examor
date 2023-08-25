@@ -10,7 +10,7 @@ class LLM:
         callbacks: list = [],
         max_retries=3,
         max_tokens=None,
-        timeout=10
+        timeout=120
     ):
         self.temperature = temperature if temperature != 0 else self._get_role_temperature()
         self.streaming = streaming
