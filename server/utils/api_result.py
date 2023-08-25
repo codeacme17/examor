@@ -1,4 +1,3 @@
-import json
 import datetime
 
 from fastapi.encoders import jsonable_encoder

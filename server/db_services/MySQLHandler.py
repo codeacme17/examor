@@ -1,5 +1,5 @@
-import mysql.connector
 import os
+import mysql.connector
 
 
 class MySQLHandler:

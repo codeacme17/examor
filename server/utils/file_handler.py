@@ -1,6 +1,7 @@
 from fastapi import UploadFile
 
 import db_services as _dbs_
+
 from lang_chain.chain import Chain
 from loaders import split_doc
 
@@ -14,7 +15,7 @@ async def upload_file(
     for file in files:
         filename = file.filename
         file_type = file.content_type
-        file_id = _dbs_.file.add_file_to_db(note_id=noteId, filename=filename)
+        file_id = _dbs_.file.add_file_to_db(noteId, filename)
         file_content = await file.read()
         docs = split_doc(file_type, file_content.decode('utf-8'))
 

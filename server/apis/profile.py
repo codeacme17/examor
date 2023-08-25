@@ -1,4 +1,5 @@
 import db_services as _dbs_
+
 from utils import api_result, types
 from lang_chain import check_key_correct as _check_key_correct
 
@@ -17,7 +18,7 @@ def set_profile(data: types.Profile):
 def check_key_correct():
     try:
         _check_key_correct()
-    except BaseException as e:
-        return api_result.error(e.error.message)
+    except Exception as e:
+        return api_result.error(str(e))
 
     return api_result.success()

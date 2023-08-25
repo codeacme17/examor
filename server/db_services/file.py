@@ -43,3 +43,22 @@ def delete_file(
              """
     data = (file_id, )
     MySQLHandler().delete_table_data(query, data)
+
+
+def is_duplicate(
+    note_id: int,
+    file_name: str
+) -> bool:
+    query = """
+            SELECT *
+            FROM t_file
+            WHERE note_id = %s
+            AND file_name = %s;
+            """
+    data = (note_id, file_name, )
+    duplicate_list = MySQLHandler().execute_query(query, data)
+
+    if (len(duplicate_list)):
+        return True
+    else:
+        return False

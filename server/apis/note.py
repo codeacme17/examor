@@ -2,42 +2,24 @@ import os
 import db_services as _dbs_
 
 from fastapi import File, Form, UploadFile
-from utils import api_result, types
-from db_services.MySQLHandler import MySQLHandler
-from utils import upload_file
+from utils import api_result, types, upload_file
 
 
 # Get notes list
 def get_notes():
-    query = """
-            SELECT * 
-            FROM t_note
-            """
-    res = MySQLHandler().execute_query(query)
+    res = _dbs_.note.get_all_notes()
     return api_result.success(res)
 
 
 # Get note info
 def get_note(id: int):
-    query = """
-            SELECT * 
-            FROM t_note 
-            WHERE id = %s
-            """
-    data = (id, )
-    res = MySQLHandler().execute_query(query, data, single=True)
+    res = _dbs_.note.get_note_by_id(id)
     return api_result.success(res)
 
 
 # Get file list by note id
-def get_files_by_noteId(noteId):
-    query = """
-            SELECT *
-            FROM t_file
-            WHERE note_id = %s
-            """
-    data = (noteId, )
-    res = MySQLHandler().execute_query(query, data)
+def get_files_by_id(id: int):
+    res = _dbs_.note.get_all_files_by_id(id)
     return api_result.success(res)
 
 
@@ -72,7 +54,7 @@ async def add_note(
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),
 ):
-    if (_dbs_.share.is_duplicate_note(noteName)):
+    if (_dbs_.note.is_duplicate(noteName)):
         return api_result.error("The same note name cannot be created repeatedly")
 
     if (len(files) > 3):
@@ -92,7 +74,7 @@ async def add_note(
     if (notionId is not None):
         pass
 
-    return api_result.success("add note successfully")
+    return api_result.success("Note added successfully")
 
 
 # Add new files to note
@@ -104,7 +86,7 @@ async def add_file(
     notionId: str = Form(default=None)
 ):
     for file in files:
-        if (_dbs_.share.is_duplicate_file(noteId, file.filename)):
+        if (_dbs_.file.is_duplicate(noteId, file.filename)):
             return api_result.error("The same file cannot be uploaded under one note")
 
     if (len(files) > 3):
@@ -119,27 +101,16 @@ async def add_file(
     if (notionId is not None):
         pass
 
-    return api_result.success("add files successfully")
+    return api_result.success("Files added  successfully")
 
 
 # Delete note by note id
 def delete_note(id: int):
-    query = """
-            DELETE FROM t_note
-            WHERE id = %s;
-            """
-    data = (id, )
-    MySQLHandler().delete_table_data(query, data)
-    return api_result.success()
+    _dbs_.note.delete_note(id)
+    return api_result.success("Note %s deleted successfully", id)
 
 
 # Update note icon
 def update_note_icon(data: types.Icon):
-    query = """
-            UPDATE t_note
-            SET icon = %s
-            WHERE id = %s;
-            """
-    data = (data.icon, data.id, )
-    MySQLHandler().update_table_data(query, data, )
-    return api_result.success()
+    _dbs_.note.update_icon(data)
+    return api_result.success("Icon updated successfully")

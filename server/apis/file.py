@@ -1,7 +1,6 @@
 import db_services as _dbs_
 
 from utils import api_result
-from db_services.MySQLHandler import MySQLHandler
 
 
 # Delete file

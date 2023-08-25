@@ -5,6 +5,16 @@ import datetime
 from db_services.MySQLHandler import MySQLHandler
 
 
+def get_question_by_id(id: int):
+    query = """
+            SELECT *
+            FROM t_question
+            WHERE id = %s
+            """
+    data = (id, )
+    return MySQLHandler().execute_query(query, data, single=True)
+
+
 def save_question_to_db(
     question_content: str,
     document_id: int,
@@ -32,6 +42,17 @@ async def update_question_state(
     push_date = get_push_date(score)
     data = (answer, score, "1", push_date, id, )
     MySQLHandler().update_table_data(query, data)
+
+
+def get_random_question_info():
+    query = """
+            SELECT *
+            FROM t_question
+            WHERE is_answered_today != '1' AND is_pushed_today = '0'
+            ORDER BY RAND()
+            LIMIT 1;
+            """
+    return MySQLHandler().execute_query(query, single=True)
 
 
 def remove_prefix_numbers(text):
