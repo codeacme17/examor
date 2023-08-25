@@ -2,7 +2,7 @@ import axios from 'axios'
 import { MessagePlugin } from 'tdesign-vue-next'
 
 const _axios = axios.create({
-  timeout: 30 * 1000,
+  timeout: 60 * 1000,
 })
 
 export type ResponseBody = {

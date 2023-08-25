@@ -1,6 +1,16 @@
 from db_services.MySQLHandler import MySQLHandler
 
 
+def get_document_by_id(id: int):
+    query = """
+            SELECT *
+            FROM t_document
+            WHERE id = %s
+            """
+    data = (id, )
+    return MySQLHandler().execute_query(query, data, single=True)
+
+
 def save_doc_to_db(
     note_id: int,
     file_id: int,

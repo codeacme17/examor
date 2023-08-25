@@ -16,8 +16,6 @@ export function useFetch(
       if (res.code === 0 && successMessage)
         MessagePlugin.success(successMessage, 2000)
       return res
-    } catch (err: any) {
-      MessagePlugin.error(err, 2000)
     } finally {
       loading.value = false
     }

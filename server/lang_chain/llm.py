@@ -1,4 +1,5 @@
 import os
+
 from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
 
 
@@ -39,7 +40,7 @@ class LLM:
             callbacks=self.callbacks,
             max_retries=self.max_retries,
             max_tokens=self.max_tokens,
-            request_timeout=self.timeout
+            request_timeout=self.timeout,
         )
 
     def _init_openai(self) -> ChatOpenAI:

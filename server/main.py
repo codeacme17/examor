@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI, File, Form, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.responses import StreamingResponse
 
@@ -61,8 +60,8 @@ def get_note(id: int):
 
 
 @app.get("/note/{id}/files")
-def get_files_by_noteId(id: int):
-    return _apis_.note.get_files_by_noteId(id)
+def get_files_by_id(id: int):
+    return _apis_.note.get_files_by_id(id)
 
 
 @app.post("/note/{id}/file")
