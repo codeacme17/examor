@@ -92,7 +92,12 @@ class Chain:
         async for token in self.llm_callbacks[0].aiter():
             exmine += token
             yield f"{token}"
-        await task
+
+        try:
+            await task
+        except Exception as e:
+            yield str(e)
+
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
 
     def _init_llm_chain(self, role: str):
