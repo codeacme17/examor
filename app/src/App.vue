@@ -2,7 +2,7 @@
   <router-view />
 
   <!-- Uploading file float box -->
-  <uploading-files />
+  <uploading-float-frame />
 
   <!-- Global message snack bar -->
   <snack-bar />

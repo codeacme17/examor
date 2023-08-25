@@ -6,56 +6,16 @@
     </empty-block>
 
     <section v-else>
-      <v-card class="pa-3" :color="greenBgColor" :loading="getRQLoading">
-        <section class="mb-5 d-flex justify-center align-center">
-          <!-- Refresh buttom -->
-          <v-btn
-            icon="mdi-refresh"
-            size="small"
-            elevation="0"
-            variant="text"
-            class="mr-2"
-            style="font-size: 16px"
-            @click="hanleClickRefresh"
-          />
-
-          <!-- Note name tag -->
-          <div>
-            {{ $t('title.random') }}
-            <v-chip size="small" class="ml-1">
-              {{ questionInfo.note_name }}
-            </v-chip>
-          </div>
-        </section>
-
-        <section class="px-4">
-          <h3 class="mb-2">{{ $t('title.question') }}</h3>
-          <p
-            class="mb-6 text-body-1"
-            v-html="toMarkdown(questionInfo.content)"
-          />
-
-          <!-- Memory progress -->
-          <v-tooltip
-            location="top right"
-            open-delay="200"
-            :text="$t('hint.memory')"
-            :open-on-hover="true"
-          >
-            <template v-slot:activator="{ props }">
-              <v-progress-linear
-                v-bind="props"
-                class="mt-1 mb-2"
-                max="100"
-                :model-value="questionInfo.progress"
-              />
-            </template>
-          </v-tooltip>
-        </section>
-      </v-card>
+      <!-- Quesiton block -->
+      <question-block
+        v-bind="questionInfo"
+        :type="'random'"
+        :loading="getRQLoading"
+        @refresh="hanleClickRefresh"
+      />
 
       <!-- Enswer block -->
-      <examine :id="questionInfo.id" v-if="trigger" />
+      <examine-block :id="questionInfo.id" v-if="trigger" />
     </section>
   </v-container>
 </template>
@@ -69,7 +29,6 @@ export default {
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
-import { greenBgColor, toMarkdown } from '@/utils'
 import { useFetch } from '@/hooks'
 import { QUESTION_API } from '@/apis'
 

@@ -101,13 +101,13 @@ async def add_file(
     if (notionId is not None):
         pass
 
-    return api_result.success("Files added  successfully")
+    return api_result.success("Files added successfully")
 
 
 # Delete note by note id
 def delete_note(id: int):
     _dbs_.note.delete_note(id)
-    return api_result.success("Note %s deleted successfully", id)
+    return api_result.success("Note deleted successfully")
 
 
 # Update note icon
