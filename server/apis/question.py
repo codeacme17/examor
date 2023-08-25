@@ -49,6 +49,7 @@ def get_random_question():
     return api_result.success({
         "id": question_info["id"],
         "content": question_info["content"],
+        "designated_role": question_info["designated_role"],
         "progress": question_info["progress"],
         "note_name": note_info["name"]
     })

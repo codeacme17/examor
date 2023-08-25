@@ -27,7 +27,7 @@
 
     <section class="px-4 pt-3">
       <!-- Question content -->
-      <h3 class="mb-2">
+      <div class="mb-2 d-flex align-center">
         <v-btn
           v-if="props.type === 'common'"
           icon="mdi-arrow-left"
@@ -37,8 +37,11 @@
           style="color: azure"
           @click="emits('back')"
         />
-        {{ $t('title.question') }}
-      </h3>
+        <h3>
+          {{ $t('title.question') }}
+        </h3>
+        <div class="ml-2">{{ switchRoleEmoji }}</div>
+      </div>
       <p class="mb-6 text-body-1" v-html="toMarkdown(props.content)" />
 
       <!-- Memory progress -->
@@ -64,11 +67,13 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
 import { greenBgColor, toMarkdown } from '@/utils'
+import { computed } from 'vue'
 
 const props = defineProps<{
   type: 'random' | 'common'
   note_name: string
   content: string
+  designated_role: 'examiner' | 'teacher' | 'interviewer'
   progress: number
   loading?: boolean
 }>()
@@ -78,4 +83,17 @@ const emits = defineEmits(['refresh', 'back'])
 const hanleClickRefresh = useDebounceFn(async () => {
   emits('refresh')
 }, 500)
+
+const switchRoleEmoji = computed(() => {
+  switch (props.designated_role) {
+    case 'examiner':
+      return '🥷'
+    case 'teacher':
+      return '👩‍🏫'
+    case 'interviewer':
+      return '👨‍💻'
+    default:
+      return ''
+  }
+})
 </script>

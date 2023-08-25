@@ -73,7 +73,8 @@ const { t } = useI18n()
 export type TableItem = {
   id: number
   content: string
-  document_id: number
+  designated_role: string
+  document_id?: number
   is_pushed?: string
   is_answered_today?: string
   progress?: number
