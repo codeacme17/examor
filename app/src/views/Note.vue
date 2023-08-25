@@ -44,44 +44,11 @@
       <!-- Exmine section -->
       <section v-else>
         <!-- Question block -->
-        <v-card class="pa-3" :color="greenBgColor">
-          <section class="px-4">
-            <h3 class="mt-1 mb-3 d-flex align-center">
-              <v-btn
-                icon="mdi-arrow-left"
-                size="x-small"
-                class="mr-3"
-                theme="dark"
-                style="color: azure"
-                @click="isShowAnswer = false"
-              />
-              {{ $t('title.question') }}
-            </h3>
-
-            <!-- Quesiton content -->
-            <p
-              class="mb-6 text-body-1"
-              v-html="toMarkdown(pickedQuestion.content)"
-            />
-
-            <!-- Memory progress -->
-            <v-tooltip
-              location="top right"
-              open-delay="200"
-              :text="$t('hint.memory')"
-              :open-on-hover="true"
-            >
-              <template v-slot:activator="{ props }">
-                <v-progress-linear
-                  v-bind="props"
-                  class="mt-1 mb-2"
-                  max="100"
-                  :model-value="pickedQuestion.progress"
-                />
-              </template>
-            </v-tooltip>
-          </section>
-        </v-card>
+        <question-block
+          v-bind="pickedQuestion"
+          :type="'common'"
+          @back="isShowAnswer = false"
+        />
 
         <!-- Examine block -->
         <examine-block :id="pickedQuestion.id" />
@@ -100,7 +67,6 @@ export default {
 import { ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useFetch, useTodayListCache } from '@/hooks'
-import { greenBgColor, toMarkdown } from '@/utils'
 import { NOTE_API } from '@/apis'
 import type { TableItem } from '@/components/tables/QuestionTable.vue'
 
