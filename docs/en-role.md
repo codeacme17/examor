@@ -36,6 +36,12 @@ The teacher is a benevolent figure. They treat your responses as a casual test a
 
 The interviewer immerses you in an interview scenario. Their questions are nearly all derived from expanding on the document. Hence, this role is the most challenging. Yet, their grading isn't overly strict; they evaluate your breadth of knowledge, akin to a real interview where assessment covers various dimensions.
 
+### Notice
+
+When generating a question, the role assumed during question generation is stored within the information of that question. In other words, if a question is generated with the role of an **examiner**, then when evaluating responses to that question in the future, it will also be assessed from the perspective of an **examiner**. The role used for question generation is displayed within the question component.
+
+<img src="./screen-shot/role-emoji-en.png">
+
 ### Case Study
 
 In this section, I will use the three roles to generate questions for the same document, showcasing the distinctions in the roles' approaches. Below is the document content:

@@ -62,9 +62,9 @@ docker-compose up
 
 > ⚠️ 目前版本的功能可能还不够稳定，在后续的计划中我会不断优化该功能（v0.1）
 
-<img  width="500"  src="/docs/screen-shot/role-cn.png" />
+<img  width="500"  src="/docs/screen-shot/zh-role.png" />
 
-角色可以为题目生成和检测创造更多的可能性，您可以在配置页面中设置角色，更多的角色简介建议查看 [角色手册](/docs//cn-role.md)
+角色可以为题目生成和检测创造更多的可能性，您可以在配置页面中设置角色，更多的角色简介建议查看 [角色手册](/docs//zh-role.md)
 
 ## 📦️ 模块
 

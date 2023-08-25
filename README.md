@@ -12,7 +12,7 @@
 </p>
 
 <p>
-  <a href="https://github.com/codeacme17/examor/blob/main/docs/cn-doc.md">
+  <a href="https://github.com/codeacme17/examor/blob/main/docs/zh-doc.md">
     <img height="21" src="https://img.shields.io/badge/zh--CN-7d09f1?style=flat-square" alt="zh-cn">
   </a>
   <a href="https://github.com/codeacme17/examor/blob/main/docs/ROADMAP.md">
@@ -82,9 +82,9 @@ Regarding the actual function, once GPT generates a test, the score is recorded 
 
 > ⚠️ The feature in the current version might not be entirely stable. In the upcoming plans, I will continue to optimize this feature (v0.1).
 
-<img width="500" src="/docs/screen-shot/role-en.png" />
+<img width="500" src="/docs/screen-shot/en-role.png" />
 
-Roles can provide more possibilities for question generation and assessment. You can set roles in the configuration page. For more information about various roles, it's recommended to refer to the [Role Manual](/docs/role.md).
+Roles can provide more possibilities for question generation and assessment. You can set roles in the configuration page. For more information about various roles, it's recommended to refer to the [Role Manual](/docs/en-role.md).
 
 ## 📦️ Modules
 
