@@ -1,4 +1,4 @@
-FROM python:3.11.2-bullseye
+FROM python:3.11
 
 WORKDIR /app
 
@@ -11,3 +11,4 @@ COPY . /app
 ENV DOCKER=True
 
 EXPOSE 51717:51717
+
