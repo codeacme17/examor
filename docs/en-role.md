@@ -12,7 +12,7 @@
 
 ### Role Introduction
 
-#### Examiner
+#### 🥷 Examiner
 
 | Extensiveness | Rigor |
 | ------------- | ----- |
@@ -20,7 +20,7 @@
 
 The examiner is an extremely strict role. They meticulously craft questions based on the document's content and have a high standard for scoring. Getting a full score from them is quite challenging unless your answers closely mirror the document.
 
-#### Teacher
+#### 👩‍🏫 Teacher
 
 | Extensiveness | Rigor |
 | ------------- | ----- |
@@ -28,7 +28,7 @@ The examiner is an extremely strict role. They meticulously craft questions base
 
 The teacher is a benevolent figure. They treat your responses as a casual test and grade leniently. Additionally, they might add a slight extension based on your document. Rest assured, it's just a minor expansion.
 
-#### Interviewer
+#### 👨‍💻 Interviewer
 
 | Extensiveness | Rigor |
 | ------------- | ----- |
