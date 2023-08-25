@@ -53,7 +53,7 @@
           </h3>
           <v-divider></v-divider>
           <div
-            v-html="toMarkdown(currentData.examine)"
+            v-html="toMarkdown(errorMessage || currentData.examine)"
             class="show-markdown-box"
             :style="fontColor"
           />
@@ -111,8 +111,9 @@ import { defaultBgColor, fontColor, toMarkdown } from '@/utils'
 import { useFetch, useListState } from '@/hooks'
 import { QUESTION_API, PROFILE_API } from '@/apis'
 import { useProfileStore } from '@/store'
+import { ErrorResponse } from '@/constant'
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const PROFILE_STORE = useProfileStore()
 const props = defineProps(['id'])
 const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
@@ -142,20 +143,23 @@ const handleKeyup = () => {
 
 // Handle submit answer event
 // submitAnswer() is a SSE connect to fetch streaming response
-const isShowExamine = ref(false)
-const isExaming = ref(false)
-const isFinishExaming = ref(false)
+const isShowExamine = ref(false) // flag to show examing block
+const isExaming = ref(false) // flag to gpt examing state
+const isFinishExaming = ref(false) // flag to is gpt finish examine
+const errorMessage = ref('')
 const [checkKeyCorrect, checkKeyLoading] = useFetch(PROFILE_API.checkKeyCorrect)
 const handleSubmit = async () => {
   if (!PROFILE_STORE.checkHasSettedModel()) return
+
   const res = await checkKeyCorrect()
   if (res.code !== 0) return
   if (!currentData.value.answer.trim()) return
-
   isShowExamine.value = true
   isExaming.value = true
+
   await submitAnswer()
   isFinishExaming.value = true
+  if (!isThereNoErrorReported()) return
   finishedList.value.add(props.id)
   pendingList.value.delete(props.id)
 }
@@ -175,6 +179,16 @@ const submitAnswer = async () => {
     }
     currentData.value.examine += decoder.decode(value)
   }
+}
+const isThereNoErrorReported = () => {
+  if (currentData.value.examine === ErrorResponse.TIMEOUT) {
+    errorMessage.value = `<div style='color: orange'> ${t(
+      'message.timeout'
+    )} </div>`
+    currentData.value.examine = ''
+    return false
+  }
+  return true
 }
 
 // Get last answer data
