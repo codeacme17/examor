@@ -177,19 +177,64 @@ html[theme-mode='dark'] {
 .show-markdown-box {
   padding: 18px 27px;
 
-  h1 {
-    font-size: 30px;
-    margin-bottom: 10px;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
   }
 
-  h2 {
-    font-size: 26px;
-    margin-bottom: 8px;
+  p {
+    line-height: 1.8rem;
   }
 
-  h3 {
-    font-size: 22px;
-    margin-bottom: 6px;
+  /* Links */
+  a {
+    color: #0366d6;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Lists */
+  ul,
+  ol {
+    margin-left: 2em;
+    line-height: 1.8rem;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 4px solid #dfe2e5;
+    color: #6a737d;
+    margin: 10px 0;
+    padding: 0 15px;
+  }
+
+  /* Horizontal Rule */
+  hr {
+    background-color: #ddd;
+    border: 0;
+    height: 1px;
+    margin: 20px 0;
+  }
+
+  /* Code Blocks */
+  pre {
+    padding: 10px 30px;
+    margin: 10px 0px;
+    border-radius: 10px;
+    background-color: var(--cood-block-bg);
+    overflow-x: scroll;
+    code {
+      background-color: transparent !important;
+      font-size: 100% !important;
+      font-family: 'JetBrains Mono';
+    }
   }
 
   code {
@@ -199,29 +244,34 @@ html[theme-mode='dark'] {
     background-color: var(--code-box-bg) !important;
   }
 
-  pre {
-    padding: 10px 30px;
-    margin: 10px 0px;
-    border-radius: 10px;
-    background-color: var(--cood-block-bg);
-    overflow-x: scroll;
-    code {
-      background-color: transparent !important;
-    }
+  /* Images */
+  img {
+    max-width: 100%;
   }
 
-  ul,
-  ol {
-    padding-left: 20px;
+  /* Tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 16px;
+    border-spacing: 0;
+  }
+  table th,
+  table td {
+    border: 1px solid #dfe2e5;
+    padding: 6px 13px;
+    text-align: left;
+  }
+  table th {
+    font-weight: bold;
   }
 
-  li {
-    margin: 5px 0px;
-    line-height: 28px;
-
-    p {
-      margin: 10px 0px 0px 6px;
-    }
+  /* Code Inline */
+  p code,
+  li code {
+    border-radius: 3px;
+    padding: 0.2em 0.4em;
+    font-size: 85%;
   }
 }
 
