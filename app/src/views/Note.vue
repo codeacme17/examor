@@ -101,16 +101,15 @@ const supplementList = ref<TableItem[]>(listData.value.supplement)
 const pickedQuestion = reactive<TableItem>({
   id: 0,
   content: '',
-  document_id: 0,
-  is_answered_today: '0',
+  designated_role: '',
   progress: 0,
 })
 const isShowAnswer = ref(false)
 const handlePickQuestion = (item: TableItem) => {
   isShowAnswer.value = true
   pickedQuestion.id = item.id
-  pickedQuestion.document_id = item.document_id
   pickedQuestion.content = item.content
+  pickedQuestion.designated_role = item.designated_role
   pickedQuestion.progress = item.progress
 }
 </script>
