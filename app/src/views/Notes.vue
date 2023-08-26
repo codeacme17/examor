@@ -1,23 +1,7 @@
 <template>
   <v-container style="max-width: 1080px">
-    <!-- Empty Notice Block -->
-    <empty-block v-if="!NOTE_STORE.notes.length" type="note">
-      <h2 class="mb-2">{{ $t('title.emptyNote') }}</h2>
-      <h4 class="d-flex align-center">
-        {{ $t('subTitle.emptyNoteStart') }}
-        <v-btn
-          variant="text"
-          color="primary"
-          class=""
-          @click="$router.push('/addNote')"
-        >
-          {{ $t('menus.addNote') }}
-        </v-btn>
-        {{ $t('subTitle.emptyNoteEnd') }}
-      </h4>
-    </empty-block>
-
-    <section v-else>
+    <!-- Main content -->
+    <section v-if="NOTE_STORE.notes.length">
       <h2>
         {{ $t('title.notes') }}
       </h2>
@@ -141,6 +125,23 @@
         </section>
       </section>
     </section>
+
+    <!-- Empty Notice Block -->
+    <empty-block v-else type="note">
+      <h2 class="mb-2">{{ $t('title.emptyNote') }}</h2>
+      <h4 class="d-flex align-center">
+        {{ $t('subTitle.emptyNoteStart') }}
+        <v-btn
+          variant="text"
+          color="primary"
+          class=""
+          @click="$router.push('/addNote')"
+        >
+          {{ $t('menus.addNote') }}
+        </v-btn>
+        {{ $t('subTitle.emptyNoteEnd') }}
+      </h4>
+    </empty-block>
 
     <!-- Upload file dialog -->
     <upload-file-dialog

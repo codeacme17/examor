@@ -11,7 +11,7 @@ declare module 'vue' {
     EmptyBlock: typeof import('./src/components/blocks/EmptyBlock.vue')['default']
     ExamineBlock: typeof import('./src/components/blocks/ExamineBlock.vue')['default']
     FilesTable: typeof import('./src/components/tables/FilesTable.vue')['default']
-    NoteHeader: typeof import('./src/components/NoteHeader.vue')['default']
+    NoteHeader: typeof import('./src/components/headers/NoteHeader.vue')['default']
     NotionIcon: typeof import('./src/components/icons/NotionIcon.vue')['default']
     OpenaiIcon: typeof import('./src/components/icons/OpenaiIcon.vue')['default']
     PineconeIcon: typeof import('./src/components/icons/PineconeIcon.vue')['default']
@@ -24,7 +24,8 @@ declare module 'vue' {
     TRadioButton: typeof import('tdesign-vue-next')['RadioButton']
     TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
     TUpload: typeof import('tdesign-vue-next')['Upload']
-    UploadFileDialog: typeof import('./src/components/UploadFileDialog.vue')['default']
+    UploadFileDialog: typeof import('./src/components/dialogs/UploadFileDialog.vue')['default']
+    UploadForm: typeof import('./src/components/forms/UploadForm.vue')['default']
     UploadingFloatFrame: typeof import('./src/components/globals/UploadingFloatFrame.vue')['default']
   }
 }

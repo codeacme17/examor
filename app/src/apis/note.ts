@@ -36,7 +36,7 @@ export const NOTE_API = {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      data: data,
+      data: data.formData,
       timeout: 100000 * 1000,
     })
   },
