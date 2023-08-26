@@ -69,7 +69,8 @@
 
       <!-- OpenAI  -->
       <div v-if="formData.currentModel.value == 'OpenAI'" class="d-flex">
-        <OpenaiIcon width="30" class="mb-3 mr-4" />
+        <OpenaiIcon width="30" class="mb-auto mt-4 mr-4" />
+        <!-- OpenAI API KEY -->
         <div style="flex: 1">
           <v-text-field
             v-model="formData.openaiKey.value"
@@ -87,6 +88,33 @@
             :color="PROFILE_STORE.profile.openaiKey.error ? orangeBgColor : ''"
             @click:append-inner="
               formData.openaiKey.show = !formData.openaiKey.show
+            "
+          />
+
+          <!-- OpenAI Organiztion -->
+          <v-text-field
+            v-model="formData.openaiOrganization.value"
+            class="mt-3"
+            label="OPENAI_ORGANIZATION"
+            variant="outlined"
+            density="compact"
+            :append-inner-icon="
+              formData.openaiOrganization.show ? 'mdi-eye' : 'mdi-eye-off'
+            "
+            :type="formData.openaiOrganization.show ? 'text' : 'password'"
+            :base-color="
+              PROFILE_STORE.profile.openaiOrganization.error
+                ? orangeBgColor
+                : ''
+            "
+            :color="
+              PROFILE_STORE.profile.openaiOrganization.error
+                ? orangeBgColor
+                : ''
+            "
+            @click:append-inner="
+              formData.openaiOrganization.show =
+                !formData.openaiOrganization.show
             "
           />
         </div>

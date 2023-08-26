@@ -34,6 +34,7 @@ def set_profile(data: types.Profile):
                 currentRole = %s,
                 currentModel = %s,
                 openaiKey = %s,
+                openaiOrganization = %s,
                 azureKey = %s,
                 openaiVersion = %s,
                 openaiBase = %s,
@@ -48,6 +49,7 @@ def set_profile(data: types.Profile):
         data.currentRole,
         data.currentModel,
         data.openaiKey,
+        data.openaiOrganization,
         data.azureKey,
         data.openaiVersion,
         data.openaiBase,
@@ -62,15 +64,18 @@ def set_profile(data: types.Profile):
 
 def set_profile_to_env():
     data: types.Profile = get_profile()
-
+    os.environ["PROFILE_ID"] = str(data['id'])
     os.environ['QUESTION_AMOUNT'] = str(data['questionAmount'])
     os.environ['CURRENT_ROLE'] = data['currentRole']
     os.environ['CURRENT_MODEL'] = data['currentModel']
+
     os.environ['OPENAI_API_KEY'] = data['openaiKey']
+    os.environ['OPENAI_ORGANIZATION'] = data['openaiOrganization']
+
     os.environ['AZURE_KEY'] = data['azureKey']
     os.environ['OPENAI_VERSION'] = data['openaiVersion']
     os.environ['OPENAI_BASE'] = data['openaiBase']
     os.environ['DEPLOYMENT_NAME'] = data['deploymentName']
+
     os.environ['NOTION_KEY'] = data['notionKey']
     os.environ['PROXY'] = f"http://{data['proxy']}"
-    os.environ["PROFILE_ID"] = str(data['id'])
