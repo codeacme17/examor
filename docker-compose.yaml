@@ -3,6 +3,7 @@ services:
   app:
     build: ./app/
     command: ["sh", "-c", "sleep 15 && pnpm dev"]
+    restart: always
     depends_on:
       - server
     ports:
