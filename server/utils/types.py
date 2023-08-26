@@ -6,6 +6,7 @@ class Profile(BaseModel):
     currentRole: str
     currentModel: str
     openaiKey: str
+    openaiOrganization: str
     azureKey: str
     openaiBase: str
     openaiVersion: str

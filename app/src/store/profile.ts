@@ -13,6 +13,7 @@ type Key =
   | 'currentRole'
   | 'currentModel'
   | 'openaiKey'
+  | 'openaiOrganization'
   | 'notionKey'
   | 'proxy'
   | 'azureKey'
@@ -40,6 +41,11 @@ const state: State = {
       value: 'OpenAI',
     },
     openaiKey: {
+      value: '',
+      show: false,
+      error: false,
+    },
+    openaiOrganization: {
       value: '',
       show: false,
       error: false,
