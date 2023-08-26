@@ -15,6 +15,7 @@ class MarkdownLoader:
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1300,
             chunk_overlap=0,
+            is_separator_regex=True,
             separators=[
                 "\n#{1,6} ",
                 "\n\*\*\*+\n",
