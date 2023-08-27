@@ -117,6 +117,19 @@
                 !formData.openaiOrganization.show
             "
           />
+
+          <!-- Openai api base -->
+          <v-text-field
+            v-model="formData.openaiBase.value"
+            class="mt-3"
+            label="API_BASE"
+            variant="outlined"
+            density="compact"
+            :base-color="
+              PROFILE_STORE.profile.openaiBase.error ? orangeBgColor : ''
+            "
+            :color="PROFILE_STORE.profile.openaiBase.error ? orangeBgColor : ''"
+          />
         </div>
       </div>
 
@@ -158,17 +171,17 @@
               PROFILE_STORE.profile.openaiVersion.error ? orangeBgColor : ''
             "
           />
-          <!-- Azure end-point -->
+          <!-- Azure api base -->
           <v-text-field
-            v-model="formData.openaiBase.value"
+            v-model="formData.azureBase.value"
             class="mt-3"
             label="API_BASE"
             variant="outlined"
             density="compact"
             :base-color="
-              PROFILE_STORE.profile.openaiBase.error ? orangeBgColor : ''
+              PROFILE_STORE.profile.azureBase.error ? orangeBgColor : ''
             "
-            :color="PROFILE_STORE.profile.openaiBase.error ? orangeBgColor : ''"
+            :color="PROFILE_STORE.profile.azureBase.error ? orangeBgColor : ''"
           />
           <!-- Deployment name -->
           <v-text-field

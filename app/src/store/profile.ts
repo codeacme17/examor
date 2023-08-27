@@ -14,12 +14,13 @@ type Key =
   | 'currentModel'
   | 'openaiKey'
   | 'openaiOrganization'
-  | 'notionKey'
-  | 'proxy'
-  | 'azureKey'
   | 'openaiBase'
+  | 'azureKey'
+  | 'azureBase'
   | 'openaiVersion'
   | 'deploymentName'
+  | 'notionKey'
+  | 'proxy'
 
 type Model = 'OpenAI' | 'Azure'
 
@@ -50,12 +51,18 @@ const state: State = {
       show: false,
       error: false,
     },
+    openaiBase: {
+      value: '',
+      show: false,
+      error: false,
+    },
+
     azureKey: {
       value: '',
       show: false,
       error: false,
     },
-    openaiBase: {
+    azureBase: {
       value: '',
       error: false,
     },
@@ -148,8 +155,8 @@ export const useProfileStore = defineStore('profileStore', {
         res = false
       }
 
-      if (!profile.openaiBase.value) {
-        profile.openaiBase.error = true
+      if (!profile.azureBase.value) {
+        profile.azureBase.error = true
         res = false
       }
 

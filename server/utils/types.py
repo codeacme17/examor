@@ -7,8 +7,9 @@ class Profile(BaseModel):
     currentModel: str
     openaiKey: str
     openaiOrganization: str
-    azureKey: str
     openaiBase: str
+    azureKey: str
+    azureBase: str
     openaiVersion: str
     deploymentName: str
     notionKey: str

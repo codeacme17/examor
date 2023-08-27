@@ -35,9 +35,10 @@ def set_profile(data: types.Profile):
                 currentModel = %s,
                 openaiKey = %s,
                 openaiOrganization = %s,
-                azureKey = %s,
-                openaiVersion = %s,
                 openaiBase = %s,
+                azureKey = %s,
+                azureBase = %s,
+                openaiVersion = %s,
                 deploymentName = %s,
                 notionKey = %s,
                 proxy = %s
@@ -50,9 +51,10 @@ def set_profile(data: types.Profile):
         data.currentModel,
         data.openaiKey,
         data.openaiOrganization,
+        data.openaiBase,
         data.azureKey,
         data.openaiVersion,
-        data.openaiBase,
+        data.azureBase,
         data.deploymentName,
         data.notionKey,
         data.proxy,
@@ -71,10 +73,11 @@ def set_profile_to_env():
 
     os.environ['OPENAI_API_KEY'] = data['openaiKey']
     os.environ['OPENAI_ORGANIZATION'] = data['openaiOrganization']
+    os.environ['OPENAI_BASE'] = data['openaiBase']
 
     os.environ['AZURE_KEY'] = data['azureKey']
+    os.environ['AZURE_BASE'] = data['azureBase']
     os.environ['OPENAI_VERSION'] = data['openaiVersion']
-    os.environ['OPENAI_BASE'] = data['openaiBase']
     os.environ['DEPLOYMENT_NAME'] = data['deploymentName']
 
     os.environ['NOTION_KEY'] = data['notionKey']

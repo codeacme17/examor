@@ -76,6 +76,7 @@ CREATE TABLE t_profile (
 	openaiOrganization varchar(100) NOT NULL DEFAULT "" COMMENT 'openai organization',
 	azureKey varchar(100) NOT NULL DEFAULT "" COMMENT 'azure key',
 	openaiBase varchar(100) NOT NULL DEFAULT "" COMMENT 'openai api base',
+	azureBase varchar(100) NOT NULL DEFAULT "" COMMENT 'openai api base for azure',
 	openaiVersion varchar(100) NOT NULL DEFAULT "" COMMENT 'openai version',
 	deploymentName varchar(100) NOT NULL DEFAULT "" COMMENT 'deployment name',
 	notionKey varchar(100) NOT NULL DEFAULT "" COMMENT '',

@@ -31,7 +31,7 @@ class LLM:
 
     def _init_azure(self) -> AzureChatOpenAI:
         return AzureChatOpenAI(
-            openai_api_base=os.environ["OPENAI_BASE"],
+            openai_api_base=os.environ["AZURE_BASE"],
             openai_api_key=os.environ["AZURE_KEY"],
             openai_api_version=os.environ["OPENAI_VERSION"],
             deployment_name=os.environ["DEPLOYMENT_NAME"],
@@ -45,13 +45,14 @@ class LLM:
 
     def _init_openai(self) -> ChatOpenAI:
         return ChatOpenAI(
+            openai_api_base=os.environ["OPENAI_BASE"],
+            openai_proxy=os.environ['PROXY'] if os.environ['PROXY'] != "http://" else None,
             model="gpt-3.5-turbo",
             temperature=self.temperature,
             streaming=self.streaming,
             callbacks=self.callbacks,
             max_retries=self.max_retries,
             max_tokens=self.max_tokens,
-            openai_proxy=os.environ['PROXY'] if os.environ['PROXY'] != "http://" else None,
             request_timeout=self.timeout,
         )
 
