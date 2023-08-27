@@ -12,7 +12,7 @@
       <v-slider
         v-model:model-value="formData.questionAmount.value"
         show-ticks
-        thumb-label·
+        thumb-label
         density="compact"
         prepend-icon="mdi-beaker-question"
         :min="3"
