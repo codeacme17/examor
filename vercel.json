@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app/main.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "server/main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "database/schema.sql",
+      "use": "@vercel/static",
+      "config": {
+        "distDir": "database"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "app/dist/$1"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "server/main.py"
+    }
+  ]
+}
