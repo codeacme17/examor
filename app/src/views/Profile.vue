@@ -75,7 +75,7 @@
           <v-text-field
             v-model="formData.openaiKey.value"
             class="mt-3"
-            label="OPENAI_KEY"
+            label="KEY"
             variant="outlined"
             density="compact"
             :append-inner-icon="
@@ -95,7 +95,7 @@
           <v-text-field
             v-model="formData.openaiOrganization.value"
             class="mt-3"
-            label="OPENAI_ORGANIZATION"
+            label="ORGANIZATION"
             variant="outlined"
             density="compact"
             :append-inner-icon="
@@ -129,7 +129,7 @@
           <v-text-field
             v-model="formData.azureKey.value"
             class="mt-3"
-            label="AZURE_KEY"
+            label="KEY"
             variant="outlined"
             density="compact"
             :append-inner-icon="
@@ -148,7 +148,7 @@
           <v-text-field
             v-model="formData.openaiVersion.value"
             class="mt-3"
-            label="AZURE_VERSION"
+            label="VERSION"
             variant="outlined"
             density="compact"
             :base-color="
@@ -162,7 +162,7 @@
           <v-text-field
             v-model="formData.openaiBase.value"
             class="mt-3"
-            label="AZURE_END_PONIT"
+            label="API_BASE"
             variant="outlined"
             density="compact"
             :base-color="
@@ -192,7 +192,7 @@
         <NotionIcon width="30" class="mb-5 mr-4" />
         <v-text-field
           v-model="formData.notionKey.value"
-          label="NOTION_KEY"
+          label="KEY"
           variant="outlined"
           density="compact"
           :append-inner-icon="
