@@ -271,10 +271,10 @@
         </v-btn>
       </div>
     </form>
-  </v-container>
 
-  <!-- Export data dialog -->
-  <export-dialog v-model:isShowDialog="isShowExportDialog" />
+    <!-- Export data dialog -->
+    <export-dialog v-model:isShowDialog="isShowExportDialog" />
+  </v-container>
 </template>
 
 <script setup lang="ts">
