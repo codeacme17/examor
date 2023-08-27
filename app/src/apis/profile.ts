@@ -22,4 +22,11 @@ export const PROFILE_API = {
       url: '/api/profile/auth/key',
     })
   },
+
+  exportData() {
+    return _axios({
+      method: 'GET',
+      url: '/api/profile/data',
+    })
+  },
 }

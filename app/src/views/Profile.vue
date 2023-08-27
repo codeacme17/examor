@@ -1,13 +1,33 @@
 <template>
   <v-container class="main_width">
-    <h2>{{ $t('title.profile') }}</h2>
-    <h5 class="text-medium-emphasis">{{ $t('subTitle.profile') }}</h5>
+    <header class="d-flex flex-column">
+      <h2>{{ $t('title.profile') }}</h2>
+      <h5 class="text-medium-emphasis">{{ $t('subTitle.profile') }}</h5>
 
-    <v-divider class="mt-8"></v-divider>
+      <v-btn
+        class="mb-2 mt-5"
+        append-icon="mdi-database-export"
+        size="small"
+        :color="greenBgColor"
+        :elevation="0"
+      >
+        export
+      </v-btn>
+      <v-btn
+        append-icon="mdi-file-import"
+        variant="tonal"
+        size="small"
+        :elevation="0"
+      >
+        import
+      </v-btn>
+    </header>
+
+    <v-divider class="my-5"></v-divider>
 
     <form class="pb-6">
       <!---------- Quesiton amount ---------->
-      <h3 class="mt-6 mb-1">{{ $t('hint.questionCounts') }}</h3>
+      <h3 class="mb-1">{{ $t('hint.questionCounts') }}</h3>
       <h5 class="mb-3 text-medium-emphasis">{{ $t('subTitle.changePlan') }}</h5>
       <v-slider
         v-model:model-value="formData.questionAmount.value"
@@ -257,7 +277,7 @@
 import { ref, onUnmounted } from 'vue'
 import { watchDeep } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-import { orangeBgColor } from '@/utils'
+import { orangeBgColor, greenBgColor } from '@/utils'
 import { useProfileStore } from '@/store'
 
 const { locale } = useI18n()

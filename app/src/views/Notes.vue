@@ -24,7 +24,7 @@
               variant="outlined"
               class="mt-3 mb-3"
               prepend-icon="mdi-text-box-plus-outline"
-              style="height: 40px"
+              style="height: 32px"
               :block="true"
               @click="isShowUploadDialog = true"
             >
