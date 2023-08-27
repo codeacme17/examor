@@ -10,8 +10,7 @@
         size="small"
         :color="greenBgColor"
         :elevation="0"
-        :loading="exportLoading"
-        @click="handleExport"
+        @click="isShowExportDialog = true"
       >
         {{ $t('button.export') }}
       </v-btn>
@@ -274,6 +273,7 @@
     </form>
   </v-container>
 
+  <!-- Export data dialog -->
   <export-dialog v-model:isShowDialog="isShowExportDialog" />
 </template>
 
@@ -281,27 +281,13 @@
 import { ref, onUnmounted } from 'vue'
 import { watchDeep } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-
-import { orangeBgColor, greenBgColor, dowmloadBinaryFile } from '@/utils'
+import { orangeBgColor, greenBgColor } from '@/utils'
 import { useProfileStore } from '@/store'
-import { useFetch } from '@/hooks'
-import { PROFILE_API } from '@/apis'
 
 const { locale } = useI18n()
 const PROFILE_STORE = useProfileStore()
 
-// Handle export data event
 const isShowExportDialog = ref(false)
-const [exportData, exportLoading] = useFetch(PROFILE_API.exportData)
-const handleExport = async () => {
-  isShowExportDialog.value = true
-  // const res = await exportData()
-  // dowmloadBinaryFile(
-  //   res,
-  //   'examor-data.xlsx',
-  //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  // )
-}
 
 // Handle sumbit profile configurations event
 const formData = PROFILE_STORE.profile
