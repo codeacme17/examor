@@ -21,6 +21,8 @@ export const en = {
     teacher: 'Teacher',
     interviewer: 'Interviewer',
     examiner: 'Examiner',
+    export: 'Export configuration and notes',
+    import: 'Import file',
   },
 
   // the title & subtitle on each page

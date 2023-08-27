@@ -21,6 +21,8 @@ export const zhCN = {
     teacher: '教师',
     interviewer: '面试官',
     examiner: '考官',
+    export: '导出配置及笔记',
+    import: '文件导入',
   },
 
   title: {

@@ -13,7 +13,7 @@
         :loading="exportLoading"
         @click="handleExport"
       >
-        export
+        {{ $t('button.export') }}
       </v-btn>
       <v-btn
         append-icon="mdi-file-import"
@@ -21,7 +21,7 @@
         size="small"
         :elevation="0"
       >
-        import
+        {{ $t('button.import') }}
       </v-btn>
     </header>
 
