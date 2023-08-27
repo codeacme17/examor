@@ -23,11 +23,15 @@ export const PROFILE_API = {
     })
   },
 
-  exportData() {
+  exportData(data: { isProfile: boolean; isNotes: boolean }) {
     return _axios({
       method: 'GET',
       url: '/api/profile/data',
       responseType: 'blob',
+      params: {
+        isProfile: data.isProfile,
+        isNotes: data.isNotes,
+      },
     })
   },
 }

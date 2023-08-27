@@ -51,6 +51,7 @@ export const en = {
     finishedAmount: 'Already answered',
     uploading: 'Uploading',
     role: 'Please select your desired role',
+    export: 'Please select the data to export',
   },
   subTitle: {
     notes: 'You can manage your notes here',
@@ -61,6 +62,8 @@ export const en = {
     changePlan:
       'The new plan will be implemented tomorrow after submitting the changes',
     role: 'Roles affect question generation and answer detection results',
+    export:
+      'Exporting data helps to preserve past data when updating a project (a file named examor-data.xlsx is exported)',
   },
 
   // label of input field
@@ -74,6 +77,8 @@ export const en = {
     document: 'Note Content',
     examine: 'Examine',
     proxy: 'Proxy',
+    isProfile: 'user profile data',
+    isNotes: 'all notes, questions and answers',
   },
 
   // placeholder of input field

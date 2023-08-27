@@ -10,6 +10,7 @@ declare module 'vue' {
     AzureIcon: typeof import('./src/components/icons/AzureIcon.vue')['default']
     EmptyBlock: typeof import('./src/components/blocks/EmptyBlock.vue')['default']
     ExamineBlock: typeof import('./src/components/blocks/ExamineBlock.vue')['default']
+    ExportDialog: typeof import('./src/components/dialogs/ExportDialog.vue')['default']
     FilesTable: typeof import('./src/components/tables/FilesTable.vue')['default']
     NoteHeader: typeof import('./src/components/headers/NoteHeader.vue')['default']
     NotionIcon: typeof import('./src/components/icons/NotionIcon.vue')['default']

@@ -50,6 +50,7 @@ export const zhCN = {
     finishedAmount: '已回答',
     uploading: '正在上传',
     role: '请选择角色',
+    export: '请选择要导出的数据',
   },
 
   subTitle: {
@@ -60,6 +61,8 @@ export const zhCN = {
     emptyNoteEnd: '页面创建你的第一个笔记',
     changePlan: '提交更改后将于明日实行新的计划',
     role: '角色会影响问题的生成和答案检测的结果',
+    export:
+      '导出数据有助于在更新项目时可以保留以往的数据 (会导出名为 examor-data.xlsx 的文件)',
   },
 
   label: {
@@ -72,6 +75,8 @@ export const zhCN = {
     document: '笔记内容',
     examine: '检测',
     proxy: '网络代理',
+    isProfile: '用户配置数据',
+    isNotes: '所有笔记内容及问题、答案',
   },
 
   placeholder: {

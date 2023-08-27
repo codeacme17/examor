@@ -273,6 +273,8 @@
       </div>
     </form>
   </v-container>
+
+  <export-dialog v-model:isShowDialog="isShowExportDialog" />
 </template>
 
 <script setup lang="ts">
@@ -289,14 +291,16 @@ const { locale } = useI18n()
 const PROFILE_STORE = useProfileStore()
 
 // Handle export data event
+const isShowExportDialog = ref(false)
 const [exportData, exportLoading] = useFetch(PROFILE_API.exportData)
 const handleExport = async () => {
-  const res = await exportData()
-  dowmloadBinaryFile(
-    res,
-    'examor-data.xlsx',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  )
+  isShowExportDialog.value = true
+  // const res = await exportData()
+  // dowmloadBinaryFile(
+  //   res,
+  //   'examor-data.xlsx',
+  //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  // )
 }
 
 // Handle sumbit profile configurations event
