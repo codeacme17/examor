@@ -27,6 +27,7 @@ export const PROFILE_API = {
     return _axios({
       method: 'GET',
       url: '/api/profile/data',
+      responseType: 'blob',
     })
   },
 }
