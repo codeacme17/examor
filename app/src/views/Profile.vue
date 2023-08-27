@@ -10,6 +10,8 @@
         size="small"
         :color="greenBgColor"
         :elevation="0"
+        :loading="exportLoading"
+        @click="handleExport"
       >
         export
       </v-btn>
@@ -277,14 +279,41 @@
 import { ref, onUnmounted } from 'vue'
 import { watchDeep } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
+
 import { orangeBgColor, greenBgColor } from '@/utils'
 import { useProfileStore } from '@/store'
+import { useFetch } from '@/hooks'
+import { PROFILE_API } from '@/apis'
 
 const { locale } = useI18n()
 const PROFILE_STORE = useProfileStore()
+
+// Handle export data event
+const [exportData, exportLoading] = useFetch(PROFILE_API.exportData)
+const handleExport = async () => {
+  const res = await exportData()
+  const data = res
+  const url = window.URL.createObjectURL(
+    new Blob([data], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    })
+  )
+  const link = document.createElement('a')
+  link.style.display = 'none'
+  link.href = url
+  link.setAttribute('download', 'data.xlsx')
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+// Handle sumbit profile configurations event
 const formData = PROFILE_STORE.profile
 const isUpdateFormData = ref(false)
-
+const handleConfirm = async () => {
+  await PROFILE_STORE.setProfile()
+  isUpdateFormData.value = false
+}
 watchDeep(formData, () => {
   isUpdateFormData.value = true
 
@@ -292,11 +321,6 @@ watchDeep(formData, () => {
     PROFILE_STORE.profile.notionKey.error = false
   }
 })
-
-const handleConfirm = async () => {
-  await PROFILE_STORE.setProfile()
-  isUpdateFormData.value = false
-}
 
 onUnmounted(() => {
   PROFILE_STORE.getProfile()
