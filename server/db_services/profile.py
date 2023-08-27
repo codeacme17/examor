@@ -86,30 +86,19 @@ def set_profile_to_env():
 
 
 def export_data(isProfile: bool, isNotes: bool):
-    print(isProfile, isNotes)
     mys = MySQLHandler()
     mys.connect_to_mysql()
-    tables = pd.read_sql("""
-                        SELECT TABLE_NAME
-                        FROM information_schema.TABLES
-                        WHERE TABLE_SCHEMA = 'db';
-                         """, mys.conn)
     writer = pd.ExcelWriter("data.xlsx", engine="xlsxwriter")
 
-    for table_name in tables["TABLE_NAME"]:
-        if (isProfile != True and table_name == 't_profile'):
-            continue
-        if (isNotes != True and table_name == 't_note'):
-            continue
-        if (isNotes != True and table_name == 't_file'):
-            continue
-        if (isNotes != True and table_name == 't_document'):
-            continue
-        if (isNotes != True and table_name == 't_question'):
-            continue
+    tables_to_export = []
+    if isProfile:
+        tables_to_export.append('t_profile')
+    if isNotes:
+        tables_to_export.extend(
+            ['t_note', 't_file', 't_document', 't_question'])
 
-        sheet_name = table_name
-        query = "SELECT * FROM " + sheet_name
+    for table_name in tables_to_export:
+        query = f"SELECT * FROM {table_name}"
         dft = pd.read_sql(query, mys.conn)
-        dft.to_excel(writer, sheet_name=sheet_name, index=False)
+        dft.to_excel(writer, sheet_name=table_name, index=False)
     writer.close()
