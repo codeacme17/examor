@@ -25,9 +25,12 @@ def check_key_correct():
     return api_result.success()
 
 
-def export_data():
+def export_data(isProfile: bool, isNotes: bool):
+    if (isProfile == False and isNotes == False):
+        return api_result.error("Must export at least one type data")
+
     try:
-        _dbs_.profile.export_data()
+        _dbs_.profile.export_data(isProfile, isNotes)
     except Exception as e:
         return api_result.error(str(e))
 

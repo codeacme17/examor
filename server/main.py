@@ -39,8 +39,8 @@ def check_key_correct():
 
 
 @app.get("/profile/data")
-def get_mysql_data():
-    return _apis_.profile.export_data()
+def get_mysql_data(isProfile: bool, isNotes: bool):
+    return _apis_.profile.export_data(isProfile, isNotes)
 
 
 # -------- Note APIs --------

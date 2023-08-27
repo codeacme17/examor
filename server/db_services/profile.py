@@ -85,7 +85,8 @@ def set_profile_to_env():
     os.environ['PROXY'] = f"http://{data['proxy']}"
 
 
-def export_data():
+def export_data(isProfile: bool, isNotes: bool):
+    print(isProfile, isNotes)
     mys = MySQLHandler()
     mys.connect_to_mysql()
     tables = pd.read_sql("""
@@ -94,7 +95,19 @@ def export_data():
                         WHERE TABLE_SCHEMA = 'db';
                          """, mys.conn)
     writer = pd.ExcelWriter("data.xlsx", engine="xlsxwriter")
+
     for table_name in tables["TABLE_NAME"]:
+        if (isProfile != True and table_name == 't_profile'):
+            continue
+        if (isNotes != True and table_name == 't_note'):
+            continue
+        if (isNotes != True and table_name == 't_file'):
+            continue
+        if (isNotes != True and table_name == 't_document'):
+            continue
+        if (isNotes != True and table_name == 't_question'):
+            continue
+
         sheet_name = table_name
         query = "SELECT * FROM " + sheet_name
         dft = pd.read_sql(query, mys.conn)
