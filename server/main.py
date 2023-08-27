@@ -38,6 +38,11 @@ def check_key_correct():
     return _apis_.profile.check_key_correct()
 
 
+@app.get("/profile/data")
+def get_mysql_data():
+    return _apis_.profile.export_data()
+
+
 # -------- Note APIs --------
 @app.get("/note/notes")
 def get_notes():

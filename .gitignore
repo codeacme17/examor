@@ -25,3 +25,4 @@ pnpm-debug.log*
 __pycache__
 profile.json
 notebooks
+data.xlsx

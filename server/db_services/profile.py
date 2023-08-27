@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 
 from utils import types
 from db_services.MySQLHandler import MySQLHandler
@@ -82,3 +83,20 @@ def set_profile_to_env():
 
     os.environ['NOTION_KEY'] = data['notionKey']
     os.environ['PROXY'] = f"http://{data['proxy']}"
+
+
+def export_data():
+    mys = MySQLHandler()
+    mys.connect_to_mysql()
+    tables = pd.read_sql("""
+                        SELECT TABLE_NAME
+                        FROM information_schema.TABLES
+                        WHERE TABLE_SCHEMA = 'db';
+                         """, mys.conn)
+    writer = pd.ExcelWriter("data.xlsx", engine="xlsxwriter")
+    for table_name in tables["TABLE_NAME"]:
+        sheet_name = table_name
+        query = "SELECT * FROM " + sheet_name
+        dft = pd.read_sql(query, mys.conn)
+        dft.to_excel(writer, sheet_name=sheet_name, index=False)
+    writer.close()
