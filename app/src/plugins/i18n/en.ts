@@ -52,6 +52,7 @@ export const en = {
     uploading: 'Uploading',
     role: 'Please select your desired role',
     export: 'Please select the data to export',
+    import: 'Please select the file you want to upload',
   },
   subTitle: {
     notes: 'You can manage your notes here',
@@ -64,6 +65,8 @@ export const en = {
     role: 'Roles affect question generation and answer detection results',
     export:
       'Exporting data helps to preserve past data when updating a project (a file named examor-data.xlsx is exported)',
+    import:
+      'Note that when you upload a file, the previous data will be cleared and the data in the file will be used.(only ".xlsx" allowed)',
   },
 
   // label of input field

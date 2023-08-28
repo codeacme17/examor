@@ -12,6 +12,7 @@ declare module 'vue' {
     ExamineBlock: typeof import('./src/components/blocks/ExamineBlock.vue')['default']
     ExportDialog: typeof import('./src/components/dialogs/ExportDialog.vue')['default']
     FilesTable: typeof import('./src/components/tables/FilesTable.vue')['default']
+    ImportDialog: typeof import('./src/components/dialogs/ImportDialog.vue')['default']
     NoteHeader: typeof import('./src/components/headers/NoteHeader.vue')['default']
     NotionIcon: typeof import('./src/components/icons/NotionIcon.vue')['default']
     OpenaiIcon: typeof import('./src/components/icons/OpenaiIcon.vue')['default']

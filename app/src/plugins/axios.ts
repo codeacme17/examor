@@ -25,11 +25,13 @@ _axios.interceptors.response.use(
     const { headers } = response
     const { code, message } = response.data
 
-    if (code !== 0 && headers['Content-Type'] === 'application/json')
+    if (code !== 0 && headers['content-type'] === 'application/json') {
       MessagePlugin.error({
         content: message,
         duration: 3000,
       })
+    }
+
     return response.data
   },
   (error) => {

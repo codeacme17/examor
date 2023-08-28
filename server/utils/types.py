@@ -2,18 +2,18 @@ from pydantic import BaseModel
 
 
 class Profile(BaseModel):
-    questionAmount: str
-    currentRole: str
-    currentModel: str
-    openaiKey: str
-    openaiOrganization: str
-    openaiBase: str
-    azureKey: str
-    azureBase: str
-    openaiVersion: str
-    deploymentName: str
-    notionKey: str
-    proxy: str
+    questionAmount: str = None
+    currentRole: str = None
+    currentModel: str = None
+    openaiKey: str = None
+    openaiOrganization: str = None
+    openaiBase: str = None
+    azureKey: str = None
+    azureBase: str = None
+    openaiVersion: str = None
+    deploymentName: str = None
+    notionKey: str = None
+    proxy: str = None
 
 
 class Icon(BaseModel):

@@ -51,6 +51,7 @@ export const zhCN = {
     uploading: '正在上传',
     role: '请选择角色',
     export: '请选择要导出的数据',
+    import: '请选择你要上传的文件',
   },
 
   subTitle: {
@@ -63,6 +64,8 @@ export const zhCN = {
     role: '角色会影响问题的生成和答案检测的结果',
     export:
       '导出数据有助于在更新项目时可以保留以往的数据 (会导出名为 examor-data.xlsx 的文件)',
+    import:
+      '注意，当您上传文件后，之前的数据将被清除，并使用文件中的数据 (只允许上传 ".xlsx" 文件)',
   },
 
   label: {

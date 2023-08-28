@@ -19,6 +19,7 @@
         variant="tonal"
         size="small"
         :elevation="0"
+        @click="isShowImportDialog = true"
       >
         {{ $t('button.import') }}
       </v-btn>
@@ -274,6 +275,9 @@
 
     <!-- Export data dialog -->
     <export-dialog v-model:isShowDialog="isShowExportDialog" />
+
+    <!-- Export data dialog -->
+    <import-dialog v-model:isShowDialog="isShowImportDialog" />
   </v-container>
 </template>
 
@@ -288,6 +292,7 @@ const { locale } = useI18n()
 const PROFILE_STORE = useProfileStore()
 
 const isShowExportDialog = ref(false)
+const isShowImportDialog = ref(false)
 
 // Handle sumbit profile configurations event
 const formData = PROFILE_STORE.profile
