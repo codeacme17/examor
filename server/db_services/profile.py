@@ -2,7 +2,6 @@ import os
 import pandas as pd
 
 from sqlalchemy import create_engine
-
 from utils import types
 from db_services.MySQLHandler import MySQLHandler
 
@@ -25,7 +24,7 @@ def get_profile():
 def init_profile():
     query = """
             INSERT INTO t_profile (questionAmount, currentRole, currentModel)
-            VALUES (5, 'examiner', 'OpenAI');
+            VALUES (7, 'examiner', 'OpenAI');
             """
     MySQLHandler().insert_table_data(query)
 

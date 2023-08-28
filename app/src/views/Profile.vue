@@ -92,8 +92,9 @@
       <!-- OpenAI  -->
       <div v-if="formData.currentModel.value == 'OpenAI'" class="d-flex">
         <OpenaiIcon width="30" class="mb-auto mt-4 mr-4" />
-        <!-- OpenAI API KEY -->
+
         <div style="flex: 1">
+          <!-- OpenAI API KEY -->
           <v-text-field
             v-model="formData.openaiKey.value"
             class="mt-3"
