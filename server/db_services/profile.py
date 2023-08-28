@@ -1,6 +1,8 @@
 import os
 import pandas as pd
 
+from sqlalchemy import create_engine
+
 from utils import types
 from db_services.MySQLHandler import MySQLHandler
 
@@ -68,20 +70,20 @@ def set_profile(data: types.Profile):
 def set_profile_to_env():
     data: types.Profile = get_profile()
     os.environ["PROFILE_ID"] = str(data['id'])
-    os.environ['QUESTION_AMOUNT'] = str(data['questionAmount'])
-    os.environ['CURRENT_ROLE'] = data['currentRole']
-    os.environ['CURRENT_MODEL'] = data['currentModel']
+    os.environ['QUESTION_AMOUNT'] = str(data['questionAmount']) or ""
+    os.environ['CURRENT_ROLE'] = data['currentRole'] or ""
+    os.environ['CURRENT_MODEL'] = data['currentModel'] or ""
 
-    os.environ['OPENAI_API_KEY'] = data['openaiKey']
-    os.environ['OPENAI_ORGANIZATION'] = data['openaiOrganization']
-    os.environ['OPENAI_BASE'] = data['openaiBase']
+    os.environ['OPENAI_API_KEY'] = data['openaiKey'] or ""
+    os.environ['OPENAI_ORGANIZATION'] = data['openaiOrganization'] or ""
+    os.environ['OPENAI_BASE'] = data['openaiBase'] or ""
 
-    os.environ['AZURE_KEY'] = data['azureKey']
-    os.environ['AZURE_BASE'] = data['azureBase']
-    os.environ['OPENAI_VERSION'] = data['openaiVersion']
-    os.environ['DEPLOYMENT_NAME'] = data['deploymentName']
+    os.environ['AZURE_KEY'] = data['azureKey'] or ""
+    os.environ['AZURE_BASE'] = data['azureBase'] or ""
+    os.environ['OPENAI_VERSION'] = data['openaiVersion'] or ""
+    os.environ['DEPLOYMENT_NAME'] = data['deploymentName'] or ""
 
-    os.environ['NOTION_KEY'] = data['notionKey']
+    os.environ['NOTION_KEY'] = data['notionKey'] or ""
     os.environ['PROXY'] = f"http://{data['proxy']}"
 
 
@@ -102,3 +104,22 @@ def export_data(isProfile: bool, isNotes: bool):
         dft = pd.read_sql(query, mys.conn)
         dft.to_excel(writer, sheet_name=table_name, index=False)
     writer.close()
+
+
+def import_data():
+    file_path = "data.xlsx"
+    host = 'database' if os.environ.get('DOCKER') else 'localhost',
+    port = '3306' if os.environ.get('DOCKER') else '52020',
+    engine = create_engine(
+        f"mysql+mysqlconnector://root:root@{host[0]}:{port[0]}/db")
+    xls = pd.ExcelFile(file_path)
+    sheet_names = xls.sheet_names
+
+    for sheet_name in sheet_names:
+        if sheet_name not in ['t_profile', 't_note', 't_file', 't_document', 't_question']:
+            continue
+
+        MySQLHandler().delete_table_data(f"DELETE FROM {sheet_name};")
+
+        df = pd.read_excel(xls, sheet_name)
+        df.to_sql(sheet_name, engine, if_exists='append', index=False)

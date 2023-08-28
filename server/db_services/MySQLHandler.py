@@ -81,7 +81,7 @@ class MySQLHandler:
             self.disconnect_from_mysql()
 
     # delete table data by id
-    def delete_table_data(self, query, data):
+    def delete_table_data(self, query, data=()):
         try:
             self.connect_to_mysql()
             self.cursor.execute(query, data)

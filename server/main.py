@@ -43,6 +43,11 @@ def get_mysql_data(isProfile: bool, isNotes: bool):
     return _apis_.profile.export_data(isProfile, isNotes)
 
 
+@app.post("/profile/data")
+def set_mysql_data(file: UploadFile = File()):
+    return _apis_.profile.import_data(file)
+
+
 # -------- Note APIs --------
 @app.get("/note/notes")
 def get_notes():

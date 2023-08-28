@@ -1,5 +1,6 @@
 import db_services as _dbs_
-from fastapi.responses import FileResponse
+from fastapi import File, UploadFile
+from fastapi.responses import FileResponse, JSONResponse
 
 from utils import api_result, types
 from lang_chain import check_key_correct as _check_key_correct
@@ -37,3 +38,19 @@ def export_data(isProfile: bool, isNotes: bool):
     return FileResponse("data.xlsx", headers={
         "Content-Disposition": "attachment; filename=data.xlsx"
     })
+
+
+def import_data(file: UploadFile = File()):
+    if file.content_type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+        return api_result.error("Only .xlsx files are allowed")
+
+    file_path = "data.xlsx"
+    with open(file_path, "wb") as f:
+        f.write(file.file.read())
+
+    try:
+        _dbs_.profile.import_data()
+    except Exception as e:
+        return api_result.error(str(e))
+
+    return api_result.success("File uploaded and saved as data.xlsx")
