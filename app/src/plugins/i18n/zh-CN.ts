@@ -117,5 +117,6 @@ export const zhCN = {
     AzureKeyError: '请配置 Azure 所需的配置项',
     timeout:
       '本次请求超时，这有可能是网络问题，请检查您的代理或者以其他的方式进行调试',
+    successImport: '导入文件成功',
   },
 }

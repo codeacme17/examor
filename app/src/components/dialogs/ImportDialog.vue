@@ -48,10 +48,14 @@ import { useI18n } from 'vue-i18n'
 import { reverseTheme, orangeBgColor } from '@/utils'
 import { useFetch } from '@/hooks'
 import { PROFILE_API } from '@/apis'
+import { useProfileStore, useNoteStore } from '@/store'
+
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
-const { locale } = useI18n()
+const { t, locale } = useI18n()
+const PROFILE_STORE = useProfileStore()
+const NOTE_STORE = useNoteStore()
 
 const props = defineProps(['isShowDialog'])
 const emits = defineEmits(['update:isShowDialog', 'submitted'])
@@ -65,12 +69,20 @@ const handleVisible = (isVisible: boolean) => {
 
 // Handle submit
 const files = ref<any>([])
-const [importData, importLoading] = useFetch(PROFILE_API.importData)
+const [importData, importLoading] = useFetch(
+  PROFILE_API.importData,
+  t('message.successImport')
+)
 const handleSubmit = async () => {
   const formData = new FormData()
   formData.append('file', files.value[0].raw)
   const res = await importData(formData)
-  console.log(res)
+
+  if (res.code !== 0) return
+
+  PROFILE_STORE.getProfile()
+  NOTE_STORE.getNotes()
+
   emits('update:isShowDialog', false)
 }
 </script>

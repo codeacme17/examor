@@ -123,5 +123,6 @@ export const en = {
     AzureKeyError: 'Please configure the configuration items required by Azure',
     timeout:
       'The current request has timed out, which could be due to a network issue. Please check your proxy settings or try debugging using an alternative method.',
+    successImport: 'Import file succeeded',
   },
 }
