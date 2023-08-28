@@ -53,7 +53,7 @@ import { reverseTheme, defaultBgColor, dowmloadBinaryFile } from '@/utils'
 import { useFetch } from '@/hooks'
 import { PROFILE_API } from '@/apis'
 
-const props = defineProps(['isShowDialog', 'noteId', 'noteName'])
+const props = defineProps(['isShowDialog'])
 const emits = defineEmits(['update:isShowDialog', 'submitted'])
 
 // Handle switch dialog visible
