@@ -5,7 +5,6 @@ import apis as _apis_
 import db_services as _dbs_
 
 from utils import types
-from db_services.MySQLHandler import MySQLHandler
 
 
 app = FastAPI()
@@ -14,12 +13,11 @@ app = FastAPI()
 @app.on_event('startup')
 def startup():
     _dbs_.profile.set_profile_to_env()
-    MySQLHandler().connect_to_mysql()
 
 
 @app.on_event("shutdown")
 def shutdown_event():
-    MySQLHandler().disconnect_from_mysql()
+    pass
 
 
 # -------- Profile APIs --------
