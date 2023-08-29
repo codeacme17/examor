@@ -22,4 +22,27 @@ export const PROFILE_API = {
       url: '/api/profile/auth/key',
     })
   },
+
+  exportData(data: { isProfile: boolean; isNotes: boolean }) {
+    return _axios({
+      method: 'GET',
+      url: '/api/profile/data',
+      responseType: 'blob',
+      params: {
+        isProfile: data.isProfile,
+        isNotes: data.isNotes,
+      },
+    })
+  },
+
+  importData(data: FormData) {
+    return _axios({
+      method: 'POST',
+      url: `/api/profile/data`,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      data: data,
+    })
+  },
 }

@@ -110,7 +110,7 @@ export const useProfileStore = defineStore('profileStore', {
       const data: any = {}
       for (const key in this.$state.profile) {
         const profileKey = key as Key
-        data[key] = this.$state.profile[profileKey].value
+        data[key] = this.$state.profile[profileKey].value || ''
       }
 
       await _setKeys(data)

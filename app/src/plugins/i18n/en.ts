@@ -21,6 +21,8 @@ export const en = {
     teacher: 'Teacher',
     interviewer: 'Interviewer',
     examiner: 'Examiner',
+    export: 'Export configuration and notes',
+    import: 'Import file',
   },
 
   // the title & subtitle on each page
@@ -49,6 +51,8 @@ export const en = {
     finishedAmount: 'Already answered',
     uploading: 'Uploading',
     role: 'Please select your desired role',
+    export: 'Please select the data to export',
+    import: 'Please select the file you want to upload',
   },
   subTitle: {
     notes: 'You can manage your notes here',
@@ -59,6 +63,10 @@ export const en = {
     changePlan:
       'The new plan will be implemented tomorrow after submitting the changes',
     role: 'Roles affect question generation and answer detection results',
+    export:
+      'Exporting data helps to preserve past data when updating a project (a file named examor-data.xlsx is exported)',
+    import:
+      'Note that when you upload a file, the previous data will be cleared and the data in the file will be used.(only ".xlsx" allowed)',
   },
 
   // label of input field
@@ -72,6 +80,8 @@ export const en = {
     document: 'Note Content',
     examine: 'Examine',
     proxy: 'Proxy',
+    isProfile: 'user profile data',
+    isNotes: 'all notes, questions and answers',
   },
 
   // placeholder of input field
@@ -113,5 +123,6 @@ export const en = {
     AzureKeyError: 'Please configure the configuration items required by Azure',
     timeout:
       'The current request has timed out, which could be due to a network issue. Please check your proxy settings or try debugging using an alternative method.',
+    successImport: 'Import file succeeded',
   },
 }

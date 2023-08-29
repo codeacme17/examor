@@ -21,6 +21,8 @@ export const zhCN = {
     teacher: '教师',
     interviewer: '面试官',
     examiner: '考官',
+    export: '导出配置及笔记',
+    import: '文件导入',
   },
 
   title: {
@@ -48,6 +50,8 @@ export const zhCN = {
     finishedAmount: '已回答',
     uploading: '正在上传',
     role: '请选择角色',
+    export: '请选择要导出的数据',
+    import: '请选择你要上传的文件',
   },
 
   subTitle: {
@@ -58,6 +62,10 @@ export const zhCN = {
     emptyNoteEnd: '页面创建你的第一个笔记',
     changePlan: '提交更改后将于明日实行新的计划',
     role: '角色会影响问题的生成和答案检测的结果',
+    export:
+      '导出数据有助于在更新项目时可以保留以往的数据 (会导出名为 examor-data.xlsx 的文件)',
+    import:
+      '注意，当您上传文件后，之前的数据将被清除，并使用文件中的数据 (只允许上传 ".xlsx" 文件)',
   },
 
   label: {
@@ -70,6 +78,8 @@ export const zhCN = {
     document: '笔记内容',
     examine: '检测',
     proxy: '网络代理',
+    isProfile: '用户配置数据',
+    isNotes: '所有笔记内容及问题、答案',
   },
 
   placeholder: {
@@ -107,5 +117,6 @@ export const zhCN = {
     AzureKeyError: '请配置 Azure 所需的配置项',
     timeout:
       '本次请求超时，这有可能是网络问题，请检查您的代理或者以其他的方式进行调试',
+    successImport: '导入文件成功',
   },
 }

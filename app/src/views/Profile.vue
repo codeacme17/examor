@@ -1,13 +1,35 @@
 <template>
   <v-container class="main_width">
-    <h2>{{ $t('title.profile') }}</h2>
-    <h5 class="text-medium-emphasis">{{ $t('subTitle.profile') }}</h5>
+    <header class="d-flex flex-column">
+      <h2>{{ $t('title.profile') }}</h2>
+      <h5 class="text-medium-emphasis">{{ $t('subTitle.profile') }}</h5>
 
-    <v-divider class="mt-8"></v-divider>
+      <v-btn
+        class="mb-2 mt-5"
+        append-icon="mdi-database-export"
+        size="small"
+        :color="greenBgColor"
+        :elevation="0"
+        @click="isShowExportDialog = true"
+      >
+        {{ $t('button.export') }}
+      </v-btn>
+      <v-btn
+        append-icon="mdi-file-import"
+        variant="tonal"
+        size="small"
+        :elevation="0"
+        @click="isShowImportDialog = true"
+      >
+        {{ $t('button.import') }}
+      </v-btn>
+    </header>
+
+    <v-divider class="my-5"></v-divider>
 
     <form class="pb-6">
       <!---------- Quesiton amount ---------->
-      <h3 class="mt-6 mb-1">{{ $t('hint.questionCounts') }}</h3>
+      <h3 class="mb-1">{{ $t('hint.questionCounts') }}</h3>
       <h5 class="mb-3 text-medium-emphasis">{{ $t('subTitle.changePlan') }}</h5>
       <v-slider
         v-model:model-value="formData.questionAmount.value"
@@ -70,8 +92,9 @@
       <!-- OpenAI  -->
       <div v-if="formData.currentModel.value == 'OpenAI'" class="d-flex">
         <OpenaiIcon width="30" class="mb-auto mt-4 mr-4" />
-        <!-- OpenAI API KEY -->
+
         <div style="flex: 1">
+          <!-- OpenAI API KEY -->
           <v-text-field
             v-model="formData.openaiKey.value"
             class="mt-3"
@@ -250,6 +273,12 @@
         </v-btn>
       </div>
     </form>
+
+    <!-- Export data dialog -->
+    <export-dialog v-model:isShowDialog="isShowExportDialog" />
+
+    <!-- Export data dialog -->
+    <import-dialog v-model:isShowDialog="isShowImportDialog" />
   </v-container>
 </template>
 
@@ -257,14 +286,22 @@
 import { ref, onUnmounted } from 'vue'
 import { watchDeep } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-import { orangeBgColor } from '@/utils'
+import { orangeBgColor, greenBgColor } from '@/utils'
 import { useProfileStore } from '@/store'
 
 const { locale } = useI18n()
 const PROFILE_STORE = useProfileStore()
+
+const isShowExportDialog = ref(false)
+const isShowImportDialog = ref(false)
+
+// Handle sumbit profile configurations event
 const formData = PROFILE_STORE.profile
 const isUpdateFormData = ref(false)
-
+const handleConfirm = async () => {
+  await PROFILE_STORE.setProfile()
+  isUpdateFormData.value = false
+}
 watchDeep(formData, () => {
   isUpdateFormData.value = true
 
@@ -272,11 +309,6 @@ watchDeep(formData, () => {
     PROFILE_STORE.profile.notionKey.error = false
   }
 })
-
-const handleConfirm = async () => {
-  await PROFILE_STORE.setProfile()
-  isUpdateFormData.value = false
-}
 
 onUnmounted(() => {
   PROFILE_STORE.getProfile()
