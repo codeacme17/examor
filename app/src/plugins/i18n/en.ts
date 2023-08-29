@@ -124,5 +124,7 @@ export const en = {
     timeout:
       'The current request has timed out, which could be due to a network issue. Please check your proxy settings or try debugging using an alternative method.',
     successImport: 'Import file succeeded',
+    needUpdate:
+      'It is detected that the project needs to be updated, please go to view the update guide',
   },
 }

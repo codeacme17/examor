@@ -14,6 +14,7 @@ declare module 'vue' {
     FilesTable: typeof import('./src/components/tables/FilesTable.vue')['default']
     ImportDialog: typeof import('./src/components/dialogs/ImportDialog.vue')['default']
     NoteHeader: typeof import('./src/components/headers/NoteHeader.vue')['default']
+    NoticeUpdateFloatFrame: typeof import('./src/components/globals/NoticeUpdateFloatFrame.vue')['default']
     NotionIcon: typeof import('./src/components/icons/NotionIcon.vue')['default']
     OpenaiIcon: typeof import('./src/components/icons/OpenaiIcon.vue')['default']
     PineconeIcon: typeof import('./src/components/icons/PineconeIcon.vue')['default']

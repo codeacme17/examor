@@ -7,7 +7,7 @@
       size="small"
       icon="mdi-open-in-new"
       variant="plain"
-      @click="$router.push(`${MESSAGE_STORE.path}`)"
+      @click="handleClick"
     >
     </v-btn>
 
@@ -24,7 +24,14 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { useMessageStore } from '@/store'
 
+const router = useRouter()
 const MESSAGE_STORE = useMessageStore()
+
+const handleClick = () => {
+  if (MESSAGE_STORE.path) router.push(`${MESSAGE_STORE.path}`)
+  else window.open(MESSAGE_STORE.url, '_blank')
+}
 </script>
