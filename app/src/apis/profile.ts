@@ -36,7 +36,6 @@ export const PROFILE_API = {
   },
 
   importData(data: FormData) {
-    console.log(data)
     return _axios({
       method: 'POST',
       url: `/api/profile/data`,

@@ -2,7 +2,7 @@ version: '3'
 services:
   app:
     build: ./app/
-    command: ["sh", "-c", "sleep 15 && pnpm dev"]
+    command: ["sh", "-c", "sleep 15 && pnpm dev:docker"]
     restart: always
     depends_on:
       - server

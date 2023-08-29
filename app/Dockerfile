@@ -8,6 +8,8 @@ RUN npm install -g pnpm
 
 RUN pnpm install
 
+RUN rm -rf /node_modules/.vite
+
 COPY . /app
 
 ENV DOCKER=true
