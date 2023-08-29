@@ -85,6 +85,7 @@ export const zhCN = {
   placeholder: {
     selectNoteType: '请选择笔记类型',
     answer: "请在此处作答（按下 'ctrl' + 'enter' 进行提交）",
+    inputFile: '请选择要上传的文件',
   },
 
   option: {

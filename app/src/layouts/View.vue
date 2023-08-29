@@ -8,6 +8,8 @@
           <Transition name="fade-transition" mode="out-in">
             <Suspense>
               <component :is="Component" :key="$route.fullPath"></component>
+
+              <template #fallback> Loading... </template>
             </Suspense>
           </Transition>
         </template>

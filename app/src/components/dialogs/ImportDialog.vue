@@ -19,17 +19,17 @@
         </h5>
       </v-alert>
 
-      <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
-        <t-upload
-          v-model="files"
-          theme="file-input"
-          class="mt-2 mb-4"
-          :accept="['.xlsx']"
-          :autoUpload="false"
-          :showUploadProgress="false"
-          :useMockProgress="false"
-        />
-      </t-config-provider>
+      <v-file-input
+        v-model="files"
+        chips
+        class="mt-5 mb-1"
+        variant="outlined"
+        density="compact"
+        prepend-icon=""
+        prepend-inner-icon="mdi-file-delimited"
+        :accept="['.xlsx']"
+        :label="$t('placeholder.inputFile')"
+      />
 
       <v-btn
         :loading="importLoading"
@@ -50,10 +50,7 @@ import { useFetch } from '@/hooks'
 import { PROFILE_API } from '@/apis'
 import { useProfileStore, useNoteStore } from '@/store'
 
-import enConfig from 'tdesign-vue-next/es/locale/en_US'
-import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
-
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const PROFILE_STORE = useProfileStore()
 const NOTE_STORE = useNoteStore()
 
@@ -71,11 +68,12 @@ const handleVisible = (isVisible: boolean) => {
 const files = ref<any>([])
 const [importData, importLoading] = useFetch(
   PROFILE_API.importData,
-  t('message.successImport')
+  'Import file successed'
 )
 const handleSubmit = async () => {
   const formData = new FormData()
-  formData.append('file', files.value[0].raw)
+  formData.append('file', files.value[0])
+
   const res = await importData(formData)
 
   if (res.code !== 0) return

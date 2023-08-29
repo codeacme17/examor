@@ -88,6 +88,7 @@ export const en = {
   placeholder: {
     selectNoteType: 'please select a note type',
     answer: "please answer here (press 'ctrl' + 'enter' to send)",
+    inputFile: 'please select a file to upload',
   },
 
   // option label on select component
