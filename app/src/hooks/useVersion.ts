@@ -26,7 +26,7 @@ export const useVersion = async (message: string): Promise<Ref<boolean>> => {
       message,
       'button',
       '',
-      'https://github.com/codeacme17/examor#%EF%B8%8F-modules'
+      'https://github.com/codeacme17/examor#%EF%B8%8F-update-the-project'
     )
   } else isNeedUpdate.value = false
 
