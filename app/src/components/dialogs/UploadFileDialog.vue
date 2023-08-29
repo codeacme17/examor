@@ -2,8 +2,8 @@
   <v-dialog
     v-model="_isShowUploadDialog"
     theme="light"
-    width="60%"
-    style="margin-bottom: 240px; min-width: 300px"
+    width="750px"
+    style="margin-bottom: 240px; min-width: 500px"
     @update:model-value="handleVisible"
   >
     <v-card

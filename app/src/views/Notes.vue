@@ -21,7 +21,7 @@
             <note-header v-bind="currentNote" :index="currentIndex" />
 
             <v-btn
-              variant="outlined"
+              variant="tonal"
               class="mt-3 mb-3"
               prepend-icon="mdi-text-box-plus-outline"
               style="height: 36px"
@@ -78,10 +78,8 @@
                   :title="$t('title.createDate')"
                   :subtitle="handleDatetime(currentNote.upload_date)"
                 />
-                <!-- <v-list-item
-                  :title="$t('title.finishedAmount')"
-                  subtitle="10"
-                />
+                <!-- Dont delete
+                <v-list-item :title="$t('title.finishedAmount')" subtitle="10" />
                 <v-list-item :title="$t('title.totalAmount')" subtitle="200" /> -->
               </v-list>
             </Transition>
