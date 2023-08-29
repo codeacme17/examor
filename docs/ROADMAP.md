@@ -15,7 +15,7 @@
 - [ ] Add detection modules for different question types
 - [ ] Add more model options
 - [ ] Set up local proxy in Docker containers
-- [ ] Added data import and export features to back up data
+- [x] Added data import and export features to back up data
 - [x] Provide identity selection, allowing users to set the identity of teachers, examiners, interviewers, etc. that affect the strictness of detection and the divergence of generated questions
 
   | Role        | Divergence | Strictness |
@@ -29,4 +29,4 @@
 - [ ] Optimize prompt templates for question generation
 - [ ] Optimize prompt templates for examine
 - [ ] Optimize Ebbinghaus algorithm
-- [ ] Improve error messages
+- [x] Improve error messages
