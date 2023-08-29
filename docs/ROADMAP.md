@@ -23,6 +23,7 @@
   | Teacher     | ⭐️⭐️     | 😏         |
   | Interviewer | ⭐️⭐️⭐️  | 😐         |
   | Examiner    | ⭐️        | 😭         |
+- [ ] Dashboard page
 
 ### Optimizations
 
