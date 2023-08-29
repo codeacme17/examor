@@ -10,10 +10,13 @@
 
 <script setup lang="ts">
 import { onMounted, watchEffect } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useWebSocket } from '@vueuse/core'
 import { useProfileStore, useNoteStore, useFileStore } from '@/store'
 import { clearExipredStorageData } from '@/utils'
+import { useVersion } from '@/hooks'
 
+const { t } = useI18n()
 const PROFILE_STORE = useProfileStore()
 const NOTE_STORE = useNoteStore()
 const FILE_STORE = useFileStore()
@@ -21,6 +24,8 @@ const FILE_STORE = useFileStore()
 onMounted(async () => {
   await NOTE_STORE.getNotes()
   await PROFILE_STORE.getProfile()
+  await useVersion(t('message.needUpdate'))
+
   clearExipredStorageData()
 })
 

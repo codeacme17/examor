@@ -118,5 +118,6 @@ export const zhCN = {
     timeout:
       '本次请求超时，这有可能是网络问题，请检查您的代理或者以其他的方式进行调试',
     successImport: '导入文件成功',
+    needUpdate: '检测到需要更新项目，请前往查看更新指南',
   },
 }

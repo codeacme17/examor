@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "scripts": {
     "dev": "vite --host",
     "dev:docker": "vite --host --force",
