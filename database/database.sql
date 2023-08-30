@@ -38,7 +38,7 @@ COLLATE=utf8_general_ci;
 
 CREATE TABLE t_question (
 	id int(12) auto_increment NOT NULL COMMENT 'question id',
-	content varchar(500) NOT NULL COMMENT 'question content',
+	content varchar(1000) NOT NULL COMMENT 'question content',
 	document_id int(12) NOT NULL COMMENT 'document id',
 	question_type char(20) COMMENT 'the type of the question',
 	designated_role char(20) NOT NULL COMMENT 'role when generating this question',
