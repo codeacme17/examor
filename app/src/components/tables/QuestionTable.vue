@@ -22,8 +22,15 @@
             />
           </td>
 
+          <!-- Quesiton type emoji -->
+          <td style="width: 20px">
+            <div v-if="item.question_type === 'short'">📝</div>
+            <div v-if="item.question_type === 'choice'">🔠</div>
+            <div v-if="item.question_type === 'blank'">⬜</div>
+          </td>
+
           <!-- Question content td -->
-          <td style="overflow: hidden" v-html="toMarkdown(item.content)" />
+          <td v-html="toMarkdown(item.content.split('\n')[0])" />
 
           <!-- Action buttons td -->
           <td style="width: 145px">
