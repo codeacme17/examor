@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from fastapi import File, Form, UploadFile
 
 
 class Profile(BaseModel):
@@ -25,3 +26,11 @@ class AnswerQuestion(BaseModel):
     id: int
     language: str
     answer: str
+
+
+class AddNoteData(BaseModel):
+    language: str
+    questionType: str
+    noteName: str = Form()
+    files: list[UploadFile] = File(default=None)
+    notionId: str = Form(default=None)

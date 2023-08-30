@@ -16,24 +16,40 @@ interviewer = """
 我会给您一个标题表示上下文对应的主题，您可以以上下文内容为基础扩展性的出题。也就是说，问题不必非在上下文中产生，但您不可以捏造您不知道的知识。
 """
 
+short = """
+您需要提出尽可能多的问题(最多7个)，您生成的问题要覆盖上下文中的各个知识点，但所有的问题不能有任何重复的内容。
+
+问题(以markdown语法，不携带数字的列表):
+"""
+
+choice = """
+你需要提出尽可能多的选择题（最多5个）并为每道题附带 4 个选项且只能有一个正确答案，你生成的问题要覆盖上下文中的各个知识点，但所有的问题不能有任何重复的内容。
+
+请您按照以下格式出题:
+'''
+- xxxx:
+    A. xxxx
+    B. xxxx
+    C. xxxx
+    D. xxxx
+
+'''
+
+选择题(以markdown语法):
+"""
+
 PROMPT_TEMPLATE = '''
 ### 标题 ###
 {title}
 
 ### 上下文 ###
 {context}
-
-您需要提出尽可能多的问题(最多7个)，您生成的问题要覆盖上下文中的各个知识点，但所有的问题不能有任何重复的内容。
-
-问题(以markdown语法，不携带数字的列表):
 '''
 
 
 def _get_role():
     current_role = os.environ.get("CURRENT_ROLE")
-    if current_role == "examiner":
-        return examiner
-    elif current_role == "teacher":
+    if current_role == "teacher":
         return teacher
     elif current_role == "interviewer":
         return interviewer
@@ -41,7 +57,16 @@ def _get_role():
         return examiner
 
 
-QUESTION_GENERATE_PROMPT_CN = PromptTemplate(
-    template=_get_role() + PROMPT_TEMPLATE,
-    input_variables=["title", "context"]
-)
+def _get_question_type(type):
+    if (type == "choice"):
+        return choice
+    else:
+        return short
+
+
+def get_question_generate_cn(type):
+    QUESTION_GENERATE_PROMPT_CN = PromptTemplate(
+        template=_get_role() + PROMPT_TEMPLATE + _get_question_type(type),
+        input_variables=["title", "context"]
+    )
+    return QUESTION_GENERATE_PROMPT_CN

@@ -36,9 +36,10 @@ class Chain:
         self,
         docs: list[Document],
         title: str,
+        questionType: str
     ):
         tasks = []
-        llm_chain = self._init_llm_chain(20, "")
+        llm_chain = self._init_llm_chain(20, "", questionType)
         for doc in docs:
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id, self.file_id, self.filename, doc.page_content)
@@ -78,7 +79,7 @@ class Chain:
         answer: str,
         role: str
     ):
-        llm_chain = self._init_llm_chain(60, role)
+        llm_chain = self._init_llm_chain(60, role, "")
         coroutine = wait_done(llm_chain.apredict(
             context=context,
             question=question,
@@ -100,7 +101,7 @@ class Chain:
 
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
 
-    def _init_llm_chain(self, timeout: int, role: str):
+    def _init_llm_chain(self, timeout: int, role: str, questionType: str):
         llm_instance = LLM(
             temperature=self.temperature,
             streaming=self.streaming,
@@ -110,6 +111,7 @@ class Chain:
 
         prompt = choose_prompt(
             role,
+            questionType,
             self.prompt_language,
             self.prompt_type
         )
