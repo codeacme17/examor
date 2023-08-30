@@ -1,5 +1,4 @@
 </br>
-</br>
 
 <p>
   <img  width="200"  src="/docs/logo-text.png" />
@@ -31,7 +30,6 @@
 
 </br>
 <img width="870" src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
-</br>
 
 ## 💡 Inspiration
 
