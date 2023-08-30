@@ -1,5 +1,7 @@
 <samp>
 
+<img src="https://img.shields.io/badge/Python-11-%23fff?style=flat-square&labelColor=7d09f1">
+
 ### Install
 
 ```bash
