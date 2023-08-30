@@ -5,12 +5,6 @@
 </p>
 
 <p>
-  <strong>
-   A website application that allows you to take exams based on your knowledge notes. Let you really remember what you have learned and written.
-  </strong>
-</p>
-
-<p>
   <a href="https://github.com/codeacme17/examor/blob/main/docs/zh-doc.md">
     <img height="21" src="https://img.shields.io/badge/zh--CN-7d09f1?style=flat-square" alt="zh-cn">
   </a>
@@ -28,8 +22,14 @@
   </a>
 </p>
 
+<samp>
+  <strong>
+   A website application that allows you to take exams based on your knowledge notes. Let you really remember what you have learned and written.
+  </strong>
+</samp>
 </br>
-<img width="870" src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
+</br>
+<img src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
 
 ## 💡 Inspiration
 
