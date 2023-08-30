@@ -22,12 +22,11 @@
   </a>
 </p>
 
-<samp>
+<p>
   <strong>
    A website application that allows you to take exams based on your knowledge notes. Let you really remember what you have learned and written.
   </strong>
-</samp>
-</br>
+</p>
 </br>
 <img src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
 
