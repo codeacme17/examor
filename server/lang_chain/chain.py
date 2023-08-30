@@ -36,15 +36,15 @@ class Chain:
         self,
         docs: list[Document],
         title: str,
-        questionType: str
+        question_type: str
     ):
         tasks = []
-        llm_chain = self._init_llm_chain(20, "", questionType)
+        llm_chain = self._init_llm_chain(20, "", question_type)
         for doc in docs:
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id, self.file_id, self.filename, doc.page_content)
             tasks.append(self._agenerate_questions(
-                llm_chain, doc, title, doc_id))
+                llm_chain, doc, title, doc_id, question_type))
 
         try:
             await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * 20)
@@ -57,19 +57,33 @@ class Chain:
         llm_chain: LLMChain,
         doc: Document,
         title: str,
-        doc_id: int
+        doc_id: int,
+        question_type: str
     ):
         async with self.semaphore:
             res = await llm_chain.apredict(
                 title=title,
                 context=doc.page_content
             )
-            lines = res.split("\n")
-            for question_content in lines:
+            question = self._spite_questions(res, question_type)
+            for question_content in question:
                 _dbs_.question.save_question_to_db(
                     question_content,
-                    doc_id
+                    doc_id,
+                    question_type
                 )
+
+    def _spite_questions(
+        self,
+        content: str,
+        question_type: str
+    ):
+        questions = []
+        if (question_type == "choice"):
+            questions = content.strip().split('\n\n')
+        else:
+            questions = content.strip().split("\n")
+        return questions
 
     async def aexamine_answer(
         self,
@@ -101,7 +115,7 @@ class Chain:
 
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
 
-    def _init_llm_chain(self, timeout: int, role: str, questionType: str):
+    def _init_llm_chain(self, timeout: int, role: str, question_type: str):
         llm_instance = LLM(
             temperature=self.temperature,
             streaming=self.streaming,
@@ -111,7 +125,7 @@ class Chain:
 
         prompt = choose_prompt(
             role,
-            questionType,
+            question_type,
             self.prompt_language,
             self.prompt_type
         )

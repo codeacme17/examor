@@ -18,13 +18,19 @@ def get_question_by_id(id: int):
 def save_question_to_db(
     question_content: str,
     document_id: int,
+    question_type: str
 ):
     question_content = remove_prefix_numbers(question_content)
     query = """
-            INSERT INTO t_question (content, document_id, designated_role) 
-            VALUES (%s, %s, %s)
+            INSERT INTO t_question (content, document_id, designated_role, question_type) 
+            VALUES (%s, %s, %s, %s)
             """
-    data = (question_content, document_id, os.environ.get("CURRENT_ROLE"), )
+    data = (
+        question_content,
+        document_id,
+        os.environ.get("CURRENT_ROLE"),
+        question_type,
+    )
     MySQLHandler().insert_table_data(query, data)
 
 
