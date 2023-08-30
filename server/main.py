@@ -54,8 +54,8 @@ def get_notes():
 
 @app.post("/note")
 async def add_note(
-    language: str,
-    questionType: str,
+    language: str = Form(),
+    questionType: str = Form(),
     noteName: str = Form(),
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),

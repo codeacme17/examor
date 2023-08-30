@@ -1,16 +1,32 @@
 <template>
   <form>
+    <!-- Choose question type radio -->
+    <t-radio-group
+      v-model="formData.questionType"
+      variant="default-filled"
+      class="mb-5"
+    >
+      <t-radio-button value="short">📝 {{ $t('button.short') }}</t-radio-button>
+      <t-radio-button value="choice">
+        🔠 {{ $t('button.choice') }}
+      </t-radio-button>
+      <!-- TODO -->
+      <t-radio-button value="blank" disabled="true">
+        ⬜ {{ $t('button.blank') }}
+      </t-radio-button>
+    </t-radio-group>
+
+    <!-- TODO -->
     <!-- <v-select
-        v-model="formData.noteType"
-        class="mt-4"
-        variant="outlined"
-        density="compact"
-        item-title="label"
-        item-value="value"
-        :label="$t('label.selectNoteType')"
-        :items="noteTypeOptions"
-        @update:model-value="handleSelectChange"
-      /> -->
+      v-model="formData.noteType"
+      class="mt-4"
+      variant="outlined"
+      density="compact"
+      item-title="label"
+      item-value="value"
+      :label="$t('label.selectNoteType')"
+      :items="noteTypeOptions"
+    /> -->
 
     <!-- File upload component -->
     <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
@@ -67,6 +83,7 @@ import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
 type FormData = {
   noteType: 'files' | 'notion' | null
+  questionType: 'short' | 'choice' | 'blank'
   files: any[]
   notion: string
 }
@@ -79,6 +96,7 @@ const emits = defineEmits(['success'])
 
 const formData = reactive<FormData>({
   noteType: 'files',
+  questionType: 'short',
   files: [],
   notion: '',
 })
@@ -116,6 +134,7 @@ const handleConfirm = async () => {
 
   const _formData = new FormData()
   _formData.append('language', locale.value)
+  _formData.append('questionType', formData.questionType)
   _formData.append('noteName', props.noteName)
   _formData.append('notionId', formData.notion)
   formData.files.forEach((item) => {
