@@ -80,7 +80,6 @@ export const zhCN = {
     lastRecord: '上次的记录',
     document: '笔记内容',
     examine: '检测',
-    proxy: '网络代理',
     isProfile: '用户配置数据',
     isNotes: '所有笔记内容及问题、答案',
   },
@@ -102,8 +101,8 @@ export const zhCN = {
     memory: '记忆进度',
     questionCounts: '请选择每天为你准备多少个问题',
     getIcon: '获取 icon 请到',
-    proxy:
-      '如果你需要 VPN 才能访问 OpenAI 那么请填入你的代理地址（请使用 "http" 协议)',
+    openaiBase: '该参数用于设置OpenAI API的基础地址',
+    openaiProxy: '该参数用于设置OpenAI API的代理地址',
     lastRecord: '暂无记录',
   },
 

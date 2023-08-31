@@ -152,6 +152,23 @@
               PROFILE_STORE.profile.openaiBase.error ? orangeBgColor : ''
             "
             :color="PROFILE_STORE.profile.openaiBase.error ? orangeBgColor : ''"
+            :hint="$t('hint.openaiBase')"
+          />
+
+          <!-- Openai Proxy -->
+          <v-text-field
+            v-model="formData.openaiProxy.value"
+            class="mt-3"
+            label="PROXY"
+            variant="outlined"
+            density="compact"
+            :base-color="
+              PROFILE_STORE.profile.openaiProxy.error ? orangeBgColor : ''
+            "
+            :color="
+              PROFILE_STORE.profile.openaiProxy.error ? orangeBgColor : ''
+            "
+            :hint="$t('hint.openaiProxy')"
           />
         </div>
       </div>
@@ -242,20 +259,6 @@
           @click:append-inner="
             formData.notionKey.show = !formData.notionKey.show
           "
-        />
-      </div>
-
-      <!---------- Other configuration ---------->
-      <h3 class="my-4">{{ $t('title.otherConfigurations') }}</h3>
-      <!-- Proxy -->
-      <div class="d-flex">
-        <v-text-field
-          v-model="formData.proxy.value"
-          variant="outlined"
-          density="compact"
-          placeholder="127.0.0.1:1086"
-          :label="$t('label.proxy')"
-          :hint="$t('hint.proxy')"
         />
       </div>
 

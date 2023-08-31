@@ -82,7 +82,6 @@ export const en = {
     lastRecord: 'last record',
     document: 'Note Content',
     examine: 'Examine',
-    proxy: 'Proxy',
     isProfile: 'user profile data',
     isNotes: 'all notes, questions and answers',
   },
@@ -107,8 +106,9 @@ export const en = {
     questionCounts:
       'Please select how many questions are prepared for you each day',
     getIcon: 'To get the icon please go to',
-    proxy:
-      'If you need a VPN to access OpenAI then please fill in your proxy address (use "http" protocol)',
+    openaiBase: 'This parameter is used to set the base address of OpenAI API',
+    openaiProxy:
+      'This parameter is used to set the proxy address of the OpenAI API',
     lastRecord: 'No reord yet',
   },
 

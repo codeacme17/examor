@@ -22,6 +22,17 @@ class Chain:
         temperature: int = 0,
         streaming: bool = False
     ):
+        """
+        Initializes a Chain instance.
+
+        :param note_id: The ID of the note.
+        :param file_id: The ID of the file.
+        :param filename: The filename.
+        :param prompt_language: The language for prompts.
+        :param prompt_type: The type of prompt.
+        :param temperature: The temperature for language model.
+        :param streaming: Whether streaming is enabled.
+        """
         self.semaphore = asyncio.Semaphore(3)
         self.note_id = note_id
         self.file_id = file_id
@@ -38,6 +49,12 @@ class Chain:
         title: str,
         question_type: str
     ):
+        """
+        Generates questions for documents.
+
+        :param docs: List of Document objects.
+        :param title: The title of the questions.
+        """
         tasks = []
         llm_chain = self._init_llm_chain(20, "", question_type)
         for doc in docs:
@@ -60,6 +77,14 @@ class Chain:
         doc_id: int,
         question_type: str
     ):
+        """
+        Generates questions for a document using the language model.
+
+        :param llm_chain: The LLMChain instance.
+        :param doc: The Document object.
+        :param title: The title for questions.
+        :param doc_id: The ID of the document.
+        """
         async with self.semaphore:
             res = await llm_chain.apredict(
                 title=title,
@@ -93,7 +118,17 @@ class Chain:
         answer: str,
         role: str
     ):
-        llm_chain = self._init_llm_chain(60, role, "")
+        """
+        Examines an answer using the language model.
+
+        :param id: The ID of the question.
+        :param context: The context for examination.
+        :param question: The question for examination.
+        :param answer: The answer for examination.
+        :param role: The role for the examination.
+        :yield: The examination results.
+        """
+        llm_chain = self._init_llm_chain(60, role)
         coroutine = wait_done(llm_chain.apredict(
             context=context,
             question=question,
@@ -115,7 +150,14 @@ class Chain:
 
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
 
-    def _init_llm_chain(self, timeout: int, role: str, question_type: str):
+    def _init_llm_chain(self, timeout: int, role: str):
+        """
+        Initializes the language model chain.
+
+        :param timeout: The timeout value.
+        :param role: The role for the examination.
+        :return: The initialized LLMChain instance.
+        """
         llm_instance = LLM(
             temperature=self.temperature,
             streaming=self.streaming,
