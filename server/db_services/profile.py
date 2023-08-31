@@ -38,12 +38,12 @@ def set_profile(data: types.Profile):
                 openaiKey = %s,
                 openaiOrganization = %s,
                 openaiBase = %s,
+                openaiProxy = %s,
                 azureKey = %s,
                 azureBase = %s,
                 openaiVersion = %s,
                 deploymentName = %s,
-                notionKey = %s,
-                proxy = %s
+                notionKey = %s
             WHERE id = %s;
             """
 
@@ -54,12 +54,12 @@ def set_profile(data: types.Profile):
         data.openaiKey,
         data.openaiOrganization,
         data.openaiBase,
+        data.openaiProxy,
         data.azureKey,
         data.azureBase,
         data.openaiVersion,
         data.deploymentName,
         data.notionKey,
-        data.proxy,
         os.environ["PROFILE_ID"]
     )
 
@@ -76,6 +76,7 @@ def set_profile_to_env():
     os.environ['OPENAI_API_KEY'] = data['openaiKey'] or ""
     os.environ['OPENAI_ORGANIZATION'] = data['openaiOrganization'] or ""
     os.environ['OPENAI_BASE'] = data['openaiBase'] or ""
+    os.environ['OPENAI_PROXY'] = data['openaiProxy'] or ""
 
     os.environ['AZURE_KEY'] = data['azureKey'] or ""
     os.environ['AZURE_BASE'] = data['azureBase'] or ""
@@ -83,7 +84,6 @@ def set_profile_to_env():
     os.environ['DEPLOYMENT_NAME'] = data['deploymentName'] or ""
 
     os.environ['NOTION_KEY'] = data['notionKey'] or ""
-    os.environ['PROXY'] = f"http://{data['proxy']}"
 
 
 def export_data(isProfile: bool, isNotes: bool):

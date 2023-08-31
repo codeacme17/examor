@@ -25,6 +25,7 @@ declare module 'vue' {
     TConfigProvider: typeof import('tdesign-vue-next')['ConfigProvider']
     TRadioButton: typeof import('tdesign-vue-next')['RadioButton']
     TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
+    TTag: typeof import('tdesign-vue-next')['Tag']
     TUpload: typeof import('tdesign-vue-next')['Upload']
     UploadFileDialog: typeof import('./src/components/dialogs/UploadFileDialog.vue')['default']
     UploadForm: typeof import('./src/components/forms/UploadForm.vue')['default']

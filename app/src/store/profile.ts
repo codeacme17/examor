@@ -15,12 +15,12 @@ type Key =
   | 'openaiKey'
   | 'openaiOrganization'
   | 'openaiBase'
+  | 'openaiProxy'
   | 'azureKey'
   | 'azureBase'
   | 'openaiVersion'
   | 'deploymentName'
   | 'notionKey'
-  | 'proxy'
 
 type Model = 'OpenAI' | 'Azure'
 
@@ -56,7 +56,11 @@ const state: State = {
       show: false,
       error: false,
     },
-
+    openaiProxy: {
+      value: '',
+      show: false,
+      error: false,
+    },
     azureKey: {
       value: '',
       show: false,
@@ -78,9 +82,6 @@ const state: State = {
       value: '',
       show: false,
       error: false,
-    },
-    proxy: {
-      value: '',
     },
   },
 
