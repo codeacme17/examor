@@ -6,7 +6,7 @@
 
 <p>
   <a href="https://github.com/codeacme17/examor/blob/main/docs/zh-doc.md">
-    <img height="21" src="https://img.shields.io/badge/zh--CN-7d09f1?style=flat-square" alt="zh-cn">
+    <img height="21" src="https://img.shields.io/badge/中文文档-7d09f1?style=flat-square" alt="zh-cn">
   </a>
   <a href="https://github.com/codeacme17/examor/blob/main/docs/ROADMAP.md">
     <img height="21" src="https://img.shields.io/badge/ROADMAP-7d09f1?style=flat-square" alt="roadmap">
