@@ -40,6 +40,7 @@
 
       <!-- Single choice -->
       <v-card
+        v-if="props.questionType === 'choice'"
         class="pt-5 pb-0 px-4 mb-5"
         :elevation="0"
         :color="defaultBgColor"

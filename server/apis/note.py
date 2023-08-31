@@ -84,6 +84,7 @@ async def add_note(
 # Add new files to note
 async def add_file(
     language: str = Form(),
+    questionType: str = Form(),
     noteId: int = Form(),
     noteName: str = Form(),
     files: list[UploadFile] = File(default=None),
@@ -98,7 +99,7 @@ async def add_file(
 
     if (len(files) > 0):
         try:
-            await upload_file(language, noteId, noteName, files)
+            await upload_file(language, questionType, noteId, noteName, files)
         except Exception as e:
             return api_result.error(str(e))
 
