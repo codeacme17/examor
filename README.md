@@ -38,8 +38,6 @@ When I'm learning a new technology, I have the habit of taking notes and jotting
 
 ## 🏁 Start
 
-> I'm very sorry, the proxy may not be available when starting the project with docker-compose, **I'll fix it as soon as possible**. This problem can currently be avoided by using the [developer method](https://github.com/codeacme17/examor/blob/main/CONTRIBUTING.md#development-setup).
-
 #### Clone this repo
 
 ```bash
@@ -59,11 +57,9 @@ Open `http://localhost:51818` in your browser to access Examor. (Due to optimiza
 
 ## ✨ Features
 
-This project primarily focuses on question generation and answer detection based on user documentation. In the initial version, I've implemented a simplified version of the Ebbinghaus memory curve, which allows periodic reviews based on the accuracy of your answers.
-
 ### Generate Issues from Documentation
 
-When users create notes, they can upload associated documents. The application generates a set of questions from these documents, based on their content. These questions will be presented to the users in the future.
+When users create notes, they can upload associated documents. The application generates a set of questions from these documents, based on their content. These questions will be presented to the users in the future.When creating notes, users can choose the types of questions they want to generate, providing them with a richer learning experience.
 
 ### Answer Detection
 
@@ -79,9 +75,21 @@ Regarding the actual function, once GPT generates a test, the score is recorded 
 
 > ⚠️ The feature in the current version might not be entirely stable. In the upcoming plans, I will continue to optimize this feature (v0.1).
 
-<img width="500" src="/docs/screen-shot/en-role.png" />
+<img width="400" src="/docs/screen-shot/en-role.png" />
 
 Roles can provide more possibilities for question generation and assessment. You can set roles in the configuration page. For more information about various roles, it's recommended to refer to the [Role Manual](/docs/en-role.md).
+
+### Question Type Selection
+
+> The current version (v0.2.1) supports generating single-choice questions, and fill-in-the-blank questions will be added in future updates.
+
+- Choose the question type when creating notes.
+
+<img  width="400"  src="/docs/screen-shot/en-question-type.png" />
+
+- When practicing questions, you can answer using different methods. The image below shows an example of a single-choice question.
+
+<img  width="800"  src="/docs/screen-shot/en-question-type-answer.png" />
 
 ## 📦️ Modules
 
