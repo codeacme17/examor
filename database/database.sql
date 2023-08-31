@@ -74,13 +74,13 @@ CREATE TABLE t_profile (
 	currentModel char(20) DEFAULT "OpenAI" NOT NULL COMMENT 'the model',
 	openaiKey varchar(100) DEFAULT "" COMMENT 'openai key',
 	openaiOrganization char(50) DEFAULT "" COMMENT 'openai organization',
+	openaiProxy varchar(100) DEFAULT "" COMMENT 'the proxy url of openai',
 	azureKey varchar(100) DEFAULT "" COMMENT 'azure key',
 	openaiBase varchar(100) DEFAULT "" COMMENT 'openai api base',
 	azureBase varchar(100) DEFAULT "" COMMENT 'openai api base for azure',
 	openaiVersion varchar(100) DEFAULT "" COMMENT 'openai version',
 	deploymentName varchar(100) DEFAULT "" COMMENT 'deployment name',
 	notionKey char(50) DEFAULT "" COMMENT '',
-	proxy varchar(100) DEFAULT "" COMMENT '',
 	CONSTRAINT t_profile_pk PRIMARY KEY (id)
 )
 ENGINE=InnoDB

@@ -8,6 +8,7 @@ class Profile(BaseModel):
     openaiKey: str = ""
     openaiOrganization: str = ""
     openaiBase: str = ""
+    openaiProxy: str = ""
     azureKey: str = ""
     azureBase: str = ""
     openaiVersion: str = ""
