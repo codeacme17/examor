@@ -22,8 +22,9 @@
 
     <!-- Answer tab connent -->
     <section v-show="currentTab === 'answer'">
-      <!-- Answer block -->
+      <!-- Short answer input -->
       <v-textarea
+        v-if="props.questionType === 'short' || props.questionType === ''"
         v-model="currentData.answer"
         variant="solo"
         auto-grow
@@ -36,6 +37,22 @@
         @keydown="handleKeydown"
         @keyup="handleKeyup"
       />
+
+      <!-- Single choice -->
+      <v-card
+        class="pt-5 pb-0 px-4 mb-5"
+        :elevation="0"
+        :color="defaultBgColor"
+      >
+        <v-radio-group v-model="currentData.answer">
+          <v-radio
+            v-for="item in options"
+            :key="item"
+            :label="item"
+            :value="item"
+          />
+        </v-radio-group>
+      </v-card>
 
       <!-- Examine block -->
       <Transition name="scroll-x-reverse-transition">
@@ -115,7 +132,11 @@ import { ErrorResponse } from '@/constant'
 
 const { locale, t } = useI18n()
 const PROFILE_STORE = useProfileStore()
-const props = defineProps(['id'])
+const props = defineProps<{
+  id: string
+  questionContent: string
+  questionType: 'short' | 'choice' | 'blank' | ''
+}>()
 const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
 
 // Get data cache
@@ -214,12 +235,33 @@ const handleGetDocument = async () => {
   document_content.value = data
 }
 
+const options = ref<string[]>([])
+const splitQuestionToOptions = () => {
+  if (props.questionType !== 'choice') return
+  const questionLines = props.questionContent.trim().split('\n')
+
+  for (let i = 1; i < questionLines.length; i++) {
+    const optionLine = questionLines[i].trim()
+    if (
+      optionLine.startsWith('A.') ||
+      optionLine.startsWith('B.') ||
+      optionLine.startsWith('C.') ||
+      optionLine.startsWith('D.')
+    ) {
+      options.value.push(optionLine)
+    }
+  }
+  console.log(options.value)
+}
+
 // Watching if current question id is changed
 watch(
   () => props.id,
   async () => {
     await handleGetLastAnswer()
     await handleGetDocument()
+
+    if (props.questionType === 'choice') splitQuestionToOptions()
 
     if (currentData.value.examine) {
       isShowExamine.value = true

@@ -81,6 +81,7 @@ export type TableItem = {
   id: number
   content: string
   designated_role: string
+  question_type: 'short' | 'choice' | 'blank' | ''
   document_id?: number
   is_pushed?: string
   is_answered_today?: string

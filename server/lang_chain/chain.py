@@ -116,7 +116,8 @@ class Chain:
         context: str,
         question: str,
         answer: str,
-        role: str
+        role: str,
+        question_type: str,
     ):
         """
         Examines an answer using the language model.
@@ -128,7 +129,7 @@ class Chain:
         :param role: The role for the examination.
         :yield: The examination results.
         """
-        llm_chain = self._init_llm_chain(60, role)
+        llm_chain = self._init_llm_chain(60, role, question_type)
         coroutine = wait_done(llm_chain.apredict(
             context=context,
             question=question,
@@ -150,7 +151,7 @@ class Chain:
 
         await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
 
-    def _init_llm_chain(self, timeout: int, role: str):
+    def _init_llm_chain(self, timeout: int, role: str, question_type: str):
         """
         Initializes the language model chain.
 

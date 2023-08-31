@@ -50,6 +50,7 @@ def get_random_question():
         "id": question_info["id"],
         "content": question_info["content"],
         "designated_role": question_info["designated_role"],
+        "question_type": question_info["question_type"],
         "progress": question_info["progress"],
         "note_name": note_info["name"]
     })
