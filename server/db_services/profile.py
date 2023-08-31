@@ -87,6 +87,12 @@ def set_profile_to_env():
 
 
 def export_data(isProfile: bool, isNotes: bool):
+    """
+    Export data from the database to an Excel file.
+
+    :param isProfile: Whether to export profile data.
+    :param isNotes: Whether to export notes-related data.
+    """
     mys = MySQLHandler()
     mys.connect_to_mysql()
     writer = pd.ExcelWriter("data.xlsx", engine="xlsxwriter")
@@ -106,6 +112,9 @@ def export_data(isProfile: bool, isNotes: bool):
 
 
 def import_data():
+    """
+    Import data from an Excel file into the database.
+    """
     file_path = "data.xlsx"
     host = 'database' if os.environ.get('DOCKER') else 'localhost',
     port = '3306' if os.environ.get('DOCKER') else '52020',

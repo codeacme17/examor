@@ -20,6 +20,14 @@ def result(
     message='',
     data=None,
 ):
+    """
+    Creates a JSON response with the given code, message, and data.
+
+    :param code: The HTTP code to use.
+    :param message: The message to include in the response.
+    :param data: The data to include in the response.
+    :return: A JSON response object.
+    """
     json_dict = {
         'data': data,
         'code': code,
