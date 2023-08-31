@@ -75,7 +75,7 @@ Regarding the actual function, once GPT generates a test, the score is recorded 
 
 > ⚠️ The feature in the current version might not be entirely stable. In the upcoming plans, I will continue to optimize this feature (v0.1).
 
-<img width="400" src="/docs/screen-shot/en-role.png" />
+<img width="500" src="/docs/screen-shot/en-role.png" />
 
 Roles can provide more possibilities for question generation and assessment. You can set roles in the configuration page. For more information about various roles, it's recommended to refer to the [Role Manual](/docs/en-role.md).
 
@@ -89,7 +89,7 @@ Roles can provide more possibilities for question generation and assessment. You
 
 - When practicing questions, you can answer using different methods. The image below shows an example of a single-choice question.
 
-<img  width="800"  src="/docs/screen-shot/en-question-type-answer.png" />
+<img  width="700"  src="/docs/screen-shot/en-question-type-answer.png" />
 
 ## 📦️ Modules
 
