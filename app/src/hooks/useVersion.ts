@@ -4,10 +4,10 @@ import { TOOL_API } from '@/apis'
 import { useMessageStore } from '@/store'
 
 /**
- *  Check if the local version is the latest version, if not, prompt the user to update
+ * Checks for updates and shows a message if an update is available.
  *
- *  @param message the message will notice user
- *  @returns boolean indicates whether to update
+ * @param {string} message - The message to show if an update is available.
+ * @returns {Promise<Ref<boolean>>} A promise that resolves with a ref indicating whether an update is needed.
  */
 export const useVersion = async (message: string): Promise<Ref<boolean>> => {
   const MESSAGE_STORE = useMessageStore()
@@ -33,6 +33,13 @@ export const useVersion = async (message: string): Promise<Ref<boolean>> => {
   return isNeedUpdate
 }
 
+/**
+ * Compares two versions and returns a comparison result.
+ *
+ * @param {string} version1 - The first version to compare.
+ * @param {string} version2 - The second version to compare.
+ * @returns {number} -1 if version1 is smaller, 1 if version1 is larger, 0 if equal.
+ */
 function compareVersions(version1: string, version2: string): number {
   const parts1 = version1.split('.')
   const parts2 = version2.split('.')

@@ -1,7 +1,12 @@
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 
-// Make raw-content render as markdown formatting content
+/**
+ * Converts the given text to Markdown format using MarkdownIt library.
+ *
+ * @param {string} text - The input text to be converted to Markdown.
+ * @returns {string} The Markdown formatted text.
+ */
 export const toMarkdown = (text: string) => {
   const md = new MarkdownIt({
     highlight: function (str, lang) {

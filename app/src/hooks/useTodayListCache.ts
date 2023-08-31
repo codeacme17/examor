@@ -11,9 +11,9 @@ const today = useDateFormat(useNow(), 'YYYY-MM-DD')
  *  then the list is cached, and when user enter the problem list page again,
  *  the interface is no longer called
  *
- *  @params noteId: whitch note list needs to be cached
- *  @params fun: if there isnt any cache of this note, will trigger this function to fetch list data
- *  @return [list, loading]
+ *  @param {string} noteId - The ID of the note.
+ *  @param {Function} fun - The asynchronous function to fetch data.
+ *  @returns {Promise<Ref[]>} A promise that resolves with an array containing the cached list and loading state.
  */
 export const useTodayListCache = async (
   noteId: string,
@@ -34,6 +34,11 @@ export const useTodayListCache = async (
   return [list, loading]
 }
 
+/**
+ * Creates state for pending and finished lists.
+ *
+ * @returns {Array<Ref<Set<string>>>} An array containing refs for pending and finished lists.
+ */
 export const useListState = () => {
   const pendingList = useLocalStorage(`${today.value}:pendingList`, new Set())
   const finishedList = useLocalStorage(`${today.value}:finishedList`, new Set())

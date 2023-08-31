@@ -2,6 +2,13 @@ import { MessagePlugin } from 'tdesign-vue-next'
 import { ref } from 'vue'
 import type { ResponseBody } from '@/plugins/axios'
 
+/**
+ * Creates a fetch function with loading state and optional success message.
+ *
+ * @param {Function} fun - The asynchronous function to perform the fetch operation.
+ * @param {string} [successMessage] - Optional message to display on fetch success.
+ * @returns {[Function, Ref<boolean>]} A tuple containing the fetch function and a ref representing the loading state.
+ */
 export function useFetch(
   fun: (data?: any) => Promise<ResponseBody | any>,
   successMessage?: string
