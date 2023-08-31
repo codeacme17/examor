@@ -2,6 +2,7 @@ import os
 import db_services as _dbs_
 
 from fastapi import File, Form, UploadFile
+
 from utils import api_result, types, upload_file
 
 
@@ -50,6 +51,7 @@ def get_questions_by_note_id(note_id: int):
 # Add new note
 async def add_note(
     language: str,
+    questionType: str,
     noteName: str = Form(),
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),
@@ -64,6 +66,7 @@ async def add_note(
         try:
             await upload_file(
                 language=language,
+                questionType=questionType,
                 noteId=_dbs_.note.get_inserted_note_id(noteName),
                 noteName=noteName,
                 files=files
@@ -71,6 +74,7 @@ async def add_note(
         except Exception as e:
             return api_result.error(str(e))
 
+    # TODO notion databse
     if (notionId is not None):
         pass
 

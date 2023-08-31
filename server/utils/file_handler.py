@@ -8,6 +8,7 @@ from loaders import split_doc
 
 async def upload_file(
     language: str,
+    questionType: str,
     noteId: int,
     noteName: str,
     files: list[UploadFile],
@@ -44,6 +45,7 @@ async def upload_file(
         await langchain_service.agenerate_questions(
             docs,
             noteName,
+            questionType,
         )
 
         # Set the file's uploading state

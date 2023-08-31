@@ -23,6 +23,9 @@ export const zhCN = {
     examiner: '考官',
     export: '导出配置及笔记',
     import: '文件导入',
+    short: '简答题',
+    choice: '单选题',
+    blank: '填空题',
   },
 
   title: {

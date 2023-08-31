@@ -20,6 +20,7 @@ def examine_question(data: types.AnswerQuestion):
         context=document_info["document"],
         question=question_info["content"],
         role=question_info["designated_role"],
+        question_type=question_info["question_type"],
         answer=data.answer
     )
 
@@ -50,6 +51,7 @@ def get_random_question():
         "id": question_info["id"],
         "content": question_info["content"],
         "designated_role": question_info["designated_role"],
+        "question_type": question_info["question_type"],
         "progress": question_info["progress"],
         "note_name": note_info["name"]
     })

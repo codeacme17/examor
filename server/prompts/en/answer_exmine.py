@@ -17,6 +17,35 @@ Attention! Please grade the answers in a manner similar to how you would assess 
 Attention! The questions may involve extensions based on the context, and your responses should reflect the tone of a humorous and highly professional interviewer.
 """
 
+short = """
+Please answer in the following format:
+'''
+**Score**: x
+**Detect**:
+xxx
+**correct answer**:
+xxx
+'''
+
+Please correct my answer and fill in the content of your correction in the "Detection" section. And, based on the context, provide an appropriate answer to the question in the "Correct Answer" section.
+Your answer (please use markdown syntax):
+"""
+
+choice = """
+Please provide your answer in the following format:
+'''
+**Score**: x
+**Detect**:
+xxx
+**correct answer**:
+A. xxx
+'''
+
+Please review my answer and make any necessary corrections based on the context and assign a score (score options: 0 or 10) to my answer.
+Your answer (please use markdown syntax):
+"""
+
+
 PROMPT_TEMP = '''
 ### Context:
 {context}
@@ -30,24 +59,11 @@ PROMPT_TEMP = '''
 {answer}
 ####
 
-Please answer in the following format:
-"""
-**Score**: x
-**Detect**:
-xxx
-**correct answer**:
-xxx
-"""
-
-Please correct my answer and fill in the content of your correction in the "Detection" section. And, based on the context, provide an appropriate answer to the question in the "Correct Answer" section.
-Your answer (please use markdown syntax):
 '''
 
 
 def _get_role_prompt(role: str):
-    if role == "examiner":
-        return examiner
-    elif role == "teacher":
+    if role == "teacher":
         return teacher
     elif role == "interviewer":
         return interviewer
@@ -55,9 +71,17 @@ def _get_role_prompt(role: str):
         return examiner
 
 
-def get_exmine_prompt_en(role: str):
+def _get_question_type(type: str):
+    if (type == "choice"):
+        return choice
+    else:
+        return short
+
+
+def get_exmine_prompt_en(role: str, question_type: str):
     ANSWER_EXAMINE_PROMPT_EN = PromptTemplate(
-        template=_get_role_prompt(role) + PROMPT_TEMP,
+        template=_get_role_prompt(role) + PROMPT_TEMP +
+        _get_question_type(question_type),
         input_variables=["context", "question", "answer"]
     )
     return ANSWER_EXAMINE_PROMPT_EN

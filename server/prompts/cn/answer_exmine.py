@@ -16,6 +16,34 @@ interviewer = """
 注意！：问题是基于上下文进行扩展的，您也需要适当的依据已知的知识进行扩展，但请不要随意编造答案，您的回答也应以一位风趣并十分专业的面试官的口吻来呈现。
 """
 
+short = """
+请您按照以下格式回答:
+'''
+**得分**：x
+**检测**：
+xxx
+**正确答案**：
+xxx
+'''
+
+请您对我的答案进行纠错，将您纠错的内容填写在“检测”部分。并且根据上下文，为问题提供一个合适的回答，填写到 ”正确答案“ 部分。
+您的回答（请使用 markdown 语法）：
+"""
+
+choice = """
+请您按照以下格式回答:
+'''
+**得分**：x
+**检测**：
+xxx
+**正确答案**：
+A. xxx
+'''
+
+请对这道选择题，根据上下文对我的答案进行纠错与打分（分数只有0和10）
+您的回答（请使用 markdown 语法）：
+"""
+
 PROMPT_TEMP = '''
 ### 上下文：
 {context}
@@ -29,24 +57,11 @@ PROMPT_TEMP = '''
 {answer}
 ####
 
-请您按照以下格式回答:
-"""
-**得分**：x
-**检测**：
-xxx
-**正确答案**：
-xxx
-"""
-
-请您对我的答案进行纠错，将您纠错的内容填写在“检测”部分。并且根据上下文，为问题提供一个合适的回答，填写到 ”正确答案“ 部分。
-您的回答（请使用 markdown 语法）：
 '''
 
 
 def _get_role_prompt(role: str):
-    if role == "examiner":
-        return examiner
-    elif role == "teacher":
+    if role == "teacher":
         return teacher
     elif role == "interviewer":
         return interviewer
@@ -54,9 +69,17 @@ def _get_role_prompt(role: str):
         return examiner
 
 
-def get_exmine_prompt_cn(role: str):
+def _get_question_type(type: str):
+    if (type == "choice"):
+        return choice
+    else:
+        return short
+
+
+def get_exmine_prompt_cn(role: str, question_type: str):
     ANSWER_EXAMINE_PROMPT_CN = PromptTemplate(
-        template=_get_role_prompt(role) + PROMPT_TEMP,
+        template=_get_role_prompt(role) + PROMPT_TEMP +
+        _get_question_type(question_type),
         input_variables=["context", "question", "answer"]
     )
     return ANSWER_EXAMINE_PROMPT_CN

@@ -51,7 +51,11 @@
         />
 
         <!-- Examine block -->
-        <examine-block :id="pickedQuestion.id" />
+        <examine-block
+          :id="pickedQuestion.id"
+          :questionContent="pickedQuestion.content"
+          :questionType="pickedQuestion.question_type"
+        />
       </section>
     </Transition>
   </v-container>
@@ -103,6 +107,7 @@ const pickedQuestion = reactive<TableItem>({
   content: '',
   designated_role: '',
   progress: 0,
+  question_type: '',
 })
 const isShowAnswer = ref(false)
 const handlePickQuestion = (item: TableItem) => {
@@ -111,5 +116,6 @@ const handlePickQuestion = (item: TableItem) => {
   pickedQuestion.content = item.content
   pickedQuestion.designated_role = item.designated_role
   pickedQuestion.progress = item.progress
+  pickedQuestion.question_type = item.question_type
 }
 </script>

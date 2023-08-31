@@ -55,11 +55,12 @@ def get_notes():
 @app.post("/note")
 async def add_note(
     language: str = Form(),
+    questionType: str = Form(),
     noteName: str = Form(),
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),
 ):
-    return await _apis_.note.add_note(language, noteName, files, notionId)
+    return await _apis_.note.add_note(language, questionType, noteName, files, notionId)
 
 
 @app.get("/note/{id}")

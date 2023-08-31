@@ -42,7 +42,10 @@
         </h3>
         <div class="ml-2">{{ switchRoleEmoji }}</div>
       </div>
-      <p class="mb-6 text-body-1" v-html="toMarkdown(props.content)" />
+      <p
+        class="mb-6 text-body-1"
+        v-html="toMarkdown(props.content.split('\n')[0])"
+      />
 
       <!-- Memory progress -->
       <v-tooltip

@@ -23,6 +23,9 @@ export const en = {
     examiner: 'Examiner',
     export: 'Export configuration and notes',
     import: 'Import file',
+    short: 'Short Answer',
+    choice: 'Single Choice',
+    blank: 'Fill in the blank'
   },
 
   // the title & subtitle on each page

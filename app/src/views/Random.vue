@@ -15,7 +15,12 @@
       />
 
       <!-- Enswer block -->
-      <examine-block :id="questionInfo.id" v-if="trigger" />
+      <examine-block
+        v-if="trigger"
+        :id="questionInfo.id"
+        :questionType="questionInfo.question_type"
+        :questionContent="questionInfo.content"
+      />
     </section>
   </v-container>
 </template>
@@ -41,6 +46,7 @@ const [_getRandomQuestion, getRQLoading] = useFetch(
 const getRandomQuestion = async () => {
   const { data } = await _getRandomQuestion()
   questionInfo.value = data
+  console.log(questionInfo.value)
   trigger.value = false
   nextTick(() => {
     trigger.value = true
