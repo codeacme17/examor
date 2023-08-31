@@ -44,7 +44,7 @@
         :elevation="0"
         :color="defaultBgColor"
       >
-        <v-radio-group v-model="currentData.answer">
+        <v-radio-group v-model="currentData.answer" :disabled="isShowExamine">
           <v-radio
             v-for="item in options"
             :key="item"

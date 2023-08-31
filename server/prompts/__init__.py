@@ -17,13 +17,13 @@ def choose_prompt(
         if (prompt_type == "question_generate"):
             prompt = get_question_generate_en(question_type)
         if (prompt_type == "answer_examine"):
-            prompt = get_exmine_prompt_en(role)
+            prompt = get_exmine_prompt_en(role, question_type)
 
     if (prompt_language == "zh-CN"):
         if (prompt_type == "question_generate"):
             prompt = get_question_generate_cn(question_type)
         if (prompt_type == "answer_examine"):
-            prompt = get_exmine_prompt_cn(role)
+            prompt = get_exmine_prompt_cn(role, question_type)
 
     return prompt
 

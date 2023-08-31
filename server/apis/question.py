@@ -20,6 +20,7 @@ def examine_question(data: types.AnswerQuestion):
         context=document_info["document"],
         question=question_info["content"],
         role=question_info["designated_role"],
+        question_type=question_info["question_type"],
         answer=data.answer
     )
 
