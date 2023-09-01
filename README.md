@@ -138,13 +138,13 @@ When starting the project, the application checks for updates. If an update is r
 
 1. Export your notes, questions, or configuration items as a backup through the **Export Configuration and Notes** button on the personal settings page. This will export a file named `examor-data.xlsx`. You can view the file contents, **but it's not recommended to modify the file content**
 
-  <img width="700" src="/docs/screen-shot/en-export-import.png" />
+   <img width="700" src="/docs/screen-shot/en-export-import.png" />
 
-2. Pull the latest remote code updates to refresh your local project.
+3. Pull the latest remote code updates to refresh your local project.
 
-3. Delete the existing Docker container and rebuild the project with the `docker-compose run` command to incorporate the latest changes.
+4. Delete the existing Docker container and rebuild the project with the `docker-compose run` command to incorporate the latest changes.
 
-4. Once the build is successful, navigate to the personal settings page, click the **Import File** button, and re-import the backed-up data into the project.
+5. Once the build is successful, navigate to the personal settings page, click the **Import File** button, and re-import the backed-up data into the project.
 
 > The current updating process is based on my personal usage. It might not be the best way to update. If you have better update methods, please feel free to provide assistance in the issues section ❤️
 
