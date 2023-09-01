@@ -89,11 +89,11 @@ Roles can provide more possibilities for question generation and assessment. You
 
 - Choose the question type when creating notes.
 
-<img  width="400"  src="/docs/screen-shot/en-question-type.png" />
+  <img  width="400"  src="/docs/screen-shot/en-question-type.png" />
 
 - When practicing questions, you can answer using different methods. The image below shows an example of a single-choice question.
 
-<img  width="700"  src="/docs/screen-shot/en-question-type-answer.png" />
+  <img  width="700"  src="/docs/screen-shot/en-question-type-answer.png" />
 
 ## 📦️ Modules
 
@@ -138,7 +138,7 @@ When starting the project, the application checks for updates. If an update is r
 
 1. Export your notes, questions, or configuration items as a backup through the **Export Configuration and Notes** button on the personal settings page. This will export a file named `examor-data.xlsx`. You can view the file contents, **but it's not recommended to modify the file content**
 
-<img width="700" src="/docs/screen-shot/en-export-import.png" />
+  <img width="700" src="/docs/screen-shot/en-export-import.png" />
 
 2. Pull the latest remote code updates to refresh your local project.
 
