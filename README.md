@@ -30,6 +30,10 @@
 </br>
 <img src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
 
+## 🗒️ Dev-plan for this week（9/1 - 9/8）
+- After a little precipitation, refactor the code of the project as a whole to improve code readability and extensibility
+- Complete the development of fill-in-the-blank questions
+
 ## 💡 Inspiration
 
 > For learners, one of the best habits should be regular self-testing - **Make It Stick: The Science of Successful Learning**
