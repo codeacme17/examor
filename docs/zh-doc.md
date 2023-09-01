@@ -72,11 +72,11 @@ docker-compose up
 
 - 在创建笔记时选择题型
 
-<img  width="420"  src="/docs/screen-shot/zh-question-type.png" />
+  <img  width="420"  src="/docs/screen-shot/zh-question-type.png" />
 
 - 刷题的时候就可以使用不同的方式进行回答，如下图是一道单选题
 
-<img  width="800"  src="/docs/screen-shot/zh-question-type-answer.png" />
+  <img  width="800"  src="/docs/screen-shot/zh-question-type-answer.png" />
 
 ## 📦️ 模块
 
@@ -121,7 +121,7 @@ docker-compose up
 
 1. 将您的笔记、问题或配置项通过个人配置页面中的 **导出配置及笔记** 按钮进行导出作为备份。这将会导出一个名为 `examor-data.xlsx` 的文件，您可以查看文件内容，**但不建议对文件内容进行修改**
 
-<img  width="700"  src="/docs/screen-shot//zh-export-import.png" />
+    <img  width="700"  src="/docs/screen-shot//zh-export-import.png" />
 
 2. 重新拉取更新最新的远程代码，更新本地的项目
 
