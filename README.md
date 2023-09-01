@@ -127,11 +127,16 @@ Roles can provide more possibilities for question generation and assessment. You
 
 ## ♻️ Update the Project
 
+> **Warning**
+> When upgrading to version v0.2.1, you may encounter an error when importing profile configurations. This is because I have modified the `proxy` key in the table [#19](https://github.com/codeacme17/examor/pull/19).
+> 
+> You can change the column name `proxy` to `openai_proxy` in the `t_profile` sheet of the Excel file.
+> 
+> I sincerely apologize for any inconvenience this may have caused in using the software. In the future, I will avoid directly changing key names in the library!
+
 When starting the project, the application checks for updates. If an update is required, the user will be notified. You can follow these steps to update:
 
-1. Export your notes, questions, or configuration items as a backup through the **Export Configuration and Notes** button on the personal settings page.
-
-> This will export a file named `examor-data.xlsx`. You can view the file contents, but it's not recommended to modify the file content.
+1. Export your notes, questions, or configuration items as a backup through the **Export Configuration and Notes** button on the personal settings page. This will export a file named `examor-data.xlsx`. You can view the file contents, **but it's not recommended to modify the file content**
 
 <img width="700" src="/docs/screen-shot/en-export-import.png" />
 
