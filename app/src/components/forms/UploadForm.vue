@@ -18,7 +18,7 @@
 
     <!-- TODO -->
     <!-- <v-select
-      v-model="formData.noteType"
+      v-model="formData.uploadType"
       class="mt-4"
       variant="outlined"
       density="compact"
@@ -31,7 +31,7 @@
     <!-- File upload component -->
     <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
       <t-upload
-        v-show="formData.noteType === 'files'"
+        v-show="formData.uploadType === 'files'"
         v-model="formData.files"
         class="mt-1 mb-7"
         placeholder=""
@@ -45,7 +45,7 @@
 
     <!-- NotionDB input field -->
     <v-text-field
-      v-show="formData.noteType === 'notion'"
+      v-show="formData.uploadType === 'notion'"
       v-model="formData.notion"
       class="mt-4"
       variant="outlined"
@@ -76,13 +76,13 @@ import { useI18n } from 'vue-i18n'
 import { PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 import { useNoteStore, useProfileStore } from '@/store'
-import { detectLegalFileName } from '@/utils'
+import { detectLegalFile } from '@/utils'
 
 import enConfig from 'tdesign-vue-next/es/locale/en_US'
 import cnConfig from 'tdesign-vue-next/es/locale/zh_CN'
 
 type FormData = {
-  noteType: 'files' | 'notion' | null
+  uploadType: 'files' | 'notion' | null
   questionType: 'short' | 'choice' | 'blank'
   files: any[]
   notion: string
@@ -95,7 +95,7 @@ const props = defineProps(['APIFun', 'noteName', 'noteId'])
 const emits = defineEmits(['success'])
 
 const formData = reactive<FormData>({
-  noteType: 'files',
+  uploadType: 'files',
   questionType: 'short',
   files: [],
   notion: '',
@@ -116,9 +116,9 @@ const noteTypeOptions = computed(() => [
 // Form item disable computed
 const disabled = computed(() => {
   if (!props.noteName) return true
-  if (!formData.noteType) return true
-  if (!formData.files.length && formData.noteType === 'files') return true
-  if (!formData.notion && formData.noteType === 'notion') return true
+  if (!formData.uploadType) return true
+  if (!formData.files.length && formData.uploadType === 'files') return true
+  if (!formData.notion && formData.uploadType === 'notion') return true
 
   return false
 })
@@ -128,18 +128,22 @@ const [submit] = useFetch(props.APIFun)
 const [checkKeyCorrect, checkKeyLoading] = useFetch(PROFILE_API.checkKeyCorrect)
 const NOTE_STORE = useNoteStore()
 const handleConfirm = async () => {
-  if (!PROFILE_STORE.checkHasSettedModel()) return
-  const res = await checkKeyCorrect()
-  if (res.code !== 0) return
-
   const _formData = new FormData()
+  const validFiles = []
   _formData.append('language', locale.value)
+  _formData.append('uploadType', formData.uploadType!)
   _formData.append('questionType', formData.questionType)
   _formData.append('noteName', props.noteName)
   _formData.append('notionId', formData.notion)
   formData.files.forEach((item) => {
-    if (detectLegalFileName(item)) _formData.append('files', item.raw)
+    if (!detectLegalFile(item)) return
+    _formData.append('files', item.raw)
+    validFiles.push(item)
   })
+
+  if (!validFiles.length) return
+  if (!PROFILE_STORE.checkHasSettedModel()) return
+  if ((await checkKeyCorrect()).code !== 0) return
 
   submit({
     id: props.noteId,
@@ -148,14 +152,13 @@ const handleConfirm = async () => {
 
   initFormData()
   emits('success')
-
   setTimeout(() => {
     NOTE_STORE.getNotes()
   }, 300)
 }
 
 const initFormData = () => {
-  formData.noteType = 'files'
+  formData.uploadType = 'files'
   formData.files = []
   formData.notion = ''
 }

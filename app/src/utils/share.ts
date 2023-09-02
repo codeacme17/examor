@@ -19,9 +19,11 @@ export const handleDatetime = (datatime: string): string => {
  * @param {Object} file - The file object to be checked.
  * @returns {boolean} Returns true if the file type is valid, otherwise returns false.
  */
-export const detectLegalFileName = (file: any) => {
+export const detectLegalFile = (file: any) => {
   if (file.type !== 'text/markdown' && file.type !== 'text/x-markdown') {
-    MessagePlugin.warning("Only '.md' type files are allowed to be uploaded")
+    MessagePlugin.warning(
+      `The type of file '${file.name}' is wrong, Only '.md' type files are allowed to be uploaded`
+    )
     return false
   } else return true
 }

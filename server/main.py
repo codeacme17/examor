@@ -55,12 +55,20 @@ def get_notes():
 @app.post("/note")
 async def add_note(
     language: str = Form(),
-    questionType: str = Form(),
     noteName: str = Form(),
+    questionType: str = Form(),
+    uploadType: str = Form(),
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None),
 ):
-    return await _apis_.note.add_note(language, questionType, noteName, files, notionId)
+    return await _apis_.note.add_note(
+        language=language,
+        noteName=noteName,
+        questionType=questionType,
+        uploadType=uploadType,
+        files=files,
+        notionId=notionId
+    )
 
 
 @app.get("/note/{id}")
@@ -77,12 +85,21 @@ def get_files_by_id(id: int):
 async def add_files_to_note(
     id: int,
     language: str = Form(),
-    questionType: str = Form(),
     noteName: str = Form(),
+    questionType: str = Form(),
+    uploadType: str = Form(),
     files: list[UploadFile] = File(default=None),
     notionId: str = Form(default=None)
 ):
-    return await _apis_.note.add_file(language, questionType, id, noteName, files, notionId)
+    return await _apis_.note.add_file(
+        noteId=id,
+        language=language,
+        noteName=noteName,
+        questionType=questionType,
+        uploadType=uploadType,
+        files=files,
+        notionId=notionId
+    )
 
 
 @app.get("/note/{id}/questions")
