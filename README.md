@@ -148,11 +148,9 @@ When starting the project, the application checks for updates. If an update is r
 
 > The current updating process is based on my personal usage. It might not be the best way to update. If you have better update methods, please feel free to provide assistance in the issues section ❤️
 
-</br>
-
 ## Contributing
 
-Contributions to the project are welcome! If you find a bug or have an idea for a new feature, please submit an issue or pull request. See more in [CONTRIBUTING](/CONTRIBUTING.md).
+**Since the project is in a very early stage, there are still many problems and bugs in the project.** If you find a bug or have an idea for a new feature, please submit an issue or pull request. See more in [CONTRIBUTING](/CONTRIBUTING.md).
 
 ## License
 
