@@ -2,8 +2,11 @@
 </br>
 
 <p>
-  <img  width="190"  src="/docs/logo-text.png" />
+  <img  width="230"  src="/docs/logo-text.png" />
 </p>
+
+> **Warning**
+> 该项目目前仍处于早期阶段，存在许多问题和Bug需要解决。因此，我们非常欢迎您提供宝贵的反馈和问题报告，共同参与完善这个项目！
 
 <p>
   <strong>
