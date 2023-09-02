@@ -22,6 +22,9 @@
   </a>
 </p>
 
+> **Warning**
+> The project is currently in its early stages, and there are several issues and bugs that require attention and resolution. Your valuable input and feedback are highly encouraged as they will contribute to the ongoing improvement of this project. Your collaboration is greatly appreciated!
+
 <p>
   <strong>
    A website application that allows you to take exams based on your knowledge notes. Let you really remember what you have learned and written 🧠.
