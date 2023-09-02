@@ -1,16 +1,14 @@
-FROM node:lts-alpine
-
-COPY package.json pnpm-lock.yaml /app/
+FROM node:18-alpine
 
 WORKDIR /app 
 
-RUN npm install -g pnpm
+COPY package.json pnpm-lock.yaml ./
 
-RUN pnpm install
+RUN npm install -g pnpm && \
+  pnpm install && \
+  rm -rf /node_modules/.vite
 
-RUN rm -rf /node_modules/.vite
-
-COPY . /app
+COPY . .
 
 ENV DOCKER=true
 
