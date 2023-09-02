@@ -10,3 +10,4 @@ pysocks==1.7.1
 pymysql==1.1.0
 pandas==1.5.3
 openpyxl==3.1.2
+xlsxwriter==3.1.2
