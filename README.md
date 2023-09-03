@@ -151,6 +151,16 @@ When starting the project, the application checks for updates. If an update is r
 
 > The current updating process is based on my personal usage. It might not be the best way to update. If you have better update methods, please feel free to provide assistance in the issues section ❤️
 
+## 🤩 Star History
+
+<a href="https://star-history.com/#codeacme17/examor&Timeline">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=codeacme17/examor&type=Timeline&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=codeacme17/examor&type=Timeline" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=codeacme17/examor&type=Timeline" />
+  </picture>
+</a>
+
 ## Contributing
 
 **Since the project is in a very early stage, there are still many problems and bugs in the project.** If you find a bug or have an idea for a new feature, please submit an issue or pull request. See more in [CONTRIBUTING](/CONTRIBUTING.md).
