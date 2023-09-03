@@ -1,5 +1,3 @@
-import { MessagePlugin } from 'tdesign-vue-next'
-
 /**
  * Extracts the date portion from a datetime string in 'YYYY-MM-DDTHH:mm:ss' format.
  *
@@ -11,19 +9,4 @@ export const handleDatetime = (datatime: string): string => {
   const chunks = datatime.split('T')
   if (chunks.length <= 1) return datatime
   return chunks[0]
-}
-
-/**
- * Checks if a given file has a valid type for uploading.
- *
- * @param {Object} file - The file object to be checked.
- * @returns {boolean} Returns true if the file type is valid, otherwise returns false.
- */
-export const detectLegalFile = (file: any) => {
-  if (file.type !== 'text/markdown' && file.type !== 'text/x-markdown') {
-    MessagePlugin.warning(
-      `The type of file '${file.name}' is wrong, Only '.md' type files are allowed to be uploaded`
-    )
-    return false
-  } else return true
 }
