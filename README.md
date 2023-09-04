@@ -35,7 +35,7 @@
 
 ## 🗒️ Dev-plan for this week（9/1 - 9/8）
 - After a little precipitation, refactor the code of the project as a whole to improve code readability and extensibility
-- Fix existing bugs
+- Fix existing bugs ([#33](https://github.com/codeacme17/examor/issues/33))
 - Complete the development of fill-in-the-blank questions (if you have spare time)
 
 ## 💡 Inspiration
