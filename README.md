@@ -98,7 +98,7 @@ Roles can provide more possibilities for question generation and assessment. You
 
   <img  width="700"  src="/docs/screen-shot/en-question-type-answer.png" />
 
-## 📦️ Modules
+## 🧩 Modules
 
 ### Notes Management
 
