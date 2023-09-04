@@ -81,7 +81,7 @@ docker-compose up
 
   <img  width="800"  src="/docs/screen-shot/zh-question-type-answer.png" />
 
-## 📦️ 模块
+## 🧩 模块
 
 ### 笔记管理
 
