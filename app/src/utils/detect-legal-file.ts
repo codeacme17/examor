@@ -24,18 +24,22 @@ export const detectLegalFile = (file: UploadFile): boolean => {
 
 /**
  * Checks if a given file is a valid Markdown file based on its name and MIME type.
+ *
  * @param file - The file to check.
  * @returns Returns true if the file is a valid Markdown file, otherwise false.
  */
 const isValidMarkdownFile = (file: UploadFile): boolean => {
   const { name, type } = file
   if (!name!.endsWith('.md')) return false
-  if (
-    type === MIME.MARKDOWN ||
-    type === MIME.X_MARKDOWN ||
-    type === MIME.TEXT_PLAIN ||
-    type === MIME.OCTET_STREAM
-  ) {
-    return true
-  } else return false
+  return true
+
+  // dont delete ---
+  // if (
+  //   type === MIME.MARKDOWN ||
+  //   type === MIME.X_MARKDOWN ||
+  //   type === MIME.TEXT_PLAIN ||
+  //   type === MIME.OCTET_STREAM
+  // ) {
+  //   return true
+  // } else return false
 }
