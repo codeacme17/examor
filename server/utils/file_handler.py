@@ -1,8 +1,8 @@
 from fastapi import UploadFile
 
 import db_services as _dbs_
+import llm_services as _llms_
 
-from llm_services.chain import Chain
 from loaders import split_doc
 
 
@@ -33,7 +33,7 @@ async def upload_file(
         docs = split_doc(file_type, file_content.decode('utf-8'))
 
         # Create a LangChain service instance
-        langchain_service = Chain(
+        langchain_service = _llms_.Chain(
             note_id=noteId,
             file_id=file_id,
             filename=filename,

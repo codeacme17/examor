@@ -7,7 +7,7 @@ from langchain.callbacks import AsyncIteratorCallbackHandler
 
 import db_services as _dbs_
 
-from .llm import LLM
+from .langchain_llm import LLM
 from prompts import choose_prompt
 
 
