@@ -132,7 +132,7 @@ Roles can provide more possibilities for question generation and assessment. You
 ## ♻️ Update the Project
 
 > **Warning**
-> When upgrading to version v0.2.1, you may encounter an error when importing profile configurations. This is because I have modified the `proxy` key in the table [#19](https://github.com/codeacme17/examor/pull/19).
+> If you are upgrading from a version earlier than v0.2.1, you may encounter an error when importing profile configurations. This is because I have modified the `proxy` key in the table [#19](https://github.com/codeacme17/examor/pull/19).
 > 
 > You can change the column name `proxy` to `openai_proxy` in the `t_profile` sheet of the Excel file.
 > 
