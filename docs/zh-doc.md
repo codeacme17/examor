@@ -115,7 +115,7 @@ docker-compose up
 ## ♻️ 更新项目
 
 > **Warning**
-> 在升级到 v0.2.1 版本的时候，导入 profile 配置时会有报错，这是因为我修改了表中 `proxy` 这个键 [#19](https://github.com/codeacme17/examor/pull/19)
+> 如果您是对低于 v0.2.1 的版本进行升级，导入 profile 配置时会有报错，这是因为我修改了表中 `proxy` 这个键 [#19](https://github.com/codeacme17/examor/pull/19)
 > 
 > 您可以将 excel 文件中的 `t_profile` 这一 sheet 页中的 `proxy` 列名改为 `openai_proxy`
 > 
