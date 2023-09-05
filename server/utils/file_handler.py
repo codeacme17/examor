@@ -2,7 +2,7 @@ from fastapi import UploadFile
 
 import db_services as _dbs_
 
-from lang_chain.chain import Chain
+from llm_services.chain import Chain
 from loaders import split_doc
 
 

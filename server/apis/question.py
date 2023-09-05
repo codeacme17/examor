@@ -1,6 +1,6 @@
 import db_services as _dbs_
 
-from lang_chain import Chain
+from llm_services import Chain
 from utils import api_result, types
 
 

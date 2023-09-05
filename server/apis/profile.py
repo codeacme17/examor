@@ -3,7 +3,7 @@ from fastapi import File, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
 
 from utils import api_result, types
-from lang_chain import check_key_correct as _check_key_correct
+from llm_services import check_key_correct as _check_key_correct
 
 
 def get_profile():
