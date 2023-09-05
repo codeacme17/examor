@@ -1,9 +1,10 @@
-import db_services as _dbs_
 from fastapi import File, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
 
+import db_services as _dbs_
+import llm_services as _llms_
+
 from utils import api_result, types
-from llm_services import check_key_correct as _check_key_correct
 
 
 def get_profile():
@@ -19,7 +20,7 @@ def set_profile(data: types.Profile):
 
 def check_key_correct():
     try:
-        _check_key_correct()
+        _llms_.check_key_correct()
     except Exception as e:
         return api_result.error(str(e))
 

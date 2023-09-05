@@ -1,4 +1,3 @@
-# pure llm request
 import os
 import requests
 
