@@ -18,7 +18,7 @@ def set_profile(data: types.Profile):
     return api_result.success()
 
 
-def check_key_correct():
+def check_llm_api_state():
     try:
         _llms_.check_llm_api_state()
     except Exception as e:

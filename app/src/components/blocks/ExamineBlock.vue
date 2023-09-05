@@ -169,11 +169,13 @@ const isShowExamine = ref(false) // flag to show examing block
 const isExaming = ref(false) // flag to gpt examing state
 const isFinishExaming = ref(false) // flag to is gpt finish examine
 const errorMessage = ref('')
-const [checkKeyCorrect, checkKeyLoading] = useFetch(PROFILE_API.checkKeyCorrect)
+const [checkLlmApiState, checkKeyLoading] = useFetch(
+  PROFILE_API.checkLlmApiState
+)
 const handleSubmit = async () => {
   if (!PROFILE_STORE.checkHasSettedModel()) return
 
-  const res = await checkKeyCorrect()
+  const res = await checkLlmApiState()
   if (res.code !== 0) return
   if (!currentData.value.answer.trim()) return
   isShowExamine.value = true

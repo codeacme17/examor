@@ -16,10 +16,10 @@ export const PROFILE_API = {
     })
   },
 
-  checkKeyCorrect() {
+  checkLlmApiState() {
     return _axios({
       method: 'GET',
-      url: '/api/profile/auth/key',
+      url: '/api/profile/auth/llm',
     })
   },
 

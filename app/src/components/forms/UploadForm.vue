@@ -125,7 +125,9 @@ const disabled = computed(() => {
 
 // Handle add note event
 const [submit] = useFetch(props.APIFun)
-const [checkKeyCorrect, checkKeyLoading] = useFetch(PROFILE_API.checkKeyCorrect)
+const [checkLlmApiState, checkKeyLoading] = useFetch(
+  PROFILE_API.checkLlmApiState
+)
 const NOTE_STORE = useNoteStore()
 const handleConfirm = async () => {
   const _formData = new FormData()
@@ -143,7 +145,7 @@ const handleConfirm = async () => {
 
   if (!validFiles.length) return
   if (!PROFILE_STORE.checkHasSettedModel()) return
-  if ((await checkKeyCorrect()).code !== 0) return
+  if ((await checkLlmApiState()).code !== 0) return
 
   submit({
     id: props.noteId,
