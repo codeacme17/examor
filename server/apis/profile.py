@@ -20,11 +20,11 @@ def set_profile(data: types.Profile):
 
 def check_llm_api_state():
     try:
-        _llms_.check_llm_api_state()
+        payment = _llms_.check_llm_api_state()
     except Exception as e:
         return api_result.error(str(e))
 
-    return api_result.success()
+    return api_result.success(payment)
 
 
 def export_data(isProfile: bool, isNotes: bool):

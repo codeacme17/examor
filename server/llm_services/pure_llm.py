@@ -12,7 +12,7 @@ def check_llm_api_state():
         error_message = data["error"]["message"]
         raise Exception(f"Error: {error_message}")
 
-    _differentiate_payment_types(headers)
+    return _differentiate_payment_types(headers)
 
 
 def _request_llm(
@@ -105,3 +105,5 @@ def _differentiate_payment_types(headers):
             os.environ["PAYMENT"] = "free"
         else:
             os.environ["PAYMENT"] = "paid"
+
+    return os.environ["PAYMENT"]
