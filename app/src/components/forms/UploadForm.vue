@@ -72,6 +72,7 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
+import { MessagePlugin } from 'tdesign-vue-next'
 import { useI18n } from 'vue-i18n'
 import { PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
@@ -90,6 +91,7 @@ type FormData = {
 
 const { t, locale } = useI18n()
 const PROFILE_STORE = useProfileStore()
+const NOTE_STORE = useNoteStore()
 
 const props = defineProps(['APIFun', 'noteName', 'noteId'])
 const emits = defineEmits(['success'])
@@ -128,10 +130,27 @@ const [submit] = useFetch(props.APIFun)
 const [checkLlmApiState, checkKeyLoading] = useFetch(
   PROFILE_API.checkLlmApiState
 )
-const NOTE_STORE = useNoteStore()
 const handleConfirm = async () => {
+  if (!PROFILE_STORE.checkHasSettedModel()) return
+
+  const { _formData, validFiles } = generateFormdata()
+  if (!validFiles.length) return
+
+  const res = await checkLlmApiState()
+  if (res.code !== 0) return
+  if (res.data === 'free') MessagePlugin.warning(t('message.rateLimit'))
+
+  submit({ id: props.noteId, formData: _formData })
+  initFormData()
+  emits('success')
+  setTimeout(() => {
+    NOTE_STORE.getNotes()
+  }, 300)
+}
+
+const generateFormdata = () => {
   const _formData = new FormData()
-  const validFiles = []
+  const validFiles: any[] = []
   _formData.append('language', locale.value)
   _formData.append('uploadType', formData.uploadType!)
   _formData.append('questionType', formData.questionType)
@@ -142,21 +161,10 @@ const handleConfirm = async () => {
     _formData.append('files', item.raw)
     validFiles.push(item)
   })
-
-  if (!validFiles.length) return
-  if (!PROFILE_STORE.checkHasSettedModel()) return
-  if ((await checkLlmApiState()).code !== 0) return
-
-  submit({
-    id: props.noteId,
-    formData: _formData,
-  })
-
-  initFormData()
-  emits('success')
-  setTimeout(() => {
-    NOTE_STORE.getNotes()
-  }, 300)
+  return {
+    _formData,
+    validFiles,
+  }
 }
 
 const initFormData = () => {

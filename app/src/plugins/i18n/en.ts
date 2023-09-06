@@ -25,7 +25,7 @@ export const en = {
     import: 'Import file',
     short: 'Short Answer',
     choice: 'Single Choice',
-    blank: 'Fill in the blank'
+    blank: 'Fill in the blank',
   },
 
   // the title & subtitle on each page
@@ -130,5 +130,7 @@ export const en = {
     successImport: 'Import file succeeded',
     needUpdate:
       'It is detected that the project needs to be updated, please go to view the update guide',
+    rateLimit:
+      'It is detected that you are currently using a free account, because the request limit for the free account will take a long time for this upload, please wait patiently',
   },
 }
