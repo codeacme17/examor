@@ -44,8 +44,9 @@ class LLM:
         )
 
     def _init_openai(self) -> ChatOpenAI:
+        print(os.environ["OPENAI_BASE"], "openai_base")
         return ChatOpenAI(
-            openai_api_base=os.environ["OPENAI_BASE"],
+            openai_api_base=os.environ["OPENAI_BASE"]+"/v1",
             openai_proxy=os.environ['OPENAI_API_PROXY'],
             model="gpt-3.5-turbo",
             temperature=self.temperature,

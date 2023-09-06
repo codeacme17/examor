@@ -75,7 +75,7 @@ def set_profile_to_env():
 
     os.environ['OPENAI_API_KEY'] = data['openaiKey'] or ""
     os.environ['OPENAI_ORGANIZATION'] = data['openaiOrganization'] or ""
-    os.environ['OPENAI_BASE'] = data['openaiBase'] or ""
+    os.environ['OPENAI_BASE'] = data['openaiBase'] or "https://api.openai.com"
     os.environ['OPENAI_API_PROXY'] = data['openaiProxy'] or ""
 
     os.environ['AZURE_KEY'] = data['azureKey'] or ""
