@@ -75,6 +75,7 @@ CREATE TABLE t_profile (
 	currentModel char(20) DEFAULT "OpenAI" NOT NULL COMMENT 'the model',
 	openaiKey varchar(100) DEFAULT "" COMMENT 'openai key',
 	openaiOrganization char(50) DEFAULT "" COMMENT 'openai organization',
+	openaiModel char(40) DEFAULT "gpt-3.5-turbo" COMMENT 'the model of openai',
 	openaiProxy varchar(100) DEFAULT "" COMMENT 'the proxy url of openai',
 	azureKey varchar(100) DEFAULT "" COMMENT 'azure key',
 	openaiBase varchar(100) DEFAULT "" COMMENT 'openai api base',
