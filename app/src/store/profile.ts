@@ -34,13 +34,13 @@ type ProfileItem = {
 const state: State = {
   profile: {
     questionAmount: {
-      value: '3',
+      value: '',
     },
     currentRole: {
-      value: 'examiner',
+      value: '',
     },
     currentModel: {
-      value: 'OpenAI',
+      value: '',
     },
     openaiModel: {
       value: '',
