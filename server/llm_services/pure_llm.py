@@ -5,6 +5,7 @@ import requests
 def check_llm_api_state():
     """Check the status of the LLM API and distinguish payment types."""
     response = _request_llm("hi", 1)
+    print(response)
     data = response.json()
     headers = response.headers
 
@@ -39,7 +40,7 @@ def _request_chat_openai(
     """Make a request to the OpenAI API."""
     key = os.getenv("OPENAI_API_KEY")
     organization = os.getenv("OPENAI_ORGANIZATION")
-    base = os.environ.get("OPENAI_BASE", "https://api.openai.com")
+    base = os.getenv("OPENAI_BASE")
     proxy = {
         "https": os.environ.get("OPENAI_API_PROXY", ""),
         "http": os.environ.get("OPENAI_API_PROXY", "")
@@ -54,9 +55,8 @@ def _request_chat_openai(
         "messages": [{"role": "system", "content": prompt}],
         "max_tokens": max_token
     }
-
     return requests.post(
-        f"{base}/v1/chat/completions",
+        url=f"{base}/v1/chat/completions",
         headers=headers,
         json=data,
         proxies=proxy,
