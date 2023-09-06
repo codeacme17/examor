@@ -1,6 +1,6 @@
 import db_services as _dbs_
+import llm_services as _llms_
 
-from lang_chain import Chain
 from utils import api_result, types
 
 
@@ -9,13 +9,13 @@ def examine_question(data: types.AnswerQuestion):
     document_info = _dbs_.document.get_document_by_id(
         question_info["document_id"])
 
-    langchain_service = Chain(
+    chain = _llms_.Chain(
         prompt_language=data.language,
         prompt_type="answer_examine",
         streaming=True
     )
 
-    return langchain_service.aexamine_answer(
+    return chain.aexamine_answer(
         id=data.id,
         context=document_info["document"],
         question=question_info["content"],

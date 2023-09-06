@@ -1,9 +1,10 @@
-import db_services as _dbs_
 from fastapi import File, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
 
+import db_services as _dbs_
+import llm_services as _llms_
+
 from utils import api_result, types
-from lang_chain import check_key_correct as _check_key_correct
 
 
 def get_profile():
@@ -17,13 +18,13 @@ def set_profile(data: types.Profile):
     return api_result.success()
 
 
-def check_key_correct():
+def check_llm_api_state():
     try:
-        _check_key_correct()
+        payment = _llms_.check_llm_api_state()
     except Exception as e:
         return api_result.error(str(e))
 
-    return api_result.success()
+    return api_result.success(payment)
 
 
 def export_data(isProfile: bool, isNotes: bool):

@@ -31,9 +31,9 @@ def set_profile(data: types.Profile):
     return _apis_.profile.set_profile(data)
 
 
-@app.get("/profile/auth/key")
-def check_key_correct():
-    return _apis_.profile.check_key_correct()
+@app.get("/profile/auth/llm")
+def check_llm_api_state():
+    return _apis_.profile.check_llm_api_state()
 
 
 @app.get("/profile/data")
