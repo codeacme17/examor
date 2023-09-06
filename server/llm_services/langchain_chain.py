@@ -1,8 +1,9 @@
+import os
 import asyncio
 
 from typing import Awaitable
 from langchain import LLMChain
-from langchain.schema import Document, HumanMessage
+from langchain.schema import Document
 from langchain.callbacks import AsyncIteratorCallbackHandler
 
 import db_services as _dbs_
@@ -33,7 +34,8 @@ class Chain:
         :param temperature: The temperature for language model.
         :param streaming: Whether streaming is enabled.
         """
-        self.semaphore = asyncio.Semaphore(3)
+        self.semaphore = asyncio.Semaphore(
+            _adjust_concurrency_by_payment_status())
         self.note_id = note_id
         self.file_id = file_id
         self.filename = filename
@@ -56,7 +58,8 @@ class Chain:
         :param title: The title of the questions.
         """
         tasks = []
-        llm_chain = self._init_llm_chain(20, "", question_type)
+        timeout = _adjust_timeout_by_payment_status()
+        llm_chain = self._init_llm_chain(timeout, "", question_type)
         for doc in docs:
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id, self.file_id, self.filename, doc.page_content)
@@ -64,7 +67,7 @@ class Chain:
                 llm_chain, doc, title, doc_id, question_type))
 
         try:
-            await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * 20)
+            await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * timeout)
         except Exception as e:
             _dbs_.file.delete_file(self.file_id)
             raise e
@@ -163,6 +166,7 @@ class Chain:
             temperature=self.temperature,
             streaming=self.streaming,
             callbacks=self.llm_callbacks,
+            max_retries=_adjust_retries_by_payment_status(),
             timeout=timeout
         )
 
@@ -190,3 +194,27 @@ async def wait_done(
         raise e
     finally:
         event.set()
+
+
+def _adjust_timeout_by_payment_status():
+    payment = os.environ.get("PAYMENT", "free")
+    if (payment == "free"):
+        return 60
+    else:
+        return 20
+
+
+def _adjust_concurrency_by_payment_status():
+    payment = os.environ.get("PAYMENT", "free")
+    if (payment == "free"):
+        return 1
+    else:
+        return 5
+
+
+def _adjust_retries_by_payment_status():
+    payment = os.environ.get("PAYMENT", "free")
+    if (payment == "free"):
+        return 20
+    else:
+        return 3
