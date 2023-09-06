@@ -19,13 +19,11 @@ Attention! The questions may involve extensions based on the context, and your r
 
 short = """
 Please answer in the following format:
-'''
 **Score**: x
 **Detect**:
 xxx
 **correct answer**:
 xxx
-'''
 
 Please correct my answer and fill in the content of your correction in the "Detection" section. And, based on the context, provide an appropriate answer to the question in the "Correct Answer" section.
 Your answer (please use markdown syntax):
@@ -33,13 +31,11 @@ Your answer (please use markdown syntax):
 
 choice = """
 Please provide your answer in the following format:
-'''
 **Score**: x
 **Detect**:
 xxx
 **correct answer**:
 A. xxx
-'''
 
 Please review my answer and make any necessary corrections based on the context and assign a score (score options: 0 or 10) to my answer.
 Your answer (please use markdown syntax):
