@@ -80,8 +80,8 @@ def set_profile_to_env():
 
     os.environ['AZURE_KEY'] = data['azureKey'] or ""
     os.environ['AZURE_BASE'] = data['azureBase'] or ""
-    os.environ['OPENAI_VERSION'] = data['openaiVersion'] or ""
-    os.environ['DEPLOYMENT_NAME'] = data['deploymentName'] or ""
+    os.environ['AZURE_VERSION'] = data['openaiVersion'] or ""
+    os.environ['AZURE_DEPLOYMENT_NAME'] = data['deploymentName'] or ""
 
     os.environ['NOTION_KEY'] = data['notionKey'] or ""
 

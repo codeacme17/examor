@@ -33,8 +33,8 @@ class LLM:
         return AzureChatOpenAI(
             openai_api_base=os.environ["AZURE_BASE"],
             openai_api_key=os.environ["AZURE_KEY"],
-            openai_api_version=os.environ["OPENAI_VERSION"],
-            deployment_name=os.environ["DEPLOYMENT_NAME"],
+            openai_api_version=os.environ["AZURE_VERSION"],
+            deployment_name=os.environ["AZURE_DEPLOYMENT_NAME"],
             temperature=self.temperature,
             streaming=self.streaming,
             callbacks=self.callbacks,

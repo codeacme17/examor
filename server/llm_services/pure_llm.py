@@ -5,7 +5,6 @@ import requests
 def check_llm_api_state():
     """Check the status of the LLM API and distinguish payment types."""
     response = _request_llm("hi", 1)
-    print(response)
     data = response.json()
     headers = response.headers
 
@@ -71,8 +70,8 @@ def _request_chat_azure(
     """Make a request to the Azure API."""
     key = os.getenv("AZURE_KEY")
     base = os.getenv('AZURE_BASE')
-    deployment_name = os.getenv("DEPLOYMENT_NAME")
-    version = os.getenv("OPENAI_VERSION")
+    deployment_name = os.getenv("AZURE_DEPLOYMENT_NAME")
+    version = os.getenv("AZURE_VERSION")
     headers = {
         "api-key": key,
         "Content-Type": "application/json",
