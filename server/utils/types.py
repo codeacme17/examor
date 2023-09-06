@@ -6,6 +6,7 @@ class Profile(BaseModel):
     questionAmount: str = ""
     currentRole: str = ""
     currentModel: str = ""
+    openaiModel: str = ""
     openaiKey: str = ""
     openaiOrganization: str = ""
     openaiBase: str = ""

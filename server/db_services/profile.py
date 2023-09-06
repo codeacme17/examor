@@ -23,45 +23,34 @@ def get_profile():
 
 def init_profile():
     query = """
-            INSERT INTO t_profile (questionAmount, currentRole, currentModel)
-            VALUES (7, 'examiner', 'OpenAI');
+            INSERT INTO t_profile ()
+            VALUES ();
             """
     MySQLHandler().insert_table_data(query)
 
 
 def set_profile(data: types.Profile):
-    query = """
-            UPDATE t_profile
-            SET questionAmount = %s,
-                currentRole = %s,
-                currentModel = %s,
-                openaiKey = %s,
-                openaiOrganization = %s,
-                openaiBase = %s,
-                openaiProxy = %s,
-                azureKey = %s,
-                azureBase = %s,
-                openaiVersion = %s,
-                deploymentName = %s,
-                notionKey = %s
-            WHERE id = %s;
-            """
+    fields = [
+        "questionAmount",
+        "currentRole",
+        "currentModel",
+        "openaiModel",
+        "openaiKey",
+        "openaiOrganization",
+        "openaiBase",
+        "openaiProxy",
+        "azureKey",
+        "azureBase",
+        "openaiVersion",
+        "deploymentName",
+        "notionKey"
+    ]
 
-    _data = (
-        data.questionAmount,
-        data.currentRole,
-        data.currentModel,
-        data.openaiKey,
-        data.openaiOrganization,
-        data.openaiBase,
-        data.openaiProxy,
-        data.azureKey,
-        data.azureBase,
-        data.openaiVersion,
-        data.deploymentName,
-        data.notionKey,
-        os.environ["PROFILE_ID"]
-    )
+    query = "UPDATE t_profile SET " + \
+        ", ".join([f"{field} = %s" for field in fields]) + " WHERE id = %s;"
+
+    _data = tuple(getattr(data, field)
+                  for field in fields) + (os.environ["PROFILE_ID"],)
 
     MySQLHandler().update_table_data(query, _data)
 
@@ -73,6 +62,7 @@ def set_profile_to_env():
     os.environ['CURRENT_ROLE'] = data['currentRole'] or ""
     os.environ['CURRENT_MODEL'] = data['currentModel'] or ""
 
+    os.environ['OPENAI_MODEL'] = data['openaiModel'] or "gpt-3.5-turbo"
     os.environ['OPENAI_API_KEY'] = data['openaiKey'] or ""
     os.environ['OPENAI_ORGANIZATION'] = data['openaiOrganization'] or ""
     os.environ['OPENAI_BASE'] = data['openaiBase'] or "https://api.openai.com"

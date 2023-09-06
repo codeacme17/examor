@@ -37,6 +37,7 @@ def _request_chat_openai(
     max_token: int
 ):
     """Make a request to the OpenAI API."""
+    model = os.getenv("OPENAI_MODEL")
     key = os.getenv("OPENAI_API_KEY")
     organization = os.getenv("OPENAI_ORGANIZATION")
     base = os.getenv("OPENAI_BASE")
@@ -50,7 +51,7 @@ def _request_chat_openai(
         "Content-Type": "application/json"
     }
     data = {
-        "model": "gpt-3.5-turbo",
+        "model": model,
         "messages": [{"role": "system", "content": prompt}],
         "max_tokens": max_token
     }

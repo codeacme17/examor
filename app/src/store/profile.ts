@@ -12,6 +12,7 @@ type Key =
   | 'questionAmount'
   | 'currentRole'
   | 'currentModel'
+  | 'openaiModel'
   | 'openaiKey'
   | 'openaiOrganization'
   | 'openaiBase'
@@ -33,13 +34,18 @@ type ProfileItem = {
 const state: State = {
   profile: {
     questionAmount: {
-      value: '3',
+      value: '',
     },
     currentRole: {
-      value: 'examiner',
+      value: '',
     },
     currentModel: {
-      value: 'OpenAI',
+      value: '',
+    },
+    openaiModel: {
+      value: '',
+      show: false,
+      error: false,
     },
     openaiKey: {
       value: '',
