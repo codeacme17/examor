@@ -12,6 +12,7 @@ type Key =
   | 'questionAmount'
   | 'currentRole'
   | 'currentModel'
+  | 'openaiModel'
   | 'openaiKey'
   | 'openaiOrganization'
   | 'openaiBase'
@@ -40,6 +41,11 @@ const state: State = {
     },
     currentModel: {
       value: 'OpenAI',
+    },
+    openaiModel: {
+      value: '',
+      show: false,
+      error: false,
     },
     openaiKey: {
       value: '',

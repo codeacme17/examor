@@ -94,6 +94,17 @@
         <OpenaiIcon width="30" class="mb-auto mt-4 mr-4" />
 
         <div style="flex: 1">
+          <v-select
+            v-model="formData.openaiModel.value"
+            class="mt-3"
+            label="OPENAI_MODEL"
+            variant="outlined"
+            density="compact"
+            :base-color="formData.openaiModel.error ? orangeBgColor : ''"
+            :color="formData.openaiModel.error ? orangeBgColor : ''"
+            :items="['gpt-3.5-turbo', 'gpt-4']"
+          />
+
           <!-- OpenAI API KEY -->
           <v-text-field
             v-model="formData.openaiKey.value"
