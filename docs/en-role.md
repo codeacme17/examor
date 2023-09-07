@@ -1,8 +1,8 @@
 # Role Manual
 
-> Version: 0.1
+<img src="https://img.shields.io/badge/version-0.1-%23fff?style=flat-square&labelColor=7d09f1">
 
-> ![IMPORTANT]
+> [!IMPORTANT]
 > When using the gpt-3.5 model, there may be cases where the output is unstable. If you want to get the best character effect, it is recommended to use the gpt-4 model
 
 ### Attribute Introduction
