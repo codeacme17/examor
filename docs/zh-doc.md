@@ -2,7 +2,7 @@
 </br>
 
 <p>
-  <img  width="230"  src="/docs/logo-text.png" />
+  <img  width="260"  src="/docs/logo-text.png" />
 </p>
 
 > [!IMPORTANT]
