@@ -2,6 +2,9 @@
 
 > Version: 0.1
 
+> ![IMPORTANT]
+> When using the gpt-3.5 model, there may be cases where the output is unstable. If you want to get the best character effect, it is recommended to use the gpt-4 model
+
 ### Attribute Introduction
 
 - Extensiveness:
