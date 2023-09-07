@@ -1,7 +1,7 @@
 </br>
 
 <p>
-  <img  width="240"  src="/docs/logo-text.png" />
+  <img src="/docs/logo-banner.png" />
 </p>
 
 <p>
