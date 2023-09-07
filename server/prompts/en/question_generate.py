@@ -20,7 +20,7 @@ Problem (in markdown syntax, list without numbers):
 """
 
 choice = """
-You need to present as many multiple-choice questions as possible (up to 5), each with 4 options and only one correct answer. The questions you generate should cover various aspects of the context's content, but there should be no duplicate content among all the questions.
+You need to present as many single-choice questions as possible (up to 5), each with 4 options and only one correct answer. The questions you generate should cover various aspects of the context's content, but there should be no duplicate content among all the questions.
 
 Please provide questions in the following format:
 '''
@@ -32,7 +32,7 @@ Please provide questions in the following format:
 
 '''
 
-Multiple-choice questions (using markdown syntax):
+Single-choice questions (using markdown syntax):
 """
 
 PROMPT_TEMPLATE = '''
