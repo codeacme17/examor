@@ -1,6 +1,10 @@
 # 角色手册
 
-> 版本：0.1
+
+<img src="https://img.shields.io/badge/version-0.1-%23fff?style=flat-square&labelColor=7d09f1">
+
+> [!IMPORTANT]
+> 使用gpt-3.5型号时，可能会出现输出不稳定的情况。 如果想获得最佳的角色效果，建议使用gpt-4模型
 
 ### 属性介绍
 
