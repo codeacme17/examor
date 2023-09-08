@@ -68,7 +68,7 @@ class Chain:
         try:
             await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * 60)
         except Exception as e:
-            _dbs_.file.delete_file(self.file_id)
+            _dbs_.file.set_file_is_uploading_state(self.file_id)
             raise e
 
     async def _agenerate_questions(
