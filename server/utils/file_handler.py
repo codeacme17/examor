@@ -22,16 +22,22 @@ async def upload_file(
     :param files: A list of UploadFile objects representing the files to upload.
     :return: None
     """
+    collection = []
 
     for file in files:
-        filename = file.filename
-        # Add the file to the database and get its ID
-        file_id = _dbs_.file.add_file_to_db(noteId, filename)
-        # Read the file content
-        file_content = await file.read()
+        file_dict = {}
+        file_dict["id"] = _dbs_.file.add_file_to_db(noteId, file.filename)
+        file_dict["name"] = file.filename
+        file_dict["content"] = await file.read()
+        collection.append(file_dict)
+
+    for item in collection:
+        filename = item["name"]
+        file_id = item["id"]
+        file_content = item["content"]
+        # save to the temp file
         with open(f"./{filename}", "w+", encoding="utf-8") as f:
             f.write(file_content.decode('utf-8'))
-        # Split the file content into documents
         docs = split_doc(filename)
 
         # Create a LangChain service instance
