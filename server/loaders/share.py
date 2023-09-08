@@ -19,7 +19,6 @@ def is_odd_backtick_paired(s: str) -> bool:
     - bool: True if the triple backticks in the string are paired, False otherwise.
     """
     counts = s.count('```')
-    print(counts)
     if counts == 0:
         return False
     elif counts % 2 == 0:
