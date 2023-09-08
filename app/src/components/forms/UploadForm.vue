@@ -138,7 +138,7 @@ const handleConfirm = async () => {
 
   const res = await checkLlmApiState()
   if (res.code !== 0) return
-  if (res.data === 'free') MessagePlugin.warning(t('message.rateLimit'))
+  if (res.data === 'free') MessagePlugin.warning(t('message.rateLimit'), 5000)
 
   submit({ id: props.noteId, formData: _formData })
   initFormData()

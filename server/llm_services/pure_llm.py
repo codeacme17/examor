@@ -97,13 +97,14 @@ def _differentiate_payment_types(headers):
     https://platform.openai.com/docs/guides/rate-limits/overview
     """
     current_model = os.getenv("CURRENT_MODEL")
-
-    if current_model == "Azure":
+    openai_model = os.getenv("OPENAI_MODEL")
+    if current_model == "Azure" or openai_model == "gpt-4":
         os.environ["PAYMENT"] = "paid"
     elif current_model == "OpenAI":
-        if headers["x-ratelimit-limit-requests"] == "3":
+        if headers["x-ratelimit-limit-requests"] == "200":
             os.environ["PAYMENT"] = "free"
         else:
             os.environ["PAYMENT"] = "paid"
 
+    print(os.environ["PAYMENT"])
     return os.environ["PAYMENT"]
