@@ -1,9 +1,11 @@
 # Roadmap
 
-## v0.3.0 - 70% Progress
+> [!IMPORTANT]
+> v0.3.0 - 70% Progress
 
 ### Features
 
+- [ ] Dashboard page
 - [ ] Support more document types
   - [ ] `.docs`
   - [ ] `.pdf`
@@ -11,9 +13,11 @@
 - [ ] Generate more question types
   - [x] single choice
   - [ ] fill in the blanks
+- [ ] Add more model options
+  - [x] gpt-4 (openai)
+  - [ ] claude (anthropic)
 - [x] Allow users to select question types when uploading docs
 - [x] Add detection modules for different question types
-- [ ] Add more model options
 - [x] Added data import and export features to back up data
 - [x] Provide identity selection, allowing users to set the identity of teachers, examiners, interviewers, etc. that affect the strictness of detection and the divergence of generated questions
 
@@ -22,7 +26,6 @@
   | Teacher     | ⭐️⭐️     | 😏         |
   | Interviewer | ⭐️⭐️⭐️  | 😐         |
   | Examiner    | ⭐️        | 😭         |
-- [ ] Dashboard page
 
 ### Optimizations
 
