@@ -57,23 +57,25 @@ def set_profile(data: types.Profile):
 
 def set_profile_to_env():
     data: types.Profile = get_profile()
-    os.environ["PROFILE_ID"] = str(data['id'])
-    os.environ['QUESTION_AMOUNT'] = str(data['questionAmount']) or ""
-    os.environ['CURRENT_ROLE'] = data['currentRole'] or ""
-    os.environ['CURRENT_MODEL'] = data['currentModel'] or ""
+    env_keys = {
+        "PROFILE_ID": ('id', None),
+        "QUESTION_AMOUNT": ('questionAmount', ""),
+        "CURRENT_ROLE": ('currentRole', ""),
+        "CURRENT_MODEL": ('currentModel', ""),
+        "OPENAI_MODEL": ('openaiModel', "gpt-3.5-turbo"),
+        "OPENAI_API_KEY": ('openaiKey', ""),
+        "OPENAI_ORGANIZATION": ('openaiOrganization', ""),
+        "OPENAI_BASE": ('openaiBase', "https://api.openai.com"),
+        "OPENAI_API_PROXY": ('openaiProxy', ""),
+        "AZURE_KEY": ('azureKey', ""),
+        "AZURE_BASE": ('azureBase', ""),
+        "AZURE_VERSION": ('openaiVersion', ""),
+        "AZURE_DEPLOYMENT_NAME": ('deploymentName', ""),
+        "NOTION_KEY": ('notionKey', "")
+    }
 
-    os.environ['OPENAI_MODEL'] = data['openaiModel'] or "gpt-3.5-turbo"
-    os.environ['OPENAI_API_KEY'] = data['openaiKey'] or ""
-    os.environ['OPENAI_ORGANIZATION'] = data['openaiOrganization'] or ""
-    os.environ['OPENAI_BASE'] = data['openaiBase'] or "https://api.openai.com"
-    os.environ['OPENAI_API_PROXY'] = data['openaiProxy'] or ""
-
-    os.environ['AZURE_KEY'] = data['azureKey'] or ""
-    os.environ['AZURE_BASE'] = data['azureBase'] or ""
-    os.environ['AZURE_VERSION'] = data['openaiVersion'] or ""
-    os.environ['AZURE_DEPLOYMENT_NAME'] = data['deploymentName'] or ""
-
-    os.environ['NOTION_KEY'] = data['notionKey'] or ""
+    for env_key, (data_key, default_value) in env_keys.items():
+        os.environ[env_key] = str(data.get(data_key, default_value))
 
 
 def export_data(isProfile: bool, isNotes: bool):
