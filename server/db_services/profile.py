@@ -54,7 +54,7 @@ def set_profile_to_env():
     data: types.Profile = get_profile()
     env_keys = {
         # Individual
-        "PROFILE_ID": ('id', None),
+        "PROFILE_ID": ('id', ""),
         "QUESTION_AMOUNT": ('questionAmount', ""),
         "CURRENT_ROLE": ('currentRole', ""),
         "CURRENT_MODEL": ('currentModel', ""),
@@ -73,7 +73,11 @@ def set_profile_to_env():
         "NOTION_KEY": ('notionKey', "")
     }
     for env_key, (data_key, default_value) in env_keys.items():
-        os.environ[env_key] = str(data.get(data_key, default_value))
+        value = data.get(data_key)
+        if value is None or value == "":
+            value = default_value
+        os.environ[env_key] = str(value)
+    print(os.environ["OPENAI_BASE"])
 
 
 def export_data(isProfile: bool, isNotes: bool):
