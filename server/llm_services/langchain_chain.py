@@ -2,19 +2,18 @@ import os
 import re
 import asyncio
 import datetime
-
 from typing import Awaitable
 from langchain import LLMChain
 from langchain.schema import Document
 from langchain.callbacks import AsyncIteratorCallbackHandler
 
 import db_services as _dbs_
-
-from utils.ebbinghaus import handle_ebbinghaus_memory
 from .langchain_llm import LLM
+from utils.ebbinghaus import handle_ebbinghaus_memory
 from prompts import choose_prompt
 
 
+# Main Chain class, which encapsulates LLMChain configurations and various methods.
 class Chain:
     def __init__(
         self,
@@ -37,6 +36,7 @@ class Chain:
         self.streaming = streaming
         self.llm_callbacks = [AsyncIteratorCallbackHandler()]
 
+    # Asynchronous method to generate questions.
     async def agenerate_questions(
         self,
         docs: list[Document],
@@ -57,6 +57,7 @@ class Chain:
             _dbs_.file.set_file_is_uploading_state(self.file_id)
             raise e
 
+    # Helper method for specific question generation.
     async def _agenerate_questions(
         self,
         llm_chain: LLMChain,
@@ -79,6 +80,7 @@ class Chain:
                     question_type=question_type
                 )
 
+    # Method to check answers.
     async def aexamine_answer(
         self,
         quesiton_id: int,
@@ -139,6 +141,7 @@ class Chain:
         )
 
 
+# Helper function to wait for asynchronous tasks to complete.
 async def _wait_done(
     fn: Awaitable,
     event: asyncio.Event
@@ -152,6 +155,7 @@ async def _wait_done(
         event.set()
 
 
+# Adjust concurrency based on payment status.
 def _adjust_concurrency_by_payment_status():
     payment = os.environ.get("PAYMENT", "free")
     if (payment == "free"):
@@ -160,6 +164,7 @@ def _adjust_concurrency_by_payment_status():
         return 3
 
 
+# Adjust the number of retries based on payment status.
 def _adjust_retries_by_payment_status():
     payment = os.environ.get("PAYMENT", "free")
     if (payment == "free"):
@@ -168,6 +173,7 @@ def _adjust_retries_by_payment_status():
         return 6
 
 
+# Split the generated questions.
 def _spite_questions(
     content: str,
     type: str
@@ -180,6 +186,7 @@ def _spite_questions(
     return questions
 
 
+# Check if the structure of the question is valid.
 def _is_legal_question_structure(
     content: str,
     type: str
@@ -195,11 +202,13 @@ def _is_legal_question_structure(
     return True
 
 
+# Remove prefix numbers or dashes from a question.
 def _remove_prefix_numbers(text):
     cleaned_text = re.sub(r'^\s*(?:\d+\.|-)\s*', '', text)
     return cleaned_text.strip()
 
 
+# Extract score from the answer.
 def _extract_score(anwser: str):
     score = re.findall(r"\d+\.?\d*", anwser)
     if score:
@@ -208,6 +217,7 @@ def _extract_score(anwser: str):
         return 0
 
 
+# Get the push date based on the score.
 def _get_push_date(score: int):
     now = datetime.datetime.now()
     days = handle_ebbinghaus_memory(score)
