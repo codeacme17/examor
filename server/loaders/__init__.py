@@ -7,7 +7,6 @@ def split_doc(filename):
     extension = os.path.splitext(filename)[1]
     loader = _choose_loader(extension)
     docs = loader.split_doc(filename)
-    os.remove(f"./{filename}")
     return docs
 
 

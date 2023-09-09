@@ -1,3 +1,5 @@
+import os
+
 from fastapi import UploadFile
 
 import db_services as _dbs_
@@ -39,6 +41,8 @@ async def upload_file(
         with open(f"./{filename}", "w+", encoding="utf-8") as f:
             f.write(file_content.decode('utf-8'))
         docs = split_doc(filename)
+        # remove temp file
+        os.remove(f"./{filename}")
 
         # Create a LangChain service instance
         langchain_service = _llms_.Chain(
