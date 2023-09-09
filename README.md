@@ -31,7 +31,7 @@
   </strong>
 </p>
 </br>
-<img src = "https://github.com/codeacme17/examor/blob/main/docs/product.png?raw=true"></img>
+<img src = "https://github.com/codeacme17/examor/blob/main/docs/product-full.png?raw=true"></img>
 
 ## 🗒️ Dev-plan for this week（9/4 - 9/10）
 > Thanks [@jw520](https://github.com/jwz520) for your help during this time
