@@ -125,7 +125,12 @@ import { ref, onUnmounted, watch } from 'vue'
 import { useLocalStorage, useNow, useDateFormat } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 
-import { defaultBgColor, fontColor, toMarkdown } from '@/utils'
+import {
+  defaultBgColor,
+  fontColor,
+  toMarkdown,
+  scrollToPageBottom,
+} from '@/utils'
 import { useFetch, useListState } from '@/hooks'
 import { QUESTION_API, PROFILE_API } from '@/apis'
 import { useProfileStore } from '@/store'
@@ -164,7 +169,7 @@ const handleKeyup = () => {
 }
 
 // Handle submit answer event
-// submitAnswer() is a SSE connect to fetch streaming response
+// fetchExaming() is a SSE connect to fetch streaming response
 const isShowExamine = ref(false) // flag to show examing block
 const isExaming = ref(false) // flag to gpt examing state
 const isFinishExaming = ref(false) // flag to is gpt finish examine
@@ -181,13 +186,13 @@ const handleSubmit = async () => {
   isShowExamine.value = true
   isExaming.value = true
 
-  await submitAnswer()
+  await fetchExaming()
   isFinishExaming.value = true
   if (!isThereNoErrorReported()) return
   finishedList.value.add(props.id)
   pendingList.value.delete(props.id)
 }
-const submitAnswer = async () => {
+const fetchExaming = async () => {
   const response = await QUESTION_API.examingAnswer({
     id: props.id,
     language: locale.value,
@@ -201,6 +206,7 @@ const submitAnswer = async () => {
       isExaming.value = false
       break
     }
+    scrollToPageBottom()
     currentData.value.examine += decoder.decode(value)
   }
 }
