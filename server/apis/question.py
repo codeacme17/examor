@@ -16,7 +16,7 @@ def examine_question(data: types.AnswerQuestion):
     )
 
     return chain.aexamine_answer(
-        id=data.id,
+        quesiton_id=data.id,
         context=document_info["document"],
         question=question_info["content"],
         role=question_info["designated_role"],

@@ -10,6 +10,7 @@ from langchain.callbacks import AsyncIteratorCallbackHandler
 
 import db_services as _dbs_
 
+from utils.ebbinghaus import handle_ebbinghaus_memory
 from .langchain_llm import LLM
 from prompts import choose_prompt
 
@@ -80,7 +81,7 @@ class Chain:
 
     async def aexamine_answer(
         self,
-        id: int,
+        quesiton_id: int,
         context: str,
         question: str,
         answer: str,
@@ -88,7 +89,7 @@ class Chain:
         question_type: str,
     ):
         llm_chain = self._init_llm_chain(60, role, question_type)
-        coroutine = wait_done(llm_chain.apredict(
+        coroutine = _wait_done(llm_chain.apredict(
             context=context,
             question=question,
             answer=answer,
@@ -110,7 +111,7 @@ class Chain:
         score = _extract_score(exmine)
         push_date = _get_push_date(score)
         await _dbs_.question.update_question_state(
-            id=id,
+            id=quesiton_id,
             answer=f"{answer} ||| {exmine}",
             score=score,
             push_date=push_date
@@ -138,7 +139,7 @@ class Chain:
         )
 
 
-async def wait_done(
+async def _wait_done(
     fn: Awaitable,
     event: asyncio.Event
 ):
@@ -209,15 +210,5 @@ def _extract_score(anwser: str):
 
 def _get_push_date(score: int):
     now = datetime.datetime.now()
-    days = 0
-
-    if (0 <= score <= 3):
-        days = 1
-    if (4 <= score <= 6):
-        days = 3
-    if (7 <= score <= 9):
-        days = 7
-    if (10 == score):
-        days = 14
-
+    days = handle_ebbinghaus_memory(score)
     return ((now+datetime.timedelta(days)).strftime("%Y-%m-%d"))
