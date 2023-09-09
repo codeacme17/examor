@@ -46,7 +46,6 @@ const [_getRandomQuestion, getRQLoading] = useFetch(
 const getRandomQuestion = async () => {
   const { data } = await _getRandomQuestion()
   questionInfo.value = data
-  console.log(questionInfo.value)
   trigger.value = false
   nextTick(() => {
     trigger.value = true

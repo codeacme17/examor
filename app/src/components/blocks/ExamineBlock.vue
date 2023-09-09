@@ -177,20 +177,18 @@ const [checkLlmApiState, checkKeyLoading] = useFetch(
 )
 const handleSubmit = async () => {
   if (!PROFILE_STORE.checkHasSettedModel()) return
-
   const res = await checkLlmApiState()
   if (res.code !== 0) return
   if (!currentData.value.answer.trim()) return
   isShowExamine.value = true
-  isExaming.value = true
-
   await fetchExaming()
   isFinishExaming.value = true
-  if (!isThereErrorReported()) return
+  if (isThereErrorReported()) return
   finishedList.value.add(props.id)
   pendingList.value.delete(props.id)
 }
 const fetchExaming = async () => {
+  isExaming.value = true
   const response = await QUESTION_API.examingAnswer({
     id: props.id,
     language: locale.value,
@@ -209,6 +207,16 @@ const fetchExaming = async () => {
   }
 }
 const isThereErrorReported = () => {
+  if (
+    currentData.value.examine.includes('Score') ||
+    currentData.value.examine.includes('Detect') ||
+    currentData.value.examine.includes('Correct Answer') ||
+    currentData.value.examine.includes('得分') ||
+    currentData.value.examine.includes('检测') ||
+    currentData.value.examine.includes('正确答案')
+  )
+    return false
+  currentData.value.examine = ''
   return true
 }
 
@@ -251,7 +259,6 @@ const splitQuestionToOptions = () => {
       options.value.push(optionLine)
     }
   }
-  console.log(options.value)
 }
 
 // Watching if current question id is changed
