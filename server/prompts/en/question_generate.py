@@ -14,13 +14,13 @@ You are an experienced interviewer with many years of qualifications, and I need
 """
 
 short = """
-You need to ask as many questions as possible (up to 7), and the questions you generate should cover various knowledge points in context, but all questions must not have any repetitive content.
+You need to ask as many questions as possible (up to 10), and the questions you generate should cover various knowledge points in context, but all questions must not have any repetitive content.
 
 Problem (in markdown syntax, list without numbers):
 """
 
 choice = """
-You need to present as many single-choice questions as possible (up to 5), each with 4 options and only one correct answer. The questions you generate should cover various aspects of the context's content, but there should be no duplicate content among all the questions.
+You need to present as many single-choice questions as possible (up to 7), each with 4 options and only one correct answer. The questions you generate should cover various aspects of the context's content, but there should be no duplicate content among all the questions.
 
 Please provide questions in the following format:
 '''
