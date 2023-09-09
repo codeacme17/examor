@@ -14,7 +14,7 @@ def _choose_loader(extension: str):
     if (extension == ".md"):
         return MarkdownLoader()
 
-    raise f"File of type '{type}' are not currently supported"
+    raise f"File of type '{extension}' are not currently supported"
 
 
 __all__ = [
