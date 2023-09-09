@@ -1,4 +1,5 @@
 import os
+import re
 import asyncio
 
 from typing import Awaitable
@@ -92,25 +93,14 @@ class Chain:
                 title=title,
                 context=doc.page_content
             )
-            question = self._spite_questions(res, question_type)
-            for question_content in question:
+            for question in _spite_questions(res, question_type):
+                if not _is_legal_question_structure(question, question_type):
+                    continue
                 _dbs_.question.save_question_to_db(
-                    question_content,
-                    doc_id,
-                    question_type
+                    question_content=_remove_prefix_numbers(question),
+                    document_id=doc_id,
+                    question_type=question_type
                 )
-
-    def _spite_questions(
-        self,
-        content: str,
-        question_type: str
-    ):
-        questions = []
-        if (question_type == "choice"):
-            questions = content.strip().split('\n\n')
-        else:
-            questions = content.strip().split("\n")
-        return questions
 
     async def aexamine_answer(
         self,
@@ -209,3 +199,35 @@ def _adjust_retries_by_payment_status():
         return 20
     else:
         return 6
+
+
+def _spite_questions(
+    content: str,
+    type: str
+):
+    questions = []
+    if (type == "choice"):
+        questions = content.strip().split('\n\n')
+    else:
+        questions = content.strip().split("\n")
+    return questions
+
+
+def _is_legal_question_structure(
+    content: str,
+    type: str
+):
+    print(content)
+    if content == "":
+        return False
+
+    if type == "choice":
+        pattern = r'^-\s.+?\n\s*A\..+\n\s*B\..+\n\s*C\..+\n\s*D\..+$'
+        return bool(re.match(pattern, content))
+
+    return True
+
+
+def _remove_prefix_numbers(text):
+    cleaned_text = re.sub(r'^\s*(?:\d+\.|-)\s*', '', text)
+    return cleaned_text.strip()

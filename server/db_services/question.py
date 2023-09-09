@@ -20,7 +20,6 @@ def save_question_to_db(
     document_id: int,
     question_type: str
 ):
-    question_content = remove_prefix_numbers(question_content)
     query = """
             INSERT INTO t_question (content, document_id, designated_role, question_type) 
             VALUES (%s, %s, %s, %s)
@@ -44,7 +43,7 @@ async def update_question_state(
             WHERE id = %s;
             """
     chunks = answer.split("|||")
-    score = extract_score(chunks[1])
+    score = _extract_score(chunks[1])
     push_date = get_push_date(score)
     data = (answer, score, "1", push_date, id, )
     MySQLHandler().update_table_data(query, data)
@@ -61,12 +60,7 @@ def get_random_question_info():
     return MySQLHandler().execute_query(query, single=True)
 
 
-def remove_prefix_numbers(text):
-    cleaned_text = re.sub(r'^\s*(?:\d+\.|-)\s*', '', text)
-    return cleaned_text.strip()
-
-
-def extract_score(anwser: str):
+def _extract_score(anwser: str):
     score = re.findall(r"\d+\.?\d*", anwser)
     if score:
         return int(float(score[0]))
