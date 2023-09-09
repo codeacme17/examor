@@ -1,6 +1,6 @@
 <template>
   <h3>
-    {{ switchTitle }}
+    {{ title }}
   </h3>
 
   <v-card
@@ -23,14 +23,14 @@
           </td>
 
           <!-- Quesiton type emoji -->
-          <td style="width: 20px">
+          <td class="pr-1">
             <div v-if="item.question_type === 'short'">📝</div>
             <div v-if="item.question_type === 'choice'">🔠</div>
             <div v-if="item.question_type === 'blank'">⬜</div>
           </td>
 
           <!-- Question content td -->
-          <td v-html="toMarkdown(item.content.split('\n')[0])" />
+          <td v-html="toMarkdown(item.content.split('\n')[0])" class="pl-1" />
 
           <!-- Action buttons td -->
           <td style="width: 145px">
@@ -114,7 +114,7 @@ const handlePickQuestion = (item: TableItem) => {
 }
 
 // Switch different title content by `porps.type`
-const switchTitle = computed(() => {
+const title = computed(() => {
   switch (props.type) {
     case 'today':
       return t('title.today')
