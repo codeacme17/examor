@@ -1,6 +1,7 @@
 import os
 import re
 import asyncio
+import datetime
 
 from typing import Awaitable
 from langchain import LLMChain
@@ -24,17 +25,6 @@ class Chain:
         temperature: int = 0,
         streaming: bool = False
     ):
-        """
-        Initializes a Chain instance.
-
-        :param note_id: The ID of the note.
-        :param file_id: The ID of the file.
-        :param filename: The filename.
-        :param prompt_language: The language for prompts.
-        :param prompt_type: The type of prompt.
-        :param temperature: The temperature for language model.
-        :param streaming: Whether streaming is enabled.
-        """
         self.semaphore = asyncio.Semaphore(
             _adjust_concurrency_by_payment_status())
         self.note_id = note_id
@@ -52,12 +42,6 @@ class Chain:
         title: str,
         question_type: str
     ):
-        """
-        Generates questions for documents.
-
-        :param docs: List of Document objects.
-        :param title: The title of the questions.
-        """
         tasks = []
         llm_chain = self._init_llm_chain(60, "", question_type)
         for doc in docs:
@@ -80,14 +64,6 @@ class Chain:
         doc_id: int,
         question_type: str
     ):
-        """
-        Generates questions for a document using the language model.
-
-        :param llm_chain: The LLMChain instance.
-        :param doc: The Document object.
-        :param title: The title for questions.
-        :param doc_id: The ID of the document.
-        """
         async with self.semaphore:
             res = await llm_chain.apredict(
                 title=title,
@@ -111,16 +87,6 @@ class Chain:
         role: str,
         question_type: str,
     ):
-        """
-        Examines an answer using the language model.
-
-        :param id: The ID of the question.
-        :param context: The context for examination.
-        :param question: The question for examination.
-        :param answer: The answer for examination.
-        :param role: The role for the examination.
-        :yield: The examination results.
-        """
         llm_chain = self._init_llm_chain(60, role, question_type)
         coroutine = wait_done(llm_chain.apredict(
             context=context,
@@ -141,16 +107,16 @@ class Chain:
             yield str(e)
             return
 
-        await _dbs_.question.update_question_state(id, f"{answer} ||| {exmine}")
+        score = _extract_score(exmine)
+        push_date = _get_push_date(score)
+        await _dbs_.question.update_question_state(
+            id=id,
+            answer=f"{answer} ||| {exmine}",
+            score=score,
+            push_date=push_date
+        )
 
     def _init_llm_chain(self, timeout: int, role: str, question_type: str):
-        """
-        Initializes the language model chain.
-
-        :param timeout: The timeout value.
-        :param role: The role for the examination.
-        :return: The initialized LLMChain instance.
-        """
         llm_instance = LLM(
             temperature=self.temperature,
             streaming=self.streaming,
@@ -231,3 +197,27 @@ def _is_legal_question_structure(
 def _remove_prefix_numbers(text):
     cleaned_text = re.sub(r'^\s*(?:\d+\.|-)\s*', '', text)
     return cleaned_text.strip()
+
+
+def _extract_score(anwser: str):
+    score = re.findall(r"\d+\.?\d*", anwser)
+    if score:
+        return int(float(score[0]))
+    else:
+        return 0
+
+
+def _get_push_date(score: int):
+    now = datetime.datetime.now()
+    days = 0
+
+    if (0 <= score <= 3):
+        days = 1
+    if (4 <= score <= 6):
+        days = 3
+    if (7 <= score <= 9):
+        days = 7
+    if (10 == score):
+        days = 14
+
+    return ((now+datetime.timedelta(days)).strftime("%Y-%m-%d"))
