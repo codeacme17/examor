@@ -124,7 +124,6 @@
 import { ref, onUnmounted, watch } from 'vue'
 import { useLocalStorage, useNow, useDateFormat } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-
 import {
   defaultBgColor,
   fontColor,
@@ -134,7 +133,6 @@ import {
 import { useFetch, useListState } from '@/hooks'
 import { QUESTION_API, PROFILE_API } from '@/apis'
 import { useProfileStore } from '@/store'
-import { ErrorResponse } from '@/constant'
 
 const { locale, t } = useI18n()
 const PROFILE_STORE = useProfileStore()
@@ -188,7 +186,7 @@ const handleSubmit = async () => {
 
   await fetchExaming()
   isFinishExaming.value = true
-  if (!isThereNoErrorReported()) return
+  if (!isThereErrorReported()) return
   finishedList.value.add(props.id)
   pendingList.value.delete(props.id)
 }
@@ -210,14 +208,7 @@ const fetchExaming = async () => {
     currentData.value.examine += decoder.decode(value)
   }
 }
-const isThereNoErrorReported = () => {
-  if (currentData.value.examine === ErrorResponse.TIMEOUT) {
-    errorMessage.value = `<div style='color: orange'> ${t(
-      'message.timeout'
-    )} </div>`
-    currentData.value.examine = ''
-    return false
-  }
+const isThereErrorReported = () => {
   return true
 }
 
