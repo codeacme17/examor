@@ -30,7 +30,7 @@
    A website application that allows you to take exams based on your knowledge notes. Let you really remember what you have learned and written 🧠.
   </strong>
 </p>
-</br>
+
 <img src = "https://github.com/codeacme17/examor/blob/main/docs/product-full.png?raw=true"></img>
 
 ## 🗒️ Dev-plan for this week（9/4 - 9/10）
