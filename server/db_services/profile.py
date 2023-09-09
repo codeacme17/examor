@@ -13,11 +13,9 @@ def get_profile():
             LIMIT 1;
             """
     profile = MySQLHandler().execute_query(query, single=True)
-
     if (not profile):
         init_profile()
         profile = get_profile()
-
     return profile
 
 
@@ -45,35 +43,35 @@ def set_profile(data: types.Profile):
         "deploymentName",
         "notionKey"
     ]
-
     query = "UPDATE t_profile SET " + \
         ", ".join([f"{field} = %s" for field in fields]) + " WHERE id = %s;"
-
     _data = tuple(getattr(data, field)
                   for field in fields) + (os.environ["PROFILE_ID"],)
-
     MySQLHandler().update_table_data(query, _data)
 
 
 def set_profile_to_env():
     data: types.Profile = get_profile()
     env_keys = {
+        # Individual
         "PROFILE_ID": ('id', None),
         "QUESTION_AMOUNT": ('questionAmount', ""),
         "CURRENT_ROLE": ('currentRole', ""),
         "CURRENT_MODEL": ('currentModel', ""),
+        # OpenAI
         "OPENAI_MODEL": ('openaiModel', "gpt-3.5-turbo"),
         "OPENAI_API_KEY": ('openaiKey', ""),
         "OPENAI_ORGANIZATION": ('openaiOrganization', ""),
         "OPENAI_BASE": ('openaiBase', "https://api.openai.com"),
         "OPENAI_API_PROXY": ('openaiProxy', ""),
+        # Azure
         "AZURE_KEY": ('azureKey', ""),
         "AZURE_BASE": ('azureBase', ""),
         "AZURE_VERSION": ('openaiVersion', ""),
         "AZURE_DEPLOYMENT_NAME": ('deploymentName', ""),
+        # Notion
         "NOTION_KEY": ('notionKey', "")
     }
-
     for env_key, (data_key, default_value) in env_keys.items():
         os.environ[env_key] = str(data.get(data_key, default_value))
 
