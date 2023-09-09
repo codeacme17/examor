@@ -134,7 +134,7 @@ import { useFetch, useListState } from '@/hooks'
 import { QUESTION_API, PROFILE_API } from '@/apis'
 import { useProfileStore } from '@/store'
 
-const { locale, t } = useI18n()
+const { locale } = useI18n()
 const PROFILE_STORE = useProfileStore()
 const props = defineProps<{
   id: string

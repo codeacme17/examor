@@ -16,8 +16,7 @@
       </t-radio-button>
     </t-radio-group>
 
-    <!-- TODO -->
-    <!-- <v-select
+    <v-select
       v-model="formData.uploadType"
       class="mt-4"
       variant="outlined"
@@ -26,7 +25,7 @@
       item-value="value"
       :label="$t('label.selectNoteType')"
       :items="noteTypeOptions"
-    /> -->
+    />
 
     <!-- File upload component -->
     <t-config-provider :global-config="locale === 'en' ? enConfig : cnConfig">
@@ -103,16 +102,16 @@ const formData = reactive<FormData>({
   notion: '',
 })
 
-// ------ Dont Delete -----------
 const noteTypeOptions = computed(() => [
   {
     label: t('option.localFiles'),
     value: 'files',
   },
-  {
-    label: t('option.notion'),
-    value: 'notion',
-  },
+  // TODO: notion db
+  // {
+  //   label: t('option.notion'),
+  //   value: 'notion',
+  // },
 ])
 
 // Form item disable computed

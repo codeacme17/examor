@@ -34,3 +34,14 @@ import { NOTE_API } from '@/apis'
 
 const noteName = ref('')
 </script>
+
+<style scoped lang="scss">
+:deep(.v-field__field) {
+  height: 38px;
+  font-size: 14px;
+
+  .v-field__input {
+    padding-top: 5px !important;
+  }
+}
+</style>
