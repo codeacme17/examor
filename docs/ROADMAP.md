@@ -15,7 +15,7 @@
   - [ ] fill in the blanks
 - [ ] Add more model options
   - [x] gpt-4 (openai)
-  - [ ] claude (anthropic)
+  - [ ] claude-2 (anthropic)
 - [x] Allow users to select question types when uploading docs
 - [x] Add detection modules for different question types
 - [x] Added data import and export features to back up data
