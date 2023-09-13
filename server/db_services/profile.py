@@ -77,7 +77,6 @@ def set_profile_to_env():
         if value is None or value == "":
             value = default_value
         os.environ[env_key] = str(value)
-    print(os.environ["OPENAI_BASE"])
 
 
 def export_data(isProfile: bool, isNotes: bool):

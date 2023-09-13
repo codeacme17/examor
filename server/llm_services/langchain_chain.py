@@ -44,8 +44,13 @@ class Chain:
         question_type: str
     ):
         tasks = []
-        llm_chain = self._init_llm_chain(60, "", question_type)
+        llm_chain = self._init_llm_chain(
+            timeout=60, question_type=question_type)
         for doc in docs:
+            print(self.note_id)
+            print(self.file_id)
+            print(self.filename)
+            print(doc.page_content)
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id, self.file_id, self.filename, doc.page_content)
             tasks.append(self._agenerate_questions(
@@ -119,7 +124,7 @@ class Chain:
             push_date=push_date
         )
 
-    def _init_llm_chain(self, timeout: int, role: str, question_type: str):
+    def _init_llm_chain(self, timeout: int = 10, role: str = "", question_type: str = ""):
         llm_instance = LLM(
             temperature=self.temperature,
             streaming=self.streaming,
@@ -191,7 +196,6 @@ def _is_legal_question_structure(
     content: str,
     type: str
 ):
-    print(content)
     if content == "":
         return False
 

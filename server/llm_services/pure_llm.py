@@ -105,6 +105,4 @@ def _differentiate_payment_types(headers):
             os.environ["PAYMENT"] = "free"
         else:
             os.environ["PAYMENT"] = "paid"
-
-    print(os.environ["PAYMENT"])
     return os.environ["PAYMENT"]
