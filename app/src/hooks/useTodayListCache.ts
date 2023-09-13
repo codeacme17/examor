@@ -22,10 +22,16 @@ export const useTodayListCache = async (
   const [fetch, loading] = useFetch(fun)
   const list = ref<TableItem[]>([])
   const key = `${today.value}:${noteId}`
-
-  if (localStorage.getItem(key))
-    list.value = JSON.parse(localStorage.getItem(key)!)
-  else {
+  const cachedData =
+    localStorage.getItem(key) && JSON.parse(localStorage.getItem(key)!)
+  if (
+    cachedData &&
+    (!!cachedData.expired.length ||
+      !!cachedData.today.length ||
+      !!cachedData.supplement.length)
+  ) {
+    list.value = cachedData
+  } else {
     const { data } = await fetch(noteId)
     list.value = data
     localStorage.setItem(key, JSON.stringify(list.value))
