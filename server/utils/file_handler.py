@@ -37,12 +37,13 @@ async def upload_file(
         filename = item["name"]
         file_id = item["id"]
         file_content = item["content"]
-        # save to the temp file
-        with open(f"./{filename}", "w+", encoding="utf-8") as f:
+        # save file to the temp dir
+        not os.path.isdir(f"./temp") and os.mkdir("./temp")
+        with open(f"./temp/{filename}", "w+", encoding="utf-8") as f:
             f.write(file_content.decode('utf-8'))
         docs = split_doc(filename)
         # remove temp file
-        os.remove(f"./{filename}")
+        os.remove(f"./temp/{filename}")
 
         # Create a LangChain service instance
         langchain_service = _llms_.Chain(

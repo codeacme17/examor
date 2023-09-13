@@ -10,10 +10,7 @@ class MarkdownLoader:
     def load_file(file):
         pass
 
-    def split_doc(self, filename) -> list[Document]:
-        with open(f"./{filename}", "r", encoding="utf-8") as f:
-            doc_content = f.read()
-
+    def split_doc(self, doc_content) -> list[Document]:
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=MAX_TOKEN,
             chunk_overlap=0,

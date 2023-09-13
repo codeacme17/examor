@@ -6,7 +6,10 @@ from .markdown import MarkdownLoader
 def split_doc(filename):
     extension = os.path.splitext(filename)[1]
     loader = _choose_loader(extension)
-    docs = loader.split_doc(filename)
+
+    with open(f"./temp/{filename}", "r", encoding="utf-8") as f:
+        doc_content = f.read()
+    docs = loader.split_doc(doc_content)
     return docs
 
 
