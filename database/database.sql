@@ -32,8 +32,8 @@ CREATE TABLE t_document (
 	CONSTRAINT t_document_FK FOREIGN KEY (file_id) REFERENCES t_file(id) ON DELETE CASCADE ON UPDATE CASCADE
 )
 ENGINE=InnoDB
-DEFAULT CHARSET=utf8
-COLLATE=utf8_general_ci;
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE t_question (

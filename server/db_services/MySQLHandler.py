@@ -1,5 +1,9 @@
 import os
 import mysql.connector
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class MySQLHandler:
@@ -20,7 +24,7 @@ class MySQLHandler:
             self.conn = mysql.connector.connect(**self.config)
             self.cursor = self.conn.cursor(buffered=True, dictionary=True)
         except mysql.connector.Error as err:
-            print("Error: {}".format(err))
+            logger.error("Error connecting to MySQL: %s", err)
 
     def execute_query(
         self,
