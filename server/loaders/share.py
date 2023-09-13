@@ -28,15 +28,16 @@ def is_odd_backtick_paired(s: str) -> bool:
 
 def is_there_no_enough_content(s: str) -> bool:
     """
-    Check if the string has less than 300 tokens.
+    Check if the string has less than 200 tokens.
+    Paragraphs that are too short will prevent useful knowledge points from being extracted.
 
     Parameters:
     - s (str): The string to check.
 
     Returns:
-    - bool: True if the string has less than 300 tokens, False otherwise.
+    - bool: True if the string has less than 200 tokens, False otherwise.
     """
-    return bool(len_token(s) < 300)
+    return bool(len_token(s) < 200)
 
 
 def is_the_token_exceeded(s: str) -> bool:
