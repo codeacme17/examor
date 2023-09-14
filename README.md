@@ -81,15 +81,14 @@ Regarding the actual function, once GPT generates a test, the score is recorded 
 
 ### Role Selection
 
-> ⚠️ The feature in the current version might not be entirely stable. In the upcoming plans, I will continue to optimize this feature (v0.1).
+> [!IMPORTANT]
+> Recommend to use the GPT-4 model for a stable experience.
 
 <img width="500" src="/docs/screen-shot/en-role.png" />
 
 Roles can provide more possibilities for question generation and assessment. You can set roles in the configuration page. For more information about various roles, it's recommended to refer to the [Role Manual](/docs/en-role.md).
 
 ### Question Type Selection
-
-> The current version (v0.2.1) supports generating single-choice questions, and fill-in-the-blank questions will be added in future updates.
 
 - Choose the question type when creating notes.
 
@@ -130,13 +129,6 @@ Roles can provide more possibilities for question generation and assessment. You
 - Document Content: This component displays the actual uploaded document content, serving as the basis and final answer for the question.
 
 ## ♻️ Update the Project
-
-> **Warning**
-> If you are upgrading from a version earlier than v0.2.1, you may encounter an error when importing profile configurations. This is because I have modified the `proxy` key in the table [#19](https://github.com/codeacme17/examor/pull/19).
-> 
-> You can change the column name `proxy` to `openai_proxy` in the `t_profile` sheet of the Excel file.
-> 
-> I sincerely apologize for any inconvenience this may have caused in using the software. In the future, I will avoid directly changing key names in the library!
 
 When starting the project, the application checks for updates. If an update is required, the user will be notified. You can follow these steps to update:
 
