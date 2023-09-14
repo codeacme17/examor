@@ -11,7 +11,7 @@
         🔠 {{ $t('button.choice') }}
       </t-radio-button>
       <!-- TODO -->
-      <t-radio-button value="blank" disabled="true">
+      <t-radio-button value="blank">
         ⬜ {{ $t('button.blank') }}
       </t-radio-button>
     </t-radio-group>

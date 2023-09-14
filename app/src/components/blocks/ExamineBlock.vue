@@ -55,6 +55,20 @@
         </v-radio-group>
       </v-card>
 
+      <v-text-field
+        v-if="props.questionType === 'blank'"
+        v-model="currentData.answer"
+        variant="solo"
+        :autofocus="true"
+        :elevation="0"
+        :bg-color="defaultBgColor"
+        :flat="true"
+        :disabled="isShowExamine"
+        :placeholder="$t('placeholder.answer')"
+        @keydown="handleKeydown"
+        @keyup="handleKeyup"
+      />
+
       <!-- Examine block -->
       <Transition name="scroll-x-reverse-transition">
         <v-card
