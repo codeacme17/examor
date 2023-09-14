@@ -1,0 +1,13 @@
+name: 💬Chat
+description: Just chat
+labels: ['chat']
+assignees: 'codeacme17'
+title: '[CHAT]: '
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please describe what you want to talk about here
+    validations:
+      required: true
