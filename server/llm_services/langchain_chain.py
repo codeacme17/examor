@@ -104,9 +104,9 @@ class Chain:
         ), self.llm_callbacks[0].done)
 
         task = asyncio.create_task(coroutine)
-        exmine = ""
+        examine = ""
         async for token in self.llm_callbacks[0].aiter():
-            exmine += token
+            examine += token
             yield f"{token}"
 
         try:
@@ -115,11 +115,11 @@ class Chain:
             yield str(e)
             return
 
-        score = _extract_score(exmine)
+        score = _extract_score(examine)
         push_date = _get_push_date(score)
         await _dbs_.question.update_question_state(
             id=quesiton_id,
-            answer=f"{answer} ||| {exmine}",
+            answer=f"{answer} ||| {examine}",
             score=score,
             push_date=push_date
         )

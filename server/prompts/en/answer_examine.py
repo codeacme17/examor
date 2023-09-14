@@ -41,6 +41,17 @@ Please review my answer and make any necessary corrections based on the context 
 Your answer (please use markdown syntax):
 """
 
+blank = """
+Please answer in the following format:
+**Score**: x
+**Evaluation**:
+xxx
+**Correct Answer**:
+xxx
+
+Based on the context of the fill-in-the-blank question, please correct and score my answer.
+Your response (please use markdown syntax):
+"""
 
 PROMPT_TEMP = '''
 ### Context:
@@ -68,13 +79,15 @@ def _get_role_prompt(role: str):
 
 
 def _get_question_type(type: str):
-    if (type == "choice"):
+    if type == "choice":
         return choice
+    elif type == "blank":
+        return blank
     else:
         return short
 
 
-def get_exmine_prompt_en(role: str, question_type: str):
+def get_examine_prompt_en(role: str, question_type: str):
     ANSWER_EXAMINE_PROMPT_EN = PromptTemplate(
         template=_get_role_prompt(role) + PROMPT_TEMP +
         _get_question_type(question_type),
