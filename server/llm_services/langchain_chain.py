@@ -47,10 +47,6 @@ class Chain:
         llm_chain = self._init_llm_chain(
             timeout=60, question_type=question_type)
         for doc in docs:
-            print(self.note_id)
-            print(self.file_id)
-            print(self.filename)
-            print(doc.page_content)
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id, self.file_id, self.filename, doc.page_content)
             tasks.append(self._agenerate_questions(

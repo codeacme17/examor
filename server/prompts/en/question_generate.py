@@ -36,7 +36,7 @@ Single-choice questions (using markdown syntax):
 """
 
 blank = """
-You need to create fill-in-the-blank questions (up to 8). The questions you generate should cover all knowledge points in the context, and there should be no repetition in any of the questions. A question shouldn't be too long (maximum of 100 characters).
+You need to create fill-in-the-blank questions (up to 8). The questions you generate should cover all knowledge points in the context, and there should be no repetition in any of the questions. Do not include the answers in the questions!
 
 Please formulate your questions in the following format:
 '''
