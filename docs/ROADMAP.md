@@ -10,9 +10,9 @@
   - [ ] `.docs`
   - [ ] `.pdf`
   - [ ] notionDB
-- [ ] Generate more question types
+- [x] Generate more question types
   - [x] single choice
-  - [ ] fill in the blanks
+  - [x] fill in the blanks
 - [ ] Add more model options
   - [x] gpt-4 (openai)
   - [ ] claude-2 (anthropic)
