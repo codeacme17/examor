@@ -199,6 +199,9 @@ def _is_legal_question_structure(
         pattern = r'^-\s.+?\n\s*A\..+\n\s*B\..+\n\s*C\..+\n\s*D\..+$'
         return bool(re.match(pattern, content))
 
+    if type == "blank":
+        return "_____" in content
+
     return True
 
 
