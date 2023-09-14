@@ -72,13 +72,13 @@ docker-compose up
 
 ### 题型选择
 
-- 在创建笔记时选择题型
+在创建笔记时选择题型
 
-  <img  width="420"  src="/docs/screen-shot/zh-question-type.png" />
+<img  width="420"  src="/docs/screen-shot/zh-question-type.png" />
 
-- 刷题的时候就可以使用不同的方式进行回答，如下图是一道单选题
+刷题的时候就可以使用不同的方式进行回答，如下图是一道单选题
 
-  <img  width="800"  src="/docs/screen-shot/zh-question-type-answer.png" />
+<img  width="800"  src="/docs/screen-shot/zh-question-type-answer.png" />
 
 ## 🧩 模块
 
