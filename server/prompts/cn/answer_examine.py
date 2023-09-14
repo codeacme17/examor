@@ -40,6 +40,18 @@ A. xxx
 您的回答（请使用 markdown 语法）：
 """
 
+blank = """
+请您按照以下格式回答:
+**得分**：x
+**检测**：
+xxx
+**正确答案**：
+xxx
+
+请对这道填空题，根据上下文对我的答案进行纠错与打分
+您的回答（请使用 markdown 语法）：
+"""
+
 PROMPT_TEMP = '''
 ### 上下文：
 {context}
@@ -66,13 +78,15 @@ def _get_role_prompt(role: str):
 
 
 def _get_question_type(type: str):
-    if (type == "choice"):
+    if type == "choice":
         return choice
+    elif type == "blank":
+        return blank
     else:
         return short
 
 
-def get_exmine_prompt_cn(role: str, question_type: str):
+def get_examine_prompt_cn(role: str, question_type: str):
     ANSWER_EXAMINE_PROMPT_CN = PromptTemplate(
         template=_get_role_prompt(role) + PROMPT_TEMP +
         _get_question_type(question_type),

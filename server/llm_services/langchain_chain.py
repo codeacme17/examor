@@ -47,10 +47,6 @@ class Chain:
         llm_chain = self._init_llm_chain(
             timeout=60, question_type=question_type)
         for doc in docs:
-            print(self.note_id)
-            print(self.file_id)
-            print(self.filename)
-            print(doc.page_content)
             doc_id = _dbs_.document.save_doc_to_db(
                 self.note_id, self.file_id, self.filename, doc.page_content)
             tasks.append(self._agenerate_questions(
@@ -104,9 +100,9 @@ class Chain:
         ), self.llm_callbacks[0].done)
 
         task = asyncio.create_task(coroutine)
-        exmine = ""
+        examine = ""
         async for token in self.llm_callbacks[0].aiter():
-            exmine += token
+            examine += token
             yield f"{token}"
 
         try:
@@ -115,11 +111,11 @@ class Chain:
             yield str(e)
             return
 
-        score = _extract_score(exmine)
+        score = _extract_score(examine)
         push_date = _get_push_date(score)
         await _dbs_.question.update_question_state(
             id=quesiton_id,
-            answer=f"{answer} ||| {exmine}",
+            answer=f"{answer} ||| {examine}",
             score=score,
             push_date=push_date
         )
@@ -202,6 +198,9 @@ def _is_legal_question_structure(
     if type == "choice":
         pattern = r'^-\s.+?\n\s*A\..+\n\s*B\..+\n\s*C\..+\n\s*D\..+$'
         return bool(re.match(pattern, content))
+
+    if type == "blank":
+        return "_____" in content
 
     return True
 

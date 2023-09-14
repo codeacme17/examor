@@ -35,6 +35,17 @@ Please provide questions in the following format:
 Single-choice questions (using markdown syntax):
 """
 
+blank = """
+You need to create fill-in-the-blank questions (up to 8). The questions you generate should cover all knowledge points in the context, and there should be no repetition in any of the questions. Do not include the answers in the questions!
+
+Please formulate your questions in the following format:
+'''
+- xxxxxxx______xxxx
+'''
+
+Fill-in-the-blank questions (in markdown syntax):
+"""
+
 PROMPT_TEMPLATE = '''
 ### title ###
 {title}
@@ -55,8 +66,10 @@ def _get_role():
 
 
 def _get_question_type(type):
-    if (type == "choice"):
+    if type == "choice":
         return choice
+    elif type == "blank":
+        return blank
     else:
         return short
 
