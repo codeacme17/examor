@@ -90,13 +90,13 @@ Roles can provide more possibilities for question generation and assessment. You
 
 ### Question Type Selection
 
-- Choose the question type when creating notes.
+Choose the question type when creating notes.
 
-  <img  width="400"  src="/docs/screen-shot/en-question-type.png" />
+<img  width="400"  src="/docs/screen-shot/en-question-type.png" />
 
-- When practicing questions, you can answer using different methods. The image below shows an example of a single-choice question.
+When practicing questions, you can answer using different methods. The image below shows an example of a single-choice question.
 
-  <img  width="700"  src="/docs/screen-shot/en-question-type-answer.png" />
+<img  width="700"  src="/docs/screen-shot/en-question-type-answer.png" />
 
 ## 🧩 Modules
 
