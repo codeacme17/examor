@@ -1,7 +1,7 @@
 # Roadmap
 
 > [!IMPORTANT]
-> v0.3.0 - 70% Progress
+> v0.5.0 - 85% Progress
 
 ### Features
 
