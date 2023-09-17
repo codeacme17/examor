@@ -112,6 +112,7 @@
             label="KEY"
             variant="outlined"
             density="compact"
+            :counter="51"
             :append-inner-icon="
               formData.openaiKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -132,6 +133,7 @@
             label="ORGANIZATION"
             variant="outlined"
             density="compact"
+            :counter="28"
             :append-inner-icon="
               formData.openaiOrganization.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -196,6 +198,7 @@
             label="KEY"
             variant="outlined"
             density="compact"
+            :counter="32"
             :append-inner-icon="
               formData.azureKey.show ? 'mdi-eye' : 'mdi-eye-off'
             "
@@ -280,7 +283,9 @@
           elevation="0"
           :block="true"
           :loading="PROFILE_STORE.confirmLoading"
-          :disabled="PROFILE_STORE.confirmLoading || !isUpdateFormData"
+          :disabled="
+            PROFILE_STORE.confirmLoading || !isUpdateFormData || isFormError
+          "
           @click="handleConfirm"
         >
           {{ $t('button.submit') }}
@@ -301,7 +306,8 @@ import { ref, onUnmounted } from 'vue'
 import { watchDeep } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import { orangeBgColor, greenBgColor } from '@/utils'
-import { useProfileStore } from '@/store'
+import { useProfileStore, ProfileItem, ProfileKey } from '@/store'
+import { computed } from 'vue'
 
 const { locale } = useI18n()
 const PROFILE_STORE = useProfileStore()
@@ -316,12 +322,35 @@ const handleConfirm = async () => {
   await PROFILE_STORE.setProfile()
   isUpdateFormData.value = false
 }
+const isFormError = computed(() => {
+  for (const key in formData) {
+    if (Object.prototype.hasOwnProperty.call(formData, key)) {
+      const profileKey = key as ProfileKey
+      const element: ProfileItem = formData[profileKey]
+      if (element.error !== undefined && element.error === true) return true
+    }
+  }
+  return false
+})
 watchDeep(formData, () => {
   isUpdateFormData.value = true
+  // Valid openai key length
+  if (formData.openaiKey.value && formData.openaiKey.value.length !== 51)
+    formData.openaiKey.error = true
+  else formData.openaiKey.error = false
+  // Valid openai organization length
+  if (
+    formData.openaiOrganization.value &&
+    formData.openaiOrganization.value.length !== 28
+  )
+    formData.openaiOrganization.error = true
+  else formData.openaiOrganization.error = false
+  // Valid azure key length
+  if (formData.azureKey.value && formData.azureKey.value.length !== 32)
+    formData.azureKey.error = true
+  else formData.azureKey.error = false
 
-  if (formData.notionKey) {
-    PROFILE_STORE.profile.notionKey.error = false
-  }
+  if (formData.notionKey) PROFILE_STORE.profile.notionKey.error = false
 })
 
 onUnmounted(() => {
@@ -343,5 +372,8 @@ onUnmounted(() => {
   font-size: 22px !important;
   margin: 0px 5px 0px -5px;
   padding-right: 13px !important;
+}
+:deep(.v-counter) {
+  font-size: 10px !important;
 }
 </style>

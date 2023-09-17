@@ -3,12 +3,12 @@ import { PROFILE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 import { useMessageStore } from './message'
 
-type State = {
-  profile: Record<Key, ProfileItem>
+export type ProfileState = {
+  profile: Record<ProfileKey, ProfileItem>
   confirmLoading: boolean
 }
 
-type Key =
+export type ProfileKey =
   | 'questionAmount'
   | 'currentRole'
   | 'currentModel'
@@ -25,13 +25,13 @@ type Key =
 
 type Model = 'OpenAI' | 'Azure'
 
-type ProfileItem = {
+export type ProfileItem = {
   value: string | Model
   show?: boolean // show or hide key
   error?: boolean // error field
 }
 
-const state: State = {
+const state: ProfileState = {
   profile: {
     questionAmount: {
       value: '',
@@ -104,7 +104,7 @@ export const useProfileStore = defineStore('profileStore', {
 
       for (const key in data) {
         if (Object.prototype.hasOwnProperty.call(this.$state.profile, key)) {
-          const profileKey = key as Key
+          const profileKey = key as ProfileKey
           this.$state.profile[profileKey].value = data[key]
         }
       }
@@ -116,7 +116,7 @@ export const useProfileStore = defineStore('profileStore', {
 
       const data: any = {}
       for (const key in this.$state.profile) {
-        const profileKey = key as Key
+        const profileKey = key as ProfileKey
         data[key] = this.$state.profile[profileKey].value || ''
       }
 
@@ -183,7 +183,7 @@ export const useProfileStore = defineStore('profileStore', {
       const { profile } = this.$state
       for (const key in profile) {
         if (Object.prototype.hasOwnProperty.call(profile, key)) {
-          const profileKey = key as Key
+          const profileKey = key as ProfileKey
           if (profile[profileKey].error) profile[profileKey].error = false
         }
       }
