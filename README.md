@@ -33,7 +33,7 @@
 
 <img src = "https://github.com/codeacme17/examor/blob/main/docs/product-full.png?raw=true"></img>
 
-## 🗒️ Dev-plan for this week（9/11 - 9/17）
+## 🗒️ Dev-plan for this week（9/18 - 9/24）
 
 - Refactor the code of the project as a whole to improve code readability and extensibility
 - Fix issue [#45](https://github.com/codeacme17/examor/issues/45), add user input restrictions and backend judgment to profile
