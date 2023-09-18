@@ -26,6 +26,7 @@
   | Teacher     | ⭐️⭐️     | 😏         |
   | Interviewer | ⭐️⭐️⭐️  | 😐         |
   | Examiner    | ⭐️        | 😭         |
+- [ ] Custom prompt: A module that allows users to set their own question-generation prompts, customize roles, and question types.
 
 ### Optimizations
 
