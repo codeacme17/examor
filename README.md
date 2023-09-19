@@ -11,8 +11,8 @@
   <a href="https://github.com/codeacme17/examor/blob/main/docs/ROADMAP.md">
     <img height="21" src="https://img.shields.io/badge/ROADMAP-7d09f1?style=flat-square" alt="roadmap">
   </a>
-  <a href="https://www.reddit.com/r/examor/">
-    <img height="21" src="https://img.shields.io/badge/Reddit-%23fff?style=flat-square&logo=reddit&logoColor=7d09f1" alt="reddit">
+  <a href="https://twitter.com/codeacme17">
+    <img height="21" src="https://img.shields.io/badge/Twitter_Follow-%23fff?style=flat-square&logo=x&logoColor=7d09f1" alt="reddit">
   </a>
   <a href="https://www.producthunt.com/posts/examor?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-examor">
     <img height="21" src="https://img.shields.io/badge/Product%20Hunt-fff?style=flat-square&logo=producthunt&logoColor=7d09f1" alt="producthunt">
