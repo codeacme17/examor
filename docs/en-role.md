@@ -42,7 +42,7 @@ The interviewer immerses you in an interview scenario. Their questions are nearl
 > [!IMPORTANT]
 > When generating a question, the role assumed during question generation is stored within the information of that question. In other words, if a question is generated with the role of an **examiner**, then when evaluating responses to that question in the future, it will also be assessed from the perspective of an **examiner**. The role used for question generation is displayed within the question component.
 > 
-> <img src="./screen-shot/role-emoji-en.png">
+>  <img src="./screen-shot/role-emoji-en.png">
 
 ### Case Study
 
