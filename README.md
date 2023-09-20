@@ -47,6 +47,9 @@ When I'm learning a new technology, I have the habit of taking notes and jotting
 
 ## 🏁 Start
 
+> [!IMPORTANT]
+> Highly recommend reading [Best Documentation Practices](https://github.com/codeacme17/examor/blob/main/docs/best-practices/en-best-practices.md) before uploading notes to optimize your document.
+
 #### Clone this repo
 
 ```bash
@@ -60,7 +63,6 @@ cd examor
 docker-compose up
 ```
 
-> [!IMPORTANT]
 > Please make sure Docker is installed on your local machine, and ports `51717`, `51818`, and `52020` are available on your local host
 
 Open `http://localhost:51818` in your browser to access Examor. (Due to optimization scheme for modules, it may be slow when loading the program or entering a certain page for the first time)
