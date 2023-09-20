@@ -60,6 +60,7 @@ cd examor
 docker-compose up
 ```
 
+> [!IMPORTANT]
 > Please make sure Docker is installed on your local machine, and ports `51717`, `51818`, and `52020` are available on your local host
 
 Open `http://localhost:51818` in your browser to access Examor. (Due to optimization scheme for modules, it may be slow when loading the program or entering a certain page for the first time)
