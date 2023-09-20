@@ -37,7 +37,7 @@
 
 - Refactor the code of the project as a whole to improve code readability and extensibility
 - ~~Fix issue [#45](https://github.com/codeacme17/examor/issues/45), add user input restrictions and backend judgment to profile~~
-- Add a 'Best Documentation Practices' section in the README. The goal is to showcase the most effective documentation (available for user testing) and the most recommended documentation layout
+- ~~Add a 'Best Documentation Practices' section in the README. The goal is to showcase the most effective documentation (available for user testing) and the most recommended documentation layout~~
 
 ## 💡 Inspiration
 
