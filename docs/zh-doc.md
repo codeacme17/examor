@@ -29,6 +29,9 @@
 
 ## 🏁 开始
 
+> [!IMPORTANT]
+> 强烈建议在上传笔记前阅读 [文档最佳实践](https://github.com/codeacme17/examor/blob/main/docs/best-practices/zh-best-practices.md) 来优化文档
+
 #### 克隆当前的仓库
 
 ```bash
@@ -42,7 +45,6 @@ cd examor
 docker-compose up
 ```
 
-> [!IMPORTANT]
 > 请确保您的本机安装了 Docker，并且本地的 `51717`、`51818` 和 `52020` 端口没有被占用
 
 在浏览器中打开 `http://localhost:51818` 开始使用 examor（因为模块优化方案，在第一次加载项目或切换页面时会比较缓慢）
