@@ -48,7 +48,7 @@ When I'm learning a new technology, I have the habit of taking notes and jotting
 ## 🏁 Start
 
 > [!IMPORTANT]
-> Highly recommend reading [Best Documentation Practices](/docs/best-practices/en-beat-practices.md) before uploading notes to optimize your document.
+> Highly recommend reading [Best Documentation Practices](https://github.com/codeacme17/examor/blob/main/docs/best-practices/en-beat-practices.md) before uploading notes to optimize your document.
 
 #### Clone this repo
 
