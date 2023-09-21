@@ -6,6 +6,7 @@
 ### Features
 
 - [ ] Dashboard page
+- [ ] Support PWA
 - [ ] Support more document types
   - [ ] `.docs`
   - [ ] `.pdf`
