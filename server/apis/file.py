@@ -1,6 +1,11 @@
 import db_services as _dbs_
-
 from utils import api_result
+
+
+# Get question count by file id
+def get_question_count(file_id: str):
+    res = _dbs_.file.get_question_count(file_id)
+    return api_result.success(res)
 
 
 # Delete file

@@ -55,12 +55,12 @@ async def upload_file(
         )
 
         # Generate questions using LangChain service
-        await langchain_service.agenerate_questions(
+        question_count = await langchain_service.agenerate_questions(
             docs,
             noteName,
             questionType,
         )
 
         # Set the file's uploading state
-        _dbs_.file.set_file_is_uploading_state(file_id)
+        _dbs_.file.set_file_is_uploading_state(file_id, question_count)
         print(f">>>>>>>>> {filename} upload success  <<<<<<<<<")

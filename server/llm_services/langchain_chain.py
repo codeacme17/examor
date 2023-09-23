@@ -35,6 +35,7 @@ class Chain:
         self.temperature = temperature
         self.streaming = streaming
         self.llm_callbacks = [AsyncIteratorCallbackHandler()]
+        self.question_count = 0
 
     # Asynchronous method to generate questions.
     async def agenerate_questions(
@@ -55,8 +56,10 @@ class Chain:
         try:
             await asyncio.wait_for(asyncio.gather(*tasks), timeout=len(docs) * 60)
         except Exception as e:
-            _dbs_.file.set_file_is_uploading_state(self.file_id)
+            _dbs_.file.set_file_is_uploading_state(
+                self.file_id, self.question_count)
             raise e
+        return self.question_count
 
     # Helper method for specific question generation.
     async def _agenerate_questions(
@@ -80,6 +83,7 @@ class Chain:
                     document_id=doc_id,
                     question_type=question_type
                 )
+                self.question_count += 1
 
     # Method to check answers.
     async def aexamine_answer(
