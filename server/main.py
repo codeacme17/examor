@@ -123,7 +123,7 @@ def delete_file(id: int):
     return _apis_.file.delete_file(id)
 
 
-@app.get("/file/{id}/quesitonCount")
+@app.get("/file/{id}/questionCount")
 def get_quesiton_count(id: int):
     return _apis_.file.get_question_count(id)
 

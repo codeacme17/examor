@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
 
-type State = {
-  uploadingFiles: UploadingFileItem[]
-}
-
 export type UploadingFileItem = {
   id: number
   note_id: number
   file_name: string
+}
+
+type State = {
+  uploadingFiles: UploadingFileItem[]
 }
 
 const state: State = {
