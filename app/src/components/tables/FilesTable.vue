@@ -1,6 +1,10 @@
 <template>
   <!-- Empty Notice Block -->
-  <section v-if="!files.length" />
+  <section v-if="!files.length" class="d-flex align-center mt-1">
+    <h4 class="text-disabled" style="user-select: none">
+      {{ $t('hint.noneFile') }}
+    </h4>
+  </section>
 
   <v-table
     v-else

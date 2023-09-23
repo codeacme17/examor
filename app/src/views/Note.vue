@@ -58,6 +58,15 @@
         />
       </section>
     </Transition>
+
+    <empty-block
+      v-if="!todayList.length && !expiredList.length && !supplementList.length"
+      type="question"
+    >
+      <h3 style="margin-top: -50px">
+        {{ $t('title.emptyQuestion') }}
+      </h3>
+    </empty-block>
   </v-container>
 </template>
 
