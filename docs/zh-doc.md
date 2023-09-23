@@ -5,8 +5,7 @@
   <img  width="260"  src="/docs/logo-text.png" />
 </p>
 
-> [!IMPORTANT]
-> **该项目目前仍处于早期阶段，存在许多问题和 Bug 需要解决**。因此，我们非常欢迎您提供宝贵的反馈和问题报告，共同参与完善这个项目！如果您有任何想法或问题，请随时在 [Discussions](https://github.com/codeacme17/examor/discussions) 中提出，期待您的参与！❤️
+> [!IMPORTANT] > **该项目目前仍处于早期阶段，存在许多问题和 Bug 需要解决**。因此，我们非常欢迎您提供宝贵的反馈和问题报告，共同参与完善这个项目！如果您有任何想法或问题，请随时在 [Discussions](https://github.com/codeacme17/examor/discussions) 中提出，期待您的参与！❤️
 
 <p>
   <strong>
@@ -17,10 +16,11 @@
 </br>
 
 ## 🗒️ 本周开发计划（9/18 - 9/24）
+
 - 对项目的代码进行重构，优化代码的可读性和可扩展性
 - ~~修复 issue [#45](https://github.com/codeacme17/examor/issues/45)，为 profile 加入用户输入校验~~
 - ~~在 REAMDE 中加入 “文档最佳实践” 模块，目的是展示效果最好的文档（可让用户测试）和最推荐的文档排版~~
-- 增加上传文档成功后的提示，并展示切分的 chunk 数和生成的问题数
+- ~~增加上传文档成功后的提示，并展示切分的 chunk 数和生成的问题数~~
 
 ## 💡 启发
 
@@ -121,7 +121,7 @@ docker-compose up
 
 1. 将您的笔记、问题或配置项通过个人配置页面中的 **导出配置及笔记** 按钮进行导出作为备份。这将会导出一个名为 `examor-data.xlsx` 的文件，您可以查看文件内容，**但不建议对文件内容进行修改**
 
-    <img  width="700"  src="/docs/screen-shot//zh-export-import.png" />
+<img  width="700"  src="/docs/screen-shot//zh-export-import.png" />
 
 2. 重新拉取更新最新的远程代码，更新本地的项目
 

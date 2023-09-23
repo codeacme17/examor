@@ -22,8 +22,7 @@
   </a>
 </p>
 
-> [!IMPORTANT]
-> **This project is still in its early stages with many issues and bugs to be addressed**. Therefore, we warmly welcome your valuable feedback and bug reports to help improve this project together! If you have any ideas or questions, please feel free to raise them in [Discussions](https://github.com/codeacme17/examor/discussions). We look forward to your participation!
+> [!IMPORTANT] > **This project is still in its early stages with many issues and bugs to be addressed**. Therefore, we warmly welcome your valuable feedback and bug reports to help improve this project together! If you have any ideas or questions, please feel free to raise them in [Discussions](https://github.com/codeacme17/examor/discussions). We look forward to your participation!
 
 <p>
   <strong>
@@ -38,7 +37,7 @@
 - Refactor the code of the project as a whole to improve code readability and extensibility
 - ~~Fix issue [#45](https://github.com/codeacme17/examor/issues/45), add user input restrictions and backend judgment to profile~~
 - ~~Add a 'Best Documentation Practices' section in the README. The goal is to showcase the most effective documentation (available for user testing) and the most recommended documentation layout~~
-- Add a notification after a successful document upload, displaying the number of chunks split and the number of questions generated
+- ~~Add a notification after a successful document upload, displaying the number of chunks split and the number of questions generated~~
 
 ## 💡 Inspiration
 
@@ -141,11 +140,11 @@ When starting the project, the application checks for updates. If an update is r
 
    <img width="700" src="/docs/screen-shot/en-export-import.png" />
 
-3. Pull the latest remote code updates to refresh your local project.
+2. Pull the latest remote code updates to refresh your local project.
 
-4. Delete the existing Docker container and rebuild the project with the `docker-compose run` command to incorporate the latest changes.
+3. Delete the existing Docker container and rebuild the project with the `docker-compose run` command to incorporate the latest changes.
 
-5. Once the build is successful, navigate to the personal settings page, click the **Import File** button, and re-import the backed-up data into the project.
+4. Once the build is successful, navigate to the personal settings page, click the **Import File** button, and re-import the backed-up data into the project.
 
 > The current updating process is based on my personal usage. It might not be the best way to update. If you have better update methods, please feel free to provide assistance in the issues section ❤️
 
