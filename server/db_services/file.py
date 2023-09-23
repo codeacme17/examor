@@ -30,7 +30,10 @@ def get_question_count(file_id: int):
             WHERE id = %s;
             """
     data = (file_id, )
-    return MySQLHandler().execute_query(query, data, True)["question_count"]
+    res = MySQLHandler().execute_query(query, data, True)
+    if res:
+        return res["question_count"]
+    return 0
 
 
 def get_uploading_files():

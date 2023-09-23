@@ -5,7 +5,8 @@ from utils import api_result
 # Get question count by file id
 def get_question_count(file_id: str):
     res = _dbs_.file.get_question_count(file_id)
-    return api_result.success(res)
+    if res != 0:
+        return api_result.success(res)
 
 
 # Delete file
