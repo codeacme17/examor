@@ -13,15 +13,13 @@ def add_file_to_db(
     return MySQLHandler().insert_table_data(query, data)
 
 
-def set_file_is_uploading_state(
-    file_id: int
-):
+def set_file_is_uploading_state(file_id: int, question_count: int = 0):
     query = """
              UPDATE t_file
-             SET is_uploading = "0"
+             SET is_uploading = "0", question_count = %s
              WHERE id = %s;
              """
-    data = (file_id, )
+    data = (question_count, file_id, )
     MySQLHandler().update_table_data(query, data)
 
 

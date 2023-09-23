@@ -13,6 +13,7 @@ CREATE TABLE t_file (
 	note_id int(12) NOT NULL COMMENT 'note id',
 	file_name varchar(100) NULL COMMENT 'file name',
 	is_uploading varchar(5) DEFAULT "1" NULL COMMENT 'is the file uploading 0-No  1-Yes',
+	question_count int(12) DEFAULT 0 COMMENT 'the number of questions generated from this file',
 	upload_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'record update time',
 	CONSTRAINT t_file_pk PRIMARY KEY (id),
 	CONSTRAINT t_file_FK FOREIGN KEY (note_id) REFERENCES t_note(id) ON DELETE CASCADE ON UPDATE CASCADE
