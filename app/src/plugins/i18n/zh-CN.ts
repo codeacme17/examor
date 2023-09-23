@@ -104,6 +104,7 @@ export const zhCN = {
     openaiBase: '该参数用于设置OpenAI API的基础地址',
     openaiProxy: '该参数用于设置OpenAI API的代理地址',
     lastRecord: '暂无记录',
+    noneFile: '该笔记下暂无任何文件',
   },
 
   errorHint: {

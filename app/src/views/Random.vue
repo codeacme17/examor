@@ -2,7 +2,9 @@
   <v-container style="max-width: 1080px">
     <!-- Empty block -->
     <empty-block v-if="questionInfo === 'empty'" type="question">
-      <h3 class="mb-2">{{ $t('title.emptyQuestion') }}</h3>
+      <h3 style="margin-top: -50px">
+        {{ $t('title.emptyQuestion') }}
+      </h3>
     </empty-block>
 
     <section v-else>

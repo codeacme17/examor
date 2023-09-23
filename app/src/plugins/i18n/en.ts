@@ -110,6 +110,7 @@ export const en = {
     openaiProxy:
       'This parameter is used to set the proxy address of the OpenAI API',
     lastRecord: 'No reord yet',
+    noneFile: 'There are currently no files in this notebook',
   },
 
   errorHint: {

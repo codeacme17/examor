@@ -25,6 +25,7 @@ async def upload_file(
     :return: None
     """
     collection = []
+    error_files = []
 
     for file in files:
         file_dict = {}
@@ -37,6 +38,7 @@ async def upload_file(
         filename = item["name"]
         file_id = item["id"]
         file_content = item["content"]
+
         # save file to the temp dir
         not os.path.isdir(f"./temp") and os.mkdir("./temp")
         with open(f"./temp/{filename}", "w+", encoding="utf-8") as f:
@@ -54,13 +56,24 @@ async def upload_file(
             prompt_type="question_generate"
         )
 
-        # Generate questions using LangChain service
-        question_count = await langchain_service.agenerate_questions(
-            docs,
-            noteName,
-            questionType,
-        )
+        try:
+            # Generate questions using LangChain service
+            question_count = await langchain_service.agenerate_questions(
+                docs,
+                noteName,
+                questionType,
+            )
+            # Handle the case where no questions were generated
+            if question_count == 0:
+                _dbs_.file.delete_file(file_id)
+                raise ("error")
+        except Exception as e:
+            error_files.append((filename))
+        finally:
+            # Set the file's uploading state
+            _dbs_.file.set_file_is_uploading_state(file_id, question_count)
 
-        # Set the file's uploading state
-        _dbs_.file.set_file_is_uploading_state(file_id, question_count)
-        print(f">>>>>>>>> {filename} upload success  <<<<<<<<<")
+    if error_files:
+        error_messages = "\n".join([f"{f}" for f in error_files])
+        raise Exception(
+            f"Error: \n{error_messages} upload failed because no questions were generated, please check 'Best Documentation Practices' to optimize your note")
