@@ -23,6 +23,16 @@ def set_file_is_uploading_state(file_id: int, question_count: int = 0):
     MySQLHandler().update_table_data(query, data)
 
 
+def get_question_count(file_id: int):
+    query = """
+            SELECT question_count
+            FROM t_file
+            WHERE id = %s;
+            """
+    data = (file_id, )
+    return MySQLHandler().execute_query(query, data, True)["question_count"]
+
+
 def get_uploading_files():
     query = """
             SELECT id, note_id, file_name

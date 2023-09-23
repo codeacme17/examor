@@ -123,6 +123,11 @@ def delete_file(id: int):
     return _apis_.file.delete_file(id)
 
 
+@app.get("/file/{id}/quesitonCount")
+def get_quesiton_count(id: int):
+    return _apis_.file.get_question_count(id)
+
+
 @app.websocket("/ws/file/uploading")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
