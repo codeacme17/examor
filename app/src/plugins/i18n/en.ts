@@ -44,6 +44,7 @@ export const en = {
     createDate: 'Create Date',
     updateFile: 'Update File',
     uploadFile: 'Upload File',
+    questionCount: 'Question Count',
     lastAnswer: 'Last Answer',
     lastExamine: 'Last Examine',
     today: 'Questions to review today',

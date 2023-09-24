@@ -16,6 +16,7 @@
     <thead>
       <tr>
         <th class="text-left">{{ $t('title.filename') }}</th>
+        <th class="text-left">{{ $t('title.questionCount') }}</th>
         <th class="text-left">{{ $t('title.uploadDate') }}</th>
         <th class="text-right"></th>
       </tr>
@@ -30,13 +31,15 @@
         <!-- File name td -->
         <td>{{ item.file_name }}</td>
 
+        <td style="width: 180px">{{ item.question_count }}</td>
+
         <!-- Update time td -->
         <td style="width: 170px">
           {{ handleDatetime(item.upload_date) }}
         </td>
 
         <!-- Action buttons td -->
-        <td style="width: 170px">
+        <td style="width: 0px">
           <div class="d-flex justify-end align-center">
             <!-- Dont delete! ------------- -->
             <!-- Update file button -->
@@ -97,6 +100,7 @@ type FileItem = {
   id: number
   file_name: string
   upload_date: string
+  question_count: number
   isShowConfirmDeleteBtn?: boolean
   isUploading?: boolean
 }
