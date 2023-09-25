@@ -41,7 +41,7 @@ Enhancement suggestions are also tracked as GitHub issues.
   - server(python3.11)
   ```bash
   cd server
-  pip install -r requirement.txt
+  pip install -r requirements.txt
   uvicorn main:app --reload --port 51717 --host 0.0.0.0
   ```
   - database
