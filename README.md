@@ -33,11 +33,11 @@
 
 <img src = "https://github.com/codeacme17/examor/blob/main/docs/product-full.png?raw=true"></img>
 
-<!--
-## 🗒️ Dev-plan for this week（9/18 - 9/24）
+
+## 🗒️ Dev-plan for these two weeks（9/25 - 10/8）
 
 - Refactor the code of the project as a whole to improve code readability and extensibility
--->
+- Add cluade model support
 
 ## 💡 Inspiration
 
