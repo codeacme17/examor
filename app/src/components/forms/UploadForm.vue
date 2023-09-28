@@ -4,17 +4,18 @@
     <t-radio-group
       v-model="formData.questionType"
       variant="default-filled"
-      class="mb-5"
+      class="mb-5 mt-0"
     >
       <t-radio-button value="short">📝 {{ $t('button.short') }}</t-radio-button>
       <t-radio-button value="choice">
         🔠 {{ $t('button.choice') }}
       </t-radio-button>
-      <!-- TODO -->
       <t-radio-button value="blank">
         ⬜ {{ $t('button.blank') }}
       </t-radio-button>
     </t-radio-group>
+
+    <v-divider class="mb-6 mt-1"></v-divider>
 
     <v-select
       v-model="formData.uploadType"
@@ -37,7 +38,9 @@
         theme="file-flow"
         multiple
         max="3"
+        :triggerButtonProps="{ block: 'true' }"
         :accept="['.md']"
+        :showThumbnail="true"
         :autoUpload="false"
       />
     </t-config-provider>
