@@ -41,9 +41,9 @@ def set_profile(data: types.Profile):
         "azureBase",
         "openaiVersion",
         "deploymentName",
+        "anthropicModel",
         "anthropicKey",
         "anthropicVersion",
-        "anthropicModel",
         "notionKey"
     ]
     query = "UPDATE t_profile SET " + \

@@ -15,6 +15,9 @@ class Profile(BaseModel):
     azureBase: str = ""
     openaiVersion: str = ""
     deploymentName: str = ""
+    anthropicModel: str = ""
+    anthropicKey: str = ""
+    anthropicVersion = ""
     notionKey: str = ""
     proxy: str = ""
 
