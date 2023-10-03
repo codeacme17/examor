@@ -6,7 +6,9 @@
       variant="default-filled"
       class="mb-5 mt-0"
     >
-      <t-radio-button value="short">📝 {{ $t('button.short') }}</t-radio-button>
+      <t-radio-button value="short">
+        📝 {{ $t('button.short') }}
+      </t-radio-button>
       <t-radio-button value="choice">
         🔠 {{ $t('button.choice') }}
       </t-radio-button>
