@@ -123,15 +123,27 @@ def _differentiate_payment_types(headers):
     """
     This function differentiates payment types based on rate limit requests.
     More information about rate limits can be found at:
-    https://platform.openai.com/docs/guides/rate-limits/overview
+    - Openai: https://platform.openai.com/docs/guides/rate-limits/overview
+    - Azure: https://learn.microsoft.com/en-us/azure/ai-services/openai/quotas-limits
+    - Anthropic: https://docs.anthropic.com/claude/reference/errors-and-rate-limits#rate-limits
     """
     current_model = os.getenv("CURRENT_MODEL")
     openai_model = os.getenv("OPENAI_MODEL")
-    if current_model == "Azure" or openai_model == "gpt-4" or current_model == "Anthropic":
-        os.environ["PAYMENT"] = "paid"
-    elif current_model == "OpenAI":
-        if headers["x-ratelimit-limit-requests"] == "200":
+
+    if current_model == "OpenAI":
+        if openai_model == "gpt-4":
+            os.environ["PAYMENT"] = "paid"
+        elif headers["x-ratelimit-limit-requests"] == "200":
             os.environ["PAYMENT"] = "free"
         else:
             os.environ["PAYMENT"] = "paid"
+
+    # Azure is always paid
+    if current_model == "Azure":
+        os.environ["PAYMENT"] = "paid"
+
+    # Anthropic is always free.
+    if current_model == "Anthropic":
+        os.environ["PAYMENT"] = "free"
+
     return os.environ["PAYMENT"]
