@@ -41,6 +41,9 @@ def set_profile(data: types.Profile):
         "azureBase",
         "openaiVersion",
         "deploymentName",
+        "anthropicModel",
+        "anthropicKey",
+        "anthropicVersion",
         "notionKey"
     ]
     query = "UPDATE t_profile SET " + \
@@ -69,6 +72,10 @@ def set_profile_to_env():
         "AZURE_BASE": ('azureBase', ""),
         "AZURE_VERSION": ('openaiVersion', ""),
         "AZURE_DEPLOYMENT_NAME": ('deploymentName', ""),
+        # Anthropic
+        "ANTHROPIC_MODEL": ('anthropicModel', 'claude-2'),
+        "ANTHROPIC_KEY": ('anthropicKey', ""),
+        "ANTHROPIC_VERSION": ('anthropicVersion', '2023-06-01'),
         # Notion
         "NOTION_KEY": ('notionKey', "")
     }

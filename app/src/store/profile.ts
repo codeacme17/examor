@@ -21,12 +21,27 @@ export type ProfileKey =
   | 'azureBase'
   | 'openaiVersion'
   | 'deploymentName'
+  | 'anthropicModel'
+  | 'anthropicKey'
+  | 'anthropicVersion'
   | 'notionKey'
 
-type Model = 'OpenAI' | 'Azure'
+type Model =
+  | 'OpenAI'
+  | 'Azure'
+  | 'Anthropic'
+  | 'claude-2'
+  | 'gpt-3.5-turbo'
+  | 'gpt-4'
+
+type Role = 'examiner' | 'teacher' | 'interviewer'
+
+type Base = 'https://api.openai.com' | ''
+
+type Version = '2023-06-01'
 
 export type ProfileItem = {
-  value: string | Model
+  value: Model | Role | Base | Version
   show?: boolean // show or hide key
   error?: boolean // error field
 }
@@ -37,13 +52,13 @@ const state: ProfileState = {
       value: '',
     },
     currentRole: {
-      value: '',
+      value: 'examiner',
     },
     currentModel: {
-      value: '',
+      value: 'OpenAI',
     },
     openaiModel: {
-      value: '',
+      value: 'gpt-3.5-turbo',
       show: false,
       error: false,
     },
@@ -58,7 +73,7 @@ const state: ProfileState = {
       error: false,
     },
     openaiBase: {
-      value: '',
+      value: 'https://api.openai.com',
       show: false,
       error: false,
     },
@@ -82,6 +97,17 @@ const state: ProfileState = {
     },
     deploymentName: {
       value: '',
+      error: false,
+    },
+    anthropicModel: {
+      value: 'claude-2',
+    },
+    anthropicKey: {
+      value: '',
+      error: false,
+    },
+    anthropicVersion: {
+      value: '2023-06-01',
       error: false,
     },
     notionKey: {

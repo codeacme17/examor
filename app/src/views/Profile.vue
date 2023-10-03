@@ -84,6 +84,7 @@
       >
         <t-radio-button value="OpenAI">OpenAI</t-radio-button>
         <t-radio-button value="Azure">Azure</t-radio-button>
+        <t-radio-button value="Anthropic">Anthropic</t-radio-button>
       </t-radio-group>
 
       <!---------- Keys ---------->
@@ -97,7 +98,7 @@
           <v-select
             v-model="formData.openaiModel.value"
             class="mt-3"
-            label="OPENAI_MODEL"
+            label="MODEL"
             variant="outlined"
             density="compact"
             :base-color="formData.openaiModel.error ? orangeBgColor : ''"
@@ -254,6 +255,64 @@
         </div>
       </div>
 
+      <!-- Anthropic -->
+      <div v-if="formData.currentModel.value === 'Anthropic'" class="d-flex">
+        <AzureIcon width="30" class="mb-auto mt-4 mr-4" />
+        <div style="flex: 1">
+          <!-- Anthropic key -->
+          <v-text-field
+            v-model="formData.anthropicKey.value"
+            class="mt-3"
+            label="KEY"
+            variant="outlined"
+            density="compact"
+            :counter="32"
+            :append-inner-icon="
+              formData.anthropicKey.show ? 'mdi-eye' : 'mdi-eye-off'
+            "
+            :type="formData.anthropicKey.show ? 'text' : 'password'"
+            :base-color="
+              PROFILE_STORE.profile.anthropicKey.error ? orangeBgColor : ''
+            "
+            :color="
+              PROFILE_STORE.profile.anthropicKey.error ? orangeBgColor : ''
+            "
+            @click:append-inner="
+              formData.anthropicKey.show = !formData.anthropicKey.show
+            "
+          />
+
+          <!-- Anthropic Model -->
+          <v-select
+            v-model="formData.anthropicModel.value"
+            class="mt-3"
+            label="MODEL"
+            variant="outlined"
+            density="compact"
+            :disabled="true"
+            :base-color="formData.anthropicModel.error ? orangeBgColor : ''"
+            :color="formData.anthropicModel.error ? orangeBgColor : ''"
+            :items="['claude-2']"
+          />
+
+          <!-- Anthropic version -->
+          <v-text-field
+            v-model="formData.anthropicVersion.value"
+            class="mt-3"
+            label="VERSION"
+            variant="outlined"
+            density="compact"
+            :disabled="true"
+            :base-color="
+              PROFILE_STORE.profile.anthropicVersion.error ? orangeBgColor : ''
+            "
+            :color="
+              PROFILE_STORE.profile.anthropicVersion.error ? orangeBgColor : ''
+            "
+          />
+        </div>
+      </div>
+
       <!-- Notion -->
       <div class="d-flex mt-3">
         <NotionIcon width="30" class="mb-5 mr-4" />
@@ -284,7 +343,7 @@
           :block="true"
           :loading="PROFILE_STORE.confirmLoading"
           :disabled="
-            PROFILE_STORE.confirmLoading || !isUpdateFormData || isFormError
+            PROFILE_STORE.confirmLoading || !isUpdatedFormData || isFormError
           "
           @click="handleConfirm"
         >
@@ -317,10 +376,10 @@ const isShowImportDialog = ref(false)
 
 // Handle sumbit profile configurations event
 const formData = PROFILE_STORE.profile
-const isUpdateFormData = ref(false)
+const isUpdatedFormData = ref(false)
 const handleConfirm = async () => {
   await PROFILE_STORE.setProfile()
-  isUpdateFormData.value = false
+  isUpdatedFormData.value = false
 }
 const isFormError = computed(() => {
   for (const key in formData) {
@@ -332,23 +391,21 @@ const isFormError = computed(() => {
   }
   return false
 })
+
+// Valid key length
+const validFieldLength = (key: ProfileKey, length: number) => {
+  if (formData[key].value && (formData[key].value as string).length !== length)
+    formData[key].error = true
+  else formData[key].error = false
+}
+
 watchDeep(formData, () => {
-  isUpdateFormData.value = true
-  // Valid openai key length
-  if (formData.openaiKey.value && formData.openaiKey.value.length !== 51)
-    formData.openaiKey.error = true
-  else formData.openaiKey.error = false
-  // Valid openai organization length
-  if (
-    formData.openaiOrganization.value &&
-    formData.openaiOrganization.value.length !== 28
-  )
-    formData.openaiOrganization.error = true
-  else formData.openaiOrganization.error = false
-  // Valid azure key length
-  if (formData.azureKey.value && formData.azureKey.value.length !== 32)
-    formData.azureKey.error = true
-  else formData.azureKey.error = false
+  // If change any form data, set isUpdatedFormData to true
+  isUpdatedFormData.value = true
+
+  validFieldLength('openaiKey', 51) // Valid openai key length
+  validFieldLength('openaiOrganization', 28) // Valid openai organization length
+  validFieldLength('azureKey', 32) // Valid azure key length
 
   if (formData.notionKey) PROFILE_STORE.profile.notionKey.error = false
 })

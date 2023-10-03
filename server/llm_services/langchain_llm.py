@@ -1,6 +1,6 @@
 import os
 
-from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
+from langchain.chat_models import AzureChatOpenAI, ChatOpenAI, ChatAnthropic
 
 
 class LLM:
@@ -48,6 +48,18 @@ class LLM:
             openai_api_base=os.environ["OPENAI_BASE"]+"/v1",
             openai_proxy=os.environ['OPENAI_API_PROXY'],
             model=os.environ["OPENAI_MODEL"],
+            temperature=self.temperature,
+            streaming=self.streaming,
+            callbacks=self.callbacks,
+            max_retries=self.max_retries,
+            max_tokens=self.max_tokens,
+            request_timeout=self.timeout,
+        )
+
+    def _init_anthropic(self) -> ChatAnthropic:
+        return ChatAnthropic(
+            anthropic_api_key=os.environ["ANTHROPIC_KEY"],
+            model=os.getenv("ANTHROPIC_MODEL", "claude-2"),
             temperature=self.temperature,
             streaming=self.streaming,
             callbacks=self.callbacks,

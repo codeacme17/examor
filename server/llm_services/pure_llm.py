@@ -26,6 +26,8 @@ def _request_llm(
         response = _request_chat_openai(prompt, max_token)
     elif (current_model == "Azure"):
         response = _request_chat_azure(prompt, max_token)
+    elif (current_model == "Anthropic"):
+        response = _request_chat_anthropic(prompt, max_token)
     else:
         raise ValueError("Unsupported model")
 
@@ -90,19 +92,58 @@ def _request_chat_azure(
     )
 
 
+def _request_chat_anthropic(
+    prompt: str,
+    max_token: int
+):
+    """Make a request to the Anthropic API."""
+    key = os.getenv("ANTHROPIC_KEY")
+    version = os.getenv("ANTHROPIC_VERSION")
+    model = os.getenv("ANTHROPIC_MODEL")
+    headers = {
+        "x-api-key": key,
+        "Content-Type": "application/json",
+        "accept": "application/json",
+        "anthropic-version": version,
+    }
+    data = {
+        "prompt": prompt,
+        "max_tokens_to_sample": max_token,
+        "model": model
+    }
+    return requests.post(
+        "https://api.anthropic.com/v1/complete",
+        headers=headers,
+        json=data,
+        timeout=3000
+    )
+
+
 def _differentiate_payment_types(headers):
     """
     This function differentiates payment types based on rate limit requests.
     More information about rate limits can be found at:
-    https://platform.openai.com/docs/guides/rate-limits/overview
+    - Openai: https://platform.openai.com/docs/guides/rate-limits/overview
+    - Azure: https://learn.microsoft.com/en-us/azure/ai-services/openai/quotas-limits
+    - Anthropic: https://docs.anthropic.com/claude/reference/errors-and-rate-limits#rate-limits
     """
     current_model = os.getenv("CURRENT_MODEL")
     openai_model = os.getenv("OPENAI_MODEL")
-    if current_model == "Azure" or openai_model == "gpt-4":
-        os.environ["PAYMENT"] = "paid"
-    elif current_model == "OpenAI":
-        if headers["x-ratelimit-limit-requests"] == "200":
+
+    if current_model == "OpenAI":
+        if openai_model == "gpt-4":
+            os.environ["PAYMENT"] = "paid"
+        elif headers["x-ratelimit-limit-requests"] == "200":
             os.environ["PAYMENT"] = "free"
         else:
             os.environ["PAYMENT"] = "paid"
+
+    # Azure is always paid
+    if current_model == "Azure":
+        os.environ["PAYMENT"] = "paid"
+
+    # Anthropic is always free.
+    if current_model == "Anthropic":
+        os.environ["PAYMENT"] = "free"
+
     return os.environ["PAYMENT"]

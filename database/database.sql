@@ -81,8 +81,11 @@ CREATE TABLE t_profile (
 	azureKey varchar(100) DEFAULT "" COMMENT 'azure key',
 	openaiBase varchar(100) DEFAULT "https://api.openai.com" COMMENT 'openai api base',
 	azureBase varchar(100) DEFAULT "" COMMENT 'openai api base for azure',
-	openaiVersion varchar(100) DEFAULT "" COMMENT 'openai version',
-	deploymentName varchar(100) DEFAULT "" COMMENT 'deployment name',
+	openaiVersion varchar(100) DEFAULT "" COMMENT 'openai version for azure',
+	deploymentName varchar(100) DEFAULT "" COMMENT 'deployment name for azure',
+	anthropicKey varchar(100) DEFAULT "" COMMENT 'anthropic api key',
+	anthropicVersion varchar(100) DEFAULT "2023-06-01" COMMENT 'anthropic version',
+	anthropicModel char(40) DEFAULT "claude-2" COMMENT 'the model of anthropic',
 	notionKey char(50) DEFAULT "" COMMENT '',
 	CONSTRAINT t_profile_pk PRIMARY KEY (id)
 )
