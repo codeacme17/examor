@@ -187,7 +187,7 @@ const handleClickTab = async (index: number) => {
 const isShowConfirmDeleteBtn = ref(false)
 const [deleteNote, deleteNodeLoading] = useFetch(
   NOTE_API.deleteNote,
-  `delete note ${currentNote && currentNote.name} successfully`
+  'delete successfully'
 )
 const handleDeleteNote = async () => {
   const { code } = await deleteNote(currentNote.id)
