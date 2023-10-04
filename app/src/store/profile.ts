@@ -169,6 +169,14 @@ export const useProfileStore = defineStore('profileStore', {
         return false
       }
 
+      if (
+        profile.currentModel.value === 'Anthropic' &&
+        !this._checkHasSettedAnthropic()
+      ) {
+        MESSAGE_STORE.show('message.AnthropicError', 'button', '/profile')
+        return false
+      }
+
       return true
     },
 
@@ -203,6 +211,14 @@ export const useProfileStore = defineStore('profileStore', {
         res = false
       }
       return res
+    },
+
+    _checkHasSettedAnthropic() {
+      const { profile } = this.$state
+      if (!profile.anthropicKey.value) {
+        profile.anthropicKey.error = true
+        return false
+      } else return true
     },
 
     clearError() {

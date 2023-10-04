@@ -127,6 +127,7 @@ export const en = {
       'Note that switching languages affects the language in which GPT generates questions and detects',
     OpenAIKeyError: 'Please configure the API key of OpenAI',
     AzureKeyError: 'Please configure the configuration items required by Azure',
+    AnthropicError: 'Please configure the API key of Anthropic',
     timeout:
       'The current request has timed out, which could be due to a network issue. Please check your proxy settings or try debugging using an alternative method.',
     successImport: 'Import file succeeded',

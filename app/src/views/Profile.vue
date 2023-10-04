@@ -257,7 +257,9 @@
 
       <!-- Anthropic -->
       <div v-if="formData.currentModel.value === 'Anthropic'" class="d-flex">
-        <AzureIcon width="30" class="mb-auto mt-4 mr-4" />
+        <!-- @TODO: Anthropic logo -->
+        <!-- <AzureIcon width="30" class="mb-auto mt-4 mr-4" /> -->
+
         <div style="flex: 1">
           <!-- Anthropic key -->
           <v-text-field

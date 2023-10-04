@@ -120,6 +120,7 @@ export const zhCN = {
     switchLang: '请注意，切换语言会影响 GPT 生成问题和检测的语言',
     OpenAIKeyError: '请配置 OpenAI 的 API key',
     AzureKeyError: '请配置 Azure 所需的配置项',
+    AnthropicError: '请配置 Anthropic 的 API key',
     timeout:
       '本次请求超时，这有可能是网络问题，请检查您的代理或者以其他的方式进行调试',
     successImport: '导入文件成功',
