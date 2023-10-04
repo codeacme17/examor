@@ -31,9 +31,19 @@ def get_question_count(file_id: int):
             """
     data = (file_id, )
     res = MySQLHandler().execute_query(query, data, True)
-    if res:
-        return res["question_count"]
-    return 0
+    question_count = res["question_count"]
+    # BC (old version v0.3.0)
+    if question_count is None or question_count == 0:
+        query = """
+                SELECT COUNT(*) AS question_count
+                FROM t_question q
+                LEFT JOIN t_document d ON q.document_id = d.id
+                LEFT JOIN t_file f ON d.file_id = f.id
+                WHERE f.id = %s
+                """
+        data = (file_id, )
+        question_count = MySQLHandler().execute_query(query, data, True)
+    return question_count
 
 
 def get_uploading_files():

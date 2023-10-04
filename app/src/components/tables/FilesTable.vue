@@ -31,7 +31,9 @@
         <!-- File name td -->
         <td>{{ item.file_name }}</td>
 
-        <td style="width: 180px">{{ item.question_count }}</td>
+        <td style="width: 180px">
+          {{ item.question_count }}
+        </td>
 
         <!-- Update time td -->
         <td style="width: 170px">
@@ -89,12 +91,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { defaultBgColor, handleDatetime } from '@/utils'
 import { FILE_API, NOTE_API } from '@/apis'
 import { useFetch } from '@/hooks'
 import { useFileStore, type UploadingFileItem } from '@/store'
-import { watchEffect } from 'vue'
 
 type FileItem = {
   id: number
@@ -109,21 +110,28 @@ const props = defineProps(['id'])
 const FILE_STORE = useFileStore()
 
 // Get file files event
-const [getFiles, getFilesLoading] = useFetch(NOTE_API.getFiles)
 const files = ref<FileItem[]>([])
-const gitFileList = async () => {
-  const res = await getFiles(props.id)
-  files.value = reactive<FileItem[]>(
-    res.data.map((item: any) => ({
-      ...item,
-      isShowConfirmDeleteBtn: false,
-      isUploading: true,
-    }))
-  )
+const [getFiles, getFilesLoading] = useFetch(NOTE_API.getFiles)
+const [_getQuestionCount] = useFetch(FILE_API.getQuestionCount)
+const getQuestionCount = async (count: number, fileId: number) => {
+  if (count !== 0) return count
+  const res = await _getQuestionCount(fileId)
+  return res.data.question_count
 }
-await gitFileList()
+const getFileList = async () => {
+  const res = await getFiles(props.id)
+  files.value = res.data.map((item: FileItem) => ({
+    ...item,
+    isShowConfirmDeleteBtn: false,
+    isUploading: true,
+  }))
+  files.value.forEach(async (item: FileItem) => {
+    item.question_count = await getQuestionCount(item.question_count, item.id)
+  })
+}
+await getFileList()
 
-// Handle update file event
+// @TODO: Handle update file event
 const currentFilename = ref('')
 const isShowUploadDialog = ref(false)
 const handleUpdate = (item: FileItem) => {
@@ -131,14 +139,14 @@ const handleUpdate = (item: FileItem) => {
   isShowUploadDialog.value = true
 }
 
-// Handle delete file event
+// @TODO: Handle delete file event
 const [deleteFile, deleteFileLoading] = useFetch(FILE_API.deleteFile)
 const handleDeleteFile = async (item: FileItem) => {
   await deleteFile({
     id: props.id,
     file_name: item.file_name,
   })
-  await gitFileList()
+  await getFileList()
 }
 
 watchEffect(() => {
