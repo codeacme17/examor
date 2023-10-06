@@ -37,7 +37,7 @@
 ## 🗒️ Dev-plan for these two weeks（9/25 - 10/8）
 
 - Refactor the code of the project as a whole to improve code readability and extensibility
-- Add cluade model support
+- ~~Add cluade model support~~
 
 ## 💡 Inspiration
 
