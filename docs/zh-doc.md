@@ -5,8 +5,10 @@
   <img  width="260"  src="/docs/logo-text.png" />
 </p>
 
+<!--
 > [!IMPORTANT]
 > **该项目目前仍处于早期阶段，存在许多问题和 Bug 需要解决**。因此，我们非常欢迎您提供宝贵的反馈和问题报告，共同参与完善这个项目！如果您有任何想法或问题，请随时在 [Discussions](https://github.com/codeacme17/examor/discussions) 中提出，期待您的参与！❤️
+-->
 
 <p>
   <strong>
@@ -14,12 +16,14 @@
   </strong>
 </p>
 
-</br>
+<img src = "https://github.com/codeacme17/examor/blob/main/docs/product-full.png?raw=true"></img>
 
+<!--
 ## 🗒️ 两周内开发计划（9/25 - 10/7）
 
 - 对项目的代码进行重构，优化代码的可读性和可扩展性
 - ~~增加 cluade 模型的支持~~
+-->
 
 ## 💡 启发
 
