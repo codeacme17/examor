@@ -18,12 +18,11 @@
 
 <img src = "https://github.com/codeacme17/examor/blob/main/docs/product-full.png?raw=true"></img>
 
-<!--
-## 🗒️ 两周内开发计划（9/25 - 10/7）
 
+## 🗒️ 本周开发计划（10/16 - 10/22）
+
+- 加入 `题库` 模块
 - 对项目的代码进行重构，优化代码的可读性和可扩展性
-- ~~增加 cluade 模型的支持~~
--->
 
 ## 💡 启发
 
