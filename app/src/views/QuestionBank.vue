@@ -21,6 +21,12 @@
         {{ item.label }}
       </v-btn>
     </section>
+
+    <v-row align="center" class="mt-2">
+      <v-col v-for="item in bankList" :key="item.name" sm="6" md="4">
+        <question-bank-card v-bind="item" />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -32,6 +38,7 @@ export default {
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import { QuesitonBankType } from '@/components/card/QuestionBankCard.vue'
 
 const selectedCategory = ref('All')
 const bankCategories = reactive([
@@ -39,31 +46,28 @@ const bankCategories = reactive([
     label: 'All',
   },
   {
-    label: 'Java',
+    label: 'Programming',
+  },
+])
+
+const bankList = reactive<QuesitonBankType[]>([
+  {
+    icon: 'mdi-vuejs',
+    name: 'Vue.js',
+    category: 'Programming',
+    link: 'https://vuejs.org/',
   },
   {
-    label: 'Python',
+    icon: 'mdi-react',
+    name: 'React',
+    category: 'Programming',
+    link: 'https://reactjs.org/',
   },
   {
-    label: 'C++',
-  },
-  {
-    label: 'C',
-  },
-  {
-    label: 'JavaScript',
-  },
-  {
-    label: 'HTML',
-  },
-  {
-    label: 'CSS',
-  },
-  {
-    label: 'SQL',
-  },
-  {
-    label: 'Other',
+    icon: 'mdi-angular',
+    name: 'Angular',
+    category: 'Programming',
+    link: 'https://angular.io/',
   },
 ])
 </script>

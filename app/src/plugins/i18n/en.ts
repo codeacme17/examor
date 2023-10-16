@@ -27,6 +27,7 @@ export const en = {
     short: 'Short Answer',
     choice: 'Single Choice',
     blank: 'Fill in the blank',
+    importBank: 'Import',
   },
 
   // the title & subtitle on each page
@@ -87,6 +88,8 @@ export const en = {
     examine: 'Examine',
     isProfile: 'user profile data',
     isNotes: 'all notes, questions and answers',
+    all: 'all',
+    programming: 'programming',
   },
 
   // placeholder of input field

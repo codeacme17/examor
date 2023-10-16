@@ -17,6 +17,8 @@ declare module 'vue' {
     NotionIcon: typeof import('./src/components/icons/NotionIcon.vue')['default']
     OpenaiIcon: typeof import('./src/components/icons/OpenaiIcon.vue')['default']
     PineconeIcon: typeof import('./src/components/icons/PineconeIcon.vue')['default']
+    QuestionBankBlock: typeof import('./src/components/card/QuestionBankBlock.vue')['default']
+    QuestionBankCard: typeof import('./src/components/card/QuestionBankCard.vue')['default']
     QuestionBlock: typeof import('./src/components/blocks/QuestionBlock.vue')['default']
     QuestionTable: typeof import('./src/components/tables/QuestionTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

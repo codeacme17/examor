@@ -27,6 +27,7 @@ export const zhCN = {
     short: '简答题',
     choice: '单选题',
     blank: '填空题',
+    importBank: '导入题库',
   },
 
   title: {
@@ -85,6 +86,8 @@ export const zhCN = {
     examine: '检测',
     isProfile: '用户配置数据',
     isNotes: '所有笔记内容及问题、答案',
+    all: '全部',
+    programming: '编程',
   },
 
   placeholder: {
