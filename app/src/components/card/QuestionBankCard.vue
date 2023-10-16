@@ -6,7 +6,11 @@
     :elevation="0"
     :color="defaultBgColor"
   >
-    <v-icon :icon="props.icon" class="mx-auto text-h2" />
+    <v-icon
+      :icon="props.icon || 'mdi-folder-table'"
+      class="mx-auto text-h2"
+      color="gray"
+    />
 
     <div class="text-center mt-3">
       <h5 class="text-h5">{{ props.name }}</h5>
@@ -34,7 +38,7 @@
 import { defaultBgColor } from '@/utils'
 
 export type QuesitonBankType = {
-  icon: string
+  icon?: string
   name: string
   category: string
   link?: string

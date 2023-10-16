@@ -64,7 +64,7 @@ const bankList = reactive<QuesitonBankType[]>([
     link: 'https://reactjs.org/',
   },
   {
-    icon: 'mdi-angular',
+    icon: '',
     name: 'Angular',
     category: 'Programming',
     link: 'https://angular.io/',
