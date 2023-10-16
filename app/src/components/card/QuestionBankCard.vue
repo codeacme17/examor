@@ -18,7 +18,13 @@
         <v-chip size="small" class="mt-2">{{ props.category }}</v-chip>
       </div>
 
-      <v-btn class="mt-3" :elevation="0"> {{ $t('button.importBank') }} </v-btn>
+      <v-btn
+        class="mt-3"
+        :elevation="0"
+        @click="emits('clickImportButton', true)"
+      >
+        {{ $t('button.importBank') }}
+      </v-btn>
 
       <div class="d-flex mt-n10">
         <v-btn
@@ -38,11 +44,12 @@
 import { defaultBgColor } from '@/utils'
 
 export type QuesitonBankType = {
-  icon?: string
   name: string
   category: string
+  icon?: string
   link?: string
 }
 
 const props = defineProps<QuesitonBankType>()
+const emits = defineEmits(['clickImportButton'])
 </script>

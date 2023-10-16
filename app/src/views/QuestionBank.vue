@@ -24,9 +24,14 @@
 
     <v-row align="center" class="mt-2">
       <v-col v-for="item in bankList" :key="item.name" sm="6" md="4">
-        <question-bank-card v-bind="item" />
+        <question-bank-card
+          v-bind="item"
+          @clickImportButton="isShowDialog = true"
+        />
       </v-col>
     </v-row>
+
+    <import-question-bank-dialog v-model:isShowDialog="isShowDialog" />
   </v-container>
 </template>
 
@@ -49,7 +54,6 @@ const bankCategories = reactive([
     label: 'Programming',
   },
 ])
-
 const bankList = reactive<QuesitonBankType[]>([
   {
     icon: 'mdi-vuejs',
@@ -70,4 +74,6 @@ const bankList = reactive<QuesitonBankType[]>([
     link: 'https://angular.io/',
   },
 ])
+
+const isShowDialog = ref(false)
 </script>
