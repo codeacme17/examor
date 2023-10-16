@@ -63,6 +63,7 @@ export const en = {
     notes: 'You can manage your notes here',
     profile: 'Can be configured here refer to the required options',
     addNote: 'You can add new notes here',
+    questionBank: 'An existing question bank can be accessed here',
     emptyNoteStart: 'You can enter the',
     emptyNoteEnd: 'page to create your first note',
     changePlan:

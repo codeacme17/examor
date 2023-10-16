@@ -63,6 +63,7 @@ export const zhCN = {
     notes: '可以在此处管理你的笔记',
     profile: '可以在此处配置引用所需的选项',
     addNote: '可以在此处新增新的笔记',
+    questionBank: '可以在此处获取已有的问题库',
     emptyNoteStart: '可以进入',
     emptyNoteEnd: '页面创建你的第一个笔记',
     changePlan: '提交更改后将于明日实行新的计划',
