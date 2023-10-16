@@ -130,14 +130,12 @@ import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
 import { useDark, useWindowSize } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
-import { useNoteStore, useFileStore } from '@/store'
+import { useNoteStore } from '@/store'
 
+const { t } = useI18n()
 const route = useRoute()
 const isDark = useDark()
-const { t } = useI18n()
-
 const NOTE_STORE = useNoteStore()
-const FILE_STORE = useFileStore()
 
 // handle side-bar rail state
 const rail = useStorage('side-bar-rail', false)
@@ -165,6 +163,12 @@ const defualtNavList = computed(() => [
     icon: 'mdi-head-question',
     title: t('menus.random'),
     value: '/random',
+    isDisplay: true,
+  },
+  {
+    icon: 'mdi-folder-question',
+    title: t('menus.questionBank'),
+    value: '/question-bank',
     isDisplay: true,
   },
 ])

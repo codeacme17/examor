@@ -6,6 +6,7 @@ export const zhCN = {
     notes: '笔记管理',
     random: '随机选题',
     addNote: '新增笔记',
+    questionBank: '题库',
   },
 
   button: {

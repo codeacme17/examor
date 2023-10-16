@@ -6,6 +6,7 @@ export const en = {
     notes: 'Notes',
     random: 'Random Pick',
     addNote: 'add note',
+    questionBank: 'Question Bank',
   },
 
   button: {
