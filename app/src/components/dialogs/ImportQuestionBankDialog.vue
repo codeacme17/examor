@@ -69,8 +69,10 @@
 import { toRef, ref, computed } from 'vue'
 import { useNoteStore, NoteItem } from '@/store'
 import { reverseTheme } from '@/utils'
+import { BANK_API } from '@/apis'
+import { useFetch } from '@/hooks'
 
-const props = defineProps(['isShowDialog'])
+const props = defineProps(['isShowDialog', 'currentBankName'])
 const emits = defineEmits(['update:isShowDialog', 'submitted'])
 const NOTE_STORE = useNoteStore()
 
@@ -100,8 +102,20 @@ const disabled = computed(() => {
   return false
 })
 
-const handleSubmit = () => {
+const [importBank, importLoading] = useFetch(BANK_API.importBank)
+const handleSubmit = async () => {
   console.log(selectedNote, newNoteName, tabType)
+  console.log(props.currentBankName)
+  const res = await importBank({
+    import_type: tabType.value,
+    note_id: tabType.value == 'exist' ? selectedNote.value?.id : -1,
+    note_name: tabType.value == 'new' ? newNoteName.value : '',
+    language: 'en',
+    category: 'programming',
+    bank_name: props.currentBankName,
+  })
+
+  console.log(res)
 }
 </script>
 

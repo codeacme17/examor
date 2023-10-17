@@ -32,12 +32,15 @@
       >
         <question-bank-card
           v-bind="item"
-          @clickImportButton="isShowDialog = true"
+          @clickImportButton="handleClickImportButton"
         />
       </v-col>
     </v-row>
 
-    <import-question-bank-dialog v-model:isShowDialog="isShowDialog" />
+    <import-question-bank-dialog
+      v-model:isShowDialog="isShowDialog"
+      :currentBankName="currentBankName"
+    />
   </v-container>
 </template>
 
@@ -85,4 +88,9 @@ const bankList = reactive<QuesitonBankType[]>([
 ])
 
 const isShowDialog = ref(false)
+const currentBankName = ref('')
+const handleClickImportButton = (bankName: string) => {
+  currentBankName.value = bankName
+  isShowDialog.value = true
+}
 </script>

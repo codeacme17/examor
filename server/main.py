@@ -170,7 +170,7 @@ def get_banks(language: str, category: str):
     return _apis_.bank.get_banks(language, category)
 
 
-@app.post("/bank/note")
+@app.post("/bank/import")
 def import_bank_to_note(data: types.ImportBankData):
     return _apis_.bank.import_bank_to_note(data)
 
