@@ -13,8 +13,8 @@ export type NoteItem = {
   id: number
   name: string
   icon: string
-  upload_date: string
-  isUploading: boolean
+  upload_date?: string
+  isUploading?: boolean
 }
 
 const state: State = {

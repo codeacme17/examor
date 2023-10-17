@@ -15,13 +15,13 @@
       <t-radio-group
         v-model="tabType"
         variant="default-filled"
-        default-value="1"
+        default-value="new"
         class="mt-3"
       >
-        <t-radio-button value="exist">
+        <t-radio-button value="new"> {{ $t('label.newNote') }}</t-radio-button>
+        <t-radio-button value="exist" :disabled="!noteList.length">
           {{ $t('label.existNote') }}
         </t-radio-button>
-        <t-radio-button value="new"> {{ $t('label.newNote') }}</t-radio-button>
       </t-radio-group>
 
       <v-table
@@ -32,14 +32,14 @@
       >
         <thead>
           <tr>
-            <th class="text-left">Name</th>
-            <th class="text-left">Calories</th>
+            <th class="text-left" style="width: 40px"></th>
+            <th class="text-left">{{ $t('label.noteName') }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in desserts" :key="item.name">
+          <tr v-for="item in noteList" :key="item.name">
+            <td><v-icon :icon="item.icon"></v-icon></td>
             <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
           </tr>
         </tbody>
       </v-table>
@@ -62,7 +62,8 @@
 </template>
 
 <script setup lang="ts">
-import { toRef, ref, computed } from 'vue'
+import { toRef, ref, computed, reactive } from 'vue'
+import { NoteItem } from '@/store'
 import { reverseTheme } from '@/utils'
 
 const props = defineProps(['isShowDialog'])
@@ -75,55 +76,30 @@ const handleVisible = (isVisible: boolean) => {
   emits('update:isShowDialog', isVisible)
 }
 
-const desserts = [
+const noteList = reactive<NoteItem[] | []>([
   {
-    name: 'Frozen Yogurt',
-    calories: 159,
+    id: 1,
+    name: 'Note 1',
+    icon: 'mdi-folder-table',
   },
   {
-    name: 'Ice cream sandwich',
-    calories: 237,
+    id: 2,
+    name: 'Note 2',
+    icon: 'mdi-folder-table',
   },
   {
-    name: 'Eclair',
-    calories: 262,
+    id: 3,
+    name: 'Note 3',
+    icon: 'mdi-folder-table',
   },
-  {
-    name: 'Cupcake',
-    calories: 305,
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-  },
-]
+])
 
-const tabType = ref<'exist' | 'new'>('exist')
+const tabType = ref<'exist' | 'new'>('new')
 const noteName = ref('')
 
 const disabled = computed(() => {
   if (tabType.value == 'exist') {
-    if (!desserts.length) return true
+    if (!noteList.length) return true
     return false
   }
 
