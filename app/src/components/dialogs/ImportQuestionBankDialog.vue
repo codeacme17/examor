@@ -27,17 +27,21 @@
       <v-table
         v-show="tabType == 'exist'"
         fixed-header
-        height="300px"
-        density="compact"
+        height="240px"
+        density="comfortable"
+        class="mt-3"
       >
-        <thead>
-          <tr>
-            <th class="text-left" style="width: 40px"></th>
-            <th class="text-left">{{ $t('label.noteName') }}</th>
-          </tr>
-        </thead>
         <tbody>
-          <tr v-for="item in noteList" :key="item.name">
+          <tr
+            v-for="item in noteList"
+            class="tr"
+            :key="item.name"
+            :style="{
+              backgroundColor:
+                item.id === selectedNote?.id ? 'var(--gray-bg)' : '',
+            }"
+            @click="handleClickTr(item)"
+          >
             <td><v-icon :icon="item.icon"></v-icon></td>
             <td>{{ item.name }}</td>
           </tr>
@@ -62,12 +66,13 @@
 </template>
 
 <script setup lang="ts">
-import { toRef, ref, computed, reactive } from 'vue'
-import { NoteItem } from '@/store'
+import { toRef, ref, computed } from 'vue'
+import { useNoteStore, NoteItem } from '@/store'
 import { reverseTheme } from '@/utils'
 
 const props = defineProps(['isShowDialog'])
 const emits = defineEmits(['update:isShowDialog', 'submitted'])
+const NOTE_STORE = useNoteStore()
 
 // Handle switch dialog visible
 const _isShowDialog = toRef(props, 'isShowDialog')
@@ -76,38 +81,32 @@ const handleVisible = (isVisible: boolean) => {
   emits('update:isShowDialog', isVisible)
 }
 
-const noteList = reactive<NoteItem[] | []>([
-  {
-    id: 1,
-    name: 'Note 1',
-    icon: 'mdi-folder-table',
-  },
-  {
-    id: 2,
-    name: 'Note 2',
-    icon: 'mdi-folder-table',
-  },
-  {
-    id: 3,
-    name: 'Note 3',
-    icon: 'mdi-folder-table',
-  },
-])
-
 const tabType = ref<'exist' | 'new'>('new')
-const noteName = ref('')
+
+const noteList = NOTE_STORE.notes
+const selectedNote = ref<NoteItem | null>(null)
+const noteName = ref('') // New note name
+const handleClickTr = (item: NoteItem) => {
+  if (item.id === selectedNote.value?.id) {
+    selectedNote.value = null
+    return
+  }
+  selectedNote.value = item
+}
 
 const disabled = computed(() => {
-  if (tabType.value == 'exist') {
-    if (!noteList.length) return true
-    return false
-  }
-
-  if (tabType.value == 'new') {
-    if (!noteName.value) return true
-    return false
-  }
-
-  return true
+  if (tabType.value == 'exist' && !selectedNote.value) return true
+  if (tabType.value == 'new' && !noteName.value) return true
+  return false
 })
 </script>
+
+<style lang="scss" scoped>
+.tr {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: var(--gray-bg);
+  }
+}
+</style>
