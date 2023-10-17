@@ -1,21 +1,36 @@
 <template>
   <v-sheet
     rounded
-    class="pa-5 d-flex flex-column justify-space-between"
+    class="pa-5 d-flex flex-column"
+    height="100%"
     :min-width="200"
     :elevation="0"
     :color="defaultBgColor"
   >
-    <v-icon
-      :icon="props.icon || 'mdi-folder-table'"
-      class="mx-auto text-h2"
-      color="gray"
+    <v-btn
+      variant="text"
+      class="text-caption ml-auto mt-n3"
+      size="small"
+      icon="mdi-link"
+      target="_blank"
+      :href="props.link"
     />
 
-    <div class="text-center mt-3">
-      <h5 class="text-h5">{{ props.name }}</h5>
+    <v-icon
+      class="mx-auto text-h2 mt-n6"
+      color="gray"
+      :icon="props.icon || 'mdi-folder-table'"
+    />
+
+    <section
+      class="text-center mt-3 d-flex flex-column justify-space-between flex-fill"
+    >
       <div>
-        <v-chip size="small" class="mt-2">{{ props.category }}</v-chip>
+        <h5 class="text-h5">{{ props.name }}</h5>
+        <v-chip size="small" class="my-2">{{ props.category }}</v-chip>
+        <p class="text-medium-emphasis" style="font-size: 14px">
+          {{ props.description || '' }}
+        </p>
       </div>
 
       <v-btn
@@ -25,18 +40,7 @@
       >
         {{ $t('button.importBank') }}
       </v-btn>
-
-      <div class="d-flex mt-n10">
-        <v-btn
-          variant="text"
-          class="text-caption ml-auto"
-          size="small"
-          icon="mdi-link"
-          target="_blank"
-          :href="props.link"
-        />
-      </div>
-    </div>
+    </section>
   </v-sheet>
 </template>
 
@@ -46,6 +50,7 @@ import { defaultBgColor } from '@/utils'
 export type QuesitonBankType = {
   name: string
   category: string
+  description?: string
   icon?: string
   link?: string
 }

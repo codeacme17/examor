@@ -22,8 +22,14 @@
       </v-btn>
     </section>
 
-    <v-row align="center" class="mt-2">
-      <v-col v-for="item in bankList" :key="item.name" sm="6" md="4">
+    <v-row align="start" class="mt-2">
+      <v-col
+        v-for="item in bankList"
+        :key="item.name"
+        sm="6"
+        md="4"
+        align-self="stretch"
+      >
         <question-bank-card
           v-bind="item"
           @clickImportButton="isShowDialog = true"
@@ -58,12 +64,15 @@ const bankList = reactive<QuesitonBankType[]>([
   {
     icon: 'mdi-vuejs',
     name: 'Vue.js',
+    description:
+      'Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.',
     category: 'Programming',
     link: 'https://vuejs.org/',
   },
   {
     icon: 'mdi-react',
     name: 'React',
+    description: 'A JavaScript library for building user interfaces',
     category: 'Programming',
     link: 'https://reactjs.org/',
   },
