@@ -59,6 +59,7 @@ export const en = {
     role: 'Please select your desired role',
     export: 'Please select the data to export',
     import: 'Please select the file you want to upload',
+    importBank: 'Please select the way you want to import',
   },
   subTitle: {
     notes: 'You can manage your notes here',
@@ -74,6 +75,8 @@ export const en = {
       'Exporting data helps to preserve past data when updating a project (a file named examor-data.xlsx is exported)',
     import:
       'Note that when you upload a file, the previous data will be cleared and the data in the file will be used.(only ".xlsx" allowed)',
+    importBank:
+      'You can choose to import the question bank into an existing note, or create a new note',
   },
 
   // label of input field
@@ -90,6 +93,8 @@ export const en = {
     isNotes: 'all notes, questions and answers',
     all: 'all',
     programming: 'programming',
+    existNote: 'Existing Note',
+    newNote: 'New Note',
   },
 
   // placeholder of input field

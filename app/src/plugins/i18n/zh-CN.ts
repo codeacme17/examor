@@ -58,6 +58,7 @@ export const zhCN = {
     role: '请选择角色',
     export: '请选择要导出的数据',
     import: '请选择你要上传的文件',
+    importBank: '请选择要导入的方式',
   },
 
   subTitle: {
@@ -73,6 +74,7 @@ export const zhCN = {
       '导出数据有助于在更新项目时可以保留以往的数据 (会导出名为 examor-data.xlsx 的文件)',
     import:
       '注意，当您上传文件后，之前的数据将被清除，并使用文件中的数据 (只允许上传 ".xlsx" 文件)',
+    importBank: '可以选择将题库导入到现有的笔记中，或创建一个新的笔记',
   },
 
   label: {
@@ -88,6 +90,8 @@ export const zhCN = {
     isNotes: '所有笔记内容及问题、答案',
     all: '全部',
     programming: '编程',
+    existNote: '现有的笔记',
+    newNote: '新的笔记',
   },
 
   placeholder: {
