@@ -26,7 +26,7 @@
       class="text-center mt-3 d-flex flex-column justify-space-between flex-fill"
     >
       <div>
-        <h5 class="text-h5">{{ props.name }}</h5>
+        <h5 class="text-h5" style="font-weight: 800">{{ props.name }}</h5>
         <v-chip size="small" class="my-2">{{ props.category }}</v-chip>
         <p class="text-medium-emphasis" style="font-size: 14px">
           {{ props.description || '' }}

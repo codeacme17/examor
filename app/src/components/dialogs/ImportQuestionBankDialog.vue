@@ -50,7 +50,7 @@
 
       <v-form v-show="tabType == 'new'">
         <v-text-field
-          v-model="noteName"
+          v-model="newNoteName"
           variant="outlined"
           density="compact"
           class="mt-4"
@@ -58,7 +58,7 @@
         />
       </v-form>
 
-      <v-btn variant="outlined" :disabled="disabled">
+      <v-btn variant="outlined" :disabled="disabled" @click="handleSubmit">
         {{ $t('button.submit') }}
       </v-btn>
     </v-card>
@@ -85,7 +85,7 @@ const tabType = ref<'exist' | 'new'>('new')
 
 const noteList = NOTE_STORE.notes
 const selectedNote = ref<NoteItem | null>(null)
-const noteName = ref('') // New note name
+const newNoteName = ref('')
 const handleClickTr = (item: NoteItem) => {
   if (item.id === selectedNote.value?.id) {
     selectedNote.value = null
@@ -96,9 +96,13 @@ const handleClickTr = (item: NoteItem) => {
 
 const disabled = computed(() => {
   if (tabType.value == 'exist' && !selectedNote.value) return true
-  if (tabType.value == 'new' && !noteName.value) return true
+  if (tabType.value == 'new' && !newNoteName.value) return true
   return false
 })
+
+const handleSubmit = () => {
+  console.log(selectedNote, newNoteName, tabType)
+}
 </script>
 
 <style lang="scss" scoped>
