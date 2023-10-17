@@ -39,3 +39,12 @@ class AddNoteData(BaseModel):
     noteName: str = Form()
     files: list[UploadFile] = File(default=None)
     notionId: str = Form(default=None)
+
+
+class ImportBankData(BaseModel):
+    import_type: str
+    note_id: int
+    note_name: str
+    language: str
+    category: str
+    bank_name: str

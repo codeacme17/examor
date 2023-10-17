@@ -164,6 +164,17 @@ def get_random_question():
     return _apis_.question.get_random_question()
 
 
+# -------- Question Bank APIs --------
+@app.get("/bank/{language}/{category}")
+def get_banks(language: str, category: str):
+    return _apis_.bank.get_banks(language, category)
+
+
+@app.post("/bank/note")
+def import_bank_to_note(data: types.ImportBankData):
+    return _apis_.bank.import_bank_to_note(data)
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=51717)
