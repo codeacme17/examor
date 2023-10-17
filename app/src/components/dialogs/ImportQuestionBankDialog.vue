@@ -58,7 +58,12 @@
         />
       </v-form>
 
-      <v-btn variant="outlined" :disabled="disabled" @click="handleSubmit">
+      <v-btn
+        variant="outlined"
+        :disabled="disabled"
+        :loading="importLoading"
+        @click="handleSubmit"
+      >
         {{ $t('button.submit') }}
       </v-btn>
     </v-card>
@@ -97,15 +102,17 @@ const handleClickTr = (item: NoteItem) => {
 }
 
 const disabled = computed(() => {
+  if (importLoading.value) return true
   if (tabType.value == 'exist' && !selectedNote.value) return true
   if (tabType.value == 'new' && !newNoteName.value) return true
   return false
 })
 
-const [importBank, importLoading] = useFetch(BANK_API.importBank)
+const [importBank, importLoading] = useFetch(
+  BANK_API.importBank,
+  `Import "${props.currentBankName}" successful`
+)
 const handleSubmit = async () => {
-  console.log(selectedNote, newNoteName, tabType)
-  console.log(props.currentBankName)
   const res = await importBank({
     import_type: tabType.value,
     note_id: tabType.value == 'exist' ? selectedNote.value?.id : -1,
@@ -116,6 +123,15 @@ const handleSubmit = async () => {
   })
 
   console.log(res)
+  if (res.code === 0) handleSuccess()
+}
+
+const handleSuccess = () => {
+  tabType.value = 'new'
+  newNoteName.value = ''
+  selectedNote.value = null
+  handleVisible(false)
+  emits('submitted')
 }
 </script>
 
