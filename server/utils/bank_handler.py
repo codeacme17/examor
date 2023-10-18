@@ -1,9 +1,9 @@
 import os
+import json
 
 
 def generate_structure(root_folder="temp"):
     result = {}
-
     for lang_dir in os.listdir(root_folder):
         path_lang = os.path.join(root_folder, lang_dir)
         if os.path.isdir(path_lang):
@@ -14,8 +14,38 @@ def generate_structure(root_folder="temp"):
                     result[lang_dir][category_dir] = []
                     for file in os.listdir(path_category):
                         if file.endswith('.json'):
-                            result[lang_dir][category_dir].append({
-                                'name': file.split('.')[0],
-                                'category': category_dir,
-                            })
+                            file_path = os.path.join(path_category, file)
+                            file_content = _is_valid_json_file(file_path)
+                            if file_content:
+                                parsed_data = _parse_json_file(
+                                    file_content, file_path)
+                                result[lang_dir][category_dir].append({
+                                    'name': file.split('.')[0],
+                                    'category': category_dir,
+                                    **parsed_data
+                                })
+                            else:
+                                print(f"File is empty: {file_path}")
     return result
+
+
+def _is_valid_json_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        file_content = f.read()
+        return file_content.strip() and file_content
+
+
+def _parse_json_file(file_content, file_path):
+    try:
+        content = json.loads(file_content)
+        icon = content.get('icon', "")
+        description = content.get('description', "")
+        link = content.get('link', "")
+        return {
+            'icon': icon,
+            'description': description,
+            'link': link
+        }
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON: {file_path}")
+        return {}
