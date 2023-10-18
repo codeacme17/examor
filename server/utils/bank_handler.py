@@ -41,10 +41,12 @@ def _parse_json_file(file_content, file_path):
         icon = content.get('icon', "")
         description = content.get('description', "")
         link = content.get('link', "")
+        total_question_count = content.get('total_question_count', 0)
         return {
             'icon': icon,
             'description': description,
-            'link': link
+            'link': link,
+            'totalQuestionCount': total_question_count
         }
     except json.JSONDecodeError:
         print(f"Error decoding JSON: {file_path}")

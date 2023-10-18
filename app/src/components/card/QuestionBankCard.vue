@@ -28,7 +28,11 @@
     >
       <div>
         <h5 class="text-h5" style="font-weight: 800">{{ props.name }}</h5>
-        <v-chip size="small" class="my-2">{{ props.category }}</v-chip>
+        <v-chip size="small" class="mr-1 px-3">
+          <v-icon icon="mdi-beaker-question-outline" class="mr-1" />
+          <span>{{ props.totalQuestionCount }}</span>
+        </v-chip>
+        <v-chip size="small" class="my-2 px-3">{{ props.category }}</v-chip>
         <p class="text-medium-emphasis" style="font-size: 14px">
           {{ props.description || '' }}
         </p>
@@ -51,6 +55,7 @@ import { defaultBgColor } from '@/utils'
 export type QuesitonBankType = {
   name: string
   category: string
+  totalQuestionCount: number
   description?: string
   icon?: string
   link?: string
