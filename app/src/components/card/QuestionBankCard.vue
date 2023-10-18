@@ -13,6 +13,7 @@
       size="small"
       icon="mdi-link"
       target="_blank"
+      :disabled="!link"
       :href="props.link"
     />
 
