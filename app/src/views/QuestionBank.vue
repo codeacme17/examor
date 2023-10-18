@@ -12,13 +12,13 @@
         v-for="item in bankCategories"
         size="small"
         class="mr-2 mt-2"
-        :variant="selectedCategory === item.label ? 'flat' : 'tonal'"
-        :color="selectedCategory === item.label ? 'primary' : ''"
-        :key="item.label"
+        :variant="selectedCategory === item ? 'flat' : 'tonal'"
+        :color="selectedCategory === item ? 'primary' : ''"
+        :key="item"
         :elevation="0"
-        @click="selectedCategory = item.label"
+        @click="handleChangeCategory(item)"
       >
-        {{ item.label }}
+        {{ item }}
       </v-btn>
     </section>
 
@@ -51,41 +51,38 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useFetch } from '@/hooks'
+import { BANK_API } from '@/apis'
 import { QuesitonBankType } from '@/components/card/QuestionBankCard.vue'
 
-const selectedCategory = ref('All')
-const bankCategories = reactive([
-  {
-    label: 'All',
-  },
-  {
-    label: 'Programming',
-  },
-])
-const bankList = reactive<QuesitonBankType[]>([
-  {
-    icon: 'mdi-vuejs',
-    name: 'Vue.js',
-    description:
-      'Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.',
-    category: 'Programming',
-    link: 'https://vuejs.org/',
-  },
-  {
-    icon: 'mdi-react',
-    name: 'React',
-    description: 'A JavaScript library for building user interfaces',
-    category: 'Programming',
-    link: 'https://reactjs.org/',
-  },
-  {
-    icon: '',
-    name: 'Angular',
-    category: 'Programming',
-    link: 'https://angular.io/',
-  },
-])
+const { locale } = useI18n()
+
+// Hanlde question bank categories
+const bankCategories = ref(['all'])
+const selectedCategory = ref('all')
+const [getCategories] = useFetch(BANK_API.getCategories)
+const handleGetCategories = async () => {
+  const res = await getCategories(locale.value === 'zh-CN' ? 'zh' : 'en')
+  bankCategories.value.splice(1)
+  bankCategories.value = bankCategories.value.concat(res.data)
+}
+
+// Handle question bank list
+const bankList = ref<QuesitonBankType[]>([])
+const [getBanks] = useFetch(BANK_API.getBanks)
+const handleGetBanks = async () => {
+  const res = await getBanks({
+    language: locale.value === 'zh-CN' ? 'zh' : 'en',
+    category: selectedCategory.value.toLowerCase(),
+  })
+  bankList.value = res.data
+}
+const handleChangeCategory = async (category: string) => {
+  selectedCategory.value = category
+  await handleGetBanks()
+}
 
 const isShowDialog = ref(false)
 const currentBankName = ref('')
@@ -93,4 +90,14 @@ const handleClickImportButton = (bankName: string) => {
   currentBankName.value = bankName
   isShowDialog.value = true
 }
+
+watch(
+  locale,
+  async () => {
+    selectedCategory.value = 'all'
+    await handleGetCategories()
+    await handleGetBanks()
+  },
+  { immediate: true }
+)
 </script>

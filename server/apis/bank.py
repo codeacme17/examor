@@ -14,7 +14,14 @@ def get_categories(language: str):
 
 def get_banks(language: str, category: str):
     bank_structure = _bh_.generate_structure()
-    res = bank_structure[language][category]
+
+    if category == 'all':
+        res = []
+        for _category in bank_structure[language]:
+            res.extend(bank_structure[language][_category])
+    else:
+        res = bank_structure[language][category]
+
     return api_result.success(res)
 
 

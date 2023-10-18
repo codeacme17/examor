@@ -76,6 +76,7 @@ import { useNoteStore, NoteItem } from '@/store'
 import { reverseTheme } from '@/utils'
 import { BANK_API } from '@/apis'
 import { useFetch } from '@/hooks'
+import { MessagePlugin } from 'tdesign-vue-next'
 
 const props = defineProps(['isShowDialog', 'currentBankName'])
 const emits = defineEmits(['update:isShowDialog', 'submitted'])
@@ -108,10 +109,7 @@ const disabled = computed(() => {
   return false
 })
 
-const [importBank, importLoading] = useFetch(
-  BANK_API.importBank,
-  `Import "${props.currentBankName}" successful`
-)
+const [importBank, importLoading] = useFetch(BANK_API.importBank)
 const handleSubmit = async () => {
   const res = await importBank({
     import_type: tabType.value,
@@ -132,6 +130,7 @@ const handleSuccess = () => {
   selectedNote.value = null
   handleVisible(false)
   emits('submitted')
+  MessagePlugin.success(`Import "${props.currentBankName}" successful`)
 }
 </script>
 
