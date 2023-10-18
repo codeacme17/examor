@@ -165,6 +165,11 @@ def get_random_question():
 
 
 # -------- Question Bank APIs --------
+@app.get("/bank/categories/{language}")
+def get_categories(language: str):
+    return _apis_.bank.get_categories(language)
+
+
 @app.get("/bank/{language}/{category}")
 def get_banks(language: str, category: str):
     return _apis_.bank.get_banks(language, category)
