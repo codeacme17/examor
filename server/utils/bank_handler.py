@@ -2,10 +2,13 @@ import os
 import json
 
 
-def generate_structure(root_folder="temp"):
+BANK_ROOT_FOLDER = "temp"
+
+
+def generate_structure():
     result = {}
-    for lang_dir in os.listdir(root_folder):
-        path_lang = os.path.join(root_folder, lang_dir)
+    for lang_dir in os.listdir(BANK_ROOT_FOLDER):
+        path_lang = os.path.join(BANK_ROOT_FOLDER, lang_dir)
         if os.path.isdir(path_lang):
             result[lang_dir] = {}
             for category_dir in os.listdir(path_lang):
@@ -51,3 +54,15 @@ def _parse_json_file(file_content, file_path):
     except json.JSONDecodeError:
         print(f"Error decoding JSON: {file_path}")
         return {}
+
+
+def get_bank_content(language: str, category: str, bank_name: str):
+    target_path = f"{BANK_ROOT_FOLDER}/{language}/{category}/{bank_name}.json"
+    try:
+        with open(target_path, "r", encoding="utf-8") as f:
+            content = json.loads(f.read())
+            return content
+    except FileNotFoundError:
+        raise Exception(f"File not found: {target_path}")
+    except json.JSONDecodeError:
+        raise Exception(f"Error decoding JSON: {target_path}")

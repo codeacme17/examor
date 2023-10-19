@@ -27,8 +27,4 @@ def save_doc_to_db(
         filename,
         doc,
     )
-    id = MySQLHandler().insert_table_data(
-        query,
-        data
-    )
-    return id
+    return MySQLHandler().insert_table_data(query, data)
