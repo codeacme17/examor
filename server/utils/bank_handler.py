@@ -1,7 +1,6 @@
 import os
 import json
 
-
 BANK_ROOT_FOLDER = "temp"
 
 

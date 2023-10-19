@@ -1,4 +1,3 @@
-import os
 import db_services as _dbs_
 from utils import api_result, types, bank_handler as _bh_
 
@@ -26,7 +25,10 @@ def get_banks(language: str, category: str):
 
 
 def import_bank_to_note(data: types.ImportBankData):
+    # If there has note name means create a new note. either use exist note
     if data.note_name:
+        if (_dbs_.note.is_duplicate(data.note_name)):
+            return api_result.error("Note name already exists")
         note_id = _dbs_.note.get_inserted_note_id(data.note_name)
     else:
         note_id = data.note_id
