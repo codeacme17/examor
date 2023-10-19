@@ -72,14 +72,21 @@
 
 <script setup lang="ts">
 import { toRef, ref, computed } from 'vue'
+import { MessagePlugin } from 'tdesign-vue-next'
+import { useI18n } from 'vue-i18n'
 import { useNoteStore, NoteItem } from '@/store'
 import { reverseTheme } from '@/utils'
 import { BANK_API } from '@/apis'
 import { useFetch } from '@/hooks'
-import { MessagePlugin } from 'tdesign-vue-next'
+import { QuesitonBankType } from '@/components/card/QuestionBankCard.vue'
 
-const props = defineProps(['isShowDialog', 'currentBankName'])
+const props = defineProps<{
+  isShowDialog: boolean
+  currentBank: QuesitonBankType
+}>()
 const emits = defineEmits(['update:isShowDialog', 'submitted'])
+
+const { locale } = useI18n()
 const NOTE_STORE = useNoteStore()
 
 // Handle switch dialog visible
@@ -115,9 +122,9 @@ const handleSubmit = async () => {
     import_type: tabType.value,
     note_id: tabType.value == 'exist' ? selectedNote.value?.id : -1,
     note_name: tabType.value == 'new' ? newNoteName.value : '',
-    language: 'en',
-    category: 'programming',
-    bank_name: props.currentBankName,
+    language: locale.value === 'zh-CN' ? 'zh' : 'en',
+    category: props.currentBank.category,
+    bank_name: props.currentBank.name,
   })
 
   if (res.code === 0) handleSuccess()
@@ -130,7 +137,7 @@ const handleSuccess = () => {
   selectedNote.value = null
   handleVisible(false)
   emits('submitted')
-  MessagePlugin.success(`Import "${props.currentBankName}" successful`)
+  MessagePlugin.success(`Import "${props.currentBank.name}" successful`)
 }
 </script>
 

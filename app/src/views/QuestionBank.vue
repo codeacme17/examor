@@ -39,7 +39,7 @@
 
     <import-question-bank-dialog
       v-model:isShowDialog="isShowDialog"
-      :currentBankName="currentBankName"
+      :currentBank="currentBank"
     />
   </v-container>
 </template>
@@ -85,9 +85,9 @@ const handleChangeCategory = async (category: string) => {
 }
 
 const isShowDialog = ref(false)
-const currentBankName = ref('')
-const handleClickImportButton = (bankName: string) => {
-  currentBankName.value = bankName
+const currentBank = ref({})
+const handleClickImportButton = (item: QuesitonBankType) => {
+  currentBank.value = item
   isShowDialog.value = true
 }
 

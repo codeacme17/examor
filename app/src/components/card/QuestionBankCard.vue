@@ -44,7 +44,7 @@
       <v-btn
         class="mt-3"
         :elevation="0"
-        @click="emits('clickImportButton', props.name)"
+        @click="emits('clickImportButton', props)"
       >
         {{ $t('button.importBank') }}
       </v-btn>
