@@ -120,11 +120,11 @@ const handleSubmit = async () => {
     bank_name: props.currentBankName,
   })
 
-  console.log(res)
   if (res.code === 0) handleSuccess()
 }
 
 const handleSuccess = () => {
+  NOTE_STORE.getNotes()
   tabType.value = 'new'
   newNoteName.value = ''
   selectedNote.value = null
