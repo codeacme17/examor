@@ -3,7 +3,20 @@
     <h2>
       {{ $t('menus.questionBank') }}
     </h2>
-    <h5 class="text-medium-emphasis">{{ $t('subTitle.questionBank') }}</h5>
+    <h5 class="text-medium-emphasis">
+      {{ $t('subTitle.questionBank') }}, {{ $t('hint.welcomeTo') }}
+      <a
+        :href="
+          locale === 'en'
+            ? 'https://github.com/codeacme17/examor/blob/main/docs/contribute/en-bank.md'
+            : 'https://github.com/codeacme17/examor/blob/main/docs/contribute/zh-bank.md'
+        "
+        target="_blank"
+      >
+        {{ $t('hint.contributeBank') }}
+        <v-icon icon="mdi-open-in-new" style="font-size: 16px" />
+      </a>
+    </h5>
 
     <v-divider class="mt-8"></v-divider>
 

@@ -115,6 +115,8 @@ export const zhCN = {
     openaiProxy: '该参数用于设置OpenAI API的代理地址',
     lastRecord: '暂无记录',
     noneFile: '该笔记下暂无任何文件',
+    welcomeTo: '同时也欢迎您',
+    contributeBank: '贡献题库',
   },
 
   errorHint: {
