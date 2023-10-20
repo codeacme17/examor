@@ -48,7 +48,7 @@
         </tbody>
       </v-table>
 
-      <v-form v-show="tabType == 'new'">
+      <v-form v-show="tabType == 'new'" @submit.prevent>
         <v-text-field
           v-model="newNoteName"
           variant="outlined"
@@ -92,6 +92,8 @@ const NOTE_STORE = useNoteStore()
 // Handle switch dialog visible
 const _isShowDialog = toRef(props, 'isShowDialog')
 const handleVisible = (isVisible: boolean) => {
+  if (importLoading.value) return
+
   _isShowDialog.value = isVisible
   emits('update:isShowDialog', isVisible)
 }

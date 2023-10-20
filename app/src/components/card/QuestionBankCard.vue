@@ -36,7 +36,7 @@
           <v-icon icon="mdi-tag-outline" class="mr-1" />
           {{ props.category }}
         </v-chip>
-        <p class="text-medium-emphasis" style="font-size: 14px">
+        <p class="text-medium-emphasis px-3 mt-3" style="font-size: 14px">
           {{ props.description || '' }}
         </p>
       </div>
