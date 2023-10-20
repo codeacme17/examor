@@ -17,7 +17,8 @@ def get_question_by_id(id: int):
 def save_question_to_db(
     question_content: str,
     document_id: int,
-    question_type: str
+    question_type: str,
+    designated_role: str = os.environ.get("CURRENT_ROLE")
 ):
     query = """
             INSERT INTO t_question (content, document_id, designated_role, question_type) 
@@ -26,7 +27,7 @@ def save_question_to_db(
     data = (
         question_content,
         document_id,
-        os.environ.get("CURRENT_ROLE"),
+        designated_role,
         question_type,
     )
     MySQLHandler().insert_table_data(query, data)

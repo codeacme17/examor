@@ -6,6 +6,7 @@ export const zhCN = {
     notes: '笔记管理',
     random: '随机选题',
     addNote: '新增笔记',
+    questionBank: '题库',
   },
 
   button: {
@@ -26,6 +27,7 @@ export const zhCN = {
     short: '简答题',
     choice: '单选题',
     blank: '填空题',
+    importBank: '导入题库',
   },
 
   title: {
@@ -56,12 +58,14 @@ export const zhCN = {
     role: '请选择角色',
     export: '请选择要导出的数据',
     import: '请选择你要上传的文件',
+    importBank: '请选择要导入的方式',
   },
 
   subTitle: {
     notes: '可以在此处管理你的笔记',
     profile: '可以在此处配置引用所需的选项',
     addNote: '可以在此处新增新的笔记',
+    questionBank: '可以在此处获取已有的问题库',
     emptyNoteStart: '可以进入',
     emptyNoteEnd: '页面创建你的第一个笔记',
     changePlan: '提交更改后将于明日实行新的计划',
@@ -70,6 +74,7 @@ export const zhCN = {
       '导出数据有助于在更新项目时可以保留以往的数据 (会导出名为 examor-data.xlsx 的文件)',
     import:
       '注意，当您上传文件后，之前的数据将被清除，并使用文件中的数据 (只允许上传 ".xlsx" 文件)',
+    importBank: '可以选择将题库导入到现有的笔记中，或创建一个新的笔记',
   },
 
   label: {
@@ -83,6 +88,10 @@ export const zhCN = {
     examine: '检测',
     isProfile: '用户配置数据',
     isNotes: '所有笔记内容及问题、答案',
+    all: '全部',
+    programming: '编程',
+    existNote: '现有的笔记',
+    newNote: '新的笔记',
   },
 
   placeholder: {

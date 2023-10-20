@@ -44,13 +44,11 @@
 
 <script setup lang="ts">
 import { toRef, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { reverseTheme, orangeBgColor } from '@/utils'
 import { useFetch } from '@/hooks'
 import { PROFILE_API } from '@/apis'
 import { useProfileStore, useNoteStore } from '@/store'
 
-const { t } = useI18n()
 const PROFILE_STORE = useProfileStore()
 const NOTE_STORE = useNoteStore()
 

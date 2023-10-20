@@ -35,7 +35,6 @@
 
 <img src = "https://github.com/codeacme17/examor/blob/main/docs/product-full.png?raw=true"></img>
 
-
 ## 🗒️ Dev-plan for this weeks（10/16 - 10/22）
 
 - **Add `quesiton-bank` module**
@@ -43,7 +42,7 @@
 
 ## 💡 Inspiration
 
-> **For learners, one of the best habits should be regular self-testing** - *Make It Stick: The Science of Successful Learning*
+> **For learners, one of the best habits should be regular self-testing** - _Make It Stick: The Science of Successful Learning_
 
 When I'm learning a new technology, I have the habit of taking notes and jotting down important information. It's a good habit, but I also have a bad habit of not enjoying reading the notes I've written (I'm not sure if this is the case for most people 🤔). This results in my notes becoming mere mementos without substantial use. That's why I choose to create an application that continuously prompts you with questions to review your note contents.
 
@@ -105,6 +104,10 @@ When practicing questions, you can answer using different methods. The image bel
 <img  width="700"  src="/docs/screen-shot/en-question-type-answer.png" />
 
 ## 🧩 Modules
+
+### Question Bank (New in v0.4.0)
+
+In the **Question Bank**, we've accumulated some high-quality document questions, including outstanding open-source documents and books like the default `vue-component` and `vue-apis`. Within this feature module, you can easily import these existing questions into your notes. Furthermore, we warmly welcome you to contribute more high-quality documents or books to enrich our question bank! For detailed contribution guidelines, please see [Contributing to the Question Bank](/docs/contribute/en-bank.md).
 
 ### Notes Management
 

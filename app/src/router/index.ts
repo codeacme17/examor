@@ -31,6 +31,11 @@ const routes = [
         component: () => import('@/views/Random.vue'),
       },
       {
+        path: '/question-bank',
+        name: 'QuesitonBank',
+        component: () => import('@/views/QuestionBank.vue'),
+      },
+      {
         path: '/addNote',
         name: 'AddNote',
         component: () => import('@/views/AddNote.vue'),

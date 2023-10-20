@@ -3,13 +3,15 @@ from db_services.MySQLHandler import MySQLHandler
 
 def add_file_to_db(
     note_id: int,
-    filename: str
+    filename: str,
+    question_count: int = 0,
+    is_uploading: str = '1'
 ):
     query = """
-            INSERT INTO t_file (note_id, file_name) 
-            VALUES (%s, %s)
+            INSERT INTO t_file (note_id, file_name, question_count, is_uploading) 
+            VALUES (%s, %s, %s, %s)
             """
-    data = (note_id, filename, )
+    data = (note_id, filename, question_count, is_uploading, )
     return MySQLHandler().insert_table_data(query, data)
 
 

@@ -1,5 +1,5 @@
 import { MessagePlugin } from 'tdesign-vue-next'
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import type { ResponseBody } from '@/plugins/axios'
 
 /**
@@ -12,7 +12,7 @@ import type { ResponseBody } from '@/plugins/axios'
 export function useFetch(
   fun: (data?: any) => Promise<ResponseBody | any>,
   successMessage?: string
-): any {
+): [Function, Ref<boolean>] {
   const loading = ref(false)
 
   const fetch = async (data: any) => {

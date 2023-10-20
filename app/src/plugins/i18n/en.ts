@@ -6,6 +6,7 @@ export const en = {
     notes: 'Notes',
     random: 'Random Pick',
     addNote: 'add note',
+    questionBank: 'Question Bank',
   },
 
   button: {
@@ -26,6 +27,7 @@ export const en = {
     short: 'Short Answer',
     choice: 'Single Choice',
     blank: 'Fill in the blank',
+    importBank: 'Import',
   },
 
   // the title & subtitle on each page
@@ -57,11 +59,13 @@ export const en = {
     role: 'Please select your desired role',
     export: 'Please select the data to export',
     import: 'Please select the file you want to upload',
+    importBank: 'Please select the way you want to import',
   },
   subTitle: {
     notes: 'You can manage your notes here',
     profile: 'Can be configured here refer to the required options',
     addNote: 'You can add new notes here',
+    questionBank: 'An existing question bank can be accessed here',
     emptyNoteStart: 'You can enter the',
     emptyNoteEnd: 'page to create your first note',
     changePlan:
@@ -71,6 +75,8 @@ export const en = {
       'Exporting data helps to preserve past data when updating a project (a file named examor-data.xlsx is exported)',
     import:
       'Note that when you upload a file, the previous data will be cleared and the data in the file will be used.(only ".xlsx" allowed)',
+    importBank:
+      'You can choose to import the question bank into an existing note, or create a new note',
   },
 
   // label of input field
@@ -85,6 +91,10 @@ export const en = {
     examine: 'Examine',
     isProfile: 'user profile data',
     isNotes: 'all notes, questions and answers',
+    all: 'all',
+    programming: 'programming',
+    existNote: 'Existing Note',
+    newNote: 'New Note',
   },
 
   // placeholder of input field
