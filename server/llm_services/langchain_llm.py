@@ -23,10 +23,12 @@ class LLM:
 
     def _init_llm(self):
         llm = None
-        if (os.environ["CURRENT_MODEL"] == "Azure"):
+        if os.environ["CURRENT_MODEL"] == "Azure":
             llm = self._init_azure()
-        if (os.environ["CURRENT_MODEL"] == "OpenAI"):
+        if os.environ["CURRENT_MODEL"] == "OpenAI":
             llm = self._init_openai()
+        if os.environ["CURRENT_MODEL"] == "Anthropic":
+            llm = self._init_anthropic()
         return llm
 
     def _init_azure(self) -> AzureChatOpenAI:
