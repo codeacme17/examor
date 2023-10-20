@@ -1,7 +1,7 @@
 import os
 import json
 
-BANK_ROOT_FOLDER = "temp"
+BANK_ROOT_FOLDER = "question_bank"
 
 
 def generate_structure():
