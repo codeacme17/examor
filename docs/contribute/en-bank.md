@@ -1,13 +1,13 @@
-## Contributing to the Question Bank
+# Contributing to the Question Bank
 
 > [!IMPORTANT]
 > The Question Bank is a module newly added in version `v0.4.0`, so we haven't collected many resources yet. We hope you can join us in enriching our bank!
 
-### How to Contribute
+## How to Contribute
 
 If you have recommended resources for the question bank, you can contribute in the following two ways:
 
-#### PR
+### PR
 
 Submitting a PR is the recommended method. When doing so, please follow these steps:
 
@@ -27,13 +27,13 @@ Submitting a PR is the recommended method. When doing so, please follow these st
 
 If your resource is incorporated into our question bank, we'll mark you as a contributor to that resource in its card, linking to your GitHub, as a token of our gratitude!
 
-#### Issue or Discussion
+### Issue or Discussion
 
 You can also notify me of any recommended high-quality resources for inclusion in the [Issue](https://github.com/codeacme17/examor/issues) or [Discussion](https://github.com/codeacme17/examor/discussions) sections.
 
-### Currently Included Resources (English)
+## Currently Included Resources (English)
 
-#### Programming Category
+### Programming Category
 
 - [vue-component](https://vuejs.org/guide/components/registration.html)
 - [vue-apis](https://vuejs.org/api/)
