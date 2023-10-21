@@ -38,7 +38,7 @@
         density="compact"
         prepend-icon="mdi-beaker-question"
         :min="3"
-        :max="10"
+        :max="20"
         :step="1"
       />
 
