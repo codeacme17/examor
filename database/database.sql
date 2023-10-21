@@ -71,7 +71,7 @@ DELIMITER ;
 
 CREATE TABLE t_profile (
 	id int(12) auto_increment NOT NULL COMMENT 'profile id',
-	questionAmount int(12) DEFAULT 7 NOT NULL COMMENT 'how many questions need push to user',
+	questionAmount int(12) DEFAULT 13 NOT NULL COMMENT 'how many questions need push to user',
 	currentRole char(20) DEFAULT "examiner" NOT NULL COMMENT 'the role',
 	currentModel char(20) DEFAULT "OpenAI" NOT NULL COMMENT 'the model',
 	openaiKey varchar(100) DEFAULT "" COMMENT 'openai key',
