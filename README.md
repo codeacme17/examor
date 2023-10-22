@@ -35,10 +35,12 @@
 
 <img src = "https://github.com/codeacme17/examor/blob/main/docs/product-full.png?raw=true"></img>
 
+<!--
 ## 🗒️ Dev-plan for this weeks（10/16 - 10/22）
 
 - **Add `quesiton-bank` module**
 - Refactor the code of the project as a whole to improve code readability and extensibility
+-->
 
 ## 💡 Inspiration
 
