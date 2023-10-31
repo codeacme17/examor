@@ -81,7 +81,8 @@ class Chain:
                 _dbs_.question.save_question_to_db(
                     question_content=_remove_prefix_numbers(question),
                     document_id=doc_id,
-                    question_type=question_type
+                    question_type=question_type,
+                    designated_role=os.environ.get("CURRENT_ROLE")
                 )
                 self.question_count += 1
 

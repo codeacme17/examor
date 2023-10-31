@@ -18,7 +18,7 @@ def save_question_to_db(
     question_content: str,
     document_id: int,
     question_type: str,
-    designated_role: str = os.environ.get("CURRENT_ROLE")
+    designated_role: str
 ):
     query = """
             INSERT INTO t_question (content, document_id, designated_role, question_type) 
