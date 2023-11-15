@@ -28,7 +28,8 @@ def get_files_by_id(id: int):
 def get_questions_by_note_id(note_id: int):
     LIMIT_QUESTIONS = int(os.environ["QUESTION_AMOUNT"])
 
-    expired_questions = _dbs_.question.get_expired_questions(note_id)
+    expired_questions = _dbs_.question.get_expired_questions(
+        note_id, LIMIT_QUESTIONS)
     gap = 0 if LIMIT_QUESTIONS - \
         len(expired_questions) < 0 else LIMIT_QUESTIONS - len(expired_questions)
 
