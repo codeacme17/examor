@@ -200,6 +200,9 @@ def _is_legal_question_structure(
     if content == "":
         return False
 
+    if len(content) < 12:
+        return False
+
     if type == "choice":
         pattern = r'^-\s.+?\n\s*A\..+\n\s*B\..+\n\s*C\..+\n\s*D\..+$'
         return bool(re.match(pattern, content))
