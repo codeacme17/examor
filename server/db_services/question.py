@@ -59,7 +59,7 @@ def get_random_question_info():
     return MySQLHandler().execute_query(query, single=True)
 
 
-def get_expired_questions(note_id: int):
+def get_expired_questions(note_id: int, question_amount: int):
     now_date = datetime.date.today().strftime('%Y-%m-%d')
     query = """
             SELECT q.*
@@ -67,9 +67,9 @@ def get_expired_questions(note_id: int):
             JOIN t_document d ON q.document_id = d.id
             WHERE d.note_id = %s AND q.push_date < %s
             ORDER BY q.push_date DESC
-            LIMIT 10;
+            LIMIT %s;
             """
-    data = (note_id, now_date, )
+    data = (note_id, now_date, question_amount, )
     return MySQLHandler().execute_query(query, data)
 
 
