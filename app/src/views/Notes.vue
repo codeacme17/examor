@@ -76,7 +76,7 @@
               >
                 <v-list-item
                   :title="$t('title.createDate')"
-                  :subtitle="handleDatetime(currentNote.upload_date)"
+                  :subtitle="handleDatetime(currentNote.upload_date!)"
                 />
                 <!-- Dont delete
                 <v-list-item :title="$t('title.finishedAmount')" subtitle="10" />

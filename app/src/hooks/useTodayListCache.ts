@@ -2,7 +2,7 @@ import { ref, type Ref } from 'vue'
 import { useNow, useDateFormat, useLocalStorage } from '@vueuse/core'
 import { useFetch } from './useFetch'
 import type { ResponseBody } from '@/plugins/axios'
-import type { TableItem } from '@/components/QuestionTable.vue'
+import type { TableItem } from '@/components/tables/QuestionTable.vue'
 
 const today = useDateFormat(useNow(), 'YYYY-MM-DD')
 

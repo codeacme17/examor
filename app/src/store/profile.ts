@@ -118,7 +118,7 @@ const state: ProfileState = {
   },
 
   confirmLoading: false,
-} as const
+}
 
 export const useProfileStore = defineStore('profileStore', {
   state: () => state,
@@ -138,6 +138,7 @@ export const useProfileStore = defineStore('profileStore', {
 
     async setProfile() {
       const [_setKeys, loading] = useFetch(PROFILE_API.setProfile)
+      // @ts-ignore
       this.$state.confirmLoading = loading
 
       const data: any = {}
