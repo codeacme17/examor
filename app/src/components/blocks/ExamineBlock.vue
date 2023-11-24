@@ -149,12 +149,13 @@ import { QUESTION_API, PROFILE_API } from '@/apis'
 import { useProfileStore } from '@/store'
 
 const { locale } = useI18n()
-const PROFILE_STORE = useProfileStore()
 const props = defineProps<{
   id: string
   questionContent: string
   questionType: 'short' | 'choice' | 'blank' | ''
 }>()
+
+const PROFILE_STORE = useProfileStore()
 const currentTab = ref<'answer' | 'lastAnswer' | 'document'>('answer')
 
 // Get data cache
@@ -192,11 +193,14 @@ const [checkLlmApiState, checkKeyLoading] = useFetch(
 const handleSubmit = async () => {
   if (!PROFILE_STORE.checkHasSettedModel()) return
   const res = await checkLlmApiState()
+
   if (res.code !== 0) return
   if (!currentData.value.answer.trim()) return
+
   isShowExamine.value = true
   await fetchExaming()
   isFinishExaming.value = true
+
   if (isThereErrorReported()) return
   finishedList.value.add(props.id)
   pendingList.value.delete(props.id)
@@ -217,6 +221,7 @@ const fetchExaming = async () => {
       break
     }
     scrollToPageBottom()
+    console.log(decoder.decode(value))
     currentData.value.examine += decoder.decode(value)
   }
 }
