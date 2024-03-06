@@ -1,14 +1,16 @@
-import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { cn } from '@/lib/utils'
+import type { Metadata } from 'next'
+import './globals.css'
+
 import { ThemeProvider } from '@/components/theme-provider'
 import { Navbar } from '@/components/layout/navbar'
+import { Sidebar } from '@/components/layout/sidebar'
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
-import './globals.css'
-import { cn } from '@/lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,25 +28,21 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
+          disableTransitionOnChange
           enableSystem>
           <ResizablePanelGroup
             autoSaveId="examor-layout"
             direction="horizontal"
-            className="h-screen">
+            className="max-h-screen">
             <ResizablePanel defaultSize={10} minSize={7} maxSize={15}>
-              <div className="flex h-full items-center justify-center p-6">
-                <span className="font-semibold">Sidebar</span>
-              </div>
+              <Sidebar />
             </ResizablePanel>
 
             <ResizableHandle withHandle />
 
-            <ResizablePanel className="relative">
+            <ResizablePanel>
               <Navbar />
-
-              <div className="flex w-full items-center justify-center p-6 mt-16">
-                {children}
-              </div>
+              <main className="w-full p-6">{children}</main>
             </ResizablePanel>
           </ResizablePanelGroup>
         </ThemeProvider>
