@@ -4,13 +4,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 import { ThemeProvider } from '@/components/theme-provider'
-import { Navbar } from '@/components/layout/navbar'
-import { Sidebar } from '@/components/layout/sidebar'
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from '@/components/ui/resizable'
+import { ResizePanel } from '@/components/layout/resize-panel'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,23 +24,7 @@ export default function RootLayout({
           defaultTheme="system"
           disableTransitionOnChange
           enableSystem>
-          <ResizablePanelGroup
-            autoSaveId="examor-layout"
-            direction="horizontal"
-            className="max-h-screen">
-            <ResizablePanel defaultSize={10} minSize={7} maxSize={15}>
-              <Sidebar />
-            </ResizablePanel>
-
-            <ResizableHandle withHandle />
-
-            <ResizablePanel className="flex flex-col">
-              <Navbar />
-              <main className="w-full p-6 flex-1 overflow-y-scroll">
-                {children}
-              </main>
-            </ResizablePanel>
-          </ResizablePanelGroup>
+          <ResizePanel>{children}</ResizePanel>
         </ThemeProvider>
       </body>
     </html>

@@ -3,7 +3,8 @@
 import * as React from 'react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/icon'
+
+import { Moon, Sun } from 'lucide-react'
 
 export function ModeToggle() {
   const { setTheme, theme } = useTheme()
@@ -16,11 +17,11 @@ export function ModeToggle() {
     <div>
       {theme === 'dark' ? (
         <Button onClick={toggleTheme} size="icon" variant="ghost">
-          <Icon name="moon" size={16} className="fill-current" />
+          <Moon size={16} className="fill-current" />
         </Button>
       ) : (
         <Button onClick={toggleTheme} size="icon" variant="ghost">
-          <Icon name="sun" size={16} className="fill-current" />
+          <Sun size={16} className="fill-current" />
         </Button>
       )}
     </div>

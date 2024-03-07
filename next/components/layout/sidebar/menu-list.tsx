@@ -2,10 +2,15 @@
 
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import dynamicIconImports from 'lucide-react/dynamicIconImports'
 
 import Link from 'next/link'
-import { Icon } from '@/components/icon'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from '@/components/ui/tooltip'
+import { LucideIcon } from 'lucide-react'
 
 interface MenuListProps {
   isCollapsed: boolean
@@ -14,7 +19,7 @@ interface MenuListProps {
 
 export interface MenuItem {
   title: string
-  icon: keyof typeof dynamicIconImports
+  icon: React.ComponentType<any> & LucideIcon
   path: string
   isLoading?: boolean
 }
@@ -24,12 +29,47 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      {menus.map((menu, index) => (
-        <Link
-          key={index}
-          href={menu.path}
-          className={cn(
-            `dark:text-white 
+      {menus.map((item, index) =>
+        isCollapsed ? (
+          <TooltipProvider key={index}>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Link
+                  href="#"
+                  className={cn(
+                    `dark:text-white 
+                      dark:hover:bg-muted 
+                      dark:hover:text-white 
+                      flex 
+                      items-center 
+                      justify-center
+                      p-2 
+                      rounded-md 
+                      transition-colors 
+                      duration-200 
+                      hover:text-muted-foreground 
+                      hover:bg-white text-sm`,
+                    pathname === item.path
+                      ? 'bg-muted text-white'
+                      : 'hover:bg-muted'
+                  )}>
+                  <item.icon size={16} />
+                  <span className="sr-only">{item.title}</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent
+                side="right"
+                className="flex items-center gap-4">
+                {item.title}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        ) : (
+          <Link
+            key={index}
+            href={item.path}
+            className={cn(
+              `dark:text-white 
               dark:hover:bg-muted 
               dark:hover:text-white 
               flex 
@@ -40,14 +80,15 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
               duration-200 
               hover:text-muted-foreground 
               hover:bg-white text-sm`,
-            pathname === menu.path
-              ? 'bg-muted text-white'
-              : 'hover:bg-muted'
-          )}>
-          <Icon name={menu.icon} className="ml-3 mr-2 h-4 w-4" />
-          {menu.title}
-        </Link>
-      ))}
+              pathname === item.path
+                ? 'bg-muted text-white'
+                : 'hover:bg-muted'
+            )}>
+            <item.icon className="ml-3 mr-2" size={16} />
+            {item.title}
+          </Link>
+        )
+      )}
     </div>
   )
 }
