@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { cn } from '@/lib/utils'
 import { Navbar } from '@/components/layout/navbar'
 import { Sidebar } from '@/components/layout/sidebar'
 import {
@@ -8,7 +9,6 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
-import { cn } from '@/lib/utils'
 
 export const ResizePanel = ({
   children,
@@ -33,8 +33,7 @@ export const ResizePanel = ({
           setIsCollapsed(false)
         }}
         className={cn(
-          isCollapsed &&
-            'min-w-[70px] transition-all duration-300 ease-in-out'
+          isCollapsed && 'min-w-[70px] transition-all duration-300 ease-in-out'
         )}>
         <Sidebar isCollapsed={isCollapsed} />
       </ResizablePanel>
@@ -43,9 +42,7 @@ export const ResizePanel = ({
 
       <ResizablePanel className="flex flex-col">
         <Navbar />
-        <main className="w-full p-6 flex-1 overflow-y-scroll">
-          {children}
-        </main>
+        <main className="w-full p-6 flex-1 overflow-y-scroll">{children}</main>
       </ResizablePanel>
     </ResizablePanelGroup>
   )

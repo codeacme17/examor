@@ -1,18 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
-import { MenuList, MenuItem } from './menu-list'
-import { cn } from '@/lib/utils'
 import { Notebook, Dices, NotebookPen, Plus } from 'lucide-react'
+import { MenuList, MenuItem } from './menu-list'
 import { Logo } from './logo'
 
-export const Sidebar = ({
-  isCollapsed,
-}: {
-  isCollapsed: boolean
-}) => {
+export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const staticMenus: MenuItem[] = [
     {
       title: 'Notes',
@@ -48,9 +44,7 @@ export const Sidebar = ({
         variant="outline"
         className={cn(
           'text-sm',
-          isCollapsed
-            ? 'p-0 justify-center items-center'
-            : 'justify-start'
+          isCollapsed ? 'p-0 justify-center items-center' : 'justify-start'
         )}>
         <Plus
           className={(cn(isCollapsed ? 'mr-0' : 'mr-2'), 'min-w-4')}
