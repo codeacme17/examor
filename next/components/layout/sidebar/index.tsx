@@ -6,12 +6,13 @@ import { Button } from '@/components/ui/button'
 import { MenuList, MenuItem } from './menu-list'
 import { cn } from '@/lib/utils'
 import { Notebook, Dices, NotebookPen, Plus } from 'lucide-react'
+import { Logo } from './logo'
 
-interface SidebarProps {
+export const Sidebar = ({
+  isCollapsed,
+}: {
   isCollapsed: boolean
-}
-
-export const Sidebar = ({ isCollapsed }: SidebarProps) => {
+}) => {
   const staticMenus: MenuItem[] = [
     {
       title: 'Notes',
@@ -35,9 +36,14 @@ export const Sidebar = ({ isCollapsed }: SidebarProps) => {
 
   return (
     <div className="flex flex-col h-screen p-4 gap-2">
-      <span className="font-semibold mb-2">Examor</span>
-      <MenuList isCollapsed={isCollapsed} menus={staticMenus} />
+      <Logo isCollapsed={isCollapsed} />
+
       <Separator />
+
+      <MenuList isCollapsed={isCollapsed} menus={staticMenus} />
+
+      <Separator />
+
       <Button
         variant="outline"
         className={cn(
@@ -52,6 +58,7 @@ export const Sidebar = ({ isCollapsed }: SidebarProps) => {
         />
         {isCollapsed ? '' : 'Add new note'}
       </Button>
+
       <MenuList isCollapsed={isCollapsed} menus={dynamicMenus} />
     </div>
   )
