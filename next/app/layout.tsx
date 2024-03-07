@@ -40,9 +40,11 @@ export default function RootLayout({
 
             <ResizableHandle withHandle />
 
-            <ResizablePanel>
+            <ResizablePanel className="flex flex-col">
               <Navbar />
-              <main className="w-full p-6">{children}</main>
+              <main className="w-full p-6 flex-1 overflow-y-scroll">
+                {children}
+              </main>
             </ResizablePanel>
           </ResizablePanelGroup>
         </ThemeProvider>

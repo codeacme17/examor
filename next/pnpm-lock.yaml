@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@radix-ui/react-dropdown-menu': ^2.0.6
+  '@radix-ui/react-separator': ^1.0.3
   '@radix-ui/react-slot': ^1.0.2
   '@types/node': ^20
   '@types/react': ^18
@@ -25,6 +26,7 @@ specifiers:
 
 dependencies:
   '@radix-ui/react-dropdown-menu': 2.0.6_idv4kgavf43po6i5e5tc2karue
+  '@radix-ui/react-separator': 1.0.3_idv4kgavf43po6i5e5tc2karue
   '@radix-ui/react-slot': 1.0.2_yw6io2npxipvw6yih4aoj2gajy
   class-variance-authority: 0.7.0
   clsx: 2.1.0
@@ -653,6 +655,27 @@ packages:
       '@radix-ui/react-primitive': 1.0.3_idv4kgavf43po6i5e5tc2karue
       '@radix-ui/react-use-callback-ref': 1.0.1_yw6io2npxipvw6yih4aoj2gajy
       '@radix-ui/react-use-controllable-state': 1.0.1_yw6io2npxipvw6yih4aoj2gajy
+      '@types/react': 18.2.63
+      '@types/react-dom': 18.2.20
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@radix-ui/react-separator/1.0.3_idv4kgavf43po6i5e5tc2karue:
+    resolution: {integrity: sha512-itYmTy/kokS21aiV5+Z56MZB54KrhPgn6eHDKkFeOLR34HMN2s8PaN47qZZAGnvupcjxHaFZnW4pQEh0BvvVuw==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.24.0
+      '@radix-ui/react-primitive': 1.0.3_idv4kgavf43po6i5e5tc2karue
       '@types/react': 18.2.63
       '@types/react-dom': 18.2.20
       react: 18.2.0
