@@ -33,11 +33,13 @@ export const Sidebar = ({
             ? 'p-0 justify-center items-center'
             : 'justify-start'
         )}>
-        <Plus
-          className={(cn(isCollapsed ? 'mr-0' : 'mr-2'), 'min-w-4')}
-          size={16}
-        />
-        {isCollapsed ? '' : 'Add new note'}
+        <Plus className={cn('min-w-4')} size={16} />
+
+        {!isCollapsed && (
+          <span className="ml-2.5">
+            {isCollapsed ? '' : 'Add new note'}
+          </span>
+        )}
       </Button>
 
       <MenuList isCollapsed={isCollapsed} menus={noteMenus} />

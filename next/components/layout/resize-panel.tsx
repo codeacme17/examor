@@ -14,6 +14,7 @@ export const ResizePanel = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
 
   return (
     <ResizablePanelGroup
@@ -41,7 +42,14 @@ export const ResizePanel = ({
         <Sidebar isCollapsed={isCollapsed} />
       </ResizablePanel>
 
-      <ResizableHandle withHandle className="hidden lg:block" />
+      <ResizableHandle
+        withHandle
+        className={cn(
+          'hidden lg:block',
+          isDragging && 'cursor-col-resize'
+        )}
+        onDragging={setIsDragging}
+      />
 
       <ResizablePanel className="flex flex-col">
         <Navbar />

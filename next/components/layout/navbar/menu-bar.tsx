@@ -12,7 +12,6 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
 import { MenuItem, useMenu } from '@/hooks/useMenu'
-import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 
 export function Menubar() {
@@ -92,4 +91,5 @@ const ListItem = React.forwardRef<
     </li>
   )
 })
+
 ListItem.displayName = 'ListItem'
