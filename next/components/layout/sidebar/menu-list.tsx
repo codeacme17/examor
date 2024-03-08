@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-
 import Link from 'next/link'
 import {
   Tooltip,
@@ -10,18 +9,11 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from '@/components/ui/tooltip'
-import { LucideIcon } from 'lucide-react'
+import { MenuItem } from '@/hooks/useMenu'
 
 interface MenuListProps {
   isCollapsed: boolean
   menus: MenuItem[]
-}
-
-export interface MenuItem {
-  title: string
-  icon: React.ComponentType<any> & LucideIcon
-  path: string
-  isLoading?: boolean
 }
 
 export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {

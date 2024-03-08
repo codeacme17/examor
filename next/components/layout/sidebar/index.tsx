@@ -1,34 +1,19 @@
 'use client'
 
-import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
-import { Notebook, Dices, NotebookPen, Plus } from 'lucide-react'
-import { MenuList, MenuItem } from './menu-list'
+import { Plus } from 'lucide-react'
+import { MenuList } from './menu-list'
 import { Logo } from './logo'
+import { useMenu } from '@/hooks/useMenu'
 
-export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
-  const staticMenus: MenuItem[] = [
-    {
-      title: 'Notes',
-      icon: Notebook,
-      path: '/notes',
-    },
-    {
-      title: 'Random Pick',
-      icon: Dices,
-      path: '/random',
-    },
-  ]
-
-  const [dynamicMenus, setDynamicMenus] = useState<MenuItem[]>([
-    {
-      title: 'Vue',
-      icon: NotebookPen,
-      path: '/vue',
-    },
-  ])
+export const Sidebar = ({
+  isCollapsed,
+}: {
+  isCollapsed: boolean
+}) => {
+  const { staticMenus, noteMenus } = useMenu()
 
   return (
     <div className="flex flex-col h-screen p-4 gap-2">
@@ -44,7 +29,9 @@ export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
         variant="outline"
         className={cn(
           'text-sm',
-          isCollapsed ? 'p-0 justify-center items-center' : 'justify-start'
+          isCollapsed
+            ? 'p-0 justify-center items-center'
+            : 'justify-start'
         )}>
         <Plus
           className={(cn(isCollapsed ? 'mr-0' : 'mr-2'), 'min-w-4')}
@@ -53,7 +40,7 @@ export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
         {isCollapsed ? '' : 'Add new note'}
       </Button>
 
-      <MenuList isCollapsed={isCollapsed} menus={dynamicMenus} />
+      <MenuList isCollapsed={isCollapsed} menus={noteMenus} />
     </div>
   )
 }
