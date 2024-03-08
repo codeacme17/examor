@@ -10,7 +10,7 @@ export const Navbar = () => {
   const router = useRouter()
 
   return (
-    <nav className="w-full right-0 z-50 h-16 flex justify-between items-center py-2 px-4 ">
+    <nav className="w-full right-0 z-50 h-12 flex justify-between items-center py-2 px-4">
       <Button
         variant="ghost"
         size="icon"

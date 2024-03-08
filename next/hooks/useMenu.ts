@@ -16,9 +16,9 @@ export interface MenuItem {
 export const useMenu = () => {
   const staticMenus: MenuItem[] = [
     {
-      title: 'Notes',
+      title: 'Manage Notes',
       icon: Notebook,
-      path: '/notes',
+      path: '/manage-notes',
     },
     {
       title: 'Random Pick',
