@@ -33,16 +33,21 @@ export const ResizePanel = ({
           setIsCollapsed(false)
         }}
         className={cn(
-          isCollapsed && 'min-w-[70px] transition-all duration-300 ease-in-out'
+          'hidden lg:block',
+          isCollapsed &&
+            'md:min-w-[70px] transition-all duration-300 ease-in-out',
+          !isCollapsed && 'md:min-w-[250px]'
         )}>
         <Sidebar isCollapsed={isCollapsed} />
       </ResizablePanel>
 
-      <ResizableHandle withHandle />
+      <ResizableHandle withHandle className="hidden lg:block" />
 
       <ResizablePanel className="flex flex-col">
         <Navbar />
-        <main className="w-full p-6 flex-1 overflow-y-scroll">{children}</main>
+        <main className="w-full p-6 flex-1 overflow-y-scroll">
+          {children}
+        </main>
       </ResizablePanel>
     </ResizablePanelGroup>
   )
