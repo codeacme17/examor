@@ -75,16 +75,6 @@
   }
 }
 
-:root {
-  --muted: 0 0% 96.1%;
-}
-
-:root {
-  .dark {
-    --muted: 0 0% 14.9%;
-  }
-}
-
 ::-webkit-scrollbar {
   background-color: transparent;
   width: 3px;

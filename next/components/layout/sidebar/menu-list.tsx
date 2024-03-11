@@ -45,13 +45,11 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
                       ? 'bg-muted text-white'
                       : 'hover:bg-muted'
                   )}>
-                  <item.icon size={16} />
-                  <span className="sr-only">{item.title}</span>
+                  <item.icon size={20} />
+                  <span className="sr-only text-sm">{item.title}</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent
-                side="right"
-                className="flex items-center gap-4">
+              <TooltipContent side="right" className="flex items-center gap-4">
                 {item.title}
               </TooltipContent>
             </Tooltip>
@@ -72,12 +70,10 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
               duration-200 
               hover:text-muted-foreground 
               hover:bg-white text-sm`,
-              pathname === item.path
-                ? 'bg-muted text-white'
-                : 'hover:bg-muted'
+              pathname === item.path ? 'bg-muted text-white' : 'hover:bg-muted'
             )}>
-            <item.icon className="ml-3 mr-2" size={16} />
-            {item.title}
+            <item.icon className="ml-3 mr-3" size={20} />
+            <span className="text-sm">{item.title}</span>
           </Link>
         )
       )}

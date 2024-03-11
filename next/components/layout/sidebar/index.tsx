@@ -8,11 +8,7 @@ import { MenuList } from './menu-list'
 import { Logo } from './logo'
 import { useMenu } from '@/hooks/useMenu'
 
-export const Sidebar = ({
-  isCollapsed,
-}: {
-  isCollapsed: boolean
-}) => {
+export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const { staticMenus, noteMenus } = useMenu()
 
   return (
@@ -29,16 +25,12 @@ export const Sidebar = ({
         variant="outline"
         className={cn(
           'text-sm',
-          isCollapsed
-            ? 'p-0 justify-center items-center'
-            : 'justify-start'
+          isCollapsed ? 'p-0 justify-center items-center' : 'justify-start'
         )}>
-        <Plus className={cn('min-w-4')} size={16} />
+        <Plus className={cn('min-w-4')} size={20} />
 
         {!isCollapsed && (
-          <span className="ml-2.5">
-            {isCollapsed ? '' : 'Add new note'}
-          </span>
+          <span className="ml-3.5">{isCollapsed ? '' : 'Add new note'}</span>
         )}
       </Button>
 
