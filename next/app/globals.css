@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(112, 112, 112, 0.636);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -73,13 +82,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-::-webkit-scrollbar {
-  background-color: transparent;
-  width: 3px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(112, 112, 112, 0.636);
 }

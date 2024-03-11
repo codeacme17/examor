@@ -25,6 +25,7 @@ export const Logo = ({ isCollapsed }: LogoProps) => {
         className="rounded-md object-cover"
         width={55}
         height={55}
+        priority={true}
       />
 
       {!isCollapsed && (

@@ -19,6 +19,18 @@ interface MenuListProps {
 export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
   const pathname = usePathname()
 
+  const CLASS_NAME = `flex 
+  items-center 
+  p-2 
+  rounded-md 
+  text-primary
+  transition-colors 
+  duration-200 
+  dark:hover:bg-muted 
+  hover:bg-white
+  hover:text-muted-foreground 
+  text-sm`
+
   return (
     <div className="flex flex-col gap-2">
       {menus.map((item, index) =>
@@ -29,21 +41,8 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
                 <Link
                   href="#"
                   className={cn(
-                    `dark:text-white 
-                      dark:hover:bg-muted 
-                      dark:hover:text-white 
-                      flex 
-                      items-center 
-                      justify-center
-                      p-2 
-                      rounded-md 
-                      transition-colors 
-                      duration-200 
-                      hover:text-muted-foreground 
-                      hover:bg-white text-sm`,
-                    pathname === item.path
-                      ? 'bg-muted text-white'
-                      : 'hover:bg-muted'
+                    CLASS_NAME,
+                    pathname === item.path ? 'bg-muted' : 'hover:bg-muted'
                   )}>
                   <item.icon size={20} />
                   <span className="sr-only text-sm">{item.title}</span>
@@ -59,18 +58,8 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
             key={index}
             href={item.path}
             className={cn(
-              `dark:text-white 
-              dark:hover:bg-muted 
-              dark:hover:text-white 
-              flex 
-              items-center 
-              p-2 
-              rounded-md 
-              transition-colors 
-              duration-200 
-              hover:text-muted-foreground 
-              hover:bg-white text-sm`,
-              pathname === item.path ? 'bg-muted text-white' : 'hover:bg-muted'
+              CLASS_NAME,
+              pathname === item.path ? 'bg-muted' : 'hover:bg-muted'
             )}>
             <item.icon className="ml-3 mr-3" size={20} />
             <span className="text-sm">{item.title}</span>

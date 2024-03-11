@@ -9,12 +9,17 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
+import { useHasMounted } from '@/hooks/useHasMouted'
 
 export const ResizePanel = ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
+  const mounted = useHasMounted()
+
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
+
+  if (!mounted) return null
 
   return (
     <ResizablePanelGroup
@@ -44,18 +49,13 @@ export const ResizePanel = ({
 
       <ResizableHandle
         withHandle
-        className={cn(
-          'hidden lg:block',
-          isDragging && 'cursor-col-resize'
-        )}
+        className={cn('hidden lg:block', isDragging && 'cursor-col-resize')}
         onDragging={setIsDragging}
       />
 
       <ResizablePanel className="flex flex-col">
         <Navbar />
-        <main className="w-full p-6 flex-1 overflow-y-scroll">
-          {children}
-        </main>
+        <main className="w-full p-6 flex-1 overflow-y-scroll">{children}</main>
       </ResizablePanel>
     </ResizablePanelGroup>
   )
