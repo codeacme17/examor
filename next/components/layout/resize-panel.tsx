@@ -49,13 +49,21 @@ export const ResizePanel = ({
 
       <ResizableHandle
         withHandle
-        className={cn('hidden lg:block', isDragging && 'cursor-col-resize')}
+        className={cn(
+          'hidden lg:block',
+          isDragging && 'cursor-col-resize'
+        )}
         onDragging={setIsDragging}
       />
 
       <ResizablePanel className="flex flex-col">
-        <Navbar />
-        <main className="w-full p-6 flex-1 overflow-y-scroll">{children}</main>
+        <section className="relative overflow-y-scroll">
+          <Navbar />
+
+          <main className="w-full p-6 flex-1 max-w-[1080px] mx-auto">
+            {children}
+          </main>
+        </section>
       </ResizablePanel>
     </ResizablePanelGroup>
   )
