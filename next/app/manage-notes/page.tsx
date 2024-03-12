@@ -1,5 +1,15 @@
+import { Header } from '@/components/header'
+
 const ManageNotes = () => {
-  return <section>Content</section>
+  return (
+    <section>
+      <Header
+        title="Manage Notes"
+        subTitle="You can manage your notes here"
+      />
+      content
+    </section>
+  )
 }
 
 export default ManageNotes
