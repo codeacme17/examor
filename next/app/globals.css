@@ -13,6 +13,8 @@
 
 @layer base {
   :root {
+    --band: #7d09f1;
+
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
 
@@ -45,6 +47,8 @@
   }
 
   .dark {
+    --band: #a858f9;
+
     --background: 0 0% 10%;
     --foreground: 0 0% 98%;
 
@@ -66,7 +70,7 @@
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 50.6%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 14.9%;
