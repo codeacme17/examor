@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname, useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
@@ -8,8 +9,14 @@ import { MenuList } from './menu-list'
 import { Logo } from './logo'
 import { useMenu } from '@/hooks/useMenu'
 
-export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
+export const Sidebar = ({
+  isCollapsed,
+}: {
+  isCollapsed: boolean
+}) => {
   const { staticMenus, noteMenus } = useMenu()
+  const router = useRouter()
+  const pathname = usePathname()
 
   return (
     <div className="flex flex-col h-screen p-4 gap-2">
@@ -23,14 +30,24 @@ export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
 
       <Button
         variant="outline"
+        onClick={() => router.push('/add-new')}
         className={cn(
-          'text-sm',
-          isCollapsed ? 'p-0 justify-center items-center' : 'justify-start'
+          `text-sm
+          dark:hover:bg-muted 
+          hover:bg-white
+          hover:text-muted-foreground 
+          `,
+          pathname === '/add-new' && 'bg-muted',
+          isCollapsed
+            ? 'p-0 justify-center items-center'
+            : 'justify-start'
         )}>
         <Plus className={cn('min-w-4')} size={20} />
 
         {!isCollapsed && (
-          <span className="ml-3.5">{isCollapsed ? '' : 'Add new note'}</span>
+          <span className="ml-3.5">
+            {isCollapsed ? '' : 'Add new note'}
+          </span>
         )}
       </Button>
 

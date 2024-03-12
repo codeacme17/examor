@@ -57,10 +57,13 @@ export const ResizePanel = ({
       />
 
       <ResizablePanel className="flex flex-col">
-        <Navbar />
-        <main className="w-full p-6 flex-1 overflow-y-scroll max-w-[1080px] mx-auto">
-          {children}
-        </main>
+        <section className="relative overflow-y-scroll">
+          <Navbar />
+
+          <main className="w-full p-6 flex-1 max-w-[1080px] mx-auto">
+            {children}
+          </main>
+        </section>
       </ResizablePanel>
     </ResizablePanelGroup>
   )
