@@ -9,11 +9,7 @@ import { MenuList } from './menu-list'
 import { Logo } from './logo'
 import { useMenu } from '@/hooks/useMenu'
 
-export const Sidebar = ({
-  isCollapsed,
-}: {
-  isCollapsed: boolean
-}) => {
+export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const { staticMenus, noteMenus } = useMenu()
   const router = useRouter()
   const pathname = usePathname()
@@ -38,14 +34,12 @@ export const Sidebar = ({
           hover:text-muted-foreground 
           `,
           pathname === '/add-new' && 'bg-muted',
-          isCollapsed
-            ? 'p-0 justify-center items-center'
-            : 'justify-start'
+          isCollapsed ? 'p-0 justify-center items-center' : 'justify-start'
         )}>
         <Plus className={cn('min-w-4')} size={20} />
 
         {!isCollapsed && (
-          <span className="ml-3.5">
+          <span className="ml-3.5 text-xs">
             {isCollapsed ? '' : 'Add new note'}
           </span>
         )}
