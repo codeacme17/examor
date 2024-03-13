@@ -39,7 +39,7 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
+                  href={item.path}
                   className={cn(
                     CLASS_NAME,
                     pathname === item.path ? 'bg-muted' : 'hover:bg-muted'
