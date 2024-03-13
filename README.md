@@ -22,10 +22,8 @@
   </a>
 </p>
 
-<!--
-> [!IMPORTANT]
-> **This project is still in its early stages with many issues and bugs to be addressed**. Therefore, we warmly welcome your valuable feedback and bug reports to help improve this project together! If you have any ideas or questions, please feel free to raise them in [Discussions](https://github.com/codeacme17/examor/discussions). We look forward to your participation!
--->
+> [!NOTE]
+> I am currently trying to refactor the project using next.js, and may support next.js deployment solutions in the near future. For more progress, please pay attention to the [dev-next](https://github.com/codeacme17/examor/tree/dev-next) branch.
 
 <p>
   <strong>
