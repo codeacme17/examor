@@ -62,7 +62,7 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
               pathname === item.path ? 'bg-muted' : 'hover:bg-muted'
             )}>
             <item.icon className="ml-3 mr-3" size={20} />
-            <span className="text-sm">{item.title}</span>
+            <span className="text-xs">{item.title}</span>
           </Link>
         )
       )}
