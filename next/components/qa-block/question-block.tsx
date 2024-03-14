@@ -2,7 +2,7 @@
 
 import { Button } from '../ui/button'
 import { ArrowLeft, RotateCcw } from 'lucide-react'
-import { RoleSwitch } from '@/components/role-switch'
+import { RoleSwitch } from '@/components/share/role-switch'
 import { Role } from '@/types/global'
 
 interface QuestionBlockProps {
