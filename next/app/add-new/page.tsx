@@ -1,5 +1,5 @@
-import { Header } from '@/components/header'
-import { UploadForm } from '@/components/upload-form'
+import { Header } from '@/components/share/header'
+import { UploadForm } from '@/components/form/upload-form'
 
 const AddNew = () => {
   return (

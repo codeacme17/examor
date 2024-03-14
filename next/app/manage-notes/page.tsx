@@ -1,4 +1,4 @@
-import { Header } from '@/components/header'
+import { Header } from '@/components/share/header'
 import { NoteTable } from './_components/note-table'
 
 const ManageNotes = () => {

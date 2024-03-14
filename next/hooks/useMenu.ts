@@ -23,7 +23,7 @@ export const useMenu = () => {
     {
       title: 'Random Pick',
       icon: Dices,
-      path: '/random',
+      path: '/random-pick',
     },
   ]
 
