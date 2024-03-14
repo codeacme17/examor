@@ -1,22 +1,12 @@
-'use client'
-
-import { useRef } from 'react'
-import { Header } from '@/components/header'
-import { QuestionBlock } from '@/components/question-block'
+import { QuestionBlock } from '@/components/qa-block/question-block'
 
 const RandomPick = () => {
-  const questionBlockRef = useRef(null)
-
   return (
     <section>
-      <Header
-        title="Random Pick"
-        subTitle="You can pick random question here"
-      />
-
       <QuestionBlock
-        type="normal"
+        type="random"
         id="1"
+        noteName="Vue.js"
         question="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quam voluptates accusantium? Maiores dolore sint alias. Est placeat quo consectetur. Iste doloremque earum quaerat ipsa culpa nobis adipisci quia minus."
         role="examiner"
       />
