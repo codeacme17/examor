@@ -1,0 +1,130 @@
+.markdown-box {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    line-height: 1.8rem;
+  }
+
+  /* Links */
+  a {
+    color: #0366d6;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Lists */
+  ul,
+  ol {
+    margin-left: 2em;
+    line-height: 1.8rem;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 4px solid #dfe2e5;
+    color: #6a737d;
+    margin: 10px 0;
+    padding: 0 15px;
+  }
+
+  /* Horizontal Rule */
+  hr {
+    background-color: #ddd;
+    border: 0;
+    height: 1px;
+    margin: 20px 0;
+  }
+
+  /* Code Blocks */
+  pre {
+    padding: 10px 30px;
+    margin: 10px 0px;
+    border-radius: 10px;
+    background-color: var(--cood-block-bg);
+    overflow-x: scroll;
+    code {
+      background-color: transparent !important;
+      font-size: 100% !important;
+      font-family: 'JetBrains Mono';
+    }
+  }
+
+  code {
+    padding: 0px 5px;
+    margin: 0px 5px;
+    border-radius: 3px;
+    background-color: var(--code-box-bg) !important;
+  }
+
+  /* Images */
+  img {
+    max-width: 100%;
+  }
+
+  /* Tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 16px;
+    border-spacing: 0;
+  }
+  table th,
+  table td {
+    border: 1px solid #dfe2e5;
+    padding: 6px 13px;
+    text-align: left;
+  }
+  table th {
+    font-weight: bold;
+  }
+
+  /* Code Inline */
+  p code,
+  li code {
+    border-radius: 3px;
+    padding: 0.2em 0.4em;
+    font-size: 85%;
+  }
+
+  code {
+    padding: 3px 8px;
+    margin: 0px 3px;
+    border-radius: 3px;
+    background-color: hsl(var(--muted)) !important;
+    color: var(--td-brand-color) !important;
+  }
+}
