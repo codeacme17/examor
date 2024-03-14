@@ -42,13 +42,19 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
                   href={item.path}
                   className={cn(
                     CLASS_NAME,
-                    pathname === item.path ? 'bg-muted' : 'hover:bg-muted'
+                    pathname === item.path
+                      ? 'bg-muted'
+                      : 'hover:bg-muted'
                   )}>
                   <item.icon size={20} />
-                  <span className="sr-only text-sm">{item.title}</span>
+                  <span className="sr-only text-sm">
+                    {item.title}
+                  </span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right" className="flex items-center gap-4">
+              <TooltipContent
+                side="right"
+                className="flex items-center gap-4">
                 {item.title}
               </TooltipContent>
             </Tooltip>

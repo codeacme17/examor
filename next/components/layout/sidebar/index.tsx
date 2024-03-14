@@ -9,7 +9,11 @@ import { MenuList } from './menu-list'
 import { Logo } from './logo'
 import { useMenu } from '@/hooks/useMenu'
 
-export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
+export const Sidebar = ({
+  isCollapsed,
+}: {
+  isCollapsed: boolean
+}) => {
   const { staticMenus, noteMenus } = useMenu()
   const router = useRouter()
   const pathname = usePathname()
@@ -29,12 +33,14 @@ export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
         onClick={() => router.push('/add-new')}
         className={cn(
           `text-sm
+          justify-start
+          items-center
           dark:hover:bg-muted 
           hover:bg-white
           hover:text-muted-foreground 
           `,
           pathname === '/add-new' && 'bg-muted',
-          isCollapsed ? 'p-0 justify-center items-center' : 'justify-start'
+          isCollapsed ? 'p-0 pl-2' : ''
         )}>
         <Plus className={cn('min-w-4')} size={20} />
 
