@@ -4,11 +4,22 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 import { ThemeProvider } from '@/components/theme-provider'
+import { Providers } from '@/components/provider'
 import { ResizePanel } from '@/components/layout/resize-panel'
 
 const poppins = Poppins({
   subsets: ['latin-ext'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  weight: [
+    '100',
+    '200',
+    '300',
+    '400',
+    '500',
+    '600',
+    '700',
+    '800',
+    '900',
+  ],
   fallback: ['system-ui', 'sans-serif'],
 })
 
@@ -29,7 +40,9 @@ export default function RootLayout({
           defaultTheme="system"
           disableTransitionOnChange
           enableSystem>
-          <ResizePanel>{children}</ResizePanel>
+          <Providers>
+            <ResizePanel>{children}</ResizePanel>
+          </Providers>
         </ThemeProvider>
       </body>
     </html>
