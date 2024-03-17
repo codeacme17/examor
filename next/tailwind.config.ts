@@ -1,4 +1,3 @@
-import { nextui } from '@nextui-org/react'
 import type { Config } from 'tailwindcss'
 
 const config = {
@@ -8,9 +7,8 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
-  plugins: [nextui(), require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate')],
   theme: {
     container: {
       center: true,

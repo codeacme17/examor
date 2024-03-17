@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Button } from '@nextui-org/button'
 import { Settings } from 'lucide-react'
 
 export const NoteTable = () => {
@@ -44,12 +43,7 @@ export const NoteTable = () => {
           <TableCell className="font-medium">INV001</TableCell>
           <TableCell>Paid</TableCell>
           <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right">
-            <Button color="primary" className="text-sm">
-              <Settings size={14} />
-              Manage
-            </Button>
-          </TableCell>
+          <TableCell className="text-right"></TableCell>
         </TableRow>
       </TableBody>
     </Table>

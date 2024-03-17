@@ -25,8 +25,6 @@
     "framer-motion": "^11.0.8",
     "lucide-react": "^0.344.0",
     "markdown-it": "^14.0.0",
-    "next": "14.1.2",
-    "next-themes": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.0",
