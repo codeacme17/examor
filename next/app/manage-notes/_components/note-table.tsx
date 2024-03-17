@@ -7,44 +7,45 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Settings } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Settings, Trash2 } from 'lucide-react'
 
 export const NoteTable = () => {
   const notes = [
     {
       id: '1',
-      title: 'Note 1',
-      status: 'Draft',
-      method: 'Credit Card',
-      amount: 250.0,
+      name: 'Note 1',
+      icon: 'Draft',
+      upload_date: '2024-02-02',
     },
     {
       id: '2',
-      title: 'Note 2',
-      status: 'Paid',
-      method: 'Credit Card',
-      amount: 250.0,
+      name: 'Note 2',
+      icon: 'Paid',
+      upload_date: '2024-02-02',
     },
   ]
 
   return (
     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[130px]">Name</TableHead>
-          <TableHead></TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead className="text-right">Create Date</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">INV001</TableCell>
-          <TableCell>Paid</TableCell>
-          <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right"></TableCell>
-        </TableRow>
+        {notes.map((note) => (
+          <TableRow key={note.id}>
+            <TableCell className="font-medium">{note.name}</TableCell>
+            <TableCell className="text-right">{note.upload_date}</TableCell>
+            <TableCell className="text-right w-[120px]">
+              <Button size={'icon'} variant={'ghost'}>
+                <Settings size={20} />
+              </Button>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   )
