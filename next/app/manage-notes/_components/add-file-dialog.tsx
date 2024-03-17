@@ -1,9 +1,8 @@
-import { useContext } from 'react'
+import { memo, useContext } from 'react'
 import { NoteContext } from '../_context/note-context'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -14,27 +13,31 @@ import { UploadForm } from '@/components/form/upload-form'
 
 interface AddFileDialogProps {}
 
-export const AddFileDialog = (props: AddFileDialogProps) => {
-  const noteContext = useContext(NoteContext)
+export const AddFileDialog = memo<AddFileDialogProps>(
+  (props: AddFileDialogProps) => {
+    const noteContext = useContext(NoteContext)
 
-  if (!noteContext?.note.id) return null
+    if (!noteContext?.note.id) return null
 
-  const note = noteContext.note
+    const note = noteContext.note
 
-  return (
-    <Dialog>
-      <DialogTrigger className="ml-auto" asChild>
-        <Button>
-          <Paperclip size={16} className="mr-2" /> Add New File
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="w-full md:w-[800px]">
-        <DialogHeader>
-          <DialogTitle>Add new file to {note.name}</DialogTitle>
-        </DialogHeader>
+    return (
+      <Dialog>
+        <DialogTrigger className="ml-auto" asChild>
+          <Button>
+            <Paperclip size={16} className="mr-2" /> Add New File
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="w-full md:w-[800px]">
+          <DialogHeader>
+            <DialogTitle>Add new file to {note.name}</DialogTitle>
+          </DialogHeader>
 
-        <UploadForm type="file" />
-      </DialogContent>
-    </Dialog>
-  )
-}
+          <UploadForm type="file" />
+        </DialogContent>
+      </Dialog>
+    )
+  }
+)
+
+AddFileDialog.displayName = 'AddFileDialog'

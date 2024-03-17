@@ -1,5 +1,6 @@
 'use client'
 
+import { memo } from 'react'
 import { Settings } from 'lucide-react'
 import {
   Table,
@@ -18,7 +19,7 @@ interface NoteTableProps {
   onSettingClick: (note: Note) => void
 }
 
-export const NoteTable = (props: NoteTableProps) => {
+export const NoteTable = memo((props: NoteTableProps) => {
   const { notes, onSettingClick } = props
 
   const handleClickSetting = (note: Note) => {
@@ -63,4 +64,6 @@ export const NoteTable = (props: NoteTableProps) => {
       </TableBody>
     </Table>
   )
-}
+})
+
+NoteTable.displayName = 'NoteTable'

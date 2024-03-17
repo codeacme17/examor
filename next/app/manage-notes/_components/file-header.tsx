@@ -1,11 +1,11 @@
-import { useContext } from 'react'
+import { memo, useContext } from 'react'
 import { NoteContext } from '../_context/note-context'
 import { MdiIcon } from '@/components/mdi-icon'
 import { Button } from '@/components/ui/button'
-import { ArrowLeftCircle, Paperclip } from 'lucide-react'
+import { ArrowLeftCircle } from 'lucide-react'
 import { AddFileDialog } from './add-file-dialog'
 
-export const FileHeader = () => {
+export const FileHeader = memo(() => {
   const noteContext = useContext(NoteContext)
 
   if (!noteContext?.note.id) return null
@@ -26,4 +26,6 @@ export const FileHeader = () => {
       <AddFileDialog />
     </header>
   )
-}
+})
+
+FileHeader.displayName = 'FileHeader'
