@@ -3,6 +3,7 @@ import { NoteContext } from '../_context/note-context'
 import { MdiIcon } from '@/components/mdi-icon'
 import { Button } from '@/components/ui/button'
 import { ArrowLeftCircle, Paperclip } from 'lucide-react'
+import { AddFileDialog } from './add-file-dialog'
 
 export const FileHeader = () => {
   const noteContext = useContext(NoteContext)
@@ -22,9 +23,7 @@ export const FileHeader = () => {
 
       <span className="font-bold ml-2">{note.name}</span>
 
-      <Button className="ml-auto">
-        <Paperclip size={16} className="mr-2" /> Add New File
-      </Button>
+      <AddFileDialog />
     </header>
   )
 }
