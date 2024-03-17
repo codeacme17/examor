@@ -1,3 +1,3 @@
 export const FileTable = () => {
-  return <section>Content</section>
+  return <section className="px-3">Content</section>
 }

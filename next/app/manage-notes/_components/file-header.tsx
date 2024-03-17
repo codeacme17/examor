@@ -1,15 +1,30 @@
-import { Note } from '../page'
+import { useContext } from 'react'
+import { NoteContext } from '../_context/note-context'
+import { MdiIcon } from '@/components/mdi-icon'
+import { Button } from '@/components/ui/button'
+import { ArrowLeftCircle, Paperclip } from 'lucide-react'
 
-interface FileHeaderProps {
-  note: Note | null
-}
+export const FileHeader = () => {
+  const noteContext = useContext(NoteContext)
 
-export const FileHeader = (props: FileHeaderProps) => {
-  const { note } = props
+  if (!noteContext?.note.id) return null
+
+  const note = noteContext.note
+  const onBack = noteContext.onBack
 
   return (
-    <header>
-      <div></div>
+    <header className="flex items-center">
+      <Button size={'icon'} variant={'ghost'} className="mr-3" onClick={onBack}>
+        <ArrowLeftCircle size={20} className="stroke-muted-foreground" />
+      </Button>
+
+      <MdiIcon icon={note.icon} size="2.3rem" />
+
+      <span className="font-bold ml-2">{note.name}</span>
+
+      <Button className="ml-auto">
+        <Paperclip size={16} className="mr-2" /> Add New File
+      </Button>
     </header>
   )
 }

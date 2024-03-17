@@ -1,12 +1,17 @@
 import { useContext } from 'react'
-import { Note } from '../page'
 import { FileHeader } from './file-header'
 import { NoteContext } from '../_context/note-context'
+import { FileTable } from './file-table'
 
 export const FileManager = () => {
   const noteContext = useContext(NoteContext)
 
   if (!noteContext?.note) return null
 
-  return <section>{noteContext.note.name}</section>
+  return (
+    <section className="flex flex-col gap-4">
+      <FileHeader />
+      <FileTable />
+    </section>
+  )
 }

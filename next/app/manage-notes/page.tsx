@@ -5,6 +5,7 @@ import { Header } from '@/components/share/header'
 import { NoteTable } from './_components/note-table'
 import { FileManager } from './_components/file-manager'
 import { NoteContextProps, NoteContextProvider } from './_context/note-context'
+import { TransitionAnimate } from '@/components/transition-animate'
 
 export interface Note {
   id: string
@@ -51,11 +52,14 @@ const ManageNotes = () => {
           title="Manage Notes"
           subTitle="You can manage your notes here"
         />
-
         {tab === 'note' ? (
-          <NoteTable notes={notes} onSettingClick={handleClickSetting} />
+          <TransitionAnimate key={tab} initial={{ x: -20 }}>
+            <NoteTable notes={notes} onSettingClick={handleClickSetting} />
+          </TransitionAnimate>
         ) : (
-          <FileManager />
+          <TransitionAnimate key={tab}>
+            <FileManager />
+          </TransitionAnimate>
         )}
       </NoteContextProvider>
     </section>
