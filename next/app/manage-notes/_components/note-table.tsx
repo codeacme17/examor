@@ -1,5 +1,6 @@
 'use client'
 
+import { Settings } from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -9,7 +10,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
-import { Settings } from 'lucide-react'
 import { MdiIcon } from '@/components/mdi-icon'
 import { Note } from '../page'
 
@@ -31,6 +31,7 @@ export const NoteTable = (props: NoteTableProps) => {
         <TableRow>
           <TableHead>Name</TableHead>
           <TableHead className="text-right">Create Date</TableHead>
+          <TableHead></TableHead>
         </TableRow>
       </TableHeader>
 
