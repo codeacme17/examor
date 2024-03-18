@@ -4,13 +4,10 @@ import { UploadForm } from '@/components/form/upload-form'
 const AddNew = () => {
   return (
     <section>
-      <Header
-        title="Add new note"
-        subTitle="You can add new note here"
-      />
+      <Header title="Add new note" subTitle="You can add new note here" />
 
       <div className="px-3">
-        <UploadForm />
+        <UploadForm type="note" />
       </div>
     </section>
   )

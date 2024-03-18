@@ -1,51 +1,69 @@
+'use client'
+
+import { memo } from 'react'
+import { Settings } from 'lucide-react'
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Settings } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { MdiIcon } from '@/components/mdi-icon'
+import { Note } from '../page'
 
-export const NoteTable = () => {
-  const notes = [
-    {
-      id: '1',
-      title: 'Note 1',
-      status: 'Draft',
-      method: 'Credit Card',
-      amount: 250.0,
-    },
-    {
-      id: '2',
-      title: 'Note 2',
-      status: 'Paid',
-      method: 'Credit Card',
-      amount: 250.0,
-    },
-  ]
+interface NoteTableProps {
+  notes: Note[]
+  onSettingClick: (note: Note) => void
+}
+
+export const NoteTable = memo((props: NoteTableProps) => {
+  const { notes, onSettingClick } = props
+
+  const handleClickSetting = (note: Note) => {
+    onSettingClick(note)
+  }
 
   return (
     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[130px]">Name</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead className="text-right">Create Date</TableHead>
           <TableHead></TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
         </TableRow>
       </TableHeader>
+
       <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">INV001</TableCell>
-          <TableCell>Paid</TableCell>
-          <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right"></TableCell>
-        </TableRow>
+        {notes.map((note) => (
+          <TableRow key={note.id}>
+            {/* Note Name */}
+            <TableCell className="font-medium">
+              <div className="flex items-center">
+                <MdiIcon icon={note.icon} size="1.5rem" className="mr-2" />
+                {note.name}
+              </div>
+            </TableCell>
+
+            {/* Node Create Date */}
+            <TableCell className="text-right">{note.upload_date}</TableCell>
+
+            {/* Hanlders */}
+            <TableCell className="text-right w-[120px]">
+              <Button
+                size={'icon'}
+                variant={'ghost'}
+                onClick={() => handleClickSetting(note)}>
+                <Settings size={20} />
+              </Button>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   )
-}
+})
+
+NoteTable.displayName = 'NoteTable'

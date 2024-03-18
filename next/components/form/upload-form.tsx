@@ -24,17 +24,26 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { DragUpload } from './drag-upload'
 
-const formSchema = z.object({
-  type: z.enum(['short', 'single', 'blank']),
-  name: z.string().min(2, {
-    message: 'File name must be at least 2 characters.',
-  }),
-  files: z.array(z.instanceof(File)).min(1, {
-    message: 'Please upload at least 1 file.',
-  }),
-})
+interface UploadFormProps {
+  type: 'note' | 'file'
+}
 
-export function UploadForm() {
+export const UploadForm = (props: UploadFormProps) => {
+  const { type } = props
+
+  const formSchema = z.object({
+    type: z.enum(['short', 'single', 'blank']),
+    name:
+      type === 'note'
+        ? z.string().min(2, {
+            message: 'File name must be at least 2 characters.',
+          })
+        : z.literal(''),
+    files: z.array(z.instanceof(File)).min(1, {
+      message: 'Please upload at least 1 file.',
+    }),
+  })
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +61,7 @@ export function UploadForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8">
+        className="space-y-8 w-full">
         <FormField
           control={form.control}
           name="type"
@@ -88,26 +97,28 @@ export function UploadForm() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Note Name</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Javascript"
-                  autoComplete="off"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                This is your note display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {type === 'note' && (
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Note Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Javascript"
+                    autoComplete="off"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your note display name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <FormField
           control={form.control}
