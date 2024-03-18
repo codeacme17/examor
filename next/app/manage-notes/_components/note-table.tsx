@@ -42,16 +42,22 @@ export const NoteTable = memo((props: NoteTableProps) => {
             {/* Note Name */}
             <TableCell className="font-medium">
               <div className="flex items-center">
-                <MdiIcon icon={note.icon} size="1.5rem" className="mr-2" />
+                <MdiIcon
+                  icon={note.icon}
+                  size="1.5rem"
+                  className="mr-2"
+                />
                 {note.name}
               </div>
             </TableCell>
 
             {/* Node Create Date */}
-            <TableCell className="text-right">{note.upload_date}</TableCell>
+            <TableCell className="text-right">
+              {note.upload_date}
+            </TableCell>
 
             {/* Hanlders */}
-            <TableCell className="text-right w-[120px]">
+            <TableCell className="text-right w-[50px]">
               <Button
                 size={'icon'}
                 variant={'ghost'}
