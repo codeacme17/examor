@@ -47,6 +47,13 @@ const ManageNotes = () => {
     note: note!,
     setNote,
     onBack: () => setTab('note'),
+    changeIcon: (icon: string) => {
+      if (!note) return
+      setNote({
+        ...note,
+        icon,
+      })
+    },
   }
 
   return (

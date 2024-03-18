@@ -1,9 +1,9 @@
 import { memo, useContext } from 'react'
 import { NoteContext } from '../_context/note-context'
-import { MdiIcon } from '@/components/mdi-icon'
 import { Button } from '@/components/ui/button'
 import { ArrowLeftCircle } from 'lucide-react'
 import { AddFileDialog } from './add-file-dialog'
+import { NoteIconPopover } from './note-icon-popover'
 
 export const FileHeader = memo(() => {
   const noteContext = useContext(NoteContext)
@@ -15,11 +15,17 @@ export const FileHeader = memo(() => {
 
   return (
     <header className="flex items-center">
-      <Button size={'icon'} variant={'ghost'} className="mr-3" onClick={onBack}>
-        <ArrowLeftCircle size={20} className="stroke-muted-foreground" />
+      <Button
+        size={'icon'}
+        variant={'ghost'}
+        className="mr-3"
+        onClick={onBack}>
+        <ArrowLeftCircle
+          size={20}
+          className="stroke-muted-foreground"
+        />
       </Button>
-
-      <MdiIcon icon={note.icon} size="2.3rem" />
+      <NoteIconPopover />
 
       <span className="font-bold ml-2">{note.name}</span>
 
