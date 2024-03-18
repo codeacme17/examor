@@ -49,31 +49,31 @@ export const FileTable = memo(() => {
   )
 
   return (
-    <section className="px-3">
-      <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>File name</TableHead>
-            <TableHead>Question count</TableHead>
-            <TableHead className="text-right">Upload date</TableHead>
+    <Table>
+      <TableCaption>
+        This list shows the files uploaded by the current note
+      </TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>File name</TableHead>
+          <TableHead>Question count</TableHead>
+          <TableHead className="text-right">Upload date</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {files.map((file) => (
+          <TableRow key={file.id}>
+            <TableCell className="font-medium">
+              {file.file_name}
+            </TableCell>
+            <TableCell>{file.question_count}</TableCell>
+            <TableCell className="text-right">
+              {file.upload_date}
+            </TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {files.map((file) => (
-            <TableRow key={file.id}>
-              <TableCell className="font-medium">
-                {file.file_name}
-              </TableCell>
-              <TableCell>{file.question_count}</TableCell>
-              <TableCell className="text-right">
-                {file.upload_date}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </section>
+        ))}
+      </TableBody>
+    </Table>
   )
 })
 

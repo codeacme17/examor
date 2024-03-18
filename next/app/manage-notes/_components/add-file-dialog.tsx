@@ -25,7 +25,8 @@ export const AddFileDialog = memo<AddFileDialogProps>(
       <Dialog>
         <DialogTrigger className="ml-auto" asChild>
           <Button>
-            <Paperclip size={16} className="mr-2" /> Add New File
+            <Paperclip size={16} />
+            <span className="hidden ml-2 sm:block">Add New File</span>
           </Button>
         </DialogTrigger>
         <DialogContent className="flex flex-col w-screen h-screen max-w-screen-md md:max-w-1/2 md:h-auto">
