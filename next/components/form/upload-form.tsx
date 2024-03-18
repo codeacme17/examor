@@ -59,7 +59,9 @@ export const UploadForm = (props: UploadFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 w-full">
         <FormField
           control={form.control}
           name="type"
@@ -81,7 +83,8 @@ export const UploadForm = (props: UploadFormProps) => {
                       <span className="mr-2">🔠</span> Single Choice
                     </SelectItem>
                     <SelectItem value="blank">
-                      <span className="mr-2">⬜</span> Fill in the blank
+                      <span className="mr-2">⬜</span> Fill in the
+                      blank
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -124,7 +127,10 @@ export const UploadForm = (props: UploadFormProps) => {
             <FormItem>
               <FormLabel>Files</FormLabel>
               <FormControl>
-                <DragUpload onFileChange={field.onChange} files={field.value} />
+                <DragUpload
+                  onFileChange={field.onChange}
+                  files={field.value}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

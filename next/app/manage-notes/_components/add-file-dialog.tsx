@@ -28,7 +28,7 @@ export const AddFileDialog = memo<AddFileDialogProps>(
             <Paperclip size={16} className="mr-2" /> Add New File
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-full md:w-[800px]">
+        <DialogContent className="flex flex-col w-screen h-screen max-w-screen-md md:max-w-1/2 md:h-auto">
           <DialogHeader>
             <DialogTitle>Add new file to {note.name}</DialogTitle>
           </DialogHeader>
