@@ -5,7 +5,7 @@ import { ArrowLeftCircle } from 'lucide-react'
 import { AddFileDialog } from './add-file-dialog'
 import { NoteIconPopover } from './note-icon-popover'
 
-export const FileHeader = memo(() => {
+export const NoteHeader = memo(() => {
   const noteContext = useContext(NoteContext)
 
   if (!noteContext?.note.id) return null
@@ -34,4 +34,4 @@ export const FileHeader = memo(() => {
   )
 })
 
-FileHeader.displayName = 'FileHeader'
+NoteHeader.displayName = 'NoteHeader'

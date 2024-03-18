@@ -1,5 +1,5 @@
 import { memo, useContext } from 'react'
-import { FileHeader } from './file-header'
+import { NoteHeader } from './note-header'
 import { NoteContext } from '../_context/note-context'
 import { FileTable } from './file-table'
 
@@ -10,7 +10,7 @@ export const FileManager = memo(() => {
 
   return (
     <section className="flex flex-col gap-4">
-      <FileHeader />
+      <NoteHeader />
       <FileTable />
     </section>
   )
