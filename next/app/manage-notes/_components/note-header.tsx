@@ -18,7 +18,7 @@ export const NoteHeader = memo(() => {
       <Button
         size={'icon'}
         variant={'ghost'}
-        className="mr-3"
+        className="mr-1"
         onClick={onBack}>
         <ArrowLeftCircle
           size={20}
