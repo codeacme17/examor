@@ -1,11 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { Header } from '@/components/share/header'
 import { NoteTable } from './_components/note-table'
 import { FileManager } from './_components/file-manager'
-import { NoteContextProps, NoteContextProvider } from './_context/note-context'
+import {
+  NoteContextProps,
+  NoteContextProvider,
+} from './_context/note-context'
 import { TransitionAnimate } from '@/components/transition-animate'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export interface Note {
   id: string
@@ -54,11 +58,19 @@ const ManageNotes = () => {
         />
         {tab === 'note' ? (
           <TransitionAnimate key={tab} initial={{ x: -20 }}>
-            <NoteTable notes={notes} onSettingClick={handleClickSetting} />
+            <NoteTable
+              notes={notes}
+              onSettingClick={handleClickSetting}
+            />
           </TransitionAnimate>
         ) : (
           <TransitionAnimate key={tab}>
-            <FileManager />
+            <Suspense
+              fallback={
+                <Skeleton className="h-20 w-full rounded-xl" />
+              }>
+              <FileManager />
+            </Suspense>
           </TransitionAnimate>
         )}
       </NoteContextProvider>
