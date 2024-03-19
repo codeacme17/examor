@@ -30,7 +30,7 @@ export const QuestionBlock = (props: QuestionBlockProps) => {
   }
 
   return (
-    <section className="w-full rounded-lg p-5 bg-blue-500/50 dark:bg-blue-700 shadow-sm">
+    <section className="w-full rounded-lg p-5 bg-blue-500/80 dark:bg-blue-700 shadow-sm">
       {type === 'normal' && (
         <div>
           <Button

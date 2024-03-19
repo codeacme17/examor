@@ -47,6 +47,11 @@ const NotePage = () => {
     setCurrentQuestion(question)
   }
 
+  const handleClickBack = () => {
+    if (tab !== 'QA') return
+    setTab('table')
+  }
+
   return (
     <section>
       <NoteHeader note={note} />
@@ -61,9 +66,7 @@ const NotePage = () => {
         currentQuestion && (
           <TransitionAnimate key={tab}>
             <QABlock
-              onBack={() => {
-                setTab('table')
-              }}
+              onBack={handleClickBack}
               type="normal"
               {...currentQuestion}
             />
