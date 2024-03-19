@@ -5,9 +5,11 @@ import {
   TabsTrigger,
 } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 import { FileClock, NotebookText } from 'lucide-react'
-import { Button } from '../ui/button'
 import { ExamineBlock } from './examine-block'
+import { DocContent } from './doc-content'
+import { LastRecord } from './last-record'
 import './markdown.scss'
 
 export const AnswerBlock = () => {
@@ -35,11 +37,13 @@ export const AnswerBlock = () => {
         </Button>
         <ExamineBlock content="```js This is the content of the examine block.```" />
       </TabsContent>
+
       <TabsContent value="record">
-        Change your password here.
+        <LastRecord content="Last Record Content" />
       </TabsContent>
+
       <TabsContent value="content">
-        Change your password here 123.
+        <DocContent content="Document Content" />
       </TabsContent>
     </Tabs>
   )

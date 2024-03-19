@@ -1,25 +1,13 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import markdownit from 'markdown-it'
+import { useMarkdownit } from '@/hooks/useMarkdownit'
 
 interface ExamineBlockProps {
   content: string
 }
 
 export const ExamineBlock = ({ content }: ExamineBlockProps) => {
-  const md = useRef<markdownit | null>(null)
-  const [renderContent, setRenderContent] = useState('')
-
-  useEffect(() => {
-    md.current = new markdownit()
-  }, [])
-
-  useEffect(() => {
-    if (md.current) {
-      setRenderContent(md.current.render(content))
-    }
-  }, [content])
+  const renderContent = useMarkdownit({ content })
 
   return (
     <section className="mt-3 rounded-md bg-purple-400/20">
