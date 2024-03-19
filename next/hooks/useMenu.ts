@@ -31,7 +31,7 @@ export const useMenu = () => {
     {
       title: 'Vue',
       icon: NotebookPen,
-      path: '/vue',
+      path: '/note/vue',
     },
   ])
 
