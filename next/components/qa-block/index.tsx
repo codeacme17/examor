@@ -1,32 +1,21 @@
 import { QuestionBlock } from './question-block'
 import { AnswerBlock } from './answer-block'
-import { QuestionType, Role } from '@/types/global'
+import { QuestionType, RoleType } from '@/types/global'
+import { Question } from '@/types/global'
 
-interface QABlockProps {
-  noteName: string
-  question: string
-  role: Role
-  questionType: QuestionType
+interface QABlockProps extends Question {
   type: 'random' | 'normal'
-  id: string
+  noteName?: string
   onPick?: () => void
   onBack?: () => void
 }
 
 export const QABlock = (props: QABlockProps) => {
-  const { noteName, question, role, type, id } = props
+  const { noteName, question, roleType, type, id } = props
 
   return (
     <section>
-      <QuestionBlock
-        type={type}
-        id={id}
-        noteName={noteName}
-        question={question}
-        role={role}
-        onClickPick={props.onPick}
-        onClickBack={props.onBack}
-      />
+      <QuestionBlock {...props} />
 
       <AnswerBlock />
     </section>

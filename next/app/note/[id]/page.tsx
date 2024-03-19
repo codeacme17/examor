@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import { NoteHeader } from './_components/note-header'
-import { Question, QuestionTable } from './_components/question-table'
+import { QuestionTable } from './_components/question-table'
 import { QABlock } from '@/components/qa-block'
 import { TransitionAnimate } from '@/components/transition-animate'
+import { Question } from '@/types/global'
 
 const note = {
   id: '1',
@@ -19,20 +20,20 @@ const questions: Question[] = [
     question: 'What is your name?',
     answer: 'My name is John Doe',
     status: 'New',
-    created_at: '2024-02-02',
-    updated_at: '2024-02-02',
-    question_type: 'short',
-    designated_role: 'examiner',
+    createdDate: '2024-02-02',
+    updatedDate: '2024-02-02',
+    questionType: 'short',
+    roleType: 'examiner',
   },
   {
     id: '2',
     question: 'What is your age?',
     answer: 'I am 20 years old',
     status: 'New',
-    created_at: '2024-02-02',
-    updated_at: '2024-02-02',
-    question_type: 'single',
-    designated_role: 'teacher',
+    createdDate: '2024-02-02',
+    updatedDate: '2024-02-02',
+    questionType: 'single',
+    roleType: 'teacher',
   },
 ]
 
@@ -64,11 +65,7 @@ const NotePage = () => {
                 setTab('table')
               }}
               type="normal"
-              question={currentQuestion.question}
-              role={currentQuestion.designated_role}
-              questionType={currentQuestion.question_type}
-              id={currentQuestion.id}
-              noteName={note.name}
+              {...currentQuestion}
             />
           </TransitionAnimate>
         )

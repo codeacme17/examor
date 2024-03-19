@@ -1,7 +1,7 @@
 'use client'
 
 import { memo } from 'react'
-import { QuestionType, Role } from '@/types/global'
+import { Question } from '@/types/global'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -14,17 +14,6 @@ import { QuestionTypeSwitch } from '@/components/share/question-type-switch'
 interface QuestionTableProps {
   questions: any
   onRowClick: (question: Question) => void
-}
-
-export interface Question {
-  id: string
-  question: string
-  designated_role: Role
-  question_type: QuestionType
-  answer: string
-  status: string
-  created_at: string
-  updated_at: string
 }
 
 export const QuestionTable = memo((props: QuestionTableProps) => {
@@ -62,7 +51,7 @@ const _Table = (props: QuestionTableProps) => {
           <TableRow key={question.id}>
             <TableCell className="p-2 pl-5 w-10">
               <QuestionTypeSwitch
-                questionType={question.question_type}
+                questionType={question.questionType!}
                 className="text-lg"
               />
             </TableCell>

@@ -2,38 +2,31 @@
 
 import { Button } from '../ui/button'
 import { ArrowLeft, RotateCcw } from 'lucide-react'
-import { RoleSwitch } from '@/components/share/role-switch'
-import { Role } from '@/types/global'
+import { RoleTypeSwitch } from '@/components/share/role-type-switch'
+import { RoleType } from '@/types/global'
 
 interface QuestionBlockProps {
   type: 'normal' | 'random'
   id: string
   question: string
-  role: Role
+  roleType: RoleType
   noteName?: string
-  onClickPick?: () => void
-  onClickBack?: () => void
+  onPick?: () => void
+  onBack?: () => void
 }
 
 export const QuestionBlock = (props: QuestionBlockProps) => {
-  const {
-    type,
-    id,
-    question,
-    role,
-    noteName,
-    onClickPick,
-    onClickBack,
-  } = props
+  const { type, id, question, roleType, noteName, onPick, onBack } =
+    props
 
   const handlePickClick = () => {
     if (type !== 'random') return
-    onClickPick && onClickPick()
+    onPick && onPick()
   }
 
   const handleBackClick = () => {
     if (type !== 'normal') return
-    onClickBack && onClickBack()
+    onBack && onBack()
   }
 
   return (
@@ -47,7 +40,10 @@ export const QuestionBlock = (props: QuestionBlockProps) => {
             <ArrowLeft size={14} />
           </Button>
           <span className="text-xl font-bold">Question</span>
-          <RoleSwitch role={role} className="text-xl ml-1" />
+          <RoleTypeSwitch
+            roleType={roleType}
+            className="text-xl ml-1"
+          />
         </div>
       )}
 
@@ -61,7 +57,10 @@ export const QuestionBlock = (props: QuestionBlockProps) => {
             <RotateCcw size={14} />
           </Button>
           <span className="text-xl font-bold">{noteName}</span>
-          <RoleSwitch role={role} className="text-xl ml-1" />
+          <RoleTypeSwitch
+            roleType={roleType}
+            className="text-xl ml-1"
+          />
         </div>
       )}
 
