@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, Settings } from 'lucide-react'
 import { ModeToggle } from './mode-toggle'
 import { Menubar } from './menu-bar'
 
@@ -29,6 +29,14 @@ export const Navbar = () => {
 
       <div className="flex">
         <Menubar />
+
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => router.push('/profile')}>
+          <Settings size={16} />
+        </Button>
+
         <ModeToggle />
       </div>
     </nav>
