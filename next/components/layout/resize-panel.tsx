@@ -50,7 +50,7 @@ export const ResizePanel = ({
       <ResizableHandle
         withHandle
         className={cn(
-          'hidden lg:flex z-[99] transition-all',
+          'hidden lg:flex z-[40] transition-all',
           isDragging && 'cursor-col-resize w-1.5'
         )}
         onDragging={setIsDragging}

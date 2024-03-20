@@ -1,16 +1,21 @@
 import { QuestionBlock } from './question-block'
 import { AnswerBlock } from './answer-block'
+import { QuestionType, RoleType } from '@/types/global'
+import { Question } from '@/types/global'
 
-export const QABlock = () => {
+interface QABlockProps extends Question {
+  type: 'random' | 'normal'
+  noteName?: string
+  onPick?: () => void
+  onBack?: () => void
+}
+
+export const QABlock = (props: QABlockProps) => {
+  const { noteName, question, roleType, type, id } = props
+
   return (
     <section>
-      <QuestionBlock
-        type="random"
-        id="1"
-        noteName="Vue.js"
-        question="Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quam voluptates accusantium? Maiores dolore sint alias. Est placeat quo consectetur. Iste doloremque earum quaerat ipsa culpa nobis adipisci quia minus."
-        role="examiner"
-      />
+      <QuestionBlock {...props} />
 
       <AnswerBlock />
     </section>
