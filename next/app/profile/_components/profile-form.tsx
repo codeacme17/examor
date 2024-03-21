@@ -23,6 +23,8 @@ import {
 } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Slider } from '@/components/ui/slider'
+import { Badge } from '@/components/ui/badge'
 
 type FormType = {
   questionAmount: number
@@ -72,7 +74,7 @@ export const ProfileForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      questionAmount: 10,
+      questionAmount: 12,
       currentModel: 'openai',
       currentRole: 'examiner',
       openaiKey: '',
@@ -96,18 +98,34 @@ export const ProfileForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
         <FormField
           control={form.control}
           name="questionAmount"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Question Type</FormLabel>
-              <FormControl></FormControl>
+              <FormLabel className="flex items-center justify-between">
+                <span>
+                  Please select how many questions are prepared for you each
+                  day.
+                </span>
+                <Badge className="text-md">{field.value}</Badge>
+              </FormLabel>
+              <FormControl className="mt-2">
+                <Slider
+                  min={1}
+                  max={20}
+                  step={1}
+                  value={[field.value]}
+                  className="cursor-pointer"
+                  onValueChange={(value) => {
+                    field.onChange(value[0])
+                  }}
+                />
+              </FormControl>
               <FormDescription>
-                You can choose the question type in this note.
+                The new plan will be implemented tomorrow after submitting the
+                changes
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -121,15 +139,9 @@ export const ProfileForm = () => {
             <FormItem>
               <FormLabel>Note Name</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Javascript"
-                  autoComplete="off"
-                  {...field}
-                />
+                <Input placeholder="Javascript" autoComplete="off" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your note display name.
-              </FormDescription>
+              <FormDescription>This is your note display name.</FormDescription>
               <FormMessage />
             </FormItem>
           )}

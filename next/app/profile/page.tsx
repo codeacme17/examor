@@ -6,7 +6,7 @@ const Profile = () => {
     <section>
       <Header
         title="Profile"
-        subTitle="You can manage your config here"
+        subTitle="Can be configured here refer to the required options"
       />
 
       <ProfileForm />
