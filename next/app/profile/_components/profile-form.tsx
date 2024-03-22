@@ -108,6 +108,7 @@ export const ProfileForm = () => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 w-full">
+        {/* QUESTION AMOUNT SELECT */}
         <FormField
           control={form.control}
           name="questionAmount"
@@ -141,6 +142,7 @@ export const ProfileForm = () => {
           )}
         />
 
+        {/* ROLE SELECT */}
         <FormField
           control={form.control}
           name="currentRole"
@@ -183,6 +185,34 @@ export const ProfileForm = () => {
                 Roles affect question generation and answer detection
                 results
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* MODEL SELECT */}
+        <FormField
+          control={form.control}
+          name="currentModel"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Please choose the model to use</FormLabel>
+              <FormControl>
+                <Tabs
+                  value={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(value as RoleType)
+                  }}
+                  className="w-full md:w-[500px]">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="openai">OpenAI</TabsTrigger>
+                    <TabsTrigger value="azure">Azure</TabsTrigger>
+                    <TabsTrigger value="anthropic">
+                      Anthropic
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
