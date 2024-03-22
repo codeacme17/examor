@@ -14,23 +14,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
+import { OpenaiConfigForm } from './openai-config-form'
 import { RoleTypeSwitch } from '@/components/share/role-type-switch'
 
 type FormType = {
@@ -51,33 +40,47 @@ type FormType = {
   anthropicModel: string
 }
 
-export const ProfileForm = () => {
-  const formSchema = z.object({
-    questionAmount: z.number().int().positive(),
-    currentRole: z.union([
-      z.literal('examiner'),
-      z.literal('teacher'),
-      z.literal('interviewer'),
-    ]),
-    currentModel: z.union([
-      z.literal('openai'),
-      z.literal('azure'),
-      z.literal('anthropic'),
-    ]),
-    openaiKey: z.string(),
-    openaiOrganization: z.string(),
-    openaiModel: z.string(),
-    openaiProxy: z.string(),
-    azureKey: z.string(),
-    openaiBase: z.string(),
-    azureBase: z.string(),
-    openaiVersion: z.string(),
-    deploymentName: z.string(),
-    anthropicKey: z.string(),
-    anthropicVersion: z.string(),
-    anthropicModel: z.string(),
-  })
+export const formSchema = z.object({
+  questionAmount: z.number().int().positive(),
+  currentRole: z.union([
+    z.literal('examiner'),
+    z.literal('teacher'),
+    z.literal('interviewer'),
+  ]),
+  currentModel: z.union([
+    z.literal('openai'),
+    z.literal('azure'),
+    z.literal('anthropic'),
+  ]),
+  openaiKey: z.string().length(51, {
+    message: 'OpenAI key must be exactly 51 characters.',
+  }),
+  openaiOrganization: z
+    .string()
+    .optional()
+    .refine(
+      (data) => {
+        if (!data) return true
+        return data.length === 28
+      },
+      {
+        message:
+          'OpenAI Organization key must be exactly 28 characters if provided.',
+      }
+    ),
+  openaiModel: z.string(),
+  openaiProxy: z.string(),
+  azureKey: z.string(),
+  openaiBase: z.string(),
+  azureBase: z.string(),
+  openaiVersion: z.string(),
+  deploymentName: z.string(),
+  anthropicKey: z.string(),
+  anthropicVersion: z.string(),
+  anthropicModel: z.string(),
+})
 
+export const ProfileForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -203,7 +206,7 @@ export const ProfileForm = () => {
                   onValueChange={(value) => {
                     field.onChange(value as RoleType)
                   }}
-                  className="w-full md:w-[500px]">
+                  className="w-full md:w-[400px]">
                   <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="openai">OpenAI</TabsTrigger>
                     <TabsTrigger value="azure">Azure</TabsTrigger>
@@ -217,6 +220,8 @@ export const ProfileForm = () => {
             </FormItem>
           )}
         />
+
+        <OpenaiConfigForm form={form} />
 
         <Button type="submit" className="w-full md:w-auto">
           Submit
