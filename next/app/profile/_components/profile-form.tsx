@@ -21,10 +21,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
+import { RoleTypeSwitch } from '@/components/share/role-type-switch'
 
 type FormType = {
   questionAmount: number
@@ -98,7 +105,9 @@ export const ProfileForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 w-full">
         <FormField
           control={form.control}
           name="questionAmount"
@@ -106,8 +115,8 @@ export const ProfileForm = () => {
             <FormItem>
               <FormLabel className="flex items-center justify-between">
                 <span>
-                  Please select how many questions are prepared for you each
-                  day.
+                  Please select how many questions are prepared for
+                  you each day
                 </span>
                 <Badge className="text-md">{field.value}</Badge>
               </FormLabel>
@@ -118,14 +127,14 @@ export const ProfileForm = () => {
                   step={1}
                   value={[field.value]}
                   className="cursor-pointer"
-                  onValueChange={(value) => {
+                  onValueChange={(value: number[]) => {
                     field.onChange(value[0])
                   }}
                 />
               </FormControl>
               <FormDescription>
-                The new plan will be implemented tomorrow after submitting the
-                changes
+                The new plan will be implemented tomorrow after
+                submitting the changes
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -137,11 +146,43 @@ export const ProfileForm = () => {
           name="currentRole"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Note Name</FormLabel>
+              <FormLabel>Please select your desired role</FormLabel>
               <FormControl>
-                <Input placeholder="Javascript" autoComplete="off" {...field} />
+                <Tabs
+                  value={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(value as RoleType)
+                  }}
+                  className="w-full md:w-[500px]">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="examiner">
+                      <RoleTypeSwitch
+                        roleType="examiner"
+                        className="mr-1"
+                      />
+                      Examiner
+                    </TabsTrigger>
+                    <TabsTrigger value="teacher">
+                      <RoleTypeSwitch
+                        roleType="teacher"
+                        className="mr-1"
+                      />
+                      Teacher
+                    </TabsTrigger>
+                    <TabsTrigger value="interviewer">
+                      <RoleTypeSwitch
+                        roleType="interviewer"
+                        className="mr-1"
+                      />
+                      Interviewer
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
               </FormControl>
-              <FormDescription>This is your note display name.</FormDescription>
+              <FormDescription>
+                Roles affect question generation and answer detection
+                results
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
