@@ -18,7 +18,11 @@ export const formSchema = z
     // OpenAI
     openaiKey: z.string().optional(),
     openaiOrganization: z.string().optional(),
-    openaiModel: z.string(),
+    openaiModel: z.union([
+      z.literal('gpt-3.5-turbo'),
+      z.literal('gpt-4'),
+      z.literal('gpt-4-1106-preview'),
+    ]),
     openaiProxy: z.string(),
     openaiBase: z.string(),
 

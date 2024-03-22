@@ -33,7 +33,7 @@ export const ProfileForm = () => {
       currentRole: 'examiner',
       openaiKey: '',
       openaiOrganization: '',
-      openaiModel: '',
+      openaiModel: 'gpt-3.5-turbo',
       openaiProxy: '',
       azureKey: '',
       openaiBase: '',

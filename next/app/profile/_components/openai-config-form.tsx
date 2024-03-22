@@ -3,7 +3,6 @@ import { UseFormReturn } from 'react-hook-form'
 import { formSchema } from '../_schema/form-schema'
 
 import {
-  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -11,6 +10,13 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 
 interface OpenaiConfigFormProps {
@@ -22,6 +28,36 @@ export const OpenaiConfigForm = (props: OpenaiConfigFormProps) => {
 
   return (
     <>
+      <FormField
+        control={form.control}
+        name="openaiModel"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>OpenAI Model</FormLabel>
+            <FormControl>
+              <Select
+                value={field.value}
+                onValueChange={field.onChange}>
+                <SelectTrigger className="w-full md:w-[240px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="gpt-3.5-turbo">
+                    gpt-3.5-turbo
+                  </SelectItem>
+                  <SelectItem value="gpt-4">gpt-4</SelectItem>
+                  <SelectItem value="gpt-4-1106-preview">
+                    gpt-4-1106-preview
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </FormControl>
+            <FormDescription></FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
       <FormField
         control={form.control}
         name="openaiKey"
