@@ -13,31 +13,31 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-interface OpenaiConfigFormProps {
+interface AzureConfigFormProps {
   form: UseFormReturn<z.infer<typeof formSchema>>
 }
 
-export const OpenaiConfigForm = (props: OpenaiConfigFormProps) => {
+export const AzureConfigForm = (props: AzureConfigFormProps) => {
   const { form } = props
 
   return (
     <>
       <FormField
         control={form.control}
-        name="openaiKey"
+        name="azureKey"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>OpenAI key</FormLabel>
+            <FormLabel>Azure key</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
             <FormDescription>
-              You can find your OpenAI key in the{' '}
+              You can find your Azure key in the{' '}
               <a
-                href="https://platform.openai.com/account/api-keys"
+                href="https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview"
                 target="_blank"
                 rel="noreferrer">
-                OpenAI API keys
+                Azure Active Directory
               </a>
             </FormDescription>
             <FormMessage />
@@ -47,34 +47,10 @@ export const OpenaiConfigForm = (props: OpenaiConfigFormProps) => {
 
       <FormField
         control={form.control}
-        name="openaiOrganization"
+        name="openaiVersion"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>OpenAI organization key (optional)</FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-
-            <FormDescription>
-              You can find your OpenAI organization key in the{' '}
-              <a
-                href="https://platform.openai.com/account/organization"
-                target="_blank"
-                rel="noreferrer">
-                OpenAI Organization
-              </a>
-            </FormDescription>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="openaiBase"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>OpenAI base endpoint (optional)</FormLabel>
+            <FormLabel>Model version</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
@@ -85,10 +61,24 @@ export const OpenaiConfigForm = (props: OpenaiConfigFormProps) => {
 
       <FormField
         control={form.control}
-        name="openaiProxy"
+        name="azureBase"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>OpenAI proxy (optional)</FormLabel>
+            <FormLabel>Azure base endpoint</FormLabel>
+            <FormControl>
+              <Input {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="deploymentName"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Azure deployment name</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>

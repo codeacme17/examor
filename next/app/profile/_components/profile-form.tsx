@@ -19,66 +19,10 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
-import { OpenaiConfigForm } from './openai-config-form'
 import { RoleTypeSwitch } from '@/components/share/role-type-switch'
-
-type FormType = {
-  questionAmount: number
-  currentRole: RoleType
-  currentModel: ModelType
-  openaiKey: string
-  openaiOrganization: string
-  openaiModel: string
-  openaiProxy: string
-  azureKey: string
-  openaiBase: string
-  azureBase: string
-  openaiVersion: string
-  deploymentName: string
-  anthropicKey: string
-  anthropicVersion: string
-  anthropicModel: string
-}
-
-export const formSchema = z.object({
-  questionAmount: z.number().int().positive(),
-  currentRole: z.union([
-    z.literal('examiner'),
-    z.literal('teacher'),
-    z.literal('interviewer'),
-  ]),
-  currentModel: z.union([
-    z.literal('openai'),
-    z.literal('azure'),
-    z.literal('anthropic'),
-  ]),
-  openaiKey: z.string().length(51, {
-    message: 'OpenAI key must be exactly 51 characters.',
-  }),
-  openaiOrganization: z
-    .string()
-    .optional()
-    .refine(
-      (data) => {
-        if (!data) return true
-        return data.length === 28
-      },
-      {
-        message:
-          'OpenAI Organization key must be exactly 28 characters if provided.',
-      }
-    ),
-  openaiModel: z.string(),
-  openaiProxy: z.string(),
-  azureKey: z.string(),
-  openaiBase: z.string(),
-  azureBase: z.string(),
-  openaiVersion: z.string(),
-  deploymentName: z.string(),
-  anthropicKey: z.string(),
-  anthropicVersion: z.string(),
-  anthropicModel: z.string(),
-})
+import { OpenaiConfigForm } from './openai-config-form'
+import { AzureConfigForm } from './azure-config-form'
+import { formSchema } from '../_schema/form-schema'
 
 export const ProfileForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -221,7 +165,13 @@ export const ProfileForm = () => {
           )}
         />
 
-        <OpenaiConfigForm form={form} />
+        {
+          {
+            openai: <OpenaiConfigForm form={form} />,
+            azure: <AzureConfigForm form={form} />,
+            anthropic: <div>Anthropic Config Form</div>,
+          }[form.watch('currentModel')]
+        }
 
         <Button type="submit" className="w-full md:w-auto">
           Submit
