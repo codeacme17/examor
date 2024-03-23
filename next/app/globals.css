@@ -88,13 +88,13 @@
     @apply bg-background text-foreground;
   }
 
-  a {
+  main a {
     text-decoration: underline;
     font-weight: 600;
     transition: opacity 0.2s ease-in-out;
   }
 
-  a:hover {
+  main a:hover {
     opacity: 0.7;
   }
 }
