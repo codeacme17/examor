@@ -83,7 +83,18 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  a {
+    text-decoration: underline;
+    font-weight: 600;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  a:hover {
+    opacity: 0.7;
   }
 }
