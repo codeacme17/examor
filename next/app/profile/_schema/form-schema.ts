@@ -29,12 +29,7 @@ export const formSchema = z
     // Azure
     azureKey: z.string().optional(),
     azureBase: z.string().optional(),
-    openaiVersion: z
-      .string()
-      .min(1, {
-        message: 'Model version must input.',
-      })
-      .optional(),
+    openaiVersion: z.string().optional(),
     deploymentName: z.string(),
 
     // Anthropic
@@ -53,10 +48,7 @@ export const formSchema = z
           })
         }
 
-        if (
-          data.openaiOrganization &&
-          data.openaiOrganization.length !== 28
-        ) {
+        if (data.openaiOrganization && data.openaiOrganization.length !== 28) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ['openaiOrganization'],
@@ -67,11 +59,11 @@ export const formSchema = z
         break
 
       case 'azure':
-        if (!data.azureKey || data.azureKey.length !== 87) {
+        if (!data.azureKey || data.azureKey.length !== 32) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ['azureKey'],
-            message: 'Azure key must be exactly 87 characters.',
+            message: 'Azure key must be exactly 32 characters.',
           })
         }
 
@@ -80,6 +72,14 @@ export const formSchema = z
             code: z.ZodIssueCode.custom,
             path: ['openaiVersion'],
             message: 'Model version must input.',
+          })
+        }
+
+        if (!data.deploymentName) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['deploymentName'],
+            message: 'Deployment Name must input.',
           })
         }
 

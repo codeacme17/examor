@@ -61,10 +61,10 @@ export const AzureConfigForm = (props: AzureConfigFormProps) => {
 
       <FormField
         control={form.control}
-        name="azureBase"
+        name="deploymentName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Azure base endpoint</FormLabel>
+            <FormLabel>Azure deployment name</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
@@ -75,10 +75,10 @@ export const AzureConfigForm = (props: AzureConfigFormProps) => {
 
       <FormField
         control={form.control}
-        name="deploymentName"
+        name="azureBase"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Azure deployment name</FormLabel>
+            <FormLabel>Azure base endpoint</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
