@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/share/password-input'
 
 interface OpenaiConfigFormProps {
   form: UseFormReturn<z.infer<typeof formSchema>>
@@ -35,16 +36,12 @@ export const OpenaiConfigForm = (props: OpenaiConfigFormProps) => {
           <FormItem>
             <FormLabel>OpenAI Model</FormLabel>
             <FormControl>
-              <Select
-                value={field.value}
-                onValueChange={field.onChange}>
+              <Select value={field.value} onValueChange={field.onChange}>
                 <SelectTrigger className="w-full md:w-[240px]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="gpt-3.5-turbo">
-                    gpt-3.5-turbo
-                  </SelectItem>
+                  <SelectItem value="gpt-3.5-turbo">gpt-3.5-turbo</SelectItem>
                   <SelectItem value="gpt-4">gpt-4</SelectItem>
                   <SelectItem value="gpt-4-1106-preview">
                     gpt-4-1106-preview
@@ -65,7 +62,7 @@ export const OpenaiConfigForm = (props: OpenaiConfigFormProps) => {
           <FormItem>
             <FormLabel>OpenAI key</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <PasswordInput {...field} />
             </FormControl>
             <FormDescription>
               You can find your OpenAI key in the{' '}
@@ -88,7 +85,7 @@ export const OpenaiConfigForm = (props: OpenaiConfigFormProps) => {
           <FormItem>
             <FormLabel>OpenAI organization key (optional)</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <PasswordInput {...field} />
             </FormControl>
 
             <FormDescription>

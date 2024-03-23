@@ -3,7 +3,6 @@ import { UseFormReturn } from 'react-hook-form'
 import { formSchema } from '../_schema/form-schema'
 
 import {
-  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -12,6 +11,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/share/password-input'
 
 interface AzureConfigFormProps {
   form: UseFormReturn<z.infer<typeof formSchema>>
@@ -29,7 +29,7 @@ export const AzureConfigForm = (props: AzureConfigFormProps) => {
           <FormItem>
             <FormLabel>Azure key</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <PasswordInput {...field} />
             </FormControl>
             <FormDescription>
               You can find your Azure key in the{' '}
