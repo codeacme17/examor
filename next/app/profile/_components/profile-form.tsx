@@ -22,6 +22,7 @@ import { Badge } from '@/components/ui/badge'
 import { RoleTypeSwitch } from '@/components/share/role-type-switch'
 import { OpenaiConfigForm } from './openai-config-form'
 import { AzureConfigForm } from './azure-config-form'
+import { AnthropicConfigForm } from './anthropic-config-form'
 import { formSchema } from '../_schema/form-schema'
 
 export const ProfileForm = () => {
@@ -41,7 +42,6 @@ export const ProfileForm = () => {
       openaiVersion: '',
       deploymentName: '',
       anthropicKey: '',
-      anthropicVersion: '',
       anthropicModel: '',
     },
   })
@@ -52,9 +52,7 @@ export const ProfileForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
         {/* QUESTION AMOUNT SELECT */}
         <FormField
           control={form.control}
@@ -63,8 +61,7 @@ export const ProfileForm = () => {
             <FormItem>
               <FormLabel className="flex items-center justify-between">
                 <span>
-                  Please select how many questions are prepared for
-                  you each day
+                  Please select how many questions are prepared for you each day
                 </span>
                 <Badge className="text-md">{field.value}</Badge>
               </FormLabel>
@@ -81,8 +78,8 @@ export const ProfileForm = () => {
                 />
               </FormControl>
               <FormDescription>
-                The new plan will be implemented tomorrow after
-                submitting the changes
+                The new plan will be implemented tomorrow after submitting the
+                changes
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -105,32 +102,22 @@ export const ProfileForm = () => {
                   className="w-full md:w-[500px]">
                   <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="examiner">
-                      <RoleTypeSwitch
-                        roleType="examiner"
-                        className="mr-1"
-                      />
+                      <RoleTypeSwitch roleType="examiner" className="mr-1" />
                       Examiner
                     </TabsTrigger>
                     <TabsTrigger value="teacher">
-                      <RoleTypeSwitch
-                        roleType="teacher"
-                        className="mr-1"
-                      />
+                      <RoleTypeSwitch roleType="teacher" className="mr-1" />
                       Teacher
                     </TabsTrigger>
                     <TabsTrigger value="interviewer">
-                      <RoleTypeSwitch
-                        roleType="interviewer"
-                        className="mr-1"
-                      />
+                      <RoleTypeSwitch roleType="interviewer" className="mr-1" />
                       Interviewer
                     </TabsTrigger>
                   </TabsList>
                 </Tabs>
               </FormControl>
               <FormDescription>
-                Roles affect question generation and answer detection
-                results
+                Roles affect question generation and answer detection results
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -154,9 +141,7 @@ export const ProfileForm = () => {
                   <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="openai">OpenAI</TabsTrigger>
                     <TabsTrigger value="azure">Azure</TabsTrigger>
-                    <TabsTrigger value="anthropic">
-                      Anthropic
-                    </TabsTrigger>
+                    <TabsTrigger value="anthropic">Anthropic</TabsTrigger>
                   </TabsList>
                 </Tabs>
               </FormControl>
@@ -169,7 +154,7 @@ export const ProfileForm = () => {
           {
             openai: <OpenaiConfigForm form={form} />,
             azure: <AzureConfigForm form={form} />,
-            anthropic: <div>Anthropic Config Form</div>,
+            anthropic: <AnthropicConfigForm form={form} />,
           }[form.watch('currentModel')]
         }
 

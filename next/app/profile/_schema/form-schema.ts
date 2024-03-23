@@ -33,9 +33,8 @@ export const formSchema = z
     deploymentName: z.string(),
 
     // Anthropic
-    anthropicKey: z.string(),
-    anthropicVersion: z.string(),
-    anthropicModel: z.string(),
+    anthropicKey: z.string().optional(),
+    anthropicModel: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     switch (data.currentModel) {
@@ -67,7 +66,7 @@ export const formSchema = z
           })
         }
 
-        if (!data.openaiVersion) {
+        if (!data.openaiVersion || !data.openaiVersion.trim()) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ['openaiVersion'],
@@ -75,14 +74,31 @@ export const formSchema = z
           })
         }
 
-        if (!data.deploymentName) {
+        if (!data.deploymentName || !data.deploymentName.trim()) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ['deploymentName'],
             message: 'Deployment Name must input.',
           })
         }
+        break
 
+      case 'anthropic':
+        if (!data.anthropicKey || data.anthropicKey.length !== 108) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['anthropicKey'],
+            message: 'Anthropic key must be exactly 108 characters.',
+          })
+        }
+
+        if (!data.anthropicModel || !data.anthropicModel.trim()) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['anthropicModel'],
+            message: 'Anthropic model must input.',
+          })
+        }
         break
 
       default:
