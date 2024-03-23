@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/share/password-input'
 
 interface AnthropicConfigFormProps {
   form: UseFormReturn<z.infer<typeof formSchema>>
@@ -28,7 +29,7 @@ export const AnthropicConfigForm = (props: AnthropicConfigFormProps) => {
           <FormItem>
             <FormLabel>Anthropic key</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <PasswordInput {...field} />
             </FormControl>
             <FormDescription>
               You can find your key in the{' '}
