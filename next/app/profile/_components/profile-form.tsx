@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
@@ -45,6 +44,11 @@ export const ProfileForm = () => {
       anthropicModel: '',
     },
   })
+
+  const handleModelChange = (value: ModelType, field: { onChange: any }) => {
+    field.onChange(value)
+    form.clearErrors()
+  }
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values)
@@ -134,9 +138,9 @@ export const ProfileForm = () => {
               <FormControl>
                 <Tabs
                   value={field.value}
-                  onValueChange={(value) => {
-                    field.onChange(value as RoleType)
-                  }}
+                  onValueChange={(value) =>
+                    handleModelChange(value as ModelType, field)
+                  }
                   className="w-full md:w-[400px]">
                   <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="openai">OpenAI</TabsTrigger>
