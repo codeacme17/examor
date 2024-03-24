@@ -1,14 +1,85 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model TNote {
+  id         Int         @id @default(autoincrement()) @db.Int
+  name       String      @db.VarChar(100)
+  icon       String      @default("mdi-text-box-outline") @db.VarChar(30)
+  uploadDate DateTime    @default(now()) @updatedAt @db.DateTime(0)
+  TFile      TFile[]
+  TDocument  TDocument[]
+}
+
+model TFile {
+  id            Int         @id @default(autoincrement()) @db.Int
+  noteId        Int         @db.Int
+  fileName      String?     @db.VarChar(100)
+  isUploading   String      @default("1") @db.VarChar(5)
+  questionCount Int         @default(0) @db.Int
+  uploadDate    DateTime    @default(now()) @updatedAt @db.DateTime(0)
+  TNote         TNote       @relation(fields: [noteId], references: [id])
+  TDocument     TDocument[]
+
+  @@index([noteId])
+}
+
+model TDocument {
+  id         Int         @id @default(autoincrement()) @db.Int
+  noteId     Int         @db.Int
+  fileId     Int         @db.Int
+  fileName   String?     @db.VarChar(100)
+  document   String      @db.Text
+  uploadDate DateTime    @default(now()) @updatedAt @db.DateTime(0)
+  TFile      TFile       @relation(fields: [fileId], references: [id])
+  TQuestion  TQuestion[]
+  TNote      TNote?      @relation(fields: [tNoteId], references: [id])
+  tNoteId    Int?        @db.Int
+
+  @@index([tNoteId])
+  @@index([fileId])
+}
+
+model TQuestion {
+  id              Int       @id @default(autoincrement()) @db.Int
+  content         String    @db.VarChar(1000)
+  documentId      Int       @db.Int
+  questionType    String?   @db.Char(20)
+  designatedRole  String    @db.Char(20)
+  pushDate        DateTime? @db.Date
+  isPushedToday   String    @default("0") @db.Char(1)
+  isAnsweredToday String    @default("0") @db.Char(1)
+  progress        Decimal   @default(0) @db.Decimal(10, 2)
+  lastAnswer      String?   @db.Text
+  uploadDate      DateTime  @default(now()) @updatedAt @db.DateTime(0)
+  TDocument       TDocument @relation(fields: [documentId], references: [id])
+
+  @@index([documentId])
+}
+
+model TProfile {
+  id                 Int     @id @default(autoincrement()) @db.Int
+  questionAmount     Int     @default(13) @db.Int
+  currentRole        String  @default("examiner") @db.Char(20)
+  currentModel       String  @default("OpenAI") @db.Char(20)
+  openaiKey          String  @default("") @db.VarChar(100)
+  openaiOrganization String  @default("") @db.Char(50)
+  openaiModel        String  @default("gpt-3.5-turbo") @db.Char(40)
+  openaiProxy        String  @default("") @db.VarChar(100)
+  azureKey           String  @default("") @db.VarChar(100)
+  openaiBase         String  @default("https://api.openai.com") @db.VarChar(100)
+  azureBase          String  @default("") @db.VarChar(100)
+  openaiVersion      String  @default("") @db.VarChar(100)
+  deploymentName     String  @default("") @db.VarChar(100)
+  anthropicKey       String  @default("") @db.VarChar(100)
+  anthropicVersion   String  @default("") @db.VarChar(100)
+  anthropicModel     String  @default("") @db.Char(40)
+  notionKey          String? @db.Char(50)
 }
