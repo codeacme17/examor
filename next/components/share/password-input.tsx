@@ -8,8 +8,8 @@ import { Button } from '@/components/ui/button'
 interface PasswordInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-export const PasswordInput = forwardRef<PasswordInputProps, HTMLInputElement>(
-  (ref, props) => {
+export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
+  (props, ref) => {
     const [show, setShow] = useState(false)
 
     const handleClick = (e: React.MouseEvent) => {
@@ -19,7 +19,7 @@ export const PasswordInput = forwardRef<PasswordInputProps, HTMLInputElement>(
 
     return (
       <div className="relative">
-        <Input {...props} type={show ? 'text' : 'password'} />
+        <Input {...props} ref={ref} type={show ? 'text' : 'password'} />
         <Button
           className="absolute right-2 top-0"
           variant={'ghost'}
