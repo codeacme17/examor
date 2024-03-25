@@ -1,0 +1,1 @@
+export { useProfileStore } from './profile'

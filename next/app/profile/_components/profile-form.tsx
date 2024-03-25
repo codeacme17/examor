@@ -22,7 +22,7 @@ import { RoleTypeSwitch } from '@/components/share/role-type-switch'
 import { OpenaiConfigForm } from './openai-config-form'
 import { AzureConfigForm } from './azure-config-form'
 import { AnthropicConfigForm } from './anthropic-config-form'
-import { formSchema } from '../_schema/form-schema'
+import { profileFormSchema as formSchema } from '@/schema/profile'
 
 export const ProfileForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
