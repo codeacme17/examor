@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ModelType, RoleType } from '@/types/global'
+import { useProfileStore } from '@/store'
 
 import {
   Form,
@@ -25,6 +26,10 @@ import { AnthropicConfigForm } from './anthropic-config-form'
 import { profileFormSchema as formSchema } from '@/schema/profile'
 
 export const ProfileForm = () => {
+  const profile = useProfileStore()
+
+  console.log(profile)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
