@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { UseFormReturn } from 'react-hook-form'
-import { formSchema } from '../_schema/form-schema'
+import { profileFormSchema as formSchema } from '@/schema/profile'
 
 import {
   FormControl,

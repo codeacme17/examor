@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const formSchema = z
+export const profileFormSchema = z
   .object({
     questionAmount: z.number().int().positive(),
 

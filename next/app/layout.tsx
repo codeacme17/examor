@@ -1,5 +1,6 @@
 import { Poppins } from 'next/font/google'
 import { cn } from '@/lib/utils'
+import { profileHandler } from '@/lib/db-handler'
 import type { Metadata } from 'next'
 import './globals.css'
 
@@ -18,9 +19,11 @@ export const metadata: Metadata = {
     'For students, scholars, interviewees and lifelong learners. Let LLMs assist you in learning 🎓',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const profile = await profileHandler.init()
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
