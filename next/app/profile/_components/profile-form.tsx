@@ -1,10 +1,13 @@
 'use client'
 
+import { useEffect } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ModelType, RoleType } from '@/types/global'
+import { ModelType, ProfileType, RoleType } from '@/types/global'
 import { useProfileStore } from '@/store'
+import { PROFILE_DEFAULT } from '@/lib/contants'
+import { profileFormSchema as formSchema } from '@/schema/profile'
 
 import {
   Form,
@@ -23,31 +26,13 @@ import { RoleTypeSwitch } from '@/components/share/role-type-switch'
 import { OpenaiConfigForm } from './openai-config-form'
 import { AzureConfigForm } from './azure-config-form'
 import { AnthropicConfigForm } from './anthropic-config-form'
-import { profileFormSchema as formSchema } from '@/schema/profile'
 
 export const ProfileForm = () => {
-  const profile = useProfileStore()
-
-  console.log(profile)
+  const { profile } = useProfileStore()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      questionAmount: 12,
-      currentModel: 'openai',
-      currentRole: 'examiner',
-      openaiKey: '',
-      openaiOrganization: '',
-      openaiModel: 'gpt-3.5-turbo',
-      openaiProxy: '',
-      azureKey: '',
-      openaiBase: 'https://api.openai.com',
-      azureBase: '',
-      openaiVersion: '',
-      deploymentName: '',
-      anthropicKey: '',
-      anthropicModel: '',
-    },
+    defaultValues: PROFILE_DEFAULT,
   })
 
   const handleModelChange = (value: ModelType, field: { onChange: any }) => {
@@ -58,6 +43,17 @@ export const ProfileForm = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values)
   }
+
+  useEffect(() => {
+    for (const key in profile) {
+      if (Object.prototype.hasOwnProperty.call(profile, key)) {
+        const _key = key as keyof Omit<ProfileType, 'id'>
+        const element = profile[_key]
+        form.setValue(_key, element)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile])
 
   return (
     <Form {...form}>
