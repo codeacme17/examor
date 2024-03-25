@@ -36,7 +36,7 @@ export const ProfileForm = () => {
       openaiModel: 'gpt-3.5-turbo',
       openaiProxy: '',
       azureKey: '',
-      openaiBase: '',
+      openaiBase: 'https://api.openai.com',
       azureBase: '',
       openaiVersion: '',
       deploymentName: '',

@@ -66,7 +66,7 @@ model TQuestion {
 
 model TProfile {
   id                 Int     @id @default(autoincrement()) @db.Int
-  questionAmount     Int     @default(13) @db.Int
+  questionAmount     Int     @default(12) @db.Int
   currentRole        String  @default("examiner") @db.Char(20)
   currentModel       String  @default("OpenAI") @db.Char(20)
   openaiKey          String  @default("") @db.VarChar(100)

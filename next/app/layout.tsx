@@ -1,5 +1,6 @@
 import { Poppins } from 'next/font/google'
 import { cn } from '@/lib/utils'
+import { initProfile } from '@/lib/db'
 import type { Metadata } from 'next'
 import './globals.css'
 
@@ -21,6 +22,8 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  initProfile()
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
