@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { UseFormReturn } from 'react-hook-form'
 import { profileFormSchema } from '@/schema/profile'
 
 export type RoleType = 'examiner' | 'teacher' | 'interviewer'
@@ -19,4 +18,4 @@ export interface Question {
   updatedDate?: string
 }
 
-export type ProfileType = UseFormReturn<z.infer<typeof profileFormSchema>> | {}
+export type ProfileType = z.infer<typeof profileFormSchema> & { id?: number }

@@ -1,9 +1,14 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ModelType, RoleType } from '@/types/global'
+import { ModelType, ProfileType, RoleType } from '@/types/global'
+import { useProfileStore } from '@/store'
+import { PROFILE_DEFAULT } from '@/lib/contants'
+import { profileFormSchema as formSchema } from '@/schema/profile'
+import { useToast } from '@/components/ui/use-toast'
 
 import {
   Form,
@@ -15,34 +20,22 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
 import { RoleTypeSwitch } from '@/components/share/role-type-switch'
 import { OpenaiConfigForm } from './openai-config-form'
 import { AzureConfigForm } from './azure-config-form'
 import { AnthropicConfigForm } from './anthropic-config-form'
-import { profileFormSchema as formSchema } from '@/schema/profile'
+import { LoadButton } from '@/components/share/load-button'
 
 export const ProfileForm = () => {
+  const { profile, setProfile } = useProfileStore()
+  const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      questionAmount: 12,
-      currentModel: 'openai',
-      currentRole: 'examiner',
-      openaiKey: '',
-      openaiOrganization: '',
-      openaiModel: 'gpt-3.5-turbo',
-      openaiProxy: '',
-      azureKey: '',
-      openaiBase: 'https://api.openai.com',
-      azureBase: '',
-      openaiVersion: '',
-      deploymentName: '',
-      anthropicKey: '',
-      anthropicModel: '',
-    },
+    defaultValues: PROFILE_DEFAULT,
   })
 
   const handleModelChange = (value: ModelType, field: { onChange: any }) => {
@@ -50,9 +43,44 @@ export const ProfileForm = () => {
     form.clearErrors()
   }
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+  const updateProfile = async () => {
+    const data = form.getValues()
+    const res = await fetch('/api/profile/update', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    })
+
+    if (!res.ok)
+      return toast({
+        title: 'Request Error',
+        description: res.text(),
+        variant: 'destructive',
+      })
+
+    toast({
+      title: 'Profile updated',
+      description: 'Your profile has been updated successfully',
+    })
+
+    setProfile(await res.json())
   }
+
+  const onSubmit = async () => {
+    setLoading(true)
+    await updateProfile()
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    for (const key in profile) {
+      if (Object.prototype.hasOwnProperty.call(profile, key)) {
+        const _key = key as keyof Omit<ProfileType, 'id'>
+        const element = profile[_key]
+        form.setValue(_key, element)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile])
 
   return (
     <Form {...form}>
@@ -162,9 +190,12 @@ export const ProfileForm = () => {
           }[form.watch('currentModel')]
         }
 
-        <Button type="submit" className="w-full md:w-auto">
+        <LoadButton
+          loading={loading}
+          loadingLabel="submitting"
+          className="w-full md:w-auto">
           Submit
-        </Button>
+        </LoadButton>
       </form>
     </Form>
   )

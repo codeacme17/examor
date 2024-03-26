@@ -6,6 +6,7 @@ import './globals.css'
 
 import { ThemeProvider } from '@/components/theme-provider'
 import { ResizePanel } from '@/components/layout/resize-panel'
+import { Toaster } from '@/components/ui/toaster'
 
 const poppins = Poppins({
   subsets: ['latin-ext'],
@@ -40,6 +41,7 @@ export default async function RootLayout({
           disableTransitionOnChange
           enableSystem>
           <ResizePanel>{children}</ResizePanel>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
