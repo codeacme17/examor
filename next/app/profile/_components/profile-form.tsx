@@ -20,11 +20,9 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
 import { RoleTypeSwitch } from '@/components/share/role-type-switch'
-import { Loader2 } from 'lucide-react'
 import { OpenaiConfigForm } from './openai-config-form'
 import { AzureConfigForm } from './azure-config-form'
 import { AnthropicConfigForm } from './anthropic-config-form'
@@ -49,13 +47,13 @@ export const ProfileForm = () => {
     const data = form.getValues()
     const res = await fetch('/api/profile/update', {
       method: 'PATCH',
-      body: JSON.stringify({ id: profile.id, ...data }),
+      body: JSON.stringify(data),
     })
 
     if (!res.ok)
       return toast({
-        title: 'Error',
-        description: 'Failed to update profile',
+        title: 'Request Error',
+        description: res.text(),
         variant: 'destructive',
       })
 
@@ -63,6 +61,7 @@ export const ProfileForm = () => {
       title: 'Profile updated',
       description: 'Your profile has been updated successfully',
     })
+
     setProfile(await res.json())
   }
 
