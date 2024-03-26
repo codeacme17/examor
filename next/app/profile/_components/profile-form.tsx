@@ -41,7 +41,17 @@ export const ProfileForm = () => {
   }
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    updateProfile()
+  }
+
+  const updateProfile = async () => {
+    const data = form.getValues()
+    const res = await fetch('/api/profile/update', {
+      method: 'PATCH',
+      body: JSON.stringify({ id: profile.id, ...data }),
+    })
+
+    console.log(await res.json())
   }
 
   useEffect(() => {

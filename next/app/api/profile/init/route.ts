@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server'
 export async function POST() {
   try {
     let profile = await prismadb.tProfile.findFirst()
-    console.log(profile)
 
     if (profile) profile
     else
