@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,6 +8,7 @@ import { ModelType, ProfileType, RoleType } from '@/types/global'
 import { useProfileStore } from '@/store'
 import { PROFILE_DEFAULT } from '@/lib/contants'
 import { profileFormSchema as formSchema } from '@/schema/profile'
+import { useToast } from '@/components/ui/use-toast'
 
 import {
   Form,
@@ -23,12 +24,15 @@ import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
 import { RoleTypeSwitch } from '@/components/share/role-type-switch'
+import { Loader2 } from 'lucide-react'
 import { OpenaiConfigForm } from './openai-config-form'
 import { AzureConfigForm } from './azure-config-form'
 import { AnthropicConfigForm } from './anthropic-config-form'
 
 export const ProfileForm = () => {
-  const { profile } = useProfileStore()
+  const { profile, setProfile } = useProfileStore()
+  const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,10 +44,6 @@ export const ProfileForm = () => {
     form.clearErrors()
   }
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    updateProfile()
-  }
-
   const updateProfile = async () => {
     const data = form.getValues()
     const res = await fetch('/api/profile/update', {
@@ -51,7 +51,22 @@ export const ProfileForm = () => {
       body: JSON.stringify({ id: profile.id, ...data }),
     })
 
-    console.log(await res.json())
+    if (!res.ok)
+      return toast({
+        title: 'Error',
+        description: 'Failed to update profile',
+        variant: 'destructive',
+      })
+
+    toast({
+      title: 'Profile updated',
+      description: 'Your profile has been updated successfully',
+    })
+    setProfile(await res.json())
+  }
+
+  const onSubmit = () => {
+    updateProfile()
   }
 
   useEffect(() => {

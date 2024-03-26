@@ -5,8 +5,6 @@ import { prismadb } from '@/lib/prismadb'
 export const PATCH = async (req: Request) => {
   try {
     const body: ProfileType = await req.json()
-    console.log('body', body)
-
     const { id, ...rest } = body
 
     if (!id) throw new Error('Profile ID is required')
