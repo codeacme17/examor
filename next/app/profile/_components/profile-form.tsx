@@ -28,6 +28,7 @@ import { Loader2 } from 'lucide-react'
 import { OpenaiConfigForm } from './openai-config-form'
 import { AzureConfigForm } from './azure-config-form'
 import { AnthropicConfigForm } from './anthropic-config-form'
+import { LoadButton } from '@/components/share/load-button'
 
 export const ProfileForm = () => {
   const { profile, setProfile } = useProfileStore()
@@ -65,8 +66,10 @@ export const ProfileForm = () => {
     setProfile(await res.json())
   }
 
-  const onSubmit = () => {
-    updateProfile()
+  const onSubmit = async () => {
+    setLoading(true)
+    await updateProfile()
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -188,9 +191,12 @@ export const ProfileForm = () => {
           }[form.watch('currentModel')]
         }
 
-        <Button type="submit" className="w-full md:w-auto">
+        <LoadButton
+          loading={loading}
+          loadingLabel="submitting"
+          className="w-full md:w-auto">
           Submit
-        </Button>
+        </LoadButton>
       </form>
     </Form>
   )
