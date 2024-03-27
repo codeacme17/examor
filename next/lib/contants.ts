@@ -16,3 +16,18 @@ export const PROFILE_DEFAULT: ProfileType = {
   anthropicKey: '',
   anthropicModel: '',
 }
+
+export const PROFILE_INPUT_KEYS: Array<keyof ProfileType> = [
+  'id',
+  'openaiKey',
+  'openaiOrganization',
+  'openaiModel',
+  'openaiProxy',
+  'azureKey',
+  'openaiBase',
+  'azureBase',
+  'openaiVersion',
+  'deploymentName',
+  'anthropicKey',
+  'anthropicModel',
+]
