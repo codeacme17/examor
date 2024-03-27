@@ -65,21 +65,20 @@ model TQuestion {
 }
 
 model TProfile {
-  id                 Int     @id @default(autoincrement()) @db.Int
-  questionAmount     Int     @default(12) @db.Int
-  currentRole        String  @default("examiner") @db.Char(20)
-  currentModel       String  @default("OpenAI") @db.Char(20)
-  openaiKey          String  @default("") @db.VarChar(100)
-  openaiOrganization String  @default("") @db.Char(50)
-  openaiModel        String  @default("gpt-3.5-turbo") @db.Char(40)
-  openaiProxy        String  @default("") @db.VarChar(100)
-  azureKey           String  @default("") @db.VarChar(100)
-  openaiBase         String  @default("https://api.openai.com") @db.VarChar(100)
-  azureBase          String  @default("") @db.VarChar(100)
-  openaiVersion      String  @default("") @db.VarChar(100)
-  deploymentName     String  @default("") @db.VarChar(100)
-  anthropicKey       String  @default("") @db.VarChar(100)
-  anthropicVersion   String  @default("") @db.VarChar(100)
-  anthropicModel     String  @default("") @db.Char(40)
-  notionKey          String? @db.Char(50)
+  id                 Int    @id @default(autoincrement()) @db.Int
+  questionAmount     Int    @default(12) @db.Int
+  currentRole        String @default("examiner") @db.Char(20)
+  currentModel       String @default("OpenAI") @db.Char(20)
+  openaiKey          String @default("") @db.VarChar(100)
+  openaiOrganization String @default("") @db.Char(50)
+  openaiModel        String @default("gpt-3.5-turbo") @db.Char(40)
+  openaiProxy        String @default("") @db.VarChar(100)
+  azureKey           String @default("") @db.VarChar(100)
+  openaiBase         String @default("https://api.openai.com") @db.VarChar(100)
+  azureBase          String @default("") @db.VarChar(100)
+  openaiVersion      String @default("") @db.VarChar(100)
+  deploymentName     String @default("") @db.VarChar(100)
+  anthropicKey       String @default("") @db.VarChar(100)
+  anthropicVersion   String @default("") @db.VarChar(100)
+  anthropicModel     String @default("") @db.Char(40)
 }
