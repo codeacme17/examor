@@ -1,24 +1,11 @@
-import {
-  ChangeEvent,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useState,
-} from 'react'
+import { ChangeEvent, forwardRef, useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { UploadCloud, Trash2, Paperclip } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
-interface DragUploadRef {
-  files: File[]
-}
+interface DragUploadRef extends HTMLDivElement {}
 
 interface DragUploadProps {
   files: File[]
@@ -30,9 +17,9 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
     const [isDragOver, setIsDragOver] = useState(false)
     const [files, setFiles] = useState<File[]>([])
 
-    useImperativeHandle(ref, () => ({
-      files: files,
-    }))
+    useEffect(() => {
+      console.log(_files)
+    }, [_files])
 
     useEffect(() => {
       onFileChange(files)
@@ -72,14 +59,13 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
     }
 
     const handleDelete = (fileName: string) => {
-      setFiles((prev) =>
-        prev.filter((file) => file.name !== fileName)
-      )
+      setFiles((prev) => prev.filter((file) => file.name !== fileName))
     }
 
     return (
       <div
         className="flex items-center justify-center w-full flex-col"
+        ref={ref}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onDragLeave={handleDragLeave}>
@@ -94,8 +80,8 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
           <div className="flex flex-col items-center justify-center pt-5 pb-6 select-none pointer-events-none">
             <UploadCloud className="w-8 h-8 mb-4 text-zinc-500 dark:text-zinc-400" />
             <p className="mb-2 text-sm text-zinc-500 dark:text-zinc-400">
-              <span className="font-semibold">Click to upload</span>{' '}
-              or drag and drop
+              <span className="font-semibold">Click to upload</span> or drag and
+              drop
             </p>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
               current only support <strong>.md</strong>
@@ -111,10 +97,10 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
           />
         </label>
 
-        {!!files.length && (
+        {!!_files.length && (
           <Table className="mt-2">
             <TableBody>
-              {files.map((file) => (
+              {_files.map((file) => (
                 <TableRow key={file.name}>
                   <TableCell className="font-medium p-1 pl-4">
                     <div className="flex items-center">

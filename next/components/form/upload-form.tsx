@@ -25,6 +25,7 @@ import { Input } from '@/components/ui/input'
 import { DragUpload } from './drag-upload'
 import { createFormSchema } from '@/schema/upload'
 import { UploadFormType } from '@/types/global'
+import { useToast } from '../ui/use-toast'
 
 interface UploadFormProps {
   type: UploadFormType
@@ -34,6 +35,7 @@ export const UploadForm = (props: UploadFormProps) => {
   const { type } = props
 
   const formSchema = createFormSchema(type)
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,9 +60,24 @@ export const UploadForm = (props: UploadFormProps) => {
       formData.append('files', file)
     })
 
-    await fetch('/api/note/create', {
+    const res = await fetch('/api/note/create', {
       method: 'POST',
       body: formData,
+    })
+
+    if (!res.ok)
+      toast({
+        title: 'Error',
+        variant: 'destructive',
+        description: 'Something went wrong! Please try again.',
+      })
+
+    form.reset()
+    form.setValue('files', [])
+
+    toast({
+      title: 'Success',
+      description: 'Your note has been uploaded successfully.',
     })
   }
 
