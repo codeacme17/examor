@@ -16,17 +16,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
 import { DragUpload } from './drag-upload'
-import { UploadFormType } from '@/types/global'
+import { QuestionType, UploadFormType } from '@/types/global'
 import { LoadButton } from '../share/load-button'
+import { QuestionTypeSwitch } from '../share/question-type-switch'
 
 interface UploadFormProps {
   type: UploadFormType
@@ -34,9 +29,8 @@ interface UploadFormProps {
 
 export const UploadForm = (props: UploadFormProps) => {
   const { type } = props
-
-  const formSchema = createFormSchema(type)
   const { toast } = useToast()
+  const formSchema = createFormSchema(type)
 
   const [loading, setLoading] = useState(false)
 
@@ -94,24 +88,42 @@ export const UploadForm = (props: UploadFormProps) => {
             <FormItem>
               <FormLabel>Question Type</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}>
-                  <SelectTrigger className="w-full  md:w-[320px]">
-                    <SelectValue placeholder="Theme" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="short">
-                      <span className="mr-2">📝</span> Short Answer
-                    </SelectItem>
-                    <SelectItem value="single">
-                      <span className="mr-2">🔠</span> Single Choice
-                    </SelectItem>
-                    <SelectItem value="blank">
-                      <span className="mr-2">⬜</span> Fill in the blank
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <Tabs
+                  value={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(value as QuestionType)
+                  }}
+                  className="w-full md:w-[500px]">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="short">
+                      <QuestionTypeSwitch
+                        questionType={'short'}
+                        className="mr-2"
+                      />
+                      <span className="hidden sm:inline-block">
+                        Short Answer
+                      </span>
+                    </TabsTrigger>
+                    <TabsTrigger value="single">
+                      <QuestionTypeSwitch
+                        questionType={'single'}
+                        className="mr-2"
+                      />
+                      <span className="hidden sm:inline-block">
+                        Single Choice
+                      </span>
+                    </TabsTrigger>
+                    <TabsTrigger value="blank">
+                      <QuestionTypeSwitch
+                        questionType={'blank'}
+                        className="mr-2"
+                      />
+                      <span className="hidden sm:inline-block">
+                        Fill in the blank
+                      </span>
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
               </FormControl>
               <FormDescription>
                 You can choose the question type in this note.
