@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ModelType, ProfileType, RoleType } from '@/types/global'
 import { useProfileStore } from '@/store'
-import { PROFILE_DEFAULT } from '@/lib/contants'
+import { PROFILE_DEFAULT, PROFILE_INPUT_KEYS } from '@/lib/contants'
 import { profileFormSchema as formSchema } from '@/schema/profile'
 import { useToast } from '@/components/ui/use-toast'
 
@@ -41,6 +41,13 @@ export const ProfileForm = () => {
   const handleModelChange = (value: ModelType, field: { onChange: any }) => {
     field.onChange(value)
     form.clearErrors()
+    resetUnsavedChanges()
+  }
+
+  const resetUnsavedChanges = () => {
+    PROFILE_INPUT_KEYS.forEach((key) => {
+      form.resetField(key as any, { defaultValue: profile[key] })
+    })
   }
 
   const updateProfile = async () => {
