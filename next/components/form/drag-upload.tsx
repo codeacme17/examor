@@ -15,11 +15,7 @@ interface DragUploadProps {
 export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
   ({ files: _files, onFileChange }, ref) => {
     const [isDragOver, setIsDragOver] = useState(false)
-    const [files, setFiles] = useState<File[]>([])
-
-    useEffect(() => {
-      console.log(_files)
-    }, [_files])
+    const [files, setFiles] = useState<File[]>(_files)
 
     useEffect(() => {
       onFileChange(files)
@@ -58,7 +54,8 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
       setFiles((prev) => [...prev, ...newFiles])
     }
 
-    const handleDelete = (fileName: string) => {
+    const handleDelete = (e: React.MouseEvent, fileName: string) => {
+      e.preventDefault()
       setFiles((prev) => prev.filter((file) => file.name !== fileName))
     }
 
@@ -115,7 +112,7 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
                     <Button
                       size={'icon'}
                       variant={'ghost'}
-                      onClick={() => handleDelete(file.name)}>
+                      onClick={(e) => handleDelete(e, file.name)}>
                       <Trash2 size={14} />
                     </Button>
                   </TableCell>
