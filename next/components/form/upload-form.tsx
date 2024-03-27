@@ -66,10 +66,10 @@ export const UploadForm = (props: UploadFormProps) => {
     })
 
     if (!res.ok)
-      toast({
+      return toast({
         title: 'Error',
         variant: 'destructive',
-        description: 'Something went wrong! Please try again.',
+        description: res.text(),
       })
 
     form.reset()
