@@ -23,26 +23,17 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { DragUpload } from './drag-upload'
+import { createFormSchema } from '@/schema/upload'
+import { UploadFormType } from '@/types/global'
 
 interface UploadFormProps {
-  type: 'note' | 'file'
+  type: UploadFormType
 }
 
 export const UploadForm = (props: UploadFormProps) => {
   const { type } = props
 
-  const formSchema = z.object({
-    type: z.enum(['short', 'single', 'blank']),
-    name:
-      type === 'note'
-        ? z.string().min(2, {
-            message: 'File name must be at least 2 characters.',
-          })
-        : z.literal(''),
-    files: z.array(z.instanceof(File)).min(1, {
-      message: 'Please upload at least 1 file.',
-    }),
-  })
+  const formSchema = createFormSchema(type)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,13 +46,27 @@ export const UploadForm = (props: UploadFormProps) => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values)
+    upload()
+  }
+
+  const upload = async () => {
+    const formData = new FormData()
+
+    formData.append('type', form.getValues('type'))
+    formData.append('name', form.getValues('name'))
+    form.getValues('files').forEach((file) => {
+      formData.append('files', file)
+    })
+
+    await fetch('/api/note/create', {
+      method: 'POST',
+      body: formData,
+    })
   }
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
         <FormField
           control={form.control}
           name="type"
@@ -83,8 +88,7 @@ export const UploadForm = (props: UploadFormProps) => {
                       <span className="mr-2">🔠</span> Single Choice
                     </SelectItem>
                     <SelectItem value="blank">
-                      <span className="mr-2">⬜</span> Fill in the
-                      blank
+                      <span className="mr-2">⬜</span> Fill in the blank
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -105,11 +109,7 @@ export const UploadForm = (props: UploadFormProps) => {
               <FormItem>
                 <FormLabel>Note Name</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Javascript"
-                    autoComplete="off"
-                    {...field}
-                  />
+                  <Input autoComplete="off" {...field} />
                 </FormControl>
                 <FormDescription>
                   This is your note display name.
@@ -127,10 +127,7 @@ export const UploadForm = (props: UploadFormProps) => {
             <FormItem>
               <FormLabel>Files</FormLabel>
               <FormControl>
-                <DragUpload
-                  onFileChange={field.onChange}
-                  files={field.value}
-                />
+                <DragUpload onFileChange={field.onChange} files={field.value} />
               </FormControl>
               <FormMessage />
             </FormItem>
