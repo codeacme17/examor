@@ -8,4 +8,12 @@ const create = async (data: any) => {
   return note
 }
 
-export const noteHandler = { create }
+const isExist = async (name: string) => {
+  const note = await prismadb.tNote.findFirst({
+    where: { name },
+  })
+
+  return !!note
+}
+
+export const noteHandler = { create, isExist }

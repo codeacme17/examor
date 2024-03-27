@@ -6,9 +6,11 @@ export const POST = async (req: Request) => {
   try {
     const formData = await req.formData()
 
-    const name = formData.get('name')
+    const name = formData.get('name') as string
     const type = formData.get('type')
     const files = formData.getAll('files') as File[]
+
+    if (await noteHandler.isExist(name)) throw new Error('Note already exists')
 
     const { id } = await noteHandler.create({ name })
 
