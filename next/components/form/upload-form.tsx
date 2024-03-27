@@ -1,8 +1,11 @@
 'use client'
 
+import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useToast } from '../ui/use-toast'
+import { createFormSchema } from '@/schema/upload'
 
 import {
   Form,
@@ -20,12 +23,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { DragUpload } from './drag-upload'
-import { createFormSchema } from '@/schema/upload'
 import { UploadFormType } from '@/types/global'
-import { useToast } from '../ui/use-toast'
+import { LoadButton } from '../share/load-button'
 
 interface UploadFormProps {
   type: UploadFormType
@@ -37,6 +38,8 @@ export const UploadForm = (props: UploadFormProps) => {
   const formSchema = createFormSchema(type)
   const { toast } = useToast()
 
+  const [loading, setLoading] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,9 +49,10 @@ export const UploadForm = (props: UploadFormProps) => {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
-    upload()
+  const onSubmit = async () => {
+    setLoading(true)
+    await upload()
+    setLoading(false)
   }
 
   const upload = async () => {
@@ -73,7 +77,6 @@ export const UploadForm = (props: UploadFormProps) => {
       })
 
     form.reset()
-    form.setValue('files', [])
 
     toast({
       title: 'Success',
@@ -151,9 +154,12 @@ export const UploadForm = (props: UploadFormProps) => {
           )}
         />
 
-        <Button type="submit" className="w-full md:w-auto">
+        <LoadButton
+          loading={loading}
+          loadingLabel="Submitting"
+          className="w-full md:w-auto">
           Submit
-        </Button>
+        </LoadButton>
       </form>
     </Form>
   )

@@ -13,13 +13,8 @@ interface DragUploadProps {
 }
 
 export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
-  ({ files: _files, onFileChange }, ref) => {
+  ({ files, onFileChange }, ref) => {
     const [isDragOver, setIsDragOver] = useState(false)
-    const [files, setFiles] = useState<File[]>(_files)
-
-    useEffect(() => {
-      onFileChange(files)
-    }, [files, onFileChange])
 
     const handleDragOver = (e: React.DragEvent) => {
       e.preventDefault()
@@ -50,13 +45,12 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
         (selectedFiles) =>
           !files.some((file) => file.name === selectedFiles.name)
       )
-
-      setFiles((prev) => [...prev, ...newFiles])
+      onFileChange([...files, ...newFiles])
     }
 
     const handleDelete = (e: React.MouseEvent, fileName: string) => {
       e.preventDefault()
-      setFiles((prev) => prev.filter((file) => file.name !== fileName))
+      onFileChange(files.filter((file) => file.name !== fileName))
     }
 
     return (
@@ -94,10 +88,10 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
           />
         </label>
 
-        {!!_files.length && (
+        {!!files.length && (
           <Table className="mt-2">
             <TableBody>
-              {_files.map((file) => (
+              {files.map((file) => (
                 <TableRow key={file.name}>
                   <TableCell className="font-medium p-1 pl-4">
                     <div className="flex items-center">
