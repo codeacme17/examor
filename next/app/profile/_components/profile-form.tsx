@@ -50,7 +50,7 @@ export const ProfileForm = () => {
     })
   }
 
-  const updateProfile = async () => {
+  const update = async () => {
     const data = form.getValues()
     const res = await fetch('/api/profile/update', {
       method: 'PATCH',
@@ -74,7 +74,7 @@ export const ProfileForm = () => {
 
   const onSubmit = async () => {
     setLoading(true)
-    await updateProfile()
+    await update()
     setLoading(false)
   }
 

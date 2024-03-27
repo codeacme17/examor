@@ -43,12 +43,6 @@ export const UploadForm = (props: UploadFormProps) => {
     },
   })
 
-  const onSubmit = async () => {
-    setLoading(true)
-    await upload()
-    setLoading(false)
-  }
-
   const upload = async () => {
     const formData = new FormData()
 
@@ -76,6 +70,12 @@ export const UploadForm = (props: UploadFormProps) => {
       title: 'Success',
       description: 'Your note has been uploaded successfully.',
     })
+  }
+
+  const onSubmit = async () => {
+    setLoading(true)
+    await upload()
+    setLoading(false)
   }
 
   return (
