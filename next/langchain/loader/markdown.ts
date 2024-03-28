@@ -1,11 +1,12 @@
 import { Document } from 'langchain/document'
+import { MarkdownTextSplitter } from 'langchain/text_splitter'
 import {
-  MarkdownTextSplitter,
-  RecursiveCharacterTextSplitter,
-} from 'langchain/text_splitter'
-import { lenToken } from './share'
-
-const MAX_TOKEN = 2500
+  MAX_TOKEN,
+  lenToken,
+  isOddBacktickPaired,
+  isTheTokenExceeded,
+  isThereNoEnoughContent,
+} from './share'
 
 export const markdownSpitter = async (markdown: string) => {
   const splitter = new MarkdownTextSplitter({
@@ -24,8 +25,14 @@ export const markdownSpitter = async (markdown: string) => {
   })
 
   const docs = await splitter.createDocuments([markdown])
+  const resDodcs: Document[] = []
 
-  docs.map((doc: Document) => {
-    console.log(lenToken(doc.pageContent))
-  })
+  for (const doc of docs) {
+    if (isOddBacktickPaired(doc.pageContent)) continue
+    if (isThereNoEnoughContent(doc.pageContent)) continue
+    if (isTheTokenExceeded(doc.pageContent)) continue
+    resDodcs.push(doc)
+  }
+
+  console.log(resDodcs)
 }
