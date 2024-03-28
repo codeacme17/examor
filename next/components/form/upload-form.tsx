@@ -165,6 +165,10 @@ export const UploadForm = (props: UploadFormProps) => {
                   fileTypes={['.md']}
                 />
               </FormControl>
+              <FormDescription>
+                It is recommended not to upload more than{' '}
+                <strong>three files</strong> at one time
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

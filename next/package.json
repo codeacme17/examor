@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@langchain/community": "^0.0.43",
+    "@langchain/core": "^0.1.52",
+    "@langchain/openai": "^0.0.24",
     "@mdi/font": "^7.4.47",
     "@prisma/client": "^5.11.0",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
@@ -28,6 +31,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.8",
+    "langchain": "^0.1.30",
     "lucide-react": "^0.344.0",
     "markdown-it": "^14.0.0",
     "next": "^14.1.3",
