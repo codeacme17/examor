@@ -16,7 +16,7 @@ const create = async (noteId: number, rawFile: File) => {
 const update = async (id: number, data: any) => {
   const file = await prismadb.tFile.update({
     where: { id },
-    data,
+    data: { ...data },
   })
 
   return file

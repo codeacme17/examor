@@ -10,9 +10,10 @@ export const POST = async (req: Request) => {
     const name = formData.get('name') as string
     const type = formData.get('type')
     const files = formData.getAll('files') as File[]
-    const documents: { fileName: string; content: string }[] = []
 
     if (await noteHandler.isExist(name)) throw new Error('Note already exists')
+
+    const documents: { fileName: string; content: string }[] = []
 
     for (const file of files) {
       const filePath = await uploadFile(file)
@@ -42,6 +43,8 @@ export const POST = async (req: Request) => {
           )
         }
       }
+
+      await fileHandler.update(fileId, { isUploading: '0' })
     }
 
     return NextResponse.json('success')
