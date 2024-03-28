@@ -3,7 +3,7 @@ import { profileFormSchema } from '@/schema/profile'
 
 export type RoleType = 'examiner' | 'teacher' | 'interviewer'
 
-export type QuestionType = 'short' | 'blank' | 'single'
+export type QuestionType = 'short' | 'blank' | 'choice'
 
 export type ModelType = 'openai' | 'azure' | 'anthropic'
 

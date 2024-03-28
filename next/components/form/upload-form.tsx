@@ -104,9 +104,9 @@ export const UploadForm = (props: UploadFormProps) => {
                         Short Answer
                       </span>
                     </TabsTrigger>
-                    <TabsTrigger value="single">
+                    <TabsTrigger value="choice">
                       <QuestionTypeSwitch
-                        questionType={'single'}
+                        questionType={'choice'}
                         className="mr-2"
                       />
                       <span className="hidden sm:inline-block">

@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server'
 import { documentHandler, fileHandler, noteHandler } from '@/lib/db-handler'
 import { deleteTempDir, readFileContent, uploadFile } from '@/lib/file-handler'
-import { markdownSpitter } from '@/langchain/loader/markdown'
+import { markdownSpitter } from '@/langchain/loader'
 
 export const POST = async (req: Request) => {
   try {
     const formData = await req.formData()
 
     const name = formData.get('name') as string
-    const type = formData.get('type')
+    const questionType = formData.get('type')
     const files = formData.getAll('files') as File[]
 
     if (await noteHandler.isExist(name)) throw new Error('Note already exists')
