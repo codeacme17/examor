@@ -28,11 +28,12 @@ export const markdownSpitter = async (markdown: string) => {
   const resDodcs: Document[] = []
 
   for (const doc of docs) {
-    if (isOddBacktickPaired(doc.pageContent)) continue
-    if (isThereNoEnoughContent(doc.pageContent)) continue
-    if (isTheTokenExceeded(doc.pageContent)) continue
+    const { pageContent } = doc
+    if (isOddBacktickPaired(pageContent)) continue
+    if (isThereNoEnoughContent(pageContent)) continue
+    if (isTheTokenExceeded(pageContent)) continue
     resDodcs.push(doc)
   }
 
-  console.log(resDodcs)
+  return resDodcs
 }
