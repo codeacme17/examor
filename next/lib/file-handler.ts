@@ -9,7 +9,6 @@ export const uploadFile = async (file: File) => {
     const filePath = path.join(dirPath, file.name)
     const buffer = Buffer.from(await file.arrayBuffer())
     await fs.writeFile(filePath, buffer)
-
     return filePath
   } catch (err) {
     console.log('[uploadFile] Error: ', err)

@@ -17,9 +17,10 @@ export const POST = async (req: Request) => {
       const filePath = await uploadFile(file)
       const content = await readFileContent(filePath)
       const docs = await markdownSpitter(content)
-      console.log(docs)
+
+      return
     }
-    // await deleteTempDir()
+    await deleteTempDir()
 
     const { id } = await noteHandler.create({ name })
 
