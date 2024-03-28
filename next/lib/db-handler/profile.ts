@@ -28,4 +28,9 @@ const update = async (data: ProfileType) => {
   return profile
 }
 
-export const profileHandler = { init, update }
+const getFirst = async () => {
+  const profile = await prismadb.tProfile.findFirst()
+  return profile
+}
+
+export const profileHandler = { init, update, getFirst }
