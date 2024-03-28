@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { noteHandler } from '@/lib/db-handler'
-import { deleteTempDir, uploadFile } from '@/lib/file-handler'
+import { deleteTempDir, readFileContent, uploadFile } from '@/lib/file-handler'
+import { markdownSpitter } from '@/langchain/loader/markdown'
 
 export const POST = async (req: Request) => {
   try {
@@ -12,7 +13,12 @@ export const POST = async (req: Request) => {
 
     if (await noteHandler.isExist(name)) throw new Error('Note already exists')
 
-    for (const file of files) await uploadFile(file)
+    for (const file of files) {
+      const filePath = await uploadFile(file)
+      const content = await readFileContent(filePath)
+      const docs = await markdownSpitter(content)
+      console.log(docs)
+    }
     // await deleteTempDir()
 
     const { id } = await noteHandler.create({ name })
