@@ -1,16 +1,17 @@
 import fs from 'node:fs/promises'
 import path from 'path'
 
-export const uploadFile = async (id: number, file: File) => {
+export const uploadFile = async (file: File) => {
   try {
-    const dirPath = path.join(process.cwd(), `public/temp/${id}`)
+    if (file.type !== 'text/markdown') throw new Error('Invalid file type')
+    const dirPath = path.join(process.cwd(), `public/temp/`)
     await fs.mkdir(dirPath, { recursive: true })
     const filePath = path.join(dirPath, file.name)
     const buffer = Buffer.from(await file.arrayBuffer())
     await fs.writeFile(filePath, buffer)
   } catch (err) {
     console.log('[uploadFile] Error: ', err)
-    throw new Error('Failed to upload file')
+    throw new Error(err as string)
   }
 }
 

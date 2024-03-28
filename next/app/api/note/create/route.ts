@@ -12,10 +12,10 @@ export const POST = async (req: Request) => {
 
     if (await noteHandler.isExist(name)) throw new Error('Note already exists')
 
-    const { id } = await noteHandler.create({ name })
+    for (const file of files) await uploadFile(file)
+    // await deleteTempDir()
 
-    for (const file of files) await uploadFile(id, file)
-    await deleteTempDir()
+    const { id } = await noteHandler.create({ name })
 
     return NextResponse.json('success')
   } catch (err) {

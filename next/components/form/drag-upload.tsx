@@ -1,4 +1,6 @@
-import { ChangeEvent, forwardRef, useEffect, useState } from 'react'
+import path from 'path'
+
+import { ChangeEvent, forwardRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { UploadCloud, Trash2, Paperclip } from 'lucide-react'
 import { Input } from '@/components/ui/input'
@@ -9,11 +11,20 @@ interface DragUploadRef extends HTMLDivElement {}
 
 interface DragUploadProps {
   files: File[]
+  fileTypes?: string[]
   onFileChange: (files: File[]) => void
 }
 
+/**
+ * DragUpload component
+ * @param files - Array of files
+ * @param fileTypes - Array of file types, example ['.md', '.txt']
+ * @param onFileChange - Function to handle file change
+ * @param ref - Reference to the component
+ * @returns DragUpload component
+ */
 export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
-  ({ files, onFileChange }, ref) => {
+  ({ files, fileTypes, onFileChange }, ref) => {
     const [isDragOver, setIsDragOver] = useState(false)
 
     const handleDragOver = (e: React.DragEvent) => {
@@ -31,7 +42,12 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
       setIsDragOver(false)
 
       const draggedFiles = Array.from(e.dataTransfer.files)
-      handleUpdateFiles(draggedFiles)
+
+      const markdownFiles = draggedFiles.filter((file) =>
+        fileTypes?.includes(path.extname(file.name))
+      )
+
+      handleUpdateFiles(markdownFiles)
     }
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +99,7 @@ export const DragUpload = forwardRef<DragUploadRef, DragUploadProps>(
             id="dropzone-file"
             className="hidden"
             type="file"
+            accept={(fileTypes || []).join(', ')}
             multiple
             onChange={(e) => handleInputChange(e)}
           />

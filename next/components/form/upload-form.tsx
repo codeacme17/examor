@@ -159,7 +159,11 @@ export const UploadForm = (props: UploadFormProps) => {
             <FormItem>
               <FormLabel>Files</FormLabel>
               <FormControl>
-                <DragUpload onFileChange={field.onChange} files={field.value} />
+                <DragUpload
+                  onFileChange={field.onChange}
+                  files={field.value}
+                  fileTypes={['.md']}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
