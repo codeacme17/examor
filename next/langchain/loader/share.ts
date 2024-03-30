@@ -1,6 +1,8 @@
 import { get_encoding } from 'tiktoken'
 
 export const MAX_TOKEN = 2500
+export const MAX_RETRIES = 3
+export const TIMEOUT = 1000 * 30
 
 export const lenToken = (content: string) => {
   const encoding = get_encoding('cl100k_base')

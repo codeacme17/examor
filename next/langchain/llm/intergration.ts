@@ -1,47 +1,62 @@
 import { AzureChatOpenAI, ChatOpenAI } from '@langchain/openai'
 import { ChatAnthropic } from '@langchain/anthropic'
 import { BaseCallbackHandler } from '@langchain/core/callbacks/base'
-import { MAX_TOKEN } from '../loader/share'
+import { MAX_RETRIES, MAX_TOKEN, TIMEOUT } from '../loader/share'
 import type { TProfile } from '@prisma/client'
 
 type ModelType = AzureChatOpenAI | ChatOpenAI | ChatAnthropic | null
 
-export class LLM {
+interface ConfigParams {
+  temperature: number
+  streaming: boolean
+  callbacks: BaseCallbackHandler[]
+  maxRetries: number
+  maxTokens: number
+  timeout: number
+}
+
+const DEFAULT_CONFIG: ConfigParams = {
+  temperature: 0,
+  streaming: false,
+  callbacks: [],
+  maxRetries: MAX_RETRIES,
+  maxTokens: MAX_TOKEN,
+  timeout: TIMEOUT,
+}
+
+export class IntergrationLlm {
   profile: TProfile
   temperature: number
   streaming: boolean
   callbacks: BaseCallbackHandler[]
-  max_retries: number
-  max_tokens: number
+  maxRetries: number
+  maxTokens: number
   timeout: number
-  llm: Promise<ModelType>
+  llm: ModelType
 
-  constructor(
-    profile: any,
-    temperature: number = 0,
-    streaming: boolean = false,
-    callbacks: BaseCallbackHandler[] = [],
-    max_retries: number = 3,
-    max_tokens: number = MAX_TOKEN,
-    timeout: number = 10
-  ) {
+  constructor(profile: any, config: ConfigParams = DEFAULT_CONFIG) {
     this.profile = profile
-    this.llm = this.initLlm()
     this.temperature =
-      temperature !== 0 ? temperature : this.getRoleTemperature()
-    this.streaming = streaming
-    this.callbacks = callbacks
-    this.max_retries = max_retries
-    this.max_tokens = max_tokens
-    this.timeout = timeout
+      config.temperature !== 0 ? config.temperature : this.getRoleTemperature()
+    this.streaming = config.streaming || false
+    this.callbacks = config.callbacks || []
+    this.maxRetries = config.maxRetries || MAX_RETRIES
+    this.maxTokens = config.maxTokens || MAX_TOKEN
+    this.timeout = config.timeout || TIMEOUT
+
+    this.llm = this.initLlm()
   }
 
-  private async initLlm(): Promise<ModelType> {
+  private initLlm(): ModelType {
     let llm = null
     const currentModel = this.profile.currentModel
-    if (currentModel === 'openai') llm = this.initAzure()
-    else if (currentModel === 'azure') llm = this.initOpenai()
+
+    if (currentModel === 'openai') llm = this.initOpenai()
+    else if (currentModel === 'azure') llm = this.initAzure()
     else if (currentModel === 'anthropic') llm = this.initAnthropic()
+
+    console.log('init llm', llm)
+
     return llm
   }
 
@@ -53,8 +68,8 @@ export class LLM {
         temperature: this.temperature,
         streaming: this.streaming,
         callbacks: this.callbacks,
-        maxRetries: this.max_retries,
-        maxTokens: this.max_tokens,
+        maxRetries: this.maxRetries,
+        maxTokens: this.maxTokens,
         timeout: this.timeout,
       },
       {
@@ -73,8 +88,8 @@ export class LLM {
       temperature: this.temperature,
       streaming: this.streaming,
       callbacks: this.callbacks,
-      maxRetries: this.max_retries,
-      maxTokens: this.max_tokens,
+      maxRetries: this.maxRetries,
+      maxTokens: this.maxTokens,
       timeout: this.timeout,
     })
   }
@@ -86,8 +101,8 @@ export class LLM {
       temperature: this.temperature,
       streaming: this.streaming,
       callbacks: this.callbacks,
-      maxRetries: this.max_retries,
-      maxTokens: this.max_tokens,
+      maxRetries: this.maxRetries,
+      maxTokens: this.maxTokens,
     })
   }
 

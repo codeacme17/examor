@@ -1,1 +1,1 @@
-export { LLM } from './intergration'
+export { IntergrationLlm } from './intergration'
