@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { IntergrationLlm } from '../index'
-import { profileHandler } from '../../../lib/db-handler'
+import { profileHandler } from '@/lib/db-handler'
 import { PureLlm } from '../pure'
 
 describe('PureLlm', () => {
