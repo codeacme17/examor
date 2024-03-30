@@ -25,14 +25,15 @@ const DEFAULT_CONFIG: ConfigParams = {
 }
 
 export class IntergrationLlm {
-  profile: TProfile
-  temperature: number
-  streaming: boolean
-  callbacks: BaseCallbackHandler[]
-  maxRetries: number
-  maxTokens: number
-  timeout: number
-  llm: ModelType
+  public llm: ModelType
+
+  private profile: TProfile
+  private temperature: number
+  private streaming: boolean
+  private callbacks: BaseCallbackHandler[]
+  private maxRetries: number
+  private maxTokens: number
+  private timeout: number
 
   constructor(profile: any, config: ConfigParams = DEFAULT_CONFIG) {
     this.profile = profile
@@ -54,8 +55,6 @@ export class IntergrationLlm {
     if (currentModel === 'openai') llm = this.initOpenai()
     else if (currentModel === 'azure') llm = this.initAzure()
     else if (currentModel === 'anthropic') llm = this.initAnthropic()
-
-    console.log('init llm', llm)
 
     return llm
   }
