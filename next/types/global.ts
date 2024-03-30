@@ -5,7 +5,7 @@ export type RoleType = 'examiner' | 'teacher' | 'interviewer'
 
 export type QuestionType = 'short' | 'blank' | 'choice'
 
-export type ModelType = 'openai' | 'azure' | 'anthropic'
+export type LlmType = 'openai' | 'azure' | 'anthropic'
 
 export interface Question {
   id: string

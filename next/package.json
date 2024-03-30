@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@langchain/anthropic": "^0.1.9",
     "@langchain/community": "^0.0.43",
     "@langchain/core": "^0.1.52",
     "@langchain/openai": "^0.0.24",
