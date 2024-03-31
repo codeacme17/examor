@@ -72,7 +72,10 @@ const _getQuestionType = (type: QuestionType) => {
   else return short
 }
 
-export const getQuestionGenerateEn = (role: RoleType, type: QuestionType) => {
+export const getQuestionGenerateEn = (
+  role: RoleType,
+  type: QuestionType
+): PromptTemplate => {
   const QUESTION_GENERATE_PROMPT_EN = new PromptTemplate({
     template: _getRole(role) + PROMPT_TEMPLATE + _getQuestionType(type),
     inputVariables: ['title', 'context'],

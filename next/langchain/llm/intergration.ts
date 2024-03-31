@@ -8,11 +8,11 @@ type ModelType = AzureChatOpenAI | ChatOpenAI | ChatAnthropic | null
 
 interface ConfigParams {
   temperature: number
-  streaming: boolean
-  callbacks: BaseCallbackHandler[]
-  maxRetries: number
-  maxTokens: number
-  timeout: number
+  streaming?: boolean
+  callbacks?: BaseCallbackHandler[]
+  maxRetries?: number
+  maxTokens?: number
+  timeout?: number
 }
 
 const DEFAULT_CONFIG: ConfigParams = {
