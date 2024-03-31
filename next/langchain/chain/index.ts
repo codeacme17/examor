@@ -11,10 +11,12 @@ import {
   removePrefixNumbers,
   isLegalQuestionStructure,
   extractScore,
+  splitQuestions,
   getPushDate,
 } from './util'
 import { documentHandler, fileHandler } from '@/lib/db-handler'
 import type { PromptType, QuestionType, RoleType } from '@/types/global'
+import { questionHandler } from '@/lib/db-handler/question'
 
 export class Chain {
   profile: TProfile
@@ -53,7 +55,7 @@ export class Chain {
   async agenerateQuestions(
     docs: Document[],
     title: string,
-    questionType: string
+    questionType: QuestionType
   ): Promise<number> {
     const tasks = []
     const llmChain = this.initLlmChain(questionType)
@@ -91,21 +93,26 @@ export class Chain {
     doc: Document,
     title: string,
     docId: number,
-    questionType: string
+    questionType: QuestionType
   ) {
     await this.semaphore.acquire()
 
     try {
-      const res = await llmChain.predict(title, doc.pageContent)
-      for (const question of spiteQuestions(res, questionType)) {
-        if (!isLegalQuestionStructure(question, questionType)) continue
+      const res = await llmChain.invoke({
+        title,
+        context: doc.pageContent,
+      })
 
-        question.saveQuestionToDb(
-          removePrefixNumbers(question),
+      for (const question of splitQuestions(res, questionType)) {
+        if (!isLegalQuestionStructure(question, questionType)) continue
+        const { currentRole } = this.profile
+        questionHandler.create(
           docId,
           questionType,
-          this.profile.currentRole
+          removePrefixNumbers(question),
+          currentRole
         )
+
         this.questionCount += 1
       }
     } finally {
@@ -114,17 +121,21 @@ export class Chain {
   }
 
   private initLlmChain(
-    roleType: RoleType,
     questionType: QuestionType,
     timeout: number = 10
   ): LLMChain {
+    const { currentRole } = this.profile
     const llmInstance = new IntergrationLlm(this.profile, {
       temperature: this.temperature,
       streaming: this.streaming,
       maxRetries: adjustRetriesByPaymentStatus(),
       timeout,
     })
-    const prompt = choicePrompt(this.promptType, roleType, questionType)
+    const prompt = choicePrompt(
+      this.promptType,
+      currentRole as RoleType,
+      questionType
+    )
     return new LLMChain({ prompt, llm: llmInstance.llm! })
   }
 }
