@@ -3,7 +3,7 @@ import { UploadFormType } from '@/types/global'
 
 export const createFormSchema = (type: UploadFormType) => {
   return z.object({
-    type: z.enum(['short', 'single', 'blank']),
+    type: z.enum(['short', 'choice', 'blank']),
 
     name:
       type === 'note'
