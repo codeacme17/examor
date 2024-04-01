@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const profile = await profileHandler.init()
+  await profileHandler.init()
 
   return (
     <html lang="en" suppressHydrationWarning>

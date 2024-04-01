@@ -11,10 +11,10 @@ export const GET = async () => {
       const files = await fileHandler.findUploading()
       socket.send(JSON.stringify(files))
     }, 1000)
-  })
 
-  ws.on('close', () => {
-    clearInterval(timer)
+    socket.on('close', () => {
+      clearInterval(timer)
+    })
   })
 
   return new Response('success')
