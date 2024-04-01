@@ -2,10 +2,12 @@
 
 import { motion } from 'framer-motion'
 import { useProfileStore } from '@/store'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const profile = useProfileStore()
+
+  const ws = useRef<WebSocket | null>(null)
 
   const fetchProfile = async () => {
     const res = await fetch('/api/profile/init', {
@@ -20,8 +22,39 @@ export default function Template({ children }: { children: React.ReactNode }) {
     }
   }
 
+  const getUploadingFiles = async () => {
+    if (ws.current) return
+
+    await fetch('/api/file/uploading', {
+      method: 'GET',
+    })
+
+    ws.current = new WebSocket('ws://localhost:51782/')
+
+    ws.current.onopen = () => {
+      console.log('connected')
+    }
+
+    ws.current.onclose = () => {
+      console.log('disconnected')
+    }
+
+    ws.current.onerror = (err) => {
+      ws.current?.close()
+    }
+
+    ws.current.onmessage = (data) => {
+      console.log(data.data)
+    }
+  }
+
   useEffect(() => {
     fetchProfile()
+    getUploadingFiles()
+
+    return () => {
+      ws.current?.close()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
