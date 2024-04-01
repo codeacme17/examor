@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ModelType, ProfileType, RoleType } from '@/types/global'
+import { LlmType, ProfileType, RoleType } from '@/types/global'
 import { useProfileStore } from '@/store'
 import { PROFILE_DEFAULT, PROFILE_INPUT_KEYS } from '@/lib/contants'
 import { profileFormSchema as formSchema } from '@/schema/profile'
@@ -38,7 +38,7 @@ export const ProfileForm = () => {
     defaultValues: PROFILE_DEFAULT,
   })
 
-  const handleModelChange = (value: ModelType, field: { onChange: any }) => {
+  const handleModelChange = (value: LlmType, field: { onChange: any }) => {
     field.onChange(value)
     form.clearErrors()
     resetUnsavedChanges()
@@ -50,7 +50,7 @@ export const ProfileForm = () => {
     })
   }
 
-  const updateProfile = async () => {
+  const update = async () => {
     const data = form.getValues()
     const res = await fetch('/api/profile/update', {
       method: 'PATCH',
@@ -74,7 +74,7 @@ export const ProfileForm = () => {
 
   const onSubmit = async () => {
     setLoading(true)
-    await updateProfile()
+    await update()
     setLoading(false)
   }
 
@@ -174,7 +174,7 @@ export const ProfileForm = () => {
                 <Tabs
                   value={field.value}
                   onValueChange={(value) =>
-                    handleModelChange(value as ModelType, field)
+                    handleModelChange(value as LlmType, field)
                   }
                   className="w-full md:w-[400px]">
                   <TabsList className="grid w-full grid-cols-3">

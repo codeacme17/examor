@@ -1,22 +1,16 @@
-import { PrismaClient } from '@prisma/client'
+import { prismadb } from '.'
 import { ProfileType } from '@/types/global'
-
-const prisma = new PrismaClient()
+import { PROFILE_DEFAULT } from '../contants'
 
 const init = async () => {
-  let profile = await prisma.tProfile.findFirst()
-  console.log(profile)
+  let profile = await prismadb.tProfile.findFirst()
 
   if (profile) profile
   else
-    profile = await prisma.tProfile.create({
+    profile = await prismadb.tProfile.create({
       data: {
         id: 1,
-        questionAmount: 12,
-        currentModel: 'openai',
-        currentRole: 'examiner',
-        openaiModel: 'gpt-3.5-turbo',
-        openaiBase: 'https://api.openai.com',
+        ...PROFILE_DEFAULT,
       },
     })
 
@@ -24,7 +18,19 @@ const init = async () => {
 }
 
 const update = async (data: ProfileType) => {
-  // prisma.tProfile.update()
+  const { id, ...rest } = data
+
+  const profile = await prismadb.tProfile.update({
+    where: { id },
+    data: rest,
+  })
+
+  return profile
 }
 
-export const profileHandler = { init, update }
+const getFirst = async () => {
+  const profile = await prismadb.tProfile.findFirst()
+  return profile
+}
+
+export const profileHandler = { init, update, getFirst }

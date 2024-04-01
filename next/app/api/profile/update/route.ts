@@ -1,18 +1,15 @@
 import { ProfileType } from '@/types/global'
 import { NextResponse } from 'next/server'
-import { prismadb } from '@/lib/prismadb'
+import { profileHandler } from '@/lib/db-handler/index'
 
 export const PATCH = async (req: Request) => {
   try {
     const body: ProfileType = await req.json()
-    const { id, ...rest } = body
 
+    const { id } = body
     if (!id) throw new Error('Something went wrong! Please reload page.')
 
-    const profile = await prismadb.tProfile.update({
-      where: { id },
-      data: rest,
-    })
+    const profile = await profileHandler.update(body)
 
     return NextResponse.json(profile)
   } catch (err) {

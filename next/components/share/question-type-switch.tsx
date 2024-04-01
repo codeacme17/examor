@@ -5,15 +5,13 @@ interface QuestionTypeSwitchProps
   questionType: QuestionType
 }
 
-export const QuestionTypeSwitch = (
-  props: QuestionTypeSwitchProps
-) => {
+export const QuestionTypeSwitch = (props: QuestionTypeSwitchProps) => {
   const { questionType, ...rest } = props
 
   return (
     <span {...rest}>
       {questionType === 'short' && '📝'}
-      {questionType === 'single' && '🔠'}
+      {questionType === 'choice' && '🔠'}
       {questionType === 'blank' && '⬜'}
     </span>
   )
