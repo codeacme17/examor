@@ -32,15 +32,14 @@ const questions: Question[] = [
     status: 'New',
     createdDate: '2024-02-02',
     updatedDate: '2024-02-02',
-    questionType: 'single',
+    questionType: 'choice',
     roleType: 'teacher',
   },
 ]
 
 const NotePage = () => {
   const [tab, setTab] = useState<'table' | 'QA'>('table')
-  const [currentQuestion, setCurrentQuestion] =
-    useState<Question | null>(null)
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
 
   const handleRowClick = (question: Question) => {
     setTab('QA')
@@ -57,10 +56,7 @@ const NotePage = () => {
       <NoteHeader note={note} />
       {tab === 'table' ? (
         <TransitionAnimate key={tab} initial={{ x: -20 }}>
-          <QuestionTable
-            questions={questions}
-            onRowClick={handleRowClick}
-          />
+          <QuestionTable questions={questions} onRowClick={handleRowClick} />
         </TransitionAnimate>
       ) : (
         currentQuestion && (
