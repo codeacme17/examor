@@ -1,12 +1,7 @@
 import { Semaphore } from 'async-mutex'
 import { Document } from 'langchain/document'
 import { StringOutputParser } from '@langchain/core/output_parsers'
-import {
-  Runnable,
-  RunnableConfig,
-  RunnableSequence,
-} from '@langchain/core/runnables'
-import { BaseMessageChunk } from '@langchain/core/messages'
+import { RunnableSequence } from '@langchain/core/runnables'
 import { IntergrationLlm } from '../llm'
 import { choicePrompt } from '../prompt'
 import {
@@ -108,9 +103,10 @@ export class Chain {
     })
 
     for (const question of splitQuestions(res, this.questionType)) {
+      console.log(question)
       if (!isLegalQuestionStructure(question, this.questionType)) continue
       const { currentRole } = this.profile
-      questionHandler.create(
+      await questionHandler.create(
         docId,
         this.questionType,
         removePrefixNumbers(question),
