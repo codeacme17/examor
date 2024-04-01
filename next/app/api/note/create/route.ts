@@ -1,11 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Document } from 'langchain/document'
-import {
-  documentHandler,
-  fileHandler,
-  noteHandler,
-  profileHandler,
-} from '@/lib/db-handler'
+import { fileHandler, noteHandler, profileHandler } from '@/lib/db-handler'
 import { deleteTempDir, readFileContent, uploadFile } from '@/lib/file-handler'
 import { markdownSpitter } from '@/langchain/loader'
 import { Chain } from '@/langchain/chain'
@@ -51,11 +46,9 @@ export const POST = async (req: Request) => {
             'generate'
           )
 
-          await chain.generateQuestions(documents)
+          chain.generateQuestions(documents)
         }
       }
-
-      await fileHandler.update(fileId, { isUploading: '0' })
     }
 
     return NextResponse.json('success')

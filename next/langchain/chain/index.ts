@@ -77,7 +77,7 @@ export class Chain {
     return chain
   }
 
-  public async generateQuestions(docs: Document[]): Promise<number> {
+  public async generateQuestions(docs: Document[]): Promise<void> {
     try {
       for (const doc of docs) {
         const { id: documentId } = await documentHandler.create(
@@ -89,11 +89,13 @@ export class Chain {
         await this._generateQuestions(doc, documentId)
       }
     } catch (e) {
-      fileHandler.update(this.fileId, { isUploading: '0' })
       throw e
+    } finally {
+      fileHandler.update(this.fileId, {
+        isUploading: '0',
+        questionCount: this.questionCount,
+      })
     }
-
-    return this.questionCount
   }
 
   private async _generateQuestions(doc: Document, docId: number) {
