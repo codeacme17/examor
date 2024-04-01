@@ -13,6 +13,7 @@ interface ConfigParams {
   maxRetries?: number
   maxTokens?: number
   timeout?: number
+  verbose?: boolean
 }
 
 const DEFAULT_CONFIG: ConfigParams = {
@@ -22,6 +23,7 @@ const DEFAULT_CONFIG: ConfigParams = {
   maxRetries: MAX_RETRIES,
   maxTokens: MAX_TOKEN,
   timeout: TIMEOUT,
+  verbose: false,
 }
 
 export class IntergrationLlm {
@@ -34,6 +36,7 @@ export class IntergrationLlm {
   private maxRetries: number
   private maxTokens: number
   private timeout: number
+  private verbose: boolean
 
   constructor(profile: any, config: ConfigParams = DEFAULT_CONFIG) {
     this.profile = profile
@@ -44,6 +47,7 @@ export class IntergrationLlm {
     this.maxRetries = config.maxRetries || MAX_RETRIES
     this.maxTokens = config.maxTokens || MAX_TOKEN
     this.timeout = config.timeout || TIMEOUT
+    this.verbose = config.verbose || false
 
     this.llm = this.initLlm()
   }
@@ -70,6 +74,7 @@ export class IntergrationLlm {
         maxRetries: this.maxRetries,
         maxTokens: this.maxTokens,
         timeout: this.timeout,
+        verbose: this.verbose,
       },
       {
         baseURL: `${this.profile.openaiBase}/v1`,
@@ -90,6 +95,7 @@ export class IntergrationLlm {
       maxRetries: this.maxRetries,
       maxTokens: this.maxTokens,
       timeout: this.timeout,
+      verbose: this.verbose,
     })
   }
 
@@ -102,6 +108,7 @@ export class IntergrationLlm {
       callbacks: this.callbacks,
       maxRetries: this.maxRetries,
       maxTokens: this.maxTokens,
+      verbose: this.verbose,
     })
   }
 

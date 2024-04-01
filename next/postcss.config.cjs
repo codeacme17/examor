@@ -1,4 +1,4 @@
-const postcssConfig = {
+module.exports = {
   plugins: {
     'postcss-import': {},
     'tailwindcss/nesting': 'postcss-nesting',
@@ -6,5 +6,3 @@ const postcssConfig = {
     autoprefixer: {},
   },
 }
-
-export default postcssConfig

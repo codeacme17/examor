@@ -60,6 +60,7 @@ export class Chain {
       streaming: this.streaming,
       maxRetries: adjustRetriesByPaymentStatus(),
       timeout,
+      verbose: true,
     })
     const prompt = choicePrompt(
       this.promptType,
@@ -72,20 +73,16 @@ export class Chain {
   }
 
   public async generateQuestions(docs: Document[]): Promise<number> {
-    const tasks = []
-
-    for (const doc of docs) {
-      const { id: documentId } = await documentHandler.create(
-        this.noteId,
-        this.fileId,
-        this.filename,
-        doc.pageContent
-      )
-      tasks.push(this._generateQuestions(doc, documentId))
-    }
-
     try {
-      await Promise.all(tasks)
+      for (const doc of docs) {
+        const { id: documentId } = await documentHandler.create(
+          this.noteId,
+          this.fileId,
+          this.filename,
+          doc.pageContent
+        )
+        await this._generateQuestions(doc, documentId)
+      }
     } catch (e) {
       fileHandler.update(this.fileId, { isUploading: '0' })
       throw e
@@ -95,28 +92,24 @@ export class Chain {
   }
 
   private async _generateQuestions(doc: Document, docId: number) {
-    try {
-      const res = await this.chain.invoke({
-        title: this.filename,
-        context: doc.pageContent,
-      })
+    const res = await this.chain.invoke({
+      title: this.filename,
+      context: doc.pageContent,
+    })
 
-      console.log(res)
+    console.log(res)
 
-      for (const question of splitQuestions(res, this.questionType)) {
-        if (!isLegalQuestionStructure(question, this.questionType)) continue
-        const { currentRole } = this.profile
-        questionHandler.create(
-          docId,
-          this.questionType,
-          removePrefixNumbers(question),
-          currentRole
-        )
+    for (const question of splitQuestions(res, this.questionType)) {
+      if (!isLegalQuestionStructure(question, this.questionType)) continue
+      const { currentRole } = this.profile
+      questionHandler.create(
+        docId,
+        this.questionType,
+        removePrefixNumbers(question),
+        currentRole
+      )
 
-        this.questionCount += 1
-      }
-    } finally {
-      this.semaphore.release()
+      this.questionCount += 1
     }
   }
 }
