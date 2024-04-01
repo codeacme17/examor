@@ -1,7 +1,12 @@
 import { Semaphore } from 'async-mutex'
 import { Document } from 'langchain/document'
-import type { TProfile } from '@prisma/client'
-
+import { StringOutputParser } from '@langchain/core/output_parsers'
+import {
+  Runnable,
+  RunnableConfig,
+  RunnableSequence,
+} from '@langchain/core/runnables'
+import { BaseMessageChunk } from '@langchain/core/messages'
 import { IntergrationLlm } from '../llm'
 import { choicePrompt } from '../prompt'
 import {
@@ -13,9 +18,8 @@ import {
 } from './util'
 import { documentHandler, fileHandler } from '@/lib/db-handler'
 import { questionHandler } from '@/lib/db-handler/question'
+import type { TProfile } from '@prisma/client'
 import type { PromptType, QuestionType, RoleType } from '@/types/global'
-import { Runnable, RunnableConfig } from '@langchain/core/runnables'
-import { BaseMessageChunk } from '@langchain/core/messages'
 
 export class Chain {
   profile: TProfile
@@ -28,7 +32,7 @@ export class Chain {
   temperature: number
   streaming: boolean
   questionCount: number
-  chain: Runnable<any, BaseMessageChunk, RunnableConfig>
+  chain: RunnableSequence<any, string>
 
   constructor(
     profile: TProfile,
@@ -53,14 +57,13 @@ export class Chain {
     this.chain = this.initChain(questionType)
   }
 
-  private initChain(questionType: QuestionType, timeout: number = 10) {
+  private initChain(questionType: QuestionType) {
     const { currentRole } = this.profile
     const llmInstance = new IntergrationLlm(this.profile, {
       temperature: this.temperature,
       streaming: this.streaming,
       maxRetries: adjustRetriesByPaymentStatus(),
-      timeout,
-      verbose: true,
+      verbose: false,
     })
     const prompt = choicePrompt(
       this.promptType,
@@ -68,7 +71,14 @@ export class Chain {
       questionType
     )
 
-    const chain = prompt.pipe(llmInstance.llm!)
+    const outputParser = new StringOutputParser()
+
+    const chain = RunnableSequence.from([
+      prompt,
+      llmInstance.llm!,
+      outputParser,
+    ])
+
     return chain
   }
 
@@ -96,8 +106,6 @@ export class Chain {
       title: this.filename,
       context: doc.pageContent,
     })
-
-    console.log(res)
 
     for (const question of splitQuestions(res, this.questionType)) {
       if (!isLegalQuestionStructure(question, this.questionType)) continue
