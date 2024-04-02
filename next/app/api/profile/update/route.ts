@@ -5,10 +5,6 @@ import { profileHandler } from '@/lib/db-handler/index'
 export const PATCH = async (req: Request) => {
   try {
     const body: ProfileType = await req.json()
-
-    const { id } = body
-    if (!id) throw new Error('Something went wrong! Please reload page.')
-
     const profile = await profileHandler.update(body)
 
     return NextResponse.json(profile)

@@ -2,7 +2,7 @@ import { prismadb } from '@/lib/db-handler'
 import { QuestionType } from '@/types/global'
 
 const create = (
-  documentId: number,
+  documentId: string,
   questionType: QuestionType,
   content: string,
   designatedRole: string

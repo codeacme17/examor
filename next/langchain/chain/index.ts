@@ -19,8 +19,8 @@ import type { PromptType, QuestionType, RoleType } from '@/types/global'
 export class Chain {
   profile: TProfile
   semaphore: Semaphore
-  noteId: number
-  fileId: number
+  noteId: string
+  fileId: string
   filename: string
   questionType: QuestionType
   promptType: PromptType
@@ -31,8 +31,8 @@ export class Chain {
 
   constructor(
     profile: TProfile,
-    noteId: number,
-    fileId: number,
+    noteId: string,
+    fileId: string,
     filename: string,
     questionType: QuestionType,
     promptType: PromptType,
@@ -86,6 +86,7 @@ export class Chain {
           this.filename,
           doc.pageContent
         )
+
         await this._generateQuestions(doc, documentId)
       }
     } catch (e) {
@@ -98,24 +99,28 @@ export class Chain {
     }
   }
 
-  private async _generateQuestions(doc: Document, docId: number) {
-    const res = await this.chain.invoke({
-      title: this.filename,
-      context: doc.pageContent,
-    })
+  private async _generateQuestions(doc: Document, docId: string) {
+    try {
+      const res = await this.chain.invoke({
+        title: this.filename,
+        context: doc.pageContent,
+      })
 
-    for (const question of splitQuestions(res, this.questionType)) {
-      console.log(question)
-      if (!isLegalQuestionStructure(question, this.questionType)) continue
-      const { currentRole } = this.profile
-      await questionHandler.create(
-        docId,
-        this.questionType,
-        removePrefixNumbers(question),
-        currentRole
-      )
+      for (const question of splitQuestions(res, this.questionType)) {
+        console.log(question)
+        if (!isLegalQuestionStructure(question, this.questionType)) continue
+        const { currentRole } = this.profile
+        await questionHandler.create(
+          docId,
+          this.questionType,
+          removePrefixNumbers(question),
+          currentRole
+        )
 
-      this.questionCount += 1
+        this.questionCount += 1
+      }
+    } catch (e) {
+      console.error('_generateQuestions error', e)
     }
   }
 }

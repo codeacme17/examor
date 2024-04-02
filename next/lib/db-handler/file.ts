@@ -1,6 +1,6 @@
 import { prismadb } from '.'
 
-const create = async (noteId: number, rawFile: File) => {
+const create = async (noteId: string, rawFile: File) => {
   const { name } = rawFile
 
   const file = await prismadb.tFile.create({
@@ -13,7 +13,7 @@ const create = async (noteId: number, rawFile: File) => {
   return file
 }
 
-const update = async (id: number, data: any) => {
+const update = async (id: string, data: any) => {
   const file = await prismadb.tFile.update({
     where: { id },
     data: { ...data },
@@ -22,7 +22,7 @@ const update = async (id: number, data: any) => {
   return file
 }
 
-const getById = async (id: number) => {
+const getById = async (id: string) => {
   const file = await prismadb.tFile.findUnique({
     where: { id },
   })

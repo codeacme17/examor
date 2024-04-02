@@ -1,35 +1,34 @@
 import { prismadb } from '.'
 import { ProfileType } from '@/types/global'
 import { PROFILE_DEFAULT } from '../contants'
+import { TProfile } from '@prisma/client'
 
 const init = async () => {
-  let profile = await prismadb.tProfile.findFirst()
+  let { id, ...profile } = await getFirst()
 
   if (profile) profile
   else
     profile = await prismadb.tProfile.create({
-      data: {
-        id: 1,
-        ...PROFILE_DEFAULT,
-      },
+      data: PROFILE_DEFAULT,
     })
 
   return profile
 }
 
 const update = async (data: ProfileType) => {
-  const { id, ...rest } = data
+  let { id } = await getFirst()
 
-  const profile = await prismadb.tProfile.update({
+  const { id: _id, ...profile } = await prismadb.tProfile.update({
     where: { id },
-    data: rest,
+    data,
   })
 
   return profile
 }
 
 const getFirst = async () => {
-  const profile = await prismadb.tProfile.findFirst()
+  const profile = (await prismadb.tProfile.findFirst()) as TProfile
+
   return profile
 }
 

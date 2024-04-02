@@ -18,7 +18,7 @@ export interface Question {
   updatedDate?: string
 }
 
-export type ProfileType = z.infer<typeof profileFormSchema> & { id?: number }
+export type ProfileType = z.infer<typeof profileFormSchema>
 
 export type UploadFormType = 'note' | 'file'
 
