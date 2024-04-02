@@ -1,7 +1,7 @@
 import { Semaphore } from 'async-mutex'
 import { Document } from 'langchain/document'
-import type { TProfile } from '@prisma/client'
-
+import { StringOutputParser } from '@langchain/core/output_parsers'
+import { RunnableSequence } from '@langchain/core/runnables'
 import { IntergrationLlm } from '../llm'
 import { choicePrompt } from '../prompt'
 import {
@@ -13,9 +13,8 @@ import {
 } from './util'
 import { documentHandler, fileHandler } from '@/lib/db-handler'
 import { questionHandler } from '@/lib/db-handler/question'
+import type { TProfile } from '@prisma/client'
 import type { PromptType, QuestionType, RoleType } from '@/types/global'
-import { Runnable, RunnableConfig } from '@langchain/core/runnables'
-import { BaseMessageChunk } from '@langchain/core/messages'
 
 export class Chain {
   profile: TProfile
@@ -28,7 +27,7 @@ export class Chain {
   temperature: number
   streaming: boolean
   questionCount: number
-  chain: Runnable<any, BaseMessageChunk, RunnableConfig>
+  chain: RunnableSequence<any, string>
 
   constructor(
     profile: TProfile,
@@ -53,13 +52,13 @@ export class Chain {
     this.chain = this.initChain(questionType)
   }
 
-  private initChain(questionType: QuestionType, timeout: number = 10) {
+  private initChain(questionType: QuestionType) {
     const { currentRole } = this.profile
     const llmInstance = new IntergrationLlm(this.profile, {
       temperature: this.temperature,
       streaming: this.streaming,
       maxRetries: adjustRetriesByPaymentStatus(),
-      timeout,
+      verbose: false,
     })
     const prompt = choicePrompt(
       this.promptType,
@@ -67,56 +66,56 @@ export class Chain {
       questionType
     )
 
-    const chain = prompt.pipe(llmInstance.llm!)
+    const outputParser = new StringOutputParser()
+
+    const chain = RunnableSequence.from([
+      prompt,
+      llmInstance.llm!,
+      outputParser,
+    ])
+
     return chain
   }
 
-  public async generateQuestions(docs: Document[]): Promise<number> {
-    const tasks = []
-
-    for (const doc of docs) {
-      const { id: documentId } = await documentHandler.create(
-        this.noteId,
-        this.fileId,
-        this.filename,
-        doc.pageContent
-      )
-      tasks.push(this._generateQuestions(doc, documentId))
-    }
-
+  public async generateQuestions(docs: Document[]): Promise<void> {
     try {
-      await Promise.all(tasks)
+      for (const doc of docs) {
+        const { id: documentId } = await documentHandler.create(
+          this.noteId,
+          this.fileId,
+          this.filename,
+          doc.pageContent
+        )
+        await this._generateQuestions(doc, documentId)
+      }
     } catch (e) {
-      fileHandler.update(this.fileId, { isUploading: '0' })
       throw e
+    } finally {
+      fileHandler.update(this.fileId, {
+        isUploading: '0',
+        questionCount: this.questionCount,
+      })
     }
-
-    return this.questionCount
   }
 
   private async _generateQuestions(doc: Document, docId: number) {
-    try {
-      const res = await this.chain.invoke({
-        title: this.filename,
-        context: doc.pageContent,
-      })
+    const res = await this.chain.invoke({
+      title: this.filename,
+      context: doc.pageContent,
+    })
 
-      console.log(res)
+    for (const question of splitQuestions(res, this.questionType)) {
+      console.log(question)
+      if (!isLegalQuestionStructure(question, this.questionType)) continue
+      const { currentRole } = this.profile
+      await questionHandler.create(
+        docId,
+        this.questionType,
+        removePrefixNumbers(question),
+        currentRole
+      )
 
-      for (const question of splitQuestions(res, this.questionType)) {
-        if (!isLegalQuestionStructure(question, this.questionType)) continue
-        const { currentRole } = this.profile
-        questionHandler.create(
-          docId,
-          this.questionType,
-          removePrefixNumbers(question),
-          currentRole
-        )
-
-        this.questionCount += 1
-      }
-    } finally {
-      this.semaphore.release()
+      this.questionCount += 1
     }
   }
 }

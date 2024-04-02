@@ -30,4 +30,12 @@ const getById = async (id: number) => {
   return file
 }
 
-export const fileHandler = { create, update, getById }
+const findUploading = async () => {
+  const files = await prismadb.tFile.findMany({
+    where: { isUploading: '1' },
+  })
+
+  return files
+}
+
+export const fileHandler = { create, update, findUploading, getById }

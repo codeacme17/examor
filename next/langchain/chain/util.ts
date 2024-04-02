@@ -27,18 +27,14 @@ export const isLegalQuestionStructure = (
   content: string,
   type: string
 ): boolean => {
-  if (!content || content.length < 12) {
-    return false
-  }
+  if (!content || content.length < 12) return false
 
-  if (type === 'choice') {
-    const pattern = /^-\s.+?\n\s*A\..+\n\s*B\..+\n\s*C\..+\n\s*D\..+$/
-    return pattern.test(content)
-  }
+  // if (type === 'choice') {
+  //   const pattern = /^-\s.+?\n\s*A\..+\n\s*B\..+\n\s*C\..+\n\s*D\..+$/
+  //   return pattern.test(content)
+  // }
 
-  if (type === 'blank') {
-    return content.includes('_____')
-  }
+  if (type === 'blank') return content.includes('_____')
 
   return true
 }
