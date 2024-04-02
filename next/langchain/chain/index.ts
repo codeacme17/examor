@@ -19,8 +19,8 @@ import type { PromptType, QuestionType, RoleType } from '@/types/global'
 export class Chain {
   profile: TProfile
   semaphore: Semaphore
-  noteId: number
-  fileId: number
+  noteId: string
+  fileId: string
   filename: string
   questionType: QuestionType
   promptType: PromptType
@@ -31,8 +31,8 @@ export class Chain {
 
   constructor(
     profile: TProfile,
-    noteId: number,
-    fileId: number,
+    noteId: string,
+    fileId: string,
     filename: string,
     questionType: QuestionType,
     promptType: PromptType,
@@ -98,7 +98,7 @@ export class Chain {
     }
   }
 
-  private async _generateQuestions(doc: Document, docId: number) {
+  private async _generateQuestions(doc: Document, docId: string) {
     const res = await this.chain.invoke({
       title: this.filename,
       context: doc.pageContent,

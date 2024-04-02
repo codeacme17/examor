@@ -1,8 +1,8 @@
 import { prismadb } from '.'
 
 const create = async (
-  noteId: number,
-  fileId: number,
+  noteId: string,
+  fileId: string,
   fileName: string,
   content: string
 ) => {
