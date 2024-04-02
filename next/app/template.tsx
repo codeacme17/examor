@@ -20,7 +20,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
     if (res.ok) {
       const data = await res.json()
       profileStore.setProfile(data)
-      console.log('init profile', data)
     } else {
       console.log('Failed to fetch profile')
     }

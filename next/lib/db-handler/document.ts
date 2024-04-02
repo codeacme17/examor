@@ -15,7 +15,7 @@ const create = async (
         document: content,
       },
     })
-    console.log('document initlized', document)
+
     return document
   } catch (error) {
     console.error('error creating document', error)
