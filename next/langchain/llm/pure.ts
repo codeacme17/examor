@@ -1,4 +1,8 @@
-import fetch, { type RequestInit, type Headers } from 'node-fetch'
+import fetch, {
+  type RequestInit,
+  type Response,
+  type Headers,
+} from 'node-fetch'
 import { TProfile } from '@prisma/client'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 
@@ -14,15 +18,35 @@ export class PureLlm {
     const maxToken = 1
     const llm = this.initLLM(prompt, maxToken)
 
-    const res = await llm!.invoke()
-    const content: any = await res.json()
+    const timeoutPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(
+          new Error(
+            'The model interface response timed out, please check the network problem or whether the proxy is enabled'
+          )
+        )
+      }, 30 * 1000)
+    })
 
-    if (res.ok) {
-      const payment = this.getPaymentState(res.headers)
-      return { payment, content }
-    } else {
-      console.log(content['error'].message)
-      throw new Error(String(content.messages))
+    try {
+      const res = (await Promise.race([
+        llm!.invoke(),
+        timeoutPromise,
+      ])) as Response
+
+      if (res.ok) {
+        const content = await res.json()
+        const payment = this.getPaymentState(res.headers)
+        return { payment, content }
+      } else {
+        // The request timed out
+        const errorContent = (await res.json()) as any
+        console.log(errorContent.error.message)
+        throw new Error(errorContent.error.message)
+      }
+    } catch (error) {
+      console.error(error)
+      throw error
     }
   }
 
