@@ -53,10 +53,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     fetchProfile()
-    // getUploadingFiles()
+    getUploadingFiles()
 
     return () => {
-      // ws.current?.close()
+      ws.current?.close()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
