@@ -18,7 +18,6 @@ export const PROFILE_DEFAULT: ProfileType = {
 }
 
 export const PROFILE_INPUT_KEYS: Array<keyof ProfileType> = [
-  'id',
   'openaiKey',
   'openaiOrganization',
   'openaiModel',

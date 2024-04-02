@@ -4,27 +4,27 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
+  provider     = "mongodb"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model TNote {
-  id         Int         @id @default(autoincrement()) @db.Int
-  name       String      @db.VarChar(100)
-  icon       String      @default("mdi-text-box-outline") @db.VarChar(30)
-  uploadDate DateTime    @default(now()) @updatedAt @db.DateTime(0)
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  icon       String      @default("mdi-text-box-outline")
+  uploadDate DateTime    @default(now()) @updatedAt
   TFile      TFile[]
   TDocument  TDocument[]
 }
 
 model TFile {
-  id            Int         @id @default(autoincrement()) @db.Int
-  noteId        Int         @db.Int
-  fileName      String?     @db.VarChar(100)
-  isUploading   String      @default("1") @db.VarChar(5)
-  questionCount Int         @default(0) @db.Int
-  uploadDate    DateTime    @default(now()) @updatedAt @db.DateTime(0)
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  noteId        String      @db.ObjectId
+  fileName      String?
+  isUploading   String      @default("1")
+  questionCount Int         @default(0)
+  uploadDate    DateTime    @default(now()) @updatedAt
   TNote         TNote       @relation(fields: [noteId], references: [id])
   TDocument     TDocument[]
 
@@ -32,53 +32,52 @@ model TFile {
 }
 
 model TDocument {
-  id         Int         @id @default(autoincrement()) @db.Int
-  noteId     Int         @db.Int
-  fileId     Int         @db.Int
-  fileName   String?     @db.VarChar(100)
-  document   String      @db.Text
-  uploadDate DateTime    @default(now()) @updatedAt @db.DateTime(0)
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  noteId     String      @db.ObjectId
+  fileId     String      @db.ObjectId
+  fileName   String?
+  document   String
+  uploadDate DateTime    @default(now()) @updatedAt
   TFile      TFile       @relation(fields: [fileId], references: [id])
   TQuestion  TQuestion[]
-  TNote      TNote?      @relation(fields: [tNoteId], references: [id])
-  tNoteId    Int?        @db.Int
+  TNote      TNote?      @relation(fields: [noteId], references: [id])
 
-  @@index([tNoteId])
+  @@index([noteId])
   @@index([fileId])
 }
 
 model TQuestion {
-  id              Int       @id @default(autoincrement()) @db.Int
-  content         String    @db.VarChar(1000)
-  documentId      Int       @db.Int
-  questionType    String?   @db.Char(20)
-  designatedRole  String    @db.Char(20)
-  pushDate        DateTime? @db.Date
-  isPushedToday   String    @default("0") @db.Char(1)
-  isAnsweredToday String    @default("0") @db.Char(1)
-  progress        Decimal   @default(0) @db.Decimal(10, 2)
-  lastAnswer      String?   @db.Text
-  uploadDate      DateTime  @default(now()) @updatedAt @db.DateTime(0)
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  content         String
+  documentId      String    @db.ObjectId
+  questionType    String?
+  designatedRole  String
+  pushDate        DateTime?
+  isPushedToday   String    @default("0")
+  isAnsweredToday String    @default("0")
+  progress        Float     @default(0)
+  lastAnswer      String?
+  uploadDate      DateTime  @default(now()) @updatedAt
   TDocument       TDocument @relation(fields: [documentId], references: [id])
 
   @@index([documentId])
 }
 
 model TProfile {
-  id                 Int    @id @default(autoincrement()) @db.Int
-  questionAmount     Int    @default(12) @db.Int
-  currentRole        String @default("examiner") @db.Char(20)
-  currentModel       String @default("OpenAI") @db.Char(20)
-  openaiKey          String @default("") @db.VarChar(100)
-  openaiOrganization String @default("") @db.Char(50)
-  openaiModel        String @default("gpt-3.5-turbo") @db.Char(40)
-  openaiProxy        String @default("") @db.VarChar(100)
-  azureKey           String @default("") @db.VarChar(100)
-  openaiBase         String @default("https://api.openai.com") @db.VarChar(100)
-  azureBase          String @default("") @db.VarChar(100)
-  openaiVersion      String @default("") @db.VarChar(100)
-  deploymentName     String @default("") @db.VarChar(100)
-  anthropicKey       String @default("") @db.VarChar(100)
-  anthropicVersion   String @default("") @db.VarChar(100)
-  anthropicModel     String @default("") @db.Char(40)
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  questionAmount     Int    @default(12)
+  currentRole        String @default("examiner")
+  currentModel       String @default("OpenAI")
+  openaiKey          String @default("")
+  openaiOrganization String @default("")
+  openaiModel        String @default("gpt-3.5-turbo")
+  openaiProxy        String @default("")
+  azureKey           String @default("")
+  openaiBase         String @default("https://api.openai.com")
+  azureBase          String @default("")
+  openaiVersion      String @default("")
+  deploymentName     String @default("")
+  anthropicKey       String @default("")
+  anthropicVersion   String @default("")
+  anthropicModel     String @default("")
 }

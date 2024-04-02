@@ -52,6 +52,9 @@ export const ProfileForm = () => {
 
   const update = async () => {
     const data = form.getValues()
+
+    console.log('data', data)
+
     const res = await fetch('/api/profile/update', {
       method: 'PATCH',
       body: JSON.stringify(data),
@@ -81,7 +84,7 @@ export const ProfileForm = () => {
   useEffect(() => {
     for (const key in profile) {
       if (Object.prototype.hasOwnProperty.call(profile, key)) {
-        const _key = key as keyof Omit<ProfileType, 'id'>
+        const _key = key as keyof ProfileType
         const element = profile[_key]
         form.setValue(_key, element)
       }
