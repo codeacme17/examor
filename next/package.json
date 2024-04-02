@@ -10,7 +10,8 @@
     "lint": "next lint",
     "test": "vitest",
     "postinstall": "prisma generate",
-    "push": "prisma db push"
+    "push": "prisma db push",
+    "delete": "node ./delete-all-notes.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
