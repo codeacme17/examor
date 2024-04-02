@@ -21,7 +21,7 @@ model TNote {
 model TFile {
   id            String      @id @default(auto()) @map("_id") @db.ObjectId
   noteId        String      @db.ObjectId
-  fileName      String?
+  fileName      String
   isUploading   String      @default("1")
   questionCount Int         @default(0)
   uploadDate    DateTime    @default(now()) @updatedAt
@@ -35,12 +35,12 @@ model TDocument {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
   noteId     String      @db.ObjectId
   fileId     String      @db.ObjectId
-  fileName   String?
+  fileName   String
   document   String
   uploadDate DateTime    @default(now()) @updatedAt
+  TNote      TNote       @relation(fields: [noteId], references: [id])
   TFile      TFile       @relation(fields: [fileId], references: [id])
   TQuestion  TQuestion[]
-  TNote      TNote?      @relation(fields: [noteId], references: [id])
 
   @@index([noteId])
   @@index([fileId])

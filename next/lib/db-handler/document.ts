@@ -6,16 +6,21 @@ const create = async (
   fileName: string,
   content: string
 ) => {
-  const document = await prismadb.tDocument.create({
-    data: {
-      noteId,
-      fileId,
-      fileName,
-      document: content,
-    },
-  })
-
-  return document
+  try {
+    const document = await prismadb.tDocument.create({
+      data: {
+        noteId,
+        fileId,
+        fileName,
+        document: content,
+      },
+    })
+    console.log('document initlized', document)
+    return document
+  } catch (error) {
+    console.error('error creating document', error)
+    throw error
+  }
 }
 
 export const documentHandler = { create }

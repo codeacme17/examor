@@ -86,6 +86,7 @@ export class Chain {
           this.filename,
           doc.pageContent
         )
+
         await this._generateQuestions(doc, documentId)
       }
     } catch (e) {
@@ -99,23 +100,27 @@ export class Chain {
   }
 
   private async _generateQuestions(doc: Document, docId: string) {
-    const res = await this.chain.invoke({
-      title: this.filename,
-      context: doc.pageContent,
-    })
+    try {
+      const res = await this.chain.invoke({
+        title: this.filename,
+        context: doc.pageContent,
+      })
 
-    for (const question of splitQuestions(res, this.questionType)) {
-      console.log(question)
-      if (!isLegalQuestionStructure(question, this.questionType)) continue
-      const { currentRole } = this.profile
-      await questionHandler.create(
-        docId,
-        this.questionType,
-        removePrefixNumbers(question),
-        currentRole
-      )
+      for (const question of splitQuestions(res, this.questionType)) {
+        console.log(question)
+        if (!isLegalQuestionStructure(question, this.questionType)) continue
+        const { currentRole } = this.profile
+        await questionHandler.create(
+          docId,
+          this.questionType,
+          removePrefixNumbers(question),
+          currentRole
+        )
 
-      this.questionCount += 1
+        this.questionCount += 1
+      }
+    } catch (e) {
+      console.error('_generateQuestions error', e)
     }
   }
 }
