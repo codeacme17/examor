@@ -6,7 +6,7 @@ interface FileState {
   setNotes: (newNotes: TNote[]) => void
 }
 
-export const useFileStore = create<FileState>((set) => ({
+export const useNoteStore = create<FileState>((set) => ({
   notes: [],
   setNotes: (newNotes: TNote[]) => set({ notes: newNotes }),
 }))

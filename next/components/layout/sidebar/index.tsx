@@ -8,12 +8,9 @@ import { Plus } from 'lucide-react'
 import { MenuList } from './menu-list'
 import { Logo } from './logo'
 import { useMenu } from '@/hooks/useMenu'
+import { Skeleton } from '@/components/ui/skeleton'
 
-export const Sidebar = ({
-  isCollapsed,
-}: {
-  isCollapsed: boolean
-}) => {
+export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const { staticMenus, noteMenus } = useMenu()
   const router = useRouter()
   const pathname = usePathname()
@@ -51,7 +48,11 @@ export const Sidebar = ({
         )}
       </Button>
 
-      <MenuList isCollapsed={isCollapsed} menus={noteMenus} />
+      {noteMenus.length ? (
+        <MenuList isCollapsed={isCollapsed} menus={noteMenus} />
+      ) : (
+        <Skeleton className="h-20" />
+      )}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useProfileStore } from '@/store'
+import { useNoteStore, useProfileStore } from '@/store'
 import { useEffect, useRef } from 'react'
 import { useFileStore } from '@/store'
 import { UploadingPopup } from '@/components/share/uploading-popup'
@@ -9,6 +9,7 @@ import { UploadingPopup } from '@/components/share/uploading-popup'
 export default function Template({ children }: { children: React.ReactNode }) {
   const profileStore = useProfileStore()
   const fileStore = useFileStore()
+  const noteStore = useNoteStore()
 
   const ws = useRef<WebSocket | null>(null)
 
@@ -32,7 +33,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
     if (res.ok) {
       const data = await res.json()
-      console.log(data)
+      noteStore.setNotes(data)
     } else {
       console.log('Failed to fetch notes')
     }
