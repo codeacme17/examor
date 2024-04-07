@@ -2,12 +2,18 @@ import { WebSocketServer } from 'ws'
 import { fileHandler } from '@/lib/db-handler'
 
 export const GET = async () => {
-  const ws = new WebSocketServer({ port: 51782 })
+  const ws = new WebSocketServer({ port: 51782 }, () => {
+    console.log('WebSocket server is running on port 51782')
+  })
 
-  let timer: any
+  ws.on('error', (error) => {
+    if (process.env.NODE_ENV !== 'development')
+      console.log('WebSocket server failed to start, ' + error)
+    return new Response('WebSocket server failed to start', { status: 500 })
+  })
 
   ws.on('connection', (socket) => {
-    setInterval(async () => {
+    const timer = setInterval(async () => {
       const files = await fileHandler.findUploading()
       socket.send(JSON.stringify(files))
     }, 1000)
