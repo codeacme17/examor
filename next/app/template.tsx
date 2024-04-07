@@ -27,9 +27,11 @@ export default function Template({ children }: { children: React.ReactNode }) {
   }
 
   const fetchNotes = async () => {
+    noteStore.setIsFetching(true)
     const res = await fetch('/api/note/all', {
       method: 'GET',
     })
+    noteStore.setIsFetching(false)
 
     if (res.ok) {
       const data = await res.json()

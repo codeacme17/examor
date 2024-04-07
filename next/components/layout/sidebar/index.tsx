@@ -9,11 +9,13 @@ import { MenuList } from './menu-list'
 import { Logo } from './logo'
 import { useMenu } from '@/hooks/useMenu'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useNoteStore } from '@/store'
 
 export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
   const { staticMenus, noteMenus } = useMenu()
   const router = useRouter()
   const pathname = usePathname()
+  const noteStore = useNoteStore()
 
   return (
     <div className="flex flex-col h-screen p-4 gap-2">
@@ -48,10 +50,10 @@ export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
         )}
       </Button>
 
-      {noteMenus.length ? (
-        <MenuList isCollapsed={isCollapsed} menus={noteMenus} />
-      ) : (
+      {noteStore.isFetching ? (
         <Skeleton className="h-20" />
+      ) : (
+        <MenuList isCollapsed={isCollapsed} menus={noteMenus} />
       )}
     </div>
   )
