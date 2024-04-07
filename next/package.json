@@ -10,7 +10,7 @@
     "lint": "next lint",
     "test": "vitest",
     "postinstall": "prisma generate",
-    "push": "prisma db push",
+    "push": "prisma generate & prisma db push",
     "delete": "node ./delete-all-notes.js"
   },
   "dependencies": {

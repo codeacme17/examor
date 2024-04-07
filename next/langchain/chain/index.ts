@@ -11,7 +11,7 @@ import {
   isLegalQuestionStructure,
   splitQuestions,
 } from './util'
-import { documentHandler, fileHandler } from '@/lib/db-handler'
+import { documentHandler, fileHandler, noteHandler } from '@/lib/db-handler'
 import { questionHandler } from '@/lib/db-handler/question'
 import type { TProfile } from '@prisma/client'
 import type { PromptType, QuestionType, RoleType } from '@/types/global'
@@ -28,9 +28,12 @@ export class Chain {
   streaming: boolean
   questionCount: number
   chain: RunnableSequence<any, string>
+  fileAmount: number
+  handledFileAmount: number
 
   constructor(
     profile: TProfile,
+    fileAmount: number,
     noteId: string,
     fileId: string,
     filename: string,
@@ -50,6 +53,8 @@ export class Chain {
     this.questionCount = 0
     this.questionType = questionType
     this.chain = this.initChain(questionType)
+    this.fileAmount = fileAmount
+    this.handledFileAmount = 0
   }
 
   private initChain(questionType: QuestionType) {
@@ -96,6 +101,13 @@ export class Chain {
         isUploading: '0',
         questionCount: this.questionCount,
       })
+
+      this.handledFileAmount += 1
+
+      if (this.handledFileAmount === this.fileAmount) {
+        await noteHandler.update(this.noteId, { isUploading: '0' })
+        this.handledFileAmount = 0
+      }
     }
   }
 

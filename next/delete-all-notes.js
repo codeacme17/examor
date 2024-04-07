@@ -26,8 +26,8 @@ async function main() {
 
   if (isConfirmed) {
     await prisma.tQuestion.deleteMany()
-    await prisma.tFile.deleteMany()
     await prisma.tDocument.deleteMany()
+    await prisma.tFile.deleteMany()
     await prisma.tNote.deleteMany()
     console.log('All notes have been deleted.')
   } else {
