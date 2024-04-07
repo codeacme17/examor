@@ -1,10 +1,5 @@
 import { useState } from 'react'
-import {
-  LucideIcon,
-  Notebook,
-  Dices,
-  NotebookPen,
-} from 'lucide-react'
+import { LucideIcon, Notebook, Dices, NotebookPen } from 'lucide-react'
 
 export interface MenuItem {
   title: string
@@ -27,13 +22,7 @@ export const useMenu = () => {
     },
   ]
 
-  const [noteMenus, setNoteMenus] = useState<MenuItem[]>([
-    {
-      title: 'Vue',
-      icon: NotebookPen,
-      path: '/note/vue',
-    },
-  ])
+  const [noteMenus, setNoteMenus] = useState<MenuItem[]>([])
 
   return {
     staticMenus,

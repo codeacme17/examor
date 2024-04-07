@@ -25,6 +25,19 @@ export default function Template({ children }: { children: React.ReactNode }) {
     }
   }
 
+  const fetchNotes = async () => {
+    const res = await fetch('/api/note/all', {
+      method: 'GET',
+    })
+
+    if (res.ok) {
+      const data = await res.json()
+      console.log(data)
+    } else {
+      console.log('Failed to fetch notes')
+    }
+  }
+
   const getUploadingFiles = async () => {
     if (ws.current) return
 
@@ -53,6 +66,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     fetchProfile()
+    fetchNotes()
     getUploadingFiles()
 
     return () => {

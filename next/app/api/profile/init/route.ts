@@ -5,8 +5,8 @@ export async function POST() {
   try {
     const profile = await profileHandler.init()
     return NextResponse.json(profile)
-  } catch (err) {
-    console.log('[Examor POST] Error: ', err)
+  } catch (error) {
+    console.log('[Examor POST] Error: ', error)
     return new NextResponse('Internal Error', { status: 500 })
   }
 }
