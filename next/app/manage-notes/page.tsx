@@ -4,40 +4,19 @@ import { Suspense, useState } from 'react'
 import { Header } from '@/components/share/header'
 import { NoteTable } from './_components/note-table'
 import { FileManager } from './_components/file-manager'
-import {
-  NoteContextProps,
-  NoteContextProvider,
-} from './_context/note-context'
+import { NoteContextProps, NoteContextProvider } from './_context/note-context'
 import { TransitionAnimate } from '@/components/transition-animate'
 import { Skeleton } from '@/components/ui/skeleton'
-
-export interface Note {
-  id: string
-  name: string
-  icon: string
-  upload_date: string
-}
-
-const notes = [
-  {
-    id: '1',
-    name: 'Vuejs',
-    icon: 'mdi-vuejs',
-    upload_date: '2024-02-02',
-  },
-  {
-    id: '2',
-    name: 'javascript',
-    icon: 'mdi-language-javascript',
-    upload_date: '2024-02-02',
-  },
-]
+import { useNoteStore } from '@/store'
+import type { TNote } from '@prisma/client'
 
 const ManageNotes = () => {
-  const [tab, setTab] = useState<'note' | 'file'>('note')
-  const [note, setNote] = useState<Note | null>(null)
+  const noteStore = useNoteStore()
 
-  const handleClickSetting = (note: Note) => {
+  const [note, setNote] = useState<TNote | null>(null)
+  const [tab, setTab] = useState<'note' | 'file'>('note')
+
+  const handleClickSetting = (note: TNote) => {
     if (tab !== 'note' && !note) return
     setNote(note)
     setTab('file')
@@ -66,16 +45,14 @@ const ManageNotes = () => {
         {tab === 'note' ? (
           <TransitionAnimate key={tab} initial={{ x: -20 }}>
             <NoteTable
-              notes={notes}
+              notes={noteStore.notes}
               onSettingClick={handleClickSetting}
             />
           </TransitionAnimate>
         ) : (
           <TransitionAnimate key={tab}>
             <Suspense
-              fallback={
-                <Skeleton className="h-20 w-full rounded-xl" />
-              }>
+              fallback={<Skeleton className="h-20 w-full rounded-xl" />}>
               <FileManager />
             </Suspense>
           </TransitionAnimate>
