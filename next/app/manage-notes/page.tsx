@@ -53,7 +53,7 @@ const ManageNotes = () => {
           <TransitionAnimate key={tab}>
             <Suspense
               fallback={<Skeleton className="h-20 w-full rounded-xl" />}>
-              <FileManager />
+              <FileManager noteId={note?.id!} />
             </Suspense>
           </TransitionAnimate>
         )}

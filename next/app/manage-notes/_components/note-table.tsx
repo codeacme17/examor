@@ -12,7 +12,8 @@ import {
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { MdiIcon } from '@/components/mdi-icon'
-import { TNote } from '@prisma/client'
+import { format } from 'date-fns'
+import type { TNote } from '@prisma/client'
 
 interface NoteTableProps {
   notes: TNote[]
@@ -49,7 +50,7 @@ export const NoteTable = memo((props: NoteTableProps) => {
 
             {/* Node Create Date */}
             <TableCell className="text-right">
-              {JSON.stringify(note.uploadDate)}
+              {format(note.uploadDate, 'yyyy-MM-dd')}
             </TableCell>
 
             {/* Hanlders */}

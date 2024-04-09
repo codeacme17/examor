@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, use } from 'react'
+import { memo, useEffect, useState } from 'react'
 import {
   Table,
   TableBody,
@@ -10,43 +10,29 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { TFile } from '@prisma/client'
+import { format } from 'date-fns'
 
-interface File {
-  id: number
-  note_id: number
-  file_name: string
-  is_uploading: boolean
-  question_count: number
-  upload_date: string
+interface FileTableProps {
+  noteId: string
 }
 
-const files: File[] = [
-  {
-    id: 1,
-    note_id: 1,
-    file_name: 'Vuejs',
-    is_uploading: false,
-    question_count: 20,
-    upload_date: '2024-02-02',
-  },
-  {
-    id: 2,
-    note_id: 2,
-    file_name: 'javascript',
-    is_uploading: false,
-    question_count: 20,
-    upload_date: '2024-02-02',
-  },
-]
+export const FileTable = memo((props: FileTableProps) => {
+  const { noteId } = props
+  const [files, setFiles] = useState<TFile[]>([])
 
-export const FileTable = memo(() => {
-  const res = use<string>(
-    new Promise((resolve) =>
-      setTimeout(() => {
-        resolve('1')
-      }, 500)
-    )
-  )
+  const fetchFiles = async () => {
+    const res = await fetch(`/api/file/list?noteId=${noteId}`, {
+      method: 'GET',
+    })
+    const data = await res.json()
+    console.log(data)
+    setFiles(data.files)
+  }
+
+  useEffect(() => {
+    fetchFiles()
+  }, [])
 
   return (
     <Table>
@@ -63,12 +49,10 @@ export const FileTable = memo(() => {
       <TableBody>
         {files.map((file) => (
           <TableRow key={file.id}>
-            <TableCell className="font-medium">
-              {file.file_name}
-            </TableCell>
-            <TableCell>{file.question_count}</TableCell>
+            <TableCell className="font-medium">{file.fileName}</TableCell>
+            <TableCell>{file.questionCount}</TableCell>
             <TableCell className="text-right">
-              {file.upload_date}
+              {format(file.uploadDate, 'yyyy-MM-dd')}
             </TableCell>
           </TableRow>
         ))}

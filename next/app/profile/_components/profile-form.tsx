@@ -53,8 +53,6 @@ export const ProfileForm = () => {
   const update = async () => {
     const data = form.getValues()
 
-    console.log('data', data)
-
     const res = await fetch('/api/profile/update', {
       method: 'PATCH',
       body: JSON.stringify(data),
