@@ -21,9 +21,7 @@ export const NoteIconPopover = () => {
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>
-  ) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') return
     handleIconChange()
   }
@@ -32,9 +30,16 @@ export const NoteIconPopover = () => {
     handleIconChange()
   }
 
-  const handleIconChange = () => {
+  const handleIconChange = async () => {
     const currentIcon = inputRef.current?.value.trim()
+
     if (!currentIcon) return
+
+    await fetch(`/api/note/${note.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ icon: currentIcon }),
+    })
+
     noteContext.changeIcon(currentIcon)
   }
 
@@ -49,9 +54,7 @@ export const NoteIconPopover = () => {
         <p className="text-sm">
           To get the icon please go to:
           <Button size={'sm'} variant={'link'}>
-            <a
-              href="https://pictogrammers.com/library/mdi/"
-              target="_blank">
+            <a href="https://pictogrammers.com/library/mdi/" target="_blank">
               Material Design Icons
             </a>
           </Button>
@@ -64,10 +67,7 @@ export const NoteIconPopover = () => {
             onKeyDown={handleKeyDown}
             className="h-full"
           />
-          <Button
-            onClick={handleClick}
-            size={'icon'}
-            className="h-full">
+          <Button onClick={handleClick} size={'icon'} className="h-full">
             <CornerDownLeft size={14} />
           </Button>
         </div>
