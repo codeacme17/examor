@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useEffect, useState } from 'react'
+import { memo, use } from 'react'
 import {
   Table,
   TableBody,
@@ -19,20 +19,16 @@ interface FileTableProps {
 
 export const FileTable = memo((props: FileTableProps) => {
   const { noteId } = props
-  const [files, setFiles] = useState<TFile[]>([])
 
   const fetchFiles = async () => {
     const res = await fetch(`/api/file/list?noteId=${noteId}`, {
       method: 'GET',
     })
     const data = await res.json()
-    console.log(data)
-    setFiles(data.files)
+    return data.files
   }
 
-  useEffect(() => {
-    fetchFiles()
-  }, [])
+  const files = use<TFile[]>(fetchFiles())
 
   return (
     <Table>
