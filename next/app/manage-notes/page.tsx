@@ -28,10 +28,7 @@ const ManageNotes = () => {
     onBack: () => setTab('note'),
     changeIcon: (icon: string) => {
       if (!note) return
-      setNote({
-        ...note,
-        icon,
-      })
+      setNote({ ...note, icon })
     },
   }
 
@@ -42,7 +39,10 @@ const ManageNotes = () => {
           title="Manage Notes"
           subTitle="You can manage your notes here"
         />
-        {tab === 'note' ? (
+
+        {noteStore.isFetching ? (
+          <Skeleton className="h-20 w-full rounded-xl" />
+        ) : tab === 'note' ? (
           <TransitionAnimate key={tab} initial={{ x: -20 }}>
             <NoteTable
               notes={noteStore.notes}
