@@ -1,14 +1,16 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { useNoteStore, useProfileStore, useFileStore } from '@/store'
+import { useProfileStore, useFileStore } from '@/store'
+import { useFetchNotes } from '@/hooks/useFetchNotes'
 
 export const Main = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const profileStore = useProfileStore()
   const fileStore = useFileStore()
-  const noteStore = useNoteStore()
 
   const ws = useRef<WebSocket | null>(null)
+
+  const { fetchNotes } = useFetchNotes()
 
   const fetchProfile = async () => {
     const res = await fetch('/api/profile/init', {
@@ -20,21 +22,6 @@ export const Main = ({ children }: Readonly<{ children: React.ReactNode }>) => {
       profileStore.setProfile(data)
     } else {
       console.log('Failed to fetch profile')
-    }
-  }
-
-  const fetchNotes = async () => {
-    noteStore.setIsFetching(true)
-    const res = await fetch('/api/note/all', {
-      method: 'GET',
-    })
-    noteStore.setIsFetching(false)
-
-    if (res.ok) {
-      const data = await res.json()
-      noteStore.setNotes(data)
-    } else {
-      console.log('Failed to fetch notes')
     }
   }
 

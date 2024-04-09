@@ -11,9 +11,13 @@ import { MdiIcon } from '@/components/mdi-icon'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { CornerDownLeft } from 'lucide-react'
+import { useFetchNotes } from '@/hooks/useFetchNotes'
+import { useToast } from '@/components/ui/use-toast'
 
 export const NoteIconPopover = () => {
   const noteContext = useContext(NoteContext)
+  const { fetchNotes } = useFetchNotes()
+  const { toast } = useToast()
 
   if (!noteContext?.note.id) return null
 
@@ -35,12 +39,21 @@ export const NoteIconPopover = () => {
 
     if (!currentIcon) return
 
-    await fetch(`/api/note/${note.id}`, {
+    const res = await fetch(`/api/note/${note.id}`, {
       method: 'PATCH',
       body: JSON.stringify({ icon: currentIcon }),
     })
 
-    noteContext.changeIcon(currentIcon)
+    if (res.ok) {
+      fetchNotes()
+      noteContext.changeIcon(currentIcon)
+    } else {
+      toast({
+        title: 'Failed to update icon',
+        description: 'Please try again later',
+        variant: 'destructive',
+      })
+    }
   }
 
   return (
