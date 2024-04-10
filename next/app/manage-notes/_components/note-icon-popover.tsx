@@ -63,17 +63,21 @@ export const NoteIconPopover = () => {
           <MdiIcon icon={note.icon} size="2.3rem" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto ml-10">
+
+      <PopoverContent
+        className="w-auto ml-10"
+        align={'start'}
+        alignOffset={-40}>
         <p className="text-sm">
-          To get the icon please go to:
-          <Button size={'sm'} variant={'link'}>
+          To get the icon please go to
+          <Button size={'sm'} variant={'link'} className="-ml-2">
             <a href="https://pictogrammers.com/library/mdi/" target="_blank">
               Material Design Icons
             </a>
           </Button>
         </p>
 
-        <div className="flex items-center mt-2 gap-1 h-10">
+        <div className="flex items-center mt-2 gap-2 h-9">
           <Input
             ref={inputRef}
             placeholder={note.icon}
