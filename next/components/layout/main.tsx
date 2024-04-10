@@ -34,14 +34,6 @@ export const Main = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 
     ws.current = new WebSocket('ws://localhost:51782/')
 
-    ws.current.onopen = () => {
-      console.log('connected')
-    }
-
-    ws.current.onclose = () => {
-      console.log('disconnected')
-    }
-
     ws.current.onerror = (err) => {
       ws.current?.close()
     }
