@@ -43,6 +43,7 @@ export default async function RootLayout({
           crawl={false}
           shadow={false}
         />
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
