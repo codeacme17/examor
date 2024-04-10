@@ -12,7 +12,7 @@ export const UploadingPopup = () => {
 
   const uploadingFiles = fileStore.uploadingFiles
 
-  // if (uploadingFiles.length === 0) return null
+  if (uploadingFiles.length === 0) return null
 
   return (
     <Popover>
