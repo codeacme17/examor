@@ -4,6 +4,7 @@ import { profileHandler } from '@/lib/db-handler'
 import type { Metadata } from 'next'
 import './globals.css'
 
+import NextTopLoader from 'nextjs-toploader'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ResizePanel } from '@/components/layout/resize-panel'
 import { Toaster } from '@/components/ui/toaster'
@@ -35,6 +36,13 @@ export default async function RootLayout({
       </head>
 
       <body className={cn(poppins.className, 'min-h-screen')}>
+        <NextTopLoader
+          color="hsl(var(--foreground))"
+          showAtBottom={true}
+          showSpinner={false}
+          crawl={false}
+          shadow={false}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
