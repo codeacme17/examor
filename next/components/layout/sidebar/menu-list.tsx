@@ -10,6 +10,7 @@ import {
   TooltipProvider,
 } from '@/components/ui/tooltip'
 import { MenuItem } from '@/hooks/useMenu'
+import { MdiIcon } from '@/components/mdi-icon'
 
 interface MenuListProps {
   isCollapsed: boolean
@@ -42,19 +43,19 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
                   href={item.path}
                   className={cn(
                     CLASS_NAME,
-                    pathname === item.path
-                      ? 'bg-muted'
-                      : 'hover:bg-muted'
+                    pathname === item.path ? 'bg-muted' : 'hover:bg-muted',
+                    item.isLoading && 'opacity-50'
                   )}>
-                  <item.icon size={20} />
-                  <span className="sr-only text-sm">
-                    {item.title}
-                  </span>
+                  {typeof item.icon === 'string' ? (
+                    <MdiIcon icon={item.icon as string} size="1.4rem" />
+                  ) : (
+                    <item.icon size={20} />
+                  )}
+
+                  <span className="sr-only text-sm">{item.title}</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent
-                side="right"
-                className="flex items-center gap-4">
+              <TooltipContent side="right" className="flex items-center gap-4">
                 {item.title}
               </TooltipContent>
             </Tooltip>
@@ -67,7 +68,15 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
               CLASS_NAME,
               pathname === item.path ? 'bg-muted' : 'hover:bg-muted'
             )}>
-            <item.icon className="ml-3 mr-3" size={20} />
+            {typeof item.icon === 'string' ? (
+              <MdiIcon
+                icon={item.icon as string}
+                className="ml-3 mr-3"
+                size="1.2rem"
+              />
+            ) : (
+              <item.icon className="ml-3 mr-3" size={20} />
+            )}
             <span className="text-xs">{item.title}</span>
           </Link>
         )

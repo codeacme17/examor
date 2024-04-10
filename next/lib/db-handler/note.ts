@@ -8,6 +8,21 @@ const create = async (data: any) => {
   return note
 }
 
+const getAll = async () => {
+  const notes = await prismadb.tNote.findMany()
+
+  return notes
+}
+
+const update = async (id: string, data: any) => {
+  const note = await prismadb.tNote.update({
+    where: { id },
+    data: { ...data },
+  })
+
+  return note
+}
+
 const isExist = async (name: string) => {
   const note = await prismadb.tNote.findFirst({
     where: { name },
@@ -16,4 +31,4 @@ const isExist = async (name: string) => {
   return !!note
 }
 
-export const noteHandler = { create, isExist }
+export const noteHandler = { create, getAll, update, isExist }

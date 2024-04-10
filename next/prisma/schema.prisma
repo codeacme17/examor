@@ -10,12 +10,13 @@ datasource db {
 }
 
 model TNote {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  icon       String      @default("mdi-text-box-outline")
-  uploadDate DateTime    @default(now()) @updatedAt
-  TFile      TFile[]
-  TDocument  TDocument[]
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  icon        String      @default("mdi-text-box-outline")
+  uploadDate  DateTime    @default(now()) @updatedAt
+  isUploading String      @default("1")
+  TFile       TFile[]
+  TDocument   TDocument[]
 }
 
 model TFile {

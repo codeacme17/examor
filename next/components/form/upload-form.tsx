@@ -22,6 +22,7 @@ import { DragUpload } from './drag-upload'
 import { QuestionType, UploadFormType } from '@/types/global'
 import { LoadButton } from '../share/load-button'
 import { QuestionTypeSwitch } from '../share/question-type-switch'
+import { useFetchNotes } from '@/hooks/useFetchNotes'
 
 interface UploadFormProps {
   type: UploadFormType
@@ -31,6 +32,7 @@ export const UploadForm = (props: UploadFormProps) => {
   const { type } = props
   const { toast } = useToast()
   const formSchema = createFormSchema(type)
+  const { fetchNotes } = useFetchNotes()
 
   const [loading, setLoading] = useState(false)
 
@@ -57,18 +59,21 @@ export const UploadForm = (props: UploadFormProps) => {
       body: formData,
     })
 
-    if (!res.ok)
+    if (!res.ok) {
       return toast({
         title: 'Error',
         variant: 'destructive',
         description: res.text(),
       })
+    }
 
     form.reset()
 
+    fetchNotes()
+
     toast({
       title: 'Success',
-      description: 'Your note has been uploaded successfully.',
+      description: 'Note is being created!',
     })
   }
 

@@ -11,9 +11,13 @@ import { MdiIcon } from '@/components/mdi-icon'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { CornerDownLeft } from 'lucide-react'
+import { useFetchNotes } from '@/hooks/useFetchNotes'
+import { useToast } from '@/components/ui/use-toast'
 
 export const NoteIconPopover = () => {
   const noteContext = useContext(NoteContext)
+  const { fetchNotes } = useFetchNotes()
+  const { toast } = useToast()
 
   if (!noteContext?.note.id) return null
 
@@ -21,9 +25,7 @@ export const NoteIconPopover = () => {
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>
-  ) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') return
     handleIconChange()
   }
@@ -32,10 +34,26 @@ export const NoteIconPopover = () => {
     handleIconChange()
   }
 
-  const handleIconChange = () => {
+  const handleIconChange = async () => {
     const currentIcon = inputRef.current?.value.trim()
+
     if (!currentIcon) return
-    noteContext.changeIcon(currentIcon)
+
+    const res = await fetch(`/api/note/${note.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ icon: currentIcon }),
+    })
+
+    if (res.ok) {
+      fetchNotes()
+      noteContext.changeIcon(currentIcon)
+    } else {
+      toast({
+        title: 'Failed to update icon',
+        description: 'Please try again later',
+        variant: 'destructive',
+      })
+    }
   }
 
   return (
@@ -49,9 +67,7 @@ export const NoteIconPopover = () => {
         <p className="text-sm">
           To get the icon please go to:
           <Button size={'sm'} variant={'link'}>
-            <a
-              href="https://pictogrammers.com/library/mdi/"
-              target="_blank">
+            <a href="https://pictogrammers.com/library/mdi/" target="_blank">
               Material Design Icons
             </a>
           </Button>
@@ -64,10 +80,7 @@ export const NoteIconPopover = () => {
             onKeyDown={handleKeyDown}
             className="h-full"
           />
-          <Button
-            onClick={handleClick}
-            size={'icon'}
-            className="h-full">
+          <Button onClick={handleClick} size={'icon'} className="h-full">
             <CornerDownLeft size={14} />
           </Button>
         </div>

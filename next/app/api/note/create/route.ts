@@ -49,6 +49,7 @@ export const POST = async (req: Request) => {
           const documents = documentsObj[fileName]
           const chain = new Chain(
             profile!,
+            files.length,
             nodeId,
             fileId,
             fileName,

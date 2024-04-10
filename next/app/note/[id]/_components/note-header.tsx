@@ -1,9 +1,9 @@
 import { memo } from 'react'
 import { MdiIcon } from '@/components/mdi-icon'
-import { Note } from '@/app/manage-notes/page'
+import type { TNote } from '@prisma/client'
 
 interface NoteHeader extends React.HTMLAttributes<HTMLDivElement> {
-  note: Note
+  note: TNote
 }
 
 export const NoteHeader = memo((props: NoteHeader) => {

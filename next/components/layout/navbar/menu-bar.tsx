@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, forwardRef } from 'react'
+import { memo, forwardRef, useEffect } from 'react'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -85,9 +85,7 @@ const ListItem = forwardRef<MenuItem & { outLine?: boolean }, any>(
             {...props}>
             <props.icon className="mr-2" size={18} />
 
-            <span className="text-sm font-medium leading-none">
-              {title}
-            </span>
+            <span className="text-sm font-medium leading-none">{title}</span>
           </Link>
         </NavigationMenuLink>
       </li>

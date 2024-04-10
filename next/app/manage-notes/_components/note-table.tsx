@@ -12,17 +12,18 @@ import {
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { MdiIcon } from '@/components/mdi-icon'
-import { Note } from '../page'
+import { format } from 'date-fns'
+import type { TNote } from '@prisma/client'
 
 interface NoteTableProps {
-  notes: Note[]
-  onSettingClick: (note: Note) => void
+  notes: TNote[]
+  onSettingClick: (note: TNote) => void
 }
 
 export const NoteTable = memo((props: NoteTableProps) => {
   const { notes, onSettingClick } = props
 
-  const handleClickSetting = (note: Note) => {
+  const handleClickSetting = (note: TNote) => {
     onSettingClick(note)
   }
 
@@ -42,18 +43,14 @@ export const NoteTable = memo((props: NoteTableProps) => {
             {/* Note Name */}
             <TableCell className="font-medium">
               <div className="flex items-center">
-                <MdiIcon
-                  icon={note.icon}
-                  size="1.5rem"
-                  className="mr-2"
-                />
+                <MdiIcon icon={note.icon} size="1.5rem" className="mr-2" />
                 {note.name}
               </div>
             </TableCell>
 
             {/* Node Create Date */}
             <TableCell className="text-right">
-              {note.upload_date}
+              {format(note.uploadDate, 'yyyy-MM-dd')}
             </TableCell>
 
             {/* Hanlders */}

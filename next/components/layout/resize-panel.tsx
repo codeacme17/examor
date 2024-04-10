@@ -10,6 +10,7 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import { useHasMounted } from '@/hooks/useHasMouted'
+import { Main } from './main'
 
 export const ResizePanel = ({
   children,
@@ -60,9 +61,7 @@ export const ResizePanel = ({
         <section className="relative overflow-y-scroll">
           <Navbar />
 
-          <main className="w-full p-6 flex-1 max-w-[1080px] mx-auto">
-            {children}
-          </main>
+          <Main>{children}</Main>
         </section>
       </ResizablePanel>
     </ResizablePanelGroup>
