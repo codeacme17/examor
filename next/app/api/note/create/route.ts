@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
-import { Document } from 'langchain/document'
-import { fileHandler, noteHandler, profileHandler } from '@/lib/db-handler'
-import { deleteTempDir, readFileContent, uploadFile } from '@/lib/file-handler'
 import { markdownSpitter } from '@/langchain/loader'
 import { Chain } from '@/langchain/chain'
 import { PureLlm } from '@/langchain/llm'
-import { QuestionType } from '@/types/global'
+import { fileHandler, noteHandler, profileHandler } from '@/lib/db-handler'
+import { deleteTempDir, readFileContent, uploadFile } from '@/lib/file-handler'
+
+import type { Document } from 'langchain/document'
+import type { QuestionType } from '@/types/global'
 
 export const POST = async (req: Request) => {
   try {
@@ -39,10 +40,10 @@ export const POST = async (req: Request) => {
 
     await deleteTempDir()
 
-    const { id: nodeId } = await noteHandler.create({ name })
+    const { id: noteId } = await noteHandler.create({ name })
 
     for (const file of files) {
-      const { id: fileId } = await fileHandler.create(nodeId, file)
+      const { id: fileId } = await fileHandler.create(noteId, file)
 
       for (const fileName in documentsObj) {
         if (Object.prototype.hasOwnProperty.call(documentsObj, fileName)) {
@@ -50,7 +51,7 @@ export const POST = async (req: Request) => {
           const chain = new Chain(
             profile!,
             files.length,
-            nodeId,
+            noteId,
             fileId,
             fileName,
             questionType,

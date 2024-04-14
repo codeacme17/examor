@@ -1,14 +1,24 @@
-import { markdownSpitter } from '@/langchain/loader'
-import { Document } from 'langchain/document'
-import { fileHandler, profileHandler } from '@/lib/db-handler'
-import { deleteTempDir, readFileContent, uploadFile } from '@/lib/file-handler'
-import { QuestionType } from '@/types/global'
 import { NextResponse } from 'next/server'
 import { Chain } from '@/langchain/chain'
+import { PureLlm } from '@/langchain/llm'
+import { markdownSpitter } from '@/langchain/loader'
+import { fileHandler, profileHandler } from '@/lib/db-handler'
+import { deleteTempDir, readFileContent, uploadFile } from '@/lib/file-handler'
+
+import type { Document } from 'langchain/document'
+import type { QuestionType } from '@/types/global'
 
 export const POST = async (req: Request) => {
   try {
     const profile = await profileHandler.getFirst()
+
+    try {
+      const pureLlm = new PureLlm(profile)
+      await pureLlm.checkLlmApiState()
+    } catch (err) {
+      console.log('Error: ', err)
+      return new NextResponse(err as string, { status: 500 })
+    }
 
     const formData = await req.formData()
     const questionType = formData.get('type') as QuestionType

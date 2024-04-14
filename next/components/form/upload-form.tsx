@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useToast } from '../ui/use-toast'
+import { useFetchNotes } from '@/hooks/useFetchNotes'
+import { useToast } from '@/components/ui/use-toast'
 import { createFormSchema } from '@/schema/upload'
 
 import {
@@ -18,11 +19,10 @@ import {
 } from '@/components/ui/form'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
-import { DragUpload } from './drag-upload'
 import { QuestionType, UploadFormType } from '@/types/global'
-import { LoadButton } from '../share/load-button'
-import { QuestionTypeSwitch } from '../share/question-type-switch'
-import { useFetchNotes } from '@/hooks/useFetchNotes'
+import { LoadButton } from '@/components/share/load-button'
+import { QuestionTypeSwitch } from '@/components/share/question-type-switch'
+import { DragUpload } from './drag-upload'
 
 interface UploadFormProps {
   type: UploadFormType
