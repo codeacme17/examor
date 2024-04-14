@@ -51,7 +51,7 @@ export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
       </Button>
 
       {noteStore.isFetching ? (
-        <Skeleton className="h-20" />
+        <Skeleton className="h-10" />
       ) : (
         <MenuList isCollapsed={isCollapsed} menus={noteMenus} />
       )}
