@@ -23,26 +23,33 @@ interface FileTableProps {
 
 export const FileTable = memo((props: FileTableProps) => {
   const { noteId } = props
-  const [files, setFiles] = useState<TFile[]>([])
+
   const fileStore = useFileStore()
 
+  const [isFetching, setIsFetching] = useState(false)
+  const [files, setFiles] = useState<TFile[]>([])
+
   const fetchFiles = useCallback(async () => {
+    setIsFetching(true)
     const res = await fetch(`/api/file/list?noteId=${noteId}`, {
       method: 'GET',
     })
     const data = await res.json()
+    setIsFetching(false)
     setFiles(data.files)
   }, [noteId])
 
   useEffect(() => {
     fetchFiles()
-  }, [noteId, fetchFiles, fileStore.uploadingFiles])
+  }, [fetchFiles, noteId])
 
   const isRawUploading = (file: TFile) => {
     return fileStore.uploadingFiles.some(
       (uploadingFile) => uploadingFile.id === file.id
     )
   }
+
+  if (isFetching) return <Skeleton className="h-20 w-full rounded-xl" />
 
   return (
     <Table>
