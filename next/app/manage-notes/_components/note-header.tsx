@@ -4,26 +4,25 @@ import { Button } from '@/components/ui/button'
 import { ArrowLeftCircle } from 'lucide-react'
 import { AddFileDialog } from './add-file-dialog'
 import { NoteIconPopover } from './note-icon-popover'
+import { useUploadingNotes } from '@/hooks/useUploadingNote'
 
 export const NoteHeader = memo(() => {
   const noteContext = useContext(NoteContext)
 
-  if (!noteContext?.note.id) return null
+  const note = noteContext!.note
+  const onBack = noteContext!.onBack
 
-  const note = noteContext.note
-  const onBack = noteContext.onBack
+  const { isNoteUploading } = useUploadingNotes(note.id)
 
   return (
     <header className="flex items-center">
       <Button
+        disabled={isNoteUploading}
         size={'icon'}
         variant={'ghost'}
         className="mr-1"
         onClick={onBack}>
-        <ArrowLeftCircle
-          size={20}
-          className="stroke-muted-foreground"
-        />
+        <ArrowLeftCircle size={20} className="stroke-muted-foreground" />
       </Button>
       <NoteIconPopover />
 

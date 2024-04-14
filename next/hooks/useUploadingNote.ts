@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useFileStore } from '@/store'
 
-export const useUploadingNotes = () => {
+export const useUploadingNotes = (noteId?: string) => {
   const [uploadingNotes, setUploadingNotes] = useState<{ noteId: string }[]>([])
+
+  const [isNoteUploading, setIsNoteUploading] = useState(false)
 
   const fileStore = useFileStore()
   const uploadingFiles = fileStore.uploadingFiles
@@ -12,8 +14,11 @@ export const useUploadingNotes = () => {
       return { noteId: file.noteId }
     })
 
-    setUploadingNotes(notes)
-  }, [uploadingFiles])
+    if (notes.some((note) => note.noteId === noteId)) setIsNoteUploading(true)
+    else setIsNoteUploading(false)
 
-  return { uploadingNotes }
+    setUploadingNotes(notes)
+  }, [uploadingFiles, noteId])
+
+  return { uploadingNotes, isNoteUploading }
 }
