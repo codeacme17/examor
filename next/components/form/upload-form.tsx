@@ -23,6 +23,7 @@ import { QuestionType, UploadFormType } from '@/types/global'
 import { LoadButton } from '../share/load-button'
 import { QuestionTypeSwitch } from '../share/question-type-switch'
 import { useFetchNotes } from '@/hooks/useFetchNotes'
+import { NextResponse } from 'next/server'
 
 interface UploadFormProps {
   type: UploadFormType
@@ -54,23 +55,24 @@ export const UploadForm = (props: UploadFormProps) => {
       formData.append('files', file)
     })
 
-    const res = await fetch('/api/note/create', {
-      method: 'POST',
-      body: formData,
-    })
+    const body = { method: 'POST', body: formData }
+    let res: Response | null = null
+    if (type === 'note') {
+      res = await fetch('/api/note/create', body)
+    } else {
+      res = await fetch('/api/file/upload', body)
+    }
 
-    if (!res.ok) {
+    if (!res!.ok) {
       return toast({
         title: 'Error',
         variant: 'destructive',
-        description: res.text(),
+        description: res!.text(),
       })
     }
 
     form.reset()
-
     fetchNotes()
-
     toast({
       title: 'Success',
       description: 'Note is being created!',
