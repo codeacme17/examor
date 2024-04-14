@@ -34,7 +34,7 @@ export const AddFileDialog = memo<AddFileDialogProps>(
             <DialogTitle>Add new file to {note.name}</DialogTitle>
           </DialogHeader>
 
-          <UploadForm type="file" />
+          <UploadForm type="file" noteId={note.id} />
         </DialogContent>
       </Dialog>
     )

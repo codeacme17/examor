@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
-import { markdownSpitter } from '@/langchain/loader'
 import { Chain } from '@/langchain/chain'
 import { PureLlm } from '@/langchain/llm'
-import { fileHandler, noteHandler, profileHandler } from '@/lib/db-handler'
+import { markdownSpitter } from '@/langchain/loader'
+import { fileHandler, profileHandler } from '@/lib/db-handler'
 import { deleteTempDir, readFileContent, uploadFile } from '@/lib/file-handler'
 
 import type { Document } from 'langchain/document'
@@ -21,16 +21,16 @@ export const POST = async (req: Request) => {
     }
 
     const formData = await req.formData()
-
-    const name = formData.get('name') as string
     const questionType = formData.get('type') as QuestionType
+    const noteId = formData.get('noteId') as string
     const files = formData.getAll('files') as File[]
-
-    if (await noteHandler.isExist(name)) throw new Error('Note already exists')
 
     const documentsObj: Record<string, Document[]> = {}
 
     for (const file of files) {
+      const isExisted = await fileHandler.checkExist(noteId, file.name)
+      if (isExisted) throw new Error(`File ${file.name} already exists`)
+
       const filePath = await uploadFile(file)
       const fileName = file.name
       const content = await readFileContent(filePath)
@@ -39,8 +39,6 @@ export const POST = async (req: Request) => {
     }
 
     await deleteTempDir()
-
-    const { id: noteId } = await noteHandler.create({ name })
 
     for (const file of files) {
       const { id: fileId } = await fileHandler.create(noteId, file)
@@ -63,9 +61,9 @@ export const POST = async (req: Request) => {
       }
     }
 
-    return NextResponse.json('success')
+    return new NextResponse('success')
   } catch (err) {
-    console.log('[Examor POST] Error: ', err)
+    console.log('Error: ', err)
     return new NextResponse(err as string, { status: 500 })
   }
 }
