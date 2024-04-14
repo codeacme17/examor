@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { LucideIcon, Notebook, Dices, NotebookPen } from 'lucide-react'
+import { LucideIcon, Notebook, Dices } from 'lucide-react'
 import { useNoteStore } from '@/store'
+import { useUploadingNotes } from '@/hooks/useUploadingNote'
 
 export interface MenuItem {
   title: string
@@ -11,6 +12,8 @@ export interface MenuItem {
 
 export const useMenu = () => {
   const noteStore = useNoteStore()
+
+  const { uploadingNotes } = useUploadingNotes()
 
   const staticMenus: MenuItem[] = [
     {
@@ -32,11 +35,13 @@ export const useMenu = () => {
       title: note.name,
       icon: note.icon,
       path: `/note/${note.name}`,
-      isUploading: note.isUploading,
+      isUploading: uploadingNotes.some(
+        (uploadingNote) => uploadingNote.noteId === note.id
+      ),
     }))
 
     setNoteMenus(noteMenus)
-  }, [noteStore.notes])
+  }, [noteStore.notes, uploadingNotes])
 
   return {
     staticMenus,

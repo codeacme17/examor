@@ -2,6 +2,8 @@
 
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { MenuItem } from '@/hooks/useMenu'
+
 import Link from 'next/link'
 import {
   Tooltip,
@@ -9,7 +11,6 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from '@/components/ui/tooltip'
-import { MenuItem } from '@/hooks/useMenu'
 import { MdiIcon } from '@/components/mdi-icon'
 
 interface MenuListProps {
@@ -43,8 +44,7 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
                   href={item.path}
                   className={cn(
                     CLASS_NAME,
-                    pathname === item.path ? 'bg-muted' : 'hover:bg-muted',
-                    item.isLoading && 'opacity-50'
+                    pathname === item.path ? 'bg-muted' : 'hover:bg-muted'
                   )}>
                   {typeof item.icon === 'string' ? (
                     <MdiIcon icon={item.icon as string} size="1.4rem" />
@@ -55,6 +55,7 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
                   <span className="sr-only text-sm">{item.title}</span>
                 </Link>
               </TooltipTrigger>
+
               <TooltipContent side="right" className="flex items-center gap-4">
                 {item.title}
               </TooltipContent>
