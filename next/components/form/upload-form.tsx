@@ -23,14 +23,14 @@ import { QuestionType, UploadFormType } from '@/types/global'
 import { LoadButton } from '../share/load-button'
 import { QuestionTypeSwitch } from '../share/question-type-switch'
 import { useFetchNotes } from '@/hooks/useFetchNotes'
-import { NextResponse } from 'next/server'
 
 interface UploadFormProps {
   type: UploadFormType
+  noteId?: string
 }
 
 export const UploadForm = (props: UploadFormProps) => {
-  const { type } = props
+  const { type, noteId } = props
   const { toast } = useToast()
   const formSchema = createFormSchema(type)
   const { fetchNotes } = useFetchNotes()
@@ -50,7 +50,8 @@ export const UploadForm = (props: UploadFormProps) => {
     const formData = new FormData()
 
     formData.append('type', form.getValues('type'))
-    formData.append('name', form.getValues('name'))
+    type === 'file' && formData.append('noteId', noteId!)
+    type === 'note' && formData.append('name', form.getValues('name'))
     form.getValues('files').forEach((file) => {
       formData.append('files', file)
     })
@@ -75,7 +76,8 @@ export const UploadForm = (props: UploadFormProps) => {
     fetchNotes()
     toast({
       title: 'Success',
-      description: 'Note is being created!',
+      description:
+        type === 'note' ? 'Note is being created' : 'Files are being uploaded',
     })
   }
 

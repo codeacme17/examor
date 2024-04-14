@@ -38,6 +38,14 @@ const getFilesByNoteId = async (noteId: string) => {
   return files
 }
 
+const checkExist = async (noteId: string, fileName: string) => {
+  const file = await prismadb.tFile.findFirst({
+    where: { noteId, fileName },
+  })
+
+  return !!file
+}
+
 const findUploading = async () => {
   const files = await prismadb.tFile.findMany({
     where: { isUploading: '1' },
@@ -51,5 +59,6 @@ export const fileHandler = {
   update,
   findUploading,
   getFilesByNoteId,
+  checkExist,
   getById,
 }
