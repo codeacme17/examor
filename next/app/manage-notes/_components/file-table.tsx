@@ -1,6 +1,11 @@
 'use client'
 
-import { memo, use } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
+import { format } from 'date-fns'
+import { cn } from '@/lib/utils'
+import { useFileStore } from '@/store'
+import type { TFile } from '@prisma/client'
+
 import {
   Table,
   TableBody,
@@ -10,8 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { TFile } from '@prisma/client'
-import { format } from 'date-fns'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface FileTableProps {
   noteId: string
@@ -19,22 +23,33 @@ interface FileTableProps {
 
 export const FileTable = memo((props: FileTableProps) => {
   const { noteId } = props
+  const [files, setFiles] = useState<TFile[]>([])
+  const fileStore = useFileStore()
 
-  const fetchFiles = async () => {
+  const fetchFiles = useCallback(async () => {
     const res = await fetch(`/api/file/list?noteId=${noteId}`, {
       method: 'GET',
     })
     const data = await res.json()
-    return data.files
-  }
+    setFiles(data.files)
+  }, [noteId])
 
-  const files = use<TFile[]>(fetchFiles())
+  useEffect(() => {
+    fetchFiles()
+  }, [noteId, fetchFiles, fileStore.uploadingFiles])
+
+  const isRawUploading = (file: TFile) => {
+    return fileStore.uploadingFiles.some(
+      (uploadingFile) => uploadingFile.id === file.id
+    )
+  }
 
   return (
     <Table>
       <TableCaption>
         This list shows the files uploaded by the current note
       </TableCaption>
+
       <TableHeader>
         <TableRow>
           <TableHead>File name</TableHead>
@@ -42,11 +57,24 @@ export const FileTable = memo((props: FileTableProps) => {
           <TableHead className="text-right">Upload date</TableHead>
         </TableRow>
       </TableHeader>
+
       <TableBody>
         {files.map((file) => (
-          <TableRow key={file.id}>
+          <TableRow
+            key={file.id}
+            className={cn(
+              isRawUploading(file) && 'pointer-events-none animate-pulse'
+            )}>
             <TableCell className="font-medium">{file.fileName}</TableCell>
-            <TableCell>{file.questionCount}</TableCell>
+
+            <TableCell>
+              {isRawUploading(file) ? (
+                <Skeleton className="w-16 h-7 rounded-xl" />
+              ) : (
+                file.questionCount
+              )}
+            </TableCell>
+
             <TableCell className="text-right">
               {format(file.uploadDate, 'yyyy-MM-dd')}
             </TableCell>
