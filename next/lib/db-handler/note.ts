@@ -8,6 +8,28 @@ const create = async (data: any) => {
   return note
 }
 
+const deleteNote = async (id: string) => {
+  const transaction = await prismadb.$transaction(async (prisma) => {
+    await prismadb.tQuestion.deleteMany({
+      where: { id },
+    })
+
+    await prisma.tDocument.deleteMany({
+      where: { id },
+    })
+
+    await prisma.tFile.deleteMany({
+      where: { id },
+    })
+
+    return prisma.tNote.delete({
+      where: { id },
+    })
+  })
+
+  return transaction
+}
+
 const getAll = async () => {
   const notes = await prismadb.tNote.findMany()
 
@@ -31,4 +53,4 @@ const isExist = async (name: string) => {
   return !!note
 }
 
-export const noteHandler = { create, getAll, update, isExist }
+export const noteHandler = { create, deleteNote, getAll, update, isExist }
