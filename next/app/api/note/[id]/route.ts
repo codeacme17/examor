@@ -13,3 +13,14 @@ export const PATCH = async (req: NextRequest) => {
     return new NextResponse(error as string, { status: 500 })
   }
 }
+
+export const DELETE = async (req: NextRequest) => {
+  try {
+    const id = req.nextUrl.pathname.split('/').pop() as string
+    const res = await noteHandler.deleteNote(id)
+    return new NextResponse(JSON.stringify(res))
+  } catch (error) {
+    console.log('[Examor DELETE] Error: ', error)
+    return new NextResponse(error as string, { status: 500 })
+  }
+}

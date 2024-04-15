@@ -123,6 +123,8 @@ export class Chain {
         if (!isLegalQuestionStructure(question, this.questionType)) continue
         const { currentRole } = this.profile
         await questionHandler.create(
+          this.noteId,
+          this.fileId,
           docId,
           this.questionType,
           removePrefixNumbers(question),
