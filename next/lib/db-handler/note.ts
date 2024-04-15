@@ -10,16 +10,16 @@ const create = async (data: any) => {
 
 const deleteNote = async (id: string) => {
   const transaction = await prismadb.$transaction(async (prisma) => {
-    await prismadb.tQuestion.deleteMany({
-      where: { id },
+    await prisma.tQuestion.deleteMany({
+      where: { noteId: id },
     })
 
     await prisma.tDocument.deleteMany({
-      where: { id },
+      where: { noteId: id },
     })
 
     await prisma.tFile.deleteMany({
-      where: { id },
+      where: { noteId: id },
     })
 
     return prisma.tNote.delete({

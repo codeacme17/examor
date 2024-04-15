@@ -5,9 +5,11 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { useToast } from '@/components/ui/use-toast'
-import { Trash } from 'lucide-react'
-import { useContext } from 'react'
+import { Trash, Loader2 } from 'lucide-react'
+import { useContext, useState } from 'react'
 import { NoteContext } from '../_context/note-context'
+import { useFetchNotes } from '@/hooks/useFetchNotes'
+import { LoadButton } from '@/components/share/load-button'
 
 interface DeletePopoverProps {
   noteId: string
@@ -15,11 +17,14 @@ interface DeletePopoverProps {
 
 export const DeletePopover = (props: DeletePopoverProps) => {
   const { noteId } = props
-  const noteContext = useContext(NoteContext)
-
-  const onBack = noteContext!.onBack
-
   const { toast } = useToast()
+
+  const noteContext = useContext(NoteContext)
+  const { onBack } = noteContext!
+
+  const [loading, setLoading] = useState(false)
+
+  const { fetchNotes } = useFetchNotes()
 
   const handleDelete = async () => {
     const res = await fetch(`/api/note/${noteId}`, {
@@ -31,20 +36,34 @@ export const DeletePopover = (props: DeletePopoverProps) => {
         title: 'Note deleted',
         description: 'The note has been deleted successfully',
       })
+      await fetchNotes()
+      onBack()
+    } else {
+      toast({
+        title: 'Failed to delete note',
+        description: 'Please try again later',
+        variant: 'destructive',
+      })
     }
-    onBack()
   }
 
   const handleConfirm = async () => {
-    handleDelete()
+    setLoading(true)
+    await handleDelete()
+    setLoading(false)
   }
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className="ml-auto" size={'icon'} variant={'ghost'}>
+        <LoadButton
+          className="ml-auto"
+          size={'icon'}
+          variant={'ghost'}
+          loadingLabel={''}
+          loading={loading}>
           <Trash size={20} />
-        </Button>
+        </LoadButton>
       </PopoverTrigger>
 
       <PopoverContent>
@@ -52,6 +71,7 @@ export const DeletePopover = (props: DeletePopoverProps) => {
 
         <Button
           className="w-full mt-2 bg-green-500"
+          disabled={loading}
           size={'sm'}
           onClick={handleConfirm}>
           Yeah
