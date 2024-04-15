@@ -17,6 +17,7 @@ model TNote {
   isUploading String      @default("1")
   TFile       TFile[]
   TDocument   TDocument[]
+  TQuestion   TQuestion[]
 }
 
 model TFile {
@@ -28,6 +29,7 @@ model TFile {
   uploadDate    DateTime    @default(now()) @updatedAt
   TNote         TNote       @relation(fields: [noteId], references: [id])
   TDocument     TDocument[]
+  TQuestion     TQuestion[]
 
   @@index([noteId])
 }
@@ -50,6 +52,8 @@ model TDocument {
 model TQuestion {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
   content         String
+  noteId          String    @db.ObjectId
+  fileId          String    @db.ObjectId
   documentId      String    @db.ObjectId
   questionType    String?
   designatedRole  String
@@ -59,9 +63,13 @@ model TQuestion {
   progress        Float     @default(0)
   lastAnswer      String?
   uploadDate      DateTime  @default(now()) @updatedAt
+  TNote           TNote     @relation(fields: [noteId], references: [id])
+  TFile           TFile     @relation(fields: [fileId], references: [id])
   TDocument       TDocument @relation(fields: [documentId], references: [id])
 
   @@index([documentId])
+  @@index([fileId])
+  @@index([noteId])
 }
 
 model TProfile {
