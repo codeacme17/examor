@@ -1,15 +1,16 @@
+import { useContext, useState } from 'react'
+import { useToast } from '@/components/ui/use-toast'
+import { useFetchNotes } from '@/hooks/useFetchNotes'
+import { NoteContext } from '../_context/note-context'
+
+import { Trash } from 'lucide-react'
+import { LoadButton } from '@/components/share/load-button'
 import { Button } from '@/components/ui/button'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useToast } from '@/components/ui/use-toast'
-import { Trash, Loader2 } from 'lucide-react'
-import { useContext, useState } from 'react'
-import { NoteContext } from '../_context/note-context'
-import { useFetchNotes } from '@/hooks/useFetchNotes'
-import { LoadButton } from '@/components/share/load-button'
 
 interface DeletePopoverProps {
   noteId: string
