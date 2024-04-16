@@ -35,11 +35,13 @@ export const Main = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     ws.current = new WebSocket('ws://localhost:51782/')
 
     ws.current.onerror = (err) => {
+      console.error(err)
       ws.current?.close()
     }
 
     ws.current.onmessage = (data) => {
-      fileStore.setUploadingFiles(JSON.parse(data.data))
+      const uploadingFiles = JSON.parse(data.data)
+      fileStore.setUploadingFiles(uploadingFiles)
     }
   }
 
