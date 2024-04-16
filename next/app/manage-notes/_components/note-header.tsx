@@ -1,11 +1,12 @@
 import { memo, useContext } from 'react'
 import { NoteContext } from '../_context/note-context'
-import { Button } from '@/components/ui/button'
-import { ArrowLeftCircle, Trash } from 'lucide-react'
+import { useUploadingNotes } from '@/hooks/useUploadingNote'
+
+import { ArrowLeftCircle } from 'lucide-react'
 import { AddFileDialog } from './add-file-dialog'
 import { NoteIconPopover } from './note-icon-popover'
-import { useUploadingNotes } from '@/hooks/useUploadingNote'
 import { DeletePopover } from './delete-popover'
+import { Button } from '@/components/ui/button'
 
 export const NoteHeader = memo(() => {
   const noteContext = useContext(NoteContext)

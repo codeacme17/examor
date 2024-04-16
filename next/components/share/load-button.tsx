@@ -1,7 +1,7 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
+import { VariantProps } from 'class-variance-authority'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
-import { VariantProps } from 'class-variance-authority'
 
 interface LoadButtonProps
   extends React.HTMLAttributes<HTMLButtonElement>,
