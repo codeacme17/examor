@@ -8,6 +8,7 @@ export interface MenuItem {
   icon: (React.ComponentType<any> & LucideIcon) | string
   path: string
   isLoading?: boolean
+  isDisabled?: boolean
 }
 
 export const useMenu = () => {
@@ -15,7 +16,7 @@ export const useMenu = () => {
 
   const { uploadingNotes } = useUploadingNotes()
 
-  const staticMenus: MenuItem[] = [
+  const [staticMenus, setStaicMenus] = useState<MenuItem[]>([
     {
       title: 'Manage Notes',
       icon: Notebook,
@@ -25,12 +26,18 @@ export const useMenu = () => {
       title: 'Random Pick',
       icon: Dices,
       path: '/random-pick',
+      isDisabled: false,
     },
-  ]
+  ])
 
   const [noteMenus, setNoteMenus] = useState<MenuItem[]>([])
 
   useEffect(() => {
+    if (noteStore.notes.length === 0) staticMenus[1].isDisabled = true
+    else staticMenus[1].isDisabled = false
+
+    setStaicMenus([...staticMenus])
+
     const noteMenus = noteStore.notes.map((note) => ({
       title: note.name,
       icon: note.icon,

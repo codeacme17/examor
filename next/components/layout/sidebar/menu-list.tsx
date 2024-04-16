@@ -44,7 +44,10 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
                   href={item.path}
                   className={cn(
                     CLASS_NAME,
-                    pathname === item.path ? 'bg-muted' : 'hover:bg-muted'
+                    pathname === item.path ? 'bg-muted' : 'hover:bg-muted',
+                    item.isDisabled
+                      ? 'opacity-50 pointer-events-none'
+                      : 'cursor-pointer'
                   )}>
                   {typeof item.icon === 'string' ? (
                     <MdiIcon icon={item.icon as string} size="1.4rem" />
@@ -67,7 +70,10 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
             href={item.path}
             className={cn(
               CLASS_NAME,
-              pathname === item.path ? 'bg-muted' : 'hover:bg-muted'
+              pathname === item.path ? 'bg-muted' : 'hover:bg-muted',
+              item.isDisabled
+                ? 'opacity-50 pointer-events-none'
+                : 'cursor-pointer'
             )}>
             {typeof item.icon === 'string' ? (
               <MdiIcon
