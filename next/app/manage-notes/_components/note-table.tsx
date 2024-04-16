@@ -2,6 +2,11 @@
 
 import { memo } from 'react'
 import { Settings } from 'lucide-react'
+import { format } from 'date-fns'
+import type { TNote } from '@prisma/client'
+
+import Image from 'next/image'
+import Link from 'next/link'
 import {
   Table,
   TableBody,
@@ -12,8 +17,6 @@ import {
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { MdiIcon } from '@/components/mdi-icon'
-import { format } from 'date-fns'
-import type { TNote } from '@prisma/client'
 
 interface NoteTableProps {
   notes: TNote[]
@@ -26,6 +29,25 @@ export const NoteTable = memo((props: NoteTableProps) => {
   const handleClickSetting = (note: TNote) => {
     onSettingClick(note)
   }
+
+  if (notes.length === 0)
+    return (
+      <section>
+        <div className="flex items-center justify-center flex-col">
+          <Image
+            src="/images/empty-dark.svg"
+            alt="Empty"
+            width={200}
+            height={200}
+          />
+
+          <p className="mt-6 text-center text-muted-foreground">
+            No notes found, you can go <Link href={'/add-new'}>here</Link> to
+            add new note
+          </p>
+        </div>
+      </section>
+    )
 
   return (
     <Table>
