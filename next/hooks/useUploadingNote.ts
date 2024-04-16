@@ -3,14 +3,12 @@ import { useFileStore } from '@/store'
 
 export const useUploadingNotes = (noteId?: string) => {
   const [uploadingNotes, setUploadingNotes] = useState<{ noteId: string }[]>([])
-
   const [isNoteUploading, setIsNoteUploading] = useState(false)
 
   const fileStore = useFileStore()
-  const uploadingFiles = fileStore.uploadingFiles
 
   useEffect(() => {
-    const notes = uploadingFiles.map((file) => {
+    const notes = fileStore.uploadingFiles.map((file) => {
       return { noteId: file.noteId }
     })
 
@@ -18,7 +16,7 @@ export const useUploadingNotes = (noteId?: string) => {
     else setIsNoteUploading(false)
 
     setUploadingNotes(notes)
-  }, [uploadingFiles, noteId])
+  }, [fileStore.uploadingFiles, noteId])
 
   return { uploadingNotes, isNoteUploading }
 }

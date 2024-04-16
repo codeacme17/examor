@@ -8,5 +8,16 @@ interface FileState {
 
 export const useFileStore = create<FileState>((set) => ({
   uploadingFiles: [],
-  setUploadingFiles: (newFiles: TFile[]) => set({ uploadingFiles: newFiles }),
+  setUploadingFiles: (newFiles: TFile[]) => {
+    set((state) => {
+      if (newFiles.length !== state.uploadingFiles.length)
+        return {
+          ...state,
+          uploadingFiles: newFiles,
+        }
+      else {
+        return state
+      }
+    })
+  },
 }))
