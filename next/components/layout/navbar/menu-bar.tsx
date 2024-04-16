@@ -1,10 +1,12 @@
 'use client'
 
-import { memo, forwardRef, useEffect } from 'react'
+import { memo, forwardRef } from 'react'
+import { cn } from '@/lib/utils'
+import { usePathname } from 'next/navigation'
+import { type MenuItem, useMenu } from '@/hooks/useMenu'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
+import { Plus } from 'lucide-react'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,8 +15,12 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
-import { MenuItem, useMenu } from '@/hooks/useMenu'
-import { Plus } from 'lucide-react'
+
+interface ListItemProps
+  extends MenuItem,
+    Omit<React.HTMLAttributes<HTMLAnchorElement>, 'title'> {
+  outLine?: boolean
+}
 
 export const Menubar = memo(() => {
   const { staticMenus, noteMenus } = useMenu()
@@ -27,12 +33,7 @@ export const Menubar = memo(() => {
           <NavigationMenuContent>
             <ul className="grid min-w-[180px] gap-1 p-2">
               {staticMenus.map((item) => (
-                <ListItem
-                  key={item.title}
-                  title={item.title}
-                  href={item.path}
-                  icon={item.icon}
-                />
+                <ListItem key={item.title} {...item} />
               ))}
             </ul>
           </NavigationMenuContent>
@@ -43,20 +44,14 @@ export const Menubar = memo(() => {
           <NavigationMenuContent>
             <ul className="grid min-w-[180px] gap-1 p-2">
               <ListItem
-                title={'Add new note'}
-                href={'/add-new'}
                 outLine
+                title={'Add new note'}
+                path={'/add-new'}
                 icon={Plus}
               />
 
               {noteMenus.map((item) => (
-                <ListItem
-                  key={item.title}
-                  title={item.title}
-                  href={item.path}
-                  icon={item.icon}
-                  loading={item.isLoading}
-                />
+                <ListItem key={item.title} {...item} />
               ))}
             </ul>
           </NavigationMenuContent>
@@ -66,32 +61,32 @@ export const Menubar = memo(() => {
   )
 })
 
-const ListItem = forwardRef<MenuItem & { outLine?: boolean }, any>(
-  ({ className, title, outLine, ...props }, ref) => {
-    const pathname = usePathname()
+const ListItem = forwardRef<any, ListItemProps>((props, ref) => {
+  const { className, title, outLine, path, isDisabled, ...rest } = props
+  const pathname = usePathname()
 
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <Link
-            ref={ref}
-            url={props.href}
-            className={cn(
-              'flex items-center select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-              outLine && 'border border-muted',
-              pathname === props.href && 'bg-muted',
-              className
-            )}
-            {...props}>
-            <props.icon className="mr-2" size={18} />
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <Link
+          ref={ref}
+          href={path}
+          className={cn(
+            'flex items-center select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            outLine && 'border border-muted',
+            pathname === path && 'bg-muted',
+            isDisabled && 'opacity-50 pointer-events-none',
+            className
+          )}
+          {...rest}>
+          <props.icon className="mr-2" size={18} />
 
-            <span className="text-sm font-medium leading-none">{title}</span>
-          </Link>
-        </NavigationMenuLink>
-      </li>
-    )
-  }
-)
+          <span className="text-sm font-medium leading-none">{title}</span>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  )
+})
 
 Menubar.displayName = 'Menubar'
 
