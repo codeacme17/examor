@@ -46,7 +46,7 @@ cd examor
 #### 使用 docker compose 启动项目
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 > 请确保您的本机安装了 Docker，并且本地的 `51717`、`51818` 和 `52020` 端口没有被占用
@@ -132,7 +132,7 @@ docker-compose up
 
 2. 重新拉取更新最新的远程代码，更新本地的项目
 
-3. 删除原有的 docker 容器，使用 `docker-compose run` 命令重新构建最新的项目
+3. 删除原有的 docker 容器，使用 `docker compose up --build` 命令重新构建最新的项目
 
 4. 构建成功后进入个人配置页面，点击 **文件导入** 按钮，将备份过的数据重新导入到项目中
 
