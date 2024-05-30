@@ -61,7 +61,7 @@ cd examor
 #### Run docker compose
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 > Please make sure Docker is installed on your local machine, and ports `51717`, `51818`, and `52020` are available on your local host
@@ -147,7 +147,7 @@ When starting the project, the application checks for updates. If an update is r
 
 2. Pull the latest remote code updates to refresh your local project.
 
-3. Delete the existing Docker container and rebuild the project with the `docker-compose run` command to incorporate the latest changes.
+3. Delete the existing Docker container and rebuild the project with the `docker compose run` command to incorporate the latest changes.
 
 4. Once the build is successful, navigate to the personal settings page, click the **Import File** button, and re-import the backed-up data into the project.
 
