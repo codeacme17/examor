@@ -1,30 +1,28 @@
-import { Poppins } from 'next/font/google'
-import { cn } from '@/lib/utils'
-import { profileHandler } from '@/lib/db-handler'
-import type { Metadata } from 'next'
-import './globals.css'
+import { Poppins } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { profileHandler } from "@/lib/db-handler";
+import type { Metadata } from "next";
+import "./globals.css";
 
-import NextTopLoader from 'nextjs-toploader'
-import { ThemeProvider } from '@/components/theme-provider'
-import { ResizePanel } from '@/components/layout/resize-panel'
-import { Toaster } from '@/components/ui/toaster'
+import NextTopLoader from "nextjs-toploader";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ResizePanel } from "@/components/layout/resize-panel";
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
-  subsets: ['latin-ext'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  fallback: ['system-ui', 'sans-serif'],
-})
+  subsets: ["latin-ext"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  fallback: ["system-ui", "sans-serif"],
+});
 
 export const metadata: Metadata = {
-  title: 'examor | self-improvement',
+  title: "examor | self-improvement",
   description:
-    'For students, scholars, interviewees and lifelong learners. Let LLMs assist you in learning 🎓',
-}
+    "For students, scholars, interviewees and lifelong learners. Let LLMs assist you in learning 🎓",
+};
 
-export default async function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  await profileHandler.init()
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  await profileHandler.init();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -35,7 +33,7 @@ export default async function RootLayout({
         />
       </head>
 
-      <body className={cn(poppins.className, 'min-h-screen')}>
+      <body className={cn(poppins.className, "min-h-screen")}>
         <NextTopLoader
           color="hsl(var(--foreground))"
           showAtBottom={true}
@@ -46,7 +44,7 @@ export default async function RootLayout({
 
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           disableTransitionOnChange
           enableSystem>
           <ResizePanel>{children}</ResizePanel>
@@ -54,5 +52,5 @@ export default async function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
