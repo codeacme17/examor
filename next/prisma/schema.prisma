@@ -1,92 +1,78 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
 }
 
 datasource db {
   provider     = "mongodb"
-  url          = env("DATABASE_URL")
+  url          = env("NEXT_PUBLIC_DATABASE_URL")
   relationMode = "prisma"
 }
 
-model TNote {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  icon        String      @default("mdi-text-box-outline")
-  uploadDate  DateTime    @default(now()) @updatedAt
-  isUploading String      @default("1")
-  TFile       TFile[]
-  TDocument   TDocument[]
-  TQuestion   TQuestion[]
+model TDocument {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  document   String
+  fileId     String   @db.ObjectId
+  fileName   String
+  noteId     String   @db.ObjectId
+  uploadDate DateTime @db.Date
+
+  @@index([noteId])
+  @@index([fileId])
 }
 
 model TFile {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  noteId        String      @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
   fileName      String
-  isUploading   String      @default("1")
-  questionCount Int         @default(0)
-  uploadDate    DateTime    @default(now()) @updatedAt
-  TNote         TNote       @relation(fields: [noteId], references: [id])
-  TDocument     TDocument[]
-  TQuestion     TQuestion[]
+  isUploading   String
+  noteId        String   @db.ObjectId
+  questionCount Int
+  uploadDate    DateTime @db.Date
 
   @@index([noteId])
 }
 
-model TDocument {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  noteId     String      @db.ObjectId
-  fileId     String      @db.ObjectId
-  fileName   String
-  document   String
-  uploadDate DateTime    @default(now()) @updatedAt
-  TNote      TNote       @relation(fields: [noteId], references: [id])
-  TFile      TFile       @relation(fields: [fileId], references: [id])
-  TQuestion  TQuestion[]
-
-  @@index([noteId])
-  @@index([fileId])
-}
-
-model TQuestion {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  content         String
-  noteId          String    @db.ObjectId
-  fileId          String    @db.ObjectId
-  documentId      String    @db.ObjectId
-  questionType    String?
-  designatedRole  String
-  pushDate        DateTime?
-  isPushedToday   String    @default("0")
-  isAnsweredToday String    @default("0")
-  progress        Float     @default(0)
-  lastAnswer      String?
-  uploadDate      DateTime  @default(now()) @updatedAt
-  TNote           TNote     @relation(fields: [noteId], references: [id])
-  TFile           TFile     @relation(fields: [fileId], references: [id])
-  TDocument       TDocument @relation(fields: [documentId], references: [id])
-
-  @@index([documentId])
-  @@index([fileId])
-  @@index([noteId])
+model TNote {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  icon        String
+  isUploading String
+  name        String
+  uploadDate  DateTime @db.Date
 }
 
 model TProfile {
   id                 String @id @default(auto()) @map("_id") @db.ObjectId
-  questionAmount     Int    @default(12)
-  currentRole        String @default("examiner")
-  currentModel       String @default("OpenAI")
-  openaiKey          String @default("")
-  openaiOrganization String @default("")
-  openaiModel        String @default("gpt-3.5-turbo")
-  openaiProxy        String @default("")
-  azureKey           String @default("")
-  openaiBase         String @default("https://api.openai.com")
-  azureBase          String @default("")
-  openaiVersion      String @default("")
-  deploymentName     String @default("")
-  anthropicKey       String @default("")
-  anthropicVersion   String @default("")
-  anthropicModel     String @default("")
+  anthropicKey       String
+  anthropicModel     String
+  anthropicVersion   String
+  azureBase          String
+  azureKey           String
+  currentModel       String
+  currentRole        String
+  deploymentName     String
+  openaiBase         String
+  openaiKey          String
+  openaiModel        String
+  openaiOrganization String
+  openaiProxy        String
+  openaiVersion      String
+  questionAmount     Int
+}
+
+model TQuestion {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  content         String
+  designatedRole  String
+  documentId      String   @db.ObjectId
+  fileId          String   @db.ObjectId
+  isAnsweredToday String
+  isPushedToday   String
+  noteId          String   @db.ObjectId
+  progress        Float
+  questionType    String
+  uploadDate      DateTime @db.Date
+
+  @@index([documentId])
+  @@index([fileId])
+  @@index([noteId])
 }
