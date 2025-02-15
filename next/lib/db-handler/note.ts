@@ -1,56 +1,64 @@
-import { prismadb } from '.'
+import { prismadb } from ".";
 
 const create = async (data: any) => {
   const note = await prismadb.tNote.create({
     data,
-  })
+  });
 
-  return note
-}
+  return note;
+};
 
 const deleteNote = async (id: string) => {
   const transaction = await prismadb.$transaction(async (prisma) => {
     await prisma.tQuestion.deleteMany({
       where: { noteId: id },
-    })
+    });
 
     await prisma.tDocument.deleteMany({
       where: { noteId: id },
-    })
+    });
 
     await prisma.tFile.deleteMany({
       where: { noteId: id },
-    })
+    });
 
     return prisma.tNote.delete({
       where: { id },
-    })
-  })
+    });
+  });
 
-  return transaction
-}
+  return transaction;
+};
 
 const getAll = async () => {
-  const notes = await prismadb.tNote.findMany()
+  const notes = await prismadb.tNote.findMany();
 
-  return notes
-}
+  return notes;
+};
+
+const getOne = async (id: string) => {
+  const note = await prismadb.tNote.findFirst({
+    where: { id },
+  });
+
+  return note;
+};
 
 const update = async (id: string, data: any) => {
   const note = await prismadb.tNote.update({
     where: { id },
     data: { ...data },
-  })
+  });
 
-  return note
-}
+  return note;
+};
 
 const isExist = async (name: string) => {
   const note = await prismadb.tNote.findFirst({
     where: { name },
-  })
+  });
 
-  return !!note
-}
+  return !!note;
+};
 
-export const noteHandler = { create, deleteNote, getAll, update, isExist }
+export const noteHandler = { create, deleteNote, getAll, getOne, update, isExist };

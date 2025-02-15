@@ -1,76 +1,87 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { NoteHeader } from './_components/note-header'
-import { QuestionTable } from './_components/question-table'
-import { QABlock } from '@/components/qa-block'
-import { TransitionAnimate } from '@/components/transition-animate'
-import { Question } from '@/types/global'
-
-const note = {
-  id: '1',
-  name: 'Vuejs',
-  icon: 'mdi-vuejs',
-  upload_date: '2024-02-02',
-}
+import { useEffect, useState } from "react";
+import { NoteHeader } from "./_components/note-header";
+import { QuestionTable } from "./_components/question-table";
+import { QABlock } from "@/components/qa-block";
+import { TransitionAnimate } from "@/components/transition-animate";
+import { Question } from "@/types/global";
+import { TNote } from "@prisma/client";
 
 const questions: Question[] = [
   {
-    id: '1',
-    question: 'What is your name?',
-    answer: 'My name is John Doe',
-    status: 'New',
-    createdDate: '2024-02-02',
-    updatedDate: '2024-02-02',
-    questionType: 'short',
-    roleType: 'examiner',
+    id: "1",
+    question: "What is your name?",
+    answer: "My name is John Doe",
+    status: "New",
+    createdDate: "2024-02-02",
+    updatedDate: "2024-02-02",
+    questionType: "short",
+    roleType: "examiner",
   },
   {
-    id: '2',
-    question: 'What is your age?',
-    answer: 'I am 20 years old',
-    status: 'New',
-    createdDate: '2024-02-02',
-    updatedDate: '2024-02-02',
-    questionType: 'choice',
-    roleType: 'teacher',
+    id: "2",
+    question: "What is your age?",
+    answer: "I am 20 years old",
+    status: "New",
+    createdDate: "2024-02-02",
+    updatedDate: "2024-02-02",
+    questionType: "choice",
+    roleType: "teacher",
   },
-]
+];
 
-const NotePage = () => {
-  const [tab, setTab] = useState<'table' | 'QA'>('table')
-  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
+const NotePage = ({ params }: any) => {
+  const { id } = params;
+
+  const [tab, setTab] = useState<"table" | "QA">("table");
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+  const [note, setNote] = useState<TNote | null>(null);
+
+  useEffect(() => {
+    getNode();
+    handleGetQuestion();
+  }, []);
+
+  const getNode = async () => {
+    const res = await fetch(`/api/note/${id}`);
+    const json = await res.json();
+    setNote(json);
+  };
+
+  const handleGetQuestion = async () => {
+    const res = await fetch(`/api/note/${id}/questions`);
+    const json = await res.json();
+    console.log("res", json);
+  };
 
   const handleRowClick = (question: Question) => {
-    setTab('QA')
-    setCurrentQuestion(question)
-  }
+    setTab("QA");
+    setCurrentQuestion(question);
+  };
 
   const handleClickBack = () => {
-    if (tab !== 'QA') return
-    setTab('table')
-  }
+    if (tab !== "QA") return;
+    setTab("table");
+  };
 
   return (
     <section>
       <NoteHeader note={note} />
-      {tab === 'table' ? (
+
+      {tab === "table" ? (
         <TransitionAnimate key={tab} initial={{ x: -20 }}>
           <QuestionTable questions={questions} onRowClick={handleRowClick} />
         </TransitionAnimate>
       ) : (
         currentQuestion && (
           <TransitionAnimate key={tab}>
-            <QABlock
-              onBack={handleClickBack}
-              type="normal"
-              {...currentQuestion}
-            />
+            <QABlock onBack={handleClickBack} type="normal" {...currentQuestion} />
           </TransitionAnimate>
         )
       )}
     </section>
-  )
-}
+  );
+};
 
-export default NotePage
+export default NotePage;

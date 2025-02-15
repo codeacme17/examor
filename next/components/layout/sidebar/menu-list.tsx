@@ -1,25 +1,22 @@
-'use client'
+"use client";
 
-import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { MenuItem } from '@/hooks/useMenu'
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { MenuItem } from "@/hooks/useMenu";
 
-import Link from 'next/link'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-} from '@/components/ui/tooltip'
-import { MdiIcon } from '@/components/mdi-icon'
+import Link from "next/link";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { MdiIcon } from "@/components/mdi-icon";
+import { useNoteStore } from "@/store";
+import { TNote } from "@prisma/client";
 
 interface MenuListProps {
-  isCollapsed: boolean
-  menus: MenuItem[]
+  isCollapsed: boolean;
+  menus: MenuItem[];
 }
 
 export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const CLASS_NAME = `flex 
   items-center 
@@ -31,7 +28,7 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
   dark:hover:bg-muted 
   hover:bg-white
   hover:text-muted-foreground 
-  text-sm`
+  text-sm`;
 
   return (
     <div className="flex flex-col gap-2">
@@ -44,12 +41,10 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
                   href={item.path}
                   className={cn(
                     CLASS_NAME,
-                    pathname === item.path ? 'bg-muted' : 'hover:bg-muted',
-                    item.isDisabled
-                      ? 'opacity-50 pointer-events-none'
-                      : 'cursor-pointer'
+                    pathname === item.path ? "bg-muted" : "hover:bg-muted",
+                    item.isDisabled ? "opacity-50 pointer-events-none" : "cursor-pointer"
                   )}>
-                  {typeof item.icon === 'string' ? (
+                  {typeof item.icon === "string" ? (
                     <MdiIcon icon={item.icon as string} size="1.4rem" />
                   ) : (
                     <item.icon size={20} />
@@ -70,17 +65,11 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
             href={item.path}
             className={cn(
               CLASS_NAME,
-              pathname === item.path ? 'bg-muted' : 'hover:bg-muted',
-              item.isDisabled
-                ? 'opacity-50 pointer-events-none'
-                : 'cursor-pointer'
+              pathname === item.path ? "bg-muted" : "hover:bg-muted",
+              item.isDisabled ? "opacity-50 pointer-events-none" : "cursor-pointer"
             )}>
-            {typeof item.icon === 'string' ? (
-              <MdiIcon
-                icon={item.icon as string}
-                className="ml-3 mr-3"
-                size="1.2rem"
-              />
+            {typeof item.icon === "string" ? (
+              <MdiIcon icon={item.icon as string} className="ml-3 mr-3" size="1.2rem" />
             ) : (
               <item.icon className="ml-3 mr-3" size={20} />
             )}
@@ -89,5 +78,5 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
         )
       )}
     </div>
-  )
-}
+  );
+};

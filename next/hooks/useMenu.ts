@@ -1,64 +1,64 @@
-import { useEffect, useState } from 'react'
-import { LucideIcon, Notebook, Dices } from 'lucide-react'
-import { useNoteStore } from '@/store'
-import { useUploadingNotes } from '@/hooks/useUploadingNote'
-import { useFileStore } from '@/store/file'
+import { useEffect, useState } from "react";
+import { LucideIcon, Notebook, Dices } from "lucide-react";
+import { useNoteStore } from "@/store";
+import { useUploadingNotes } from "@/hooks/useUploadingNote";
+import { useFileStore } from "@/store/file";
 
 export interface MenuItem {
-  title: string
-  path: string
-  isLoading?: boolean
-  isDisabled?: boolean
-  icon: (React.ComponentType<any> & LucideIcon) | string
+  id?: string;
+  title: string;
+  path: string;
+  isLoading?: boolean;
+  isDisabled?: boolean;
+  icon: (React.ComponentType<any> & LucideIcon) | string;
 }
 
 export const useMenu = () => {
-  const noteStore = useNoteStore()
-  const fileStore = useFileStore()
-  const { notes } = noteStore
-  const { uploadingFiles } = fileStore
-  const { uploadingNotes } = useUploadingNotes()
+  const noteStore = useNoteStore();
+  const fileStore = useFileStore();
+  const { notes } = noteStore;
+  const { uploadingFiles } = fileStore;
+  const { uploadingNotes } = useUploadingNotes();
 
   const [staticMenus, setStaicMenus] = useState<MenuItem[]>([
     {
-      title: 'Manage Notes',
+      title: "Manage Notes",
       icon: Notebook,
-      path: '/manage-notes',
+      path: "/manage-notes",
       isDisabled: false,
     },
     {
-      title: 'Random Pick',
+      title: "Random Pick",
       icon: Dices,
-      path: '/random-pick',
+      path: "/random-pick",
       isDisabled: false,
     },
-  ])
-  const [noteMenus, setNoteMenus] = useState<MenuItem[]>([])
+  ]);
+  const [noteMenus, setNoteMenus] = useState<MenuItem[]>([]);
 
   useEffect(() => {
     if (notes.length === 0) {
-      staticMenus[1].isDisabled = true
+      staticMenus[1].isDisabled = true;
     } else if (notes.length === 1 && !!uploadingFiles.length) {
-      staticMenus[1].isDisabled = true
-    } else staticMenus[1].isDisabled = false
+      staticMenus[1].isDisabled = true;
+    } else staticMenus[1].isDisabled = false;
 
-    setStaicMenus([...staticMenus])
+    setStaicMenus([...staticMenus]);
 
     const noteMenus = notes.map((note) => ({
+      id: note.id,
       title: note.name,
       icon: note.icon,
-      path: `/note/${note.name}`,
-      isUploading: uploadingNotes.some(
-        (uploadingNote) => uploadingNote.noteId === note.id
-      ),
-    }))
+      path: `/note/${note.id}`,
+      isUploading: uploadingNotes.some((uploadingNote) => uploadingNote.noteId === note.id),
+    }));
 
-    setNoteMenus(noteMenus)
-  }, [notes, uploadingNotes, uploadingFiles])
+    setNoteMenus(noteMenus);
+  }, [notes, uploadingNotes, uploadingFiles]);
 
   return {
     staticMenus,
     noteMenus,
     setNoteMenus,
-  }
-}
+  };
+};
