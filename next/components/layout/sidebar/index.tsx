@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { usePathname, useRouter } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { Separator } from '@/components/ui/separator'
-import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
-import { MenuList } from './menu-list'
-import { Logo } from './logo'
-import { useMenu } from '@/hooks/useMenu'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useNoteStore } from '@/store'
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { MenuList } from "./menu-list";
+import { Logo } from "./logo";
+import { useMenu } from "@/hooks/useMenu";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useNoteStore } from "@/store";
 
 export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
-  const { staticMenus, noteMenus } = useMenu()
-  const router = useRouter()
-  const pathname = usePathname()
-  const noteStore = useNoteStore()
+  const router = useRouter();
+  const pathname = usePathname();
+  const noteStore = useNoteStore();
+  const { staticMenus, noteMenus } = useMenu();
 
   return (
     <div className="flex flex-col h-screen p-4 gap-2">
@@ -29,7 +29,7 @@ export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
 
       <Button
         variant="outline"
-        onClick={() => router.push('/add-new')}
+        onClick={() => router.push("/add-new")}
         className={cn(
           `text-sm
           justify-start
@@ -38,15 +38,13 @@ export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
           hover:bg-white
           hover:text-muted-foreground 
           `,
-          pathname === '/add-new' && 'bg-muted',
-          isCollapsed ? 'p-0 pl-2' : ''
+          pathname === "/add-new" && "bg-muted",
+          isCollapsed ? "p-0 pl-2" : ""
         )}>
-        <Plus className={cn('min-w-4')} size={20} />
+        <Plus className={cn("min-w-4")} size={20} />
 
         {!isCollapsed && (
-          <span className="ml-3.5 text-xs">
-            {isCollapsed ? '' : 'Add new note'}
-          </span>
+          <span className="ml-3.5 text-xs">{isCollapsed ? "" : "Add new note"}</span>
         )}
       </Button>
 
@@ -56,5 +54,5 @@ export const Sidebar = ({ isCollapsed }: { isCollapsed: boolean }) => {
         <MenuList isCollapsed={isCollapsed} menus={noteMenus} />
       )}
     </div>
-  )
-}
+  );
+};

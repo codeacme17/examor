@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
-import { memo, forwardRef } from 'react'
-import { cn } from '@/lib/utils'
-import { usePathname } from 'next/navigation'
-import { type MenuItem, useMenu } from '@/hooks/useMenu'
+import { memo, forwardRef } from "react";
+import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { type IMenuItem, useMenu } from "@/hooks/useMenu";
 
-import Link from 'next/link'
-import { Plus } from 'lucide-react'
+import Link from "next/link";
+import { Plus } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,16 +14,14 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu'
+} from "@/components/ui/navigation-menu";
 
-interface ListItemProps
-  extends MenuItem,
-    Omit<React.HTMLAttributes<HTMLAnchorElement>, 'title'> {
-  outLine?: boolean
+interface ListItemProps extends IMenuItem, Omit<React.HTMLAttributes<HTMLAnchorElement>, "title"> {
+  outLine?: boolean;
 }
 
 export const Menubar = memo(() => {
-  const { staticMenus, noteMenus } = useMenu()
+  const { staticMenus, noteMenus } = useMenu();
 
   return (
     <NavigationMenu orientation="vertical" className="lg:hidden">
@@ -43,12 +41,7 @@ export const Menubar = memo(() => {
           <NavigationMenuTrigger>Notes</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid min-w-[180px] gap-1 p-2">
-              <ListItem
-                outLine
-                title={'Add new note'}
-                path={'/add-new'}
-                icon={Plus}
-              />
+              <ListItem outLine title={"Add new note"} path={"/add-new"} icon={Plus} />
 
               {noteMenus.map((item) => (
                 <ListItem key={item.title} {...item} />
@@ -58,12 +51,12 @@ export const Menubar = memo(() => {
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-  )
-})
+  );
+});
 
 const ListItem = forwardRef<any, ListItemProps>((props, ref) => {
-  const { className, title, outLine, path, isDisabled, ...rest } = props
-  const pathname = usePathname()
+  const { className, title, outLine, path, isDisabled, ...rest } = props;
+  const pathname = usePathname();
 
   return (
     <li>
@@ -72,10 +65,10 @@ const ListItem = forwardRef<any, ListItemProps>((props, ref) => {
           ref={ref}
           href={path}
           className={cn(
-            'flex items-center select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-            outLine && 'border border-muted',
-            pathname === path && 'bg-muted',
-            isDisabled && 'opacity-50 pointer-events-none',
+            "flex items-center select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            outLine && "border border-muted",
+            pathname === path && "bg-muted",
+            isDisabled && "opacity-50 pointer-events-none",
             className
           )}
           {...rest}>
@@ -85,9 +78,9 @@ const ListItem = forwardRef<any, ListItemProps>((props, ref) => {
         </Link>
       </NavigationMenuLink>
     </li>
-  )
-})
+  );
+});
 
-Menubar.displayName = 'Menubar'
+Menubar.displayName = "Menubar";
 
-ListItem.displayName = 'ListItem'
+ListItem.displayName = "ListItem";

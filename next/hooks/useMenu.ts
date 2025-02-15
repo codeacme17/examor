@@ -3,10 +3,9 @@ import { LucideIcon, Notebook, Dices } from "lucide-react";
 import { useNoteStore } from "@/store";
 import { useUploadingNotes } from "@/hooks/useUploadingNote";
 import { useFileStore } from "@/store/file";
+import { TNote } from "@prisma/client";
 
-export interface MenuItem {
-  id?: string;
-  title: string;
+export interface IMenuItem extends Omit<TNote, "uploadDate" | "isUploading" | "icon"> {
   path: string;
   isLoading?: boolean;
   isDisabled?: boolean;
@@ -20,21 +19,23 @@ export const useMenu = () => {
   const { uploadingFiles } = fileStore;
   const { uploadingNotes } = useUploadingNotes();
 
-  const [staticMenus, setStaicMenus] = useState<MenuItem[]>([
+  const [staticMenus, setStaicMenus] = useState<IMenuItem[]>([
     {
-      title: "Manage Notes",
+      id: "mange-notes",
+      name: "Manage Notes",
       icon: Notebook,
       path: "/manage-notes",
       isDisabled: false,
     },
     {
-      title: "Random Pick",
+      id: "random-pick",
+      name: "Random Pick",
       icon: Dices,
       path: "/random-pick",
       isDisabled: false,
     },
   ]);
-  const [noteMenus, setNoteMenus] = useState<MenuItem[]>([]);
+  const [noteMenus, setNoteMenus] = useState<IMenuItem[]>([]);
 
   useEffect(() => {
     if (notes.length === 0) {
@@ -46,9 +47,7 @@ export const useMenu = () => {
     setStaicMenus([...staticMenus]);
 
     const noteMenus = notes.map((note) => ({
-      id: note.id,
-      title: note.name,
-      icon: note.icon,
+      ...note,
       path: `/note/${note.id}`,
       isUploading: uploadingNotes.some((uploadingNote) => uploadingNote.noteId === note.id),
     }));

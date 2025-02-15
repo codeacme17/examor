@@ -1,22 +1,24 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { MenuItem } from "@/hooks/useMenu";
+import { IMenuItem } from "@/hooks/useMenu";
 
-import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { MdiIcon } from "@/components/mdi-icon";
 import { useNoteStore } from "@/store";
 import { TNote } from "@prisma/client";
+import { Button } from "@/components/ui/button";
 
 interface MenuListProps {
   isCollapsed: boolean;
-  menus: MenuItem[];
+  menus: IMenuItem[];
 }
 
 export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { setCurrentNote } = useNoteStore();
 
   const CLASS_NAME = `flex 
   items-center 
@@ -24,11 +26,18 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
   rounded-md 
   text-primary
   transition-colors 
+  bg-transparent
   duration-200 
   dark:hover:bg-muted 
   hover:bg-white
   hover:text-muted-foreground 
   text-sm`;
+
+  const handleClickItem = (item: IMenuItem) => {
+    if (item.isDisabled) return;
+    router.push(item.path);
+    setCurrentNote(item as unknown as TNote);
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -37,8 +46,8 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
           <TooltipProvider key={index}>
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
-                <Link
-                  href={item.path}
+                <Button
+                  onClick={() => handleClickItem(item)}
                   className={cn(
                     CLASS_NAME,
                     pathname === item.path ? "bg-muted" : "hover:bg-muted",
@@ -50,21 +59,22 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
                     <item.icon size={20} />
                   )}
 
-                  <span className="sr-only text-sm">{item.title}</span>
-                </Link>
+                  <span className="sr-only text-sm">{item.name}</span>
+                </Button>
               </TooltipTrigger>
 
               <TooltipContent side="right" className="flex items-center gap-4">
-                {item.title}
+                {item.name}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         ) : (
-          <Link
+          <Button
             key={index}
-            href={item.path}
+            onClick={() => handleClickItem(item)}
             className={cn(
               CLASS_NAME,
+              "justify-start",
               pathname === item.path ? "bg-muted" : "hover:bg-muted",
               item.isDisabled ? "opacity-50 pointer-events-none" : "cursor-pointer"
             )}>
@@ -73,8 +83,8 @@ export const MenuList = ({ isCollapsed, menus }: MenuListProps) => {
             ) : (
               <item.icon className="ml-3 mr-3" size={20} />
             )}
-            <span className="text-xs">{item.title}</span>
-          </Link>
+            <span className="text-xs">{item.name}</span>
+          </Button>
         )
       )}
     </div>

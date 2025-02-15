@@ -7,6 +7,7 @@ import { QABlock } from "@/components/qa-block";
 import { TransitionAnimate } from "@/components/transition-animate";
 import { Question } from "@/types/global";
 import { TNote } from "@prisma/client";
+import { useNoteStore } from "@/store";
 
 const questions: Question[] = [
   {
@@ -34,19 +35,20 @@ const questions: Question[] = [
 const NotePage = ({ params }: any) => {
   const { id } = params;
 
+  const { currentNote, setCurrentNote } = useNoteStore();
+
   const [tab, setTab] = useState<"table" | "QA">("table");
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
-  const [note, setNote] = useState<TNote | null>(null);
 
   useEffect(() => {
-    getNode();
+    if (!currentNote) getNode();
     handleGetQuestion();
   }, []);
 
   const getNode = async () => {
     const res = await fetch(`/api/note/${id}`);
     const json = await res.json();
-    setNote(json);
+    setCurrentNote(json);
   };
 
   const handleGetQuestion = async () => {
@@ -67,7 +69,7 @@ const NotePage = ({ params }: any) => {
 
   return (
     <section>
-      <NoteHeader note={note} />
+      <NoteHeader note={currentNote} />
 
       {tab === "table" ? (
         <TransitionAnimate key={tab} initial={{ x: -20 }}>
