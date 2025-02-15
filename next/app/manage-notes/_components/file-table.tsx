@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { memo, useCallback, useEffect, useState } from 'react'
-import { format } from 'date-fns'
-import { cn } from '@/lib/utils'
-import { useFileStore } from '@/store'
-import type { TFile } from '@prisma/client'
+import { memo, useCallback, useEffect, useState } from "react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { useFileStore } from "@/store";
+import type { TFile } from "@prisma/client";
 
 import {
   Table,
@@ -14,48 +14,44 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Skeleton } from '@/components/ui/skeleton'
+} from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface FileTableProps {
-  noteId: string
+  noteId: string;
 }
 
 export const FileTable = memo((props: FileTableProps) => {
-  const { noteId } = props
+  const { noteId } = props;
 
-  const fileStore = useFileStore()
+  const fileStore = useFileStore();
 
-  const [isFetching, setIsFetching] = useState(false)
-  const [files, setFiles] = useState<TFile[]>([])
+  const [isFetching, setIsFetching] = useState(false);
+  const [files, setFiles] = useState<TFile[]>([]);
 
   const fetchFiles = useCallback(async () => {
-    setIsFetching(true)
+    setIsFetching(true);
     const res = await fetch(`/api/file/list?noteId=${noteId}`, {
-      method: 'GET',
-    })
-    const data = await res.json()
-    setIsFetching(false)
-    setFiles(data.files)
-  }, [noteId])
+      method: "GET",
+    });
+    const data = await res.json();
+    setIsFetching(false);
+    setFiles(data.files);
+  }, [noteId]);
 
   useEffect(() => {
-    fetchFiles()
-  }, [fetchFiles, noteId])
+    fetchFiles();
+  }, [fetchFiles, noteId]);
 
   const isRawUploading = (file: TFile) => {
-    return fileStore.uploadingFiles.some(
-      (uploadingFile) => uploadingFile.id === file.id
-    )
-  }
+    return fileStore.uploadingFiles.some((uploadingFile) => uploadingFile.id === file.id);
+  };
 
-  if (isFetching) return <Skeleton className="h-20 w-full rounded-xl" />
+  if (isFetching) return <Skeleton className="h-20 w-full rounded-xl" />;
 
   return (
     <Table>
-      <TableCaption>
-        This list shows the files uploaded by the current note
-      </TableCaption>
+      <TableCaption>This list shows the files uploaded by the current note</TableCaption>
 
       <TableHeader>
         <TableRow>
@@ -69,9 +65,7 @@ export const FileTable = memo((props: FileTableProps) => {
         {files.map((file) => (
           <TableRow
             key={file.id}
-            className={cn(
-              isRawUploading(file) && 'pointer-events-none animate-pulse'
-            )}>
+            className={cn(isRawUploading(file) && "pointer-events-none animate-pulse")}>
             <TableCell className="font-medium">{file.fileName}</TableCell>
 
             <TableCell>
@@ -82,14 +76,12 @@ export const FileTable = memo((props: FileTableProps) => {
               )}
             </TableCell>
 
-            <TableCell className="text-right">
-              {format(file.uploadDate, 'yyyy-MM-dd')}
-            </TableCell>
+            <TableCell className="text-right">{format(file.uploadDate, "yyyy-MM-dd")}</TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
-  )
-})
+  );
+});
 
-FileTable.displayName = 'FileTable'
+FileTable.displayName = "FileTable";

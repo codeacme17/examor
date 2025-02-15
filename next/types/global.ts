@@ -1,25 +1,25 @@
-import { z } from 'zod'
-import { profileFormSchema } from '@/schema/profile'
+import { z } from "zod";
+import { profileFormSchema } from "@/schema/profile";
 
-export type RoleType = 'examiner' | 'teacher' | 'interviewer'
+export type RoleType = "examiner" | "teacher" | "interviewer";
 
-export type QuestionType = 'short' | 'blank' | 'choice'
+export type QuestionType = "short" | "blank" | "choice";
 
-export type LlmType = 'openai' | 'azure' | 'anthropic'
+export type LlmType = "openai" | "azure" | "anthropic";
 
-export interface Question {
-  id: string
-  question: string
-  roleType: RoleType
-  questionType?: QuestionType
-  answer?: string
-  status?: string
-  createdDate?: string
-  updatedDate?: string
+export interface IQuestion {
+  id: string;
+  question: string;
+  roleType: RoleType;
+  questionType?: QuestionType;
+  answer?: string;
+  status?: string;
+  createdDate?: string;
+  updatedDate?: string;
 }
 
-export type ProfileType = z.infer<typeof profileFormSchema>
+export type ProfileType = z.infer<typeof profileFormSchema>;
 
-export type UploadFormType = 'note' | 'file'
+export type UploadFormType = "note" | "file";
 
-export type PromptType = 'generate' | 'examine'
+export type PromptType = "generate" | "examine";

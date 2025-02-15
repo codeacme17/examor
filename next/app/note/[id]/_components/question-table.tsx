@@ -1,23 +1,18 @@
-'use client'
+"use client";
 
-import { memo } from 'react'
-import { Question } from '@/types/global'
-import { Button } from '@/components/ui/button'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from '@/components/ui/table'
-import { QuestionTypeSwitch } from '@/components/share/question-type-switch'
+import { memo } from "react";
+import { IQuestion } from "@/types/global";
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { QuestionTypeSwitch } from "@/components/share/question-type-switch";
 
 interface QuestionTableProps {
-  questions: any
-  onRowClick: (question: Question) => void
+  questions: any;
+  onRowClick: (question: IQuestion) => void;
 }
 
 export const QuestionTable = memo((props: QuestionTableProps) => {
-  const { questions, onRowClick } = props
+  const { questions, onRowClick } = props;
 
   return (
     <section className="flex flex-col gap-5">
@@ -27,9 +22,7 @@ export const QuestionTable = memo((props: QuestionTableProps) => {
       </div>
 
       <div>
-        <div className="font-bold text-xl mb-3">
-          Expires Questions
-        </div>
+        <div className="font-bold text-xl mb-3">Expires Questions</div>
         <_Table questions={questions} onRowClick={onRowClick} />
       </div>
 
@@ -38,28 +31,23 @@ export const QuestionTable = memo((props: QuestionTableProps) => {
         <_Table questions={questions} onRowClick={onRowClick} />
       </div>
     </section>
-  )
-})
+  );
+});
 
 const _Table = (props: QuestionTableProps) => {
-  const { questions, onRowClick } = props
+  const { questions, onRowClick } = props;
 
   return (
     <Table className="border">
       <TableBody>
-        {questions.map((question: Question) => (
+        {questions.map((question: IQuestion) => (
           <TableRow key={question.id}>
             <TableCell className="p-2 pl-5 w-10">
-              <QuestionTypeSwitch
-                questionType={question.questionType!}
-                className="text-lg"
-              />
+              <QuestionTypeSwitch questionType={question.questionType!} className="text-lg" />
             </TableCell>
             <TableCell className="p-2">{question.question}</TableCell>
             <TableCell className="text-right p-2 pr-5 w-20">
-              <Button
-                size={'sm'}
-                onClick={() => onRowClick(question)}>
+              <Button size={"sm"} onClick={() => onRowClick(question)}>
                 Go
               </Button>
             </TableCell>
@@ -67,7 +55,7 @@ const _Table = (props: QuestionTableProps) => {
         ))}
       </TableBody>
     </Table>
-  )
-}
+  );
+};
 
-QuestionTable.displayName = 'QuestionTable'
+QuestionTable.displayName = "QuestionTable";

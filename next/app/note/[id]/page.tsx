@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useNoteStore } from "@/store";
+import { IQuestion } from "@/types/global";
+
+import { TransitionAnimate } from "@/components/transition-animate";
+import { QABlock } from "@/components/qa-block";
 import { NoteHeader } from "./_components/note-header";
 import { QuestionTable } from "./_components/question-table";
-import { QABlock } from "@/components/qa-block";
-import { TransitionAnimate } from "@/components/transition-animate";
-import { Question } from "@/types/global";
-import { TNote } from "@prisma/client";
-import { useNoteStore } from "@/store";
 
-const questions: Question[] = [
+const questions: IQuestion[] = [
   {
     id: "1",
     question: "What is your name?",
@@ -38,7 +38,7 @@ const NotePage = ({ params }: any) => {
   const { currentNote, setCurrentNote } = useNoteStore();
 
   const [tab, setTab] = useState<"table" | "QA">("table");
-  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+  const [currentQuestion, setCurrentQuestion] = useState<IQuestion | null>(null);
 
   useEffect(() => {
     if (!currentNote) getNode();
@@ -57,7 +57,7 @@ const NotePage = ({ params }: any) => {
     console.log("res", json);
   };
 
-  const handleRowClick = (question: Question) => {
+  const handleRowClick = (question: IQuestion) => {
     setTab("QA");
     setCurrentQuestion(question);
   };
