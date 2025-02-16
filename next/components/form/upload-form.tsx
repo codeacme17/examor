@@ -94,7 +94,7 @@ export const UploadForm = (props: UploadFormProps) => {
           name="type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>IQuestion Type</FormLabel>
+              <FormLabel>Question Type</FormLabel>
               <FormControl>
                 <Tabs
                   value={field.value}

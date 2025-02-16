@@ -35,7 +35,7 @@ export const QuestionBlock = (props: QuestionBlockProps) => {
           <Button size={"icon"} className="w-7 h-7 rounded-full mr-3" onClick={handleBackClick}>
             <ArrowLeft size={14} />
           </Button>
-          <span className="text-xl font-bold">IQuestion</span>
+          <span className="text-xl font-bold">Question</span>
           <RoleTypeSwitch roleType={roleType} className="text-xl ml-1" />
         </div>
       )}

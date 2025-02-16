@@ -8,6 +8,7 @@ import { TransitionAnimate } from "@/components/transition-animate";
 import { QABlock } from "@/components/qa-block";
 import { NoteHeader } from "./_components/note-header";
 import { QuestionTable } from "./_components/question-table";
+import { NotFound } from "@/app/not-found";
 
 const questions: IQuestion[] = [
   {
@@ -66,6 +67,8 @@ const NotePage = ({ params }: any) => {
     if (tab !== "QA") return;
     setTab("table");
   };
+
+  if (!currentNote) return <NotFound />;
 
   return (
     <section>
