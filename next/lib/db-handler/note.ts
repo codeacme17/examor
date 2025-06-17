@@ -61,4 +61,11 @@ const isExist = async (name: string) => {
   return !!note;
 };
 
-export const noteHandler = { create, deleteNote, getAll, getOne, update, isExist };
+export const noteHandler = {
+  create,
+  deleteNote,
+  getAll,
+  getOne,
+  update,
+  isExist,
+};

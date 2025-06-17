@@ -1,58 +1,59 @@
-import { prismadb } from '.'
+import { prismadb } from ".";
+import type { TFile } from "@prisma/client";
 
 const create = async (noteId: string, rawFile: File) => {
-  const { name } = rawFile
+  const { name } = rawFile;
 
   const file = await prismadb.tFile.create({
     data: {
       noteId,
       fileName: name,
-    },
-  })
+    } as TFile,
+  });
 
-  return file
-}
+  return file;
+};
 
 const update = async (id: string, data: any) => {
   const file = await prismadb.tFile.update({
     where: { id },
     data: { ...data },
-  })
+  });
 
-  return file
-}
+  return file;
+};
 
 const getById = async (id: string) => {
   const file = await prismadb.tFile.findUnique({
     where: { id },
-  })
+  });
 
-  return file
-}
+  return file;
+};
 
 const getFilesByNoteId = async (noteId: string) => {
   const files = await prismadb.tFile.findMany({
     where: { noteId },
-  })
+  });
 
-  return files
-}
+  return files;
+};
 
 const checkExist = async (noteId: string, fileName: string) => {
   const file = await prismadb.tFile.findFirst({
     where: { noteId, fileName },
-  })
+  });
 
-  return !!file
-}
+  return !!file;
+};
 
 const findUploading = async () => {
   const files = await prismadb.tFile.findMany({
-    where: { isUploading: '1' },
-  })
+    where: { isUploading: "1" },
+  });
 
-  return files
-}
+  return files;
+};
 
 export const fileHandler = {
   create,
@@ -61,4 +62,4 @@ export const fileHandler = {
   getFilesByNoteId,
   checkExist,
   getById,
-}
+};

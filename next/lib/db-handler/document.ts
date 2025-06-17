@@ -1,4 +1,5 @@
-import { prismadb } from '.'
+import { prismadb } from ".";
+import type { TDocument } from "@prisma/client";
 
 const create = async (
   noteId: string,
@@ -13,14 +14,14 @@ const create = async (
         fileId,
         fileName,
         document: content,
-      },
-    })
+      } as TDocument,
+    });
 
-    return document
+    return document;
   } catch (error) {
-    console.error('error creating document', error)
-    throw error
+    console.error("error creating document", error);
+    throw error;
   }
-}
+};
 
-export const documentHandler = { create }
+export const documentHandler = { create };

@@ -1,5 +1,6 @@
-import { prismadb } from '@/lib/db-handler'
-import { QuestionType } from '@/types/global'
+import { prismadb } from "@/lib/db-handler";
+import { QuestionType } from "@/types/global";
+import { TQuestion } from "@prisma/client";
 
 const create = (
   noteId: string,
@@ -17,10 +18,10 @@ const create = (
       questionType,
       content,
       designatedRole,
-    },
-  })
+    } as TQuestion,
+  });
 
-  return question
-}
+  return question;
+};
 
-export const questionHandler = { create }
+export const questionHandler = { create };
